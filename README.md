@@ -1,0 +1,2 @@
+# MEAN
+FS-core application
