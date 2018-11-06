@@ -13,7 +13,10 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import cors from 'cors';
 import i18n from 'i18n';
-
+import passport from 'passport';
+import User from './models/user';
+import Session from 'express-session';
+import flash from 'connect-flash';
 mongoose.Promise = global.Promise;
 mongoose
   .connect(
@@ -23,7 +26,7 @@ mongoose
   )
   .catch(err => console.log(err));
 const app = express();
-
+app.use(flash());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(
@@ -31,6 +34,12 @@ app.use(
     extended: true
   })
 );
+app.use(Session({
+  secret: 'secret'
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 i18n.configure({
   locales: ['en', 'zh'],
   directory: `${__dirname}/locales`,
@@ -48,6 +57,17 @@ app.use(function (req, res, next) {
   next();
 });
 
+
+passport.serializeUser(function (user, cb) {
+  cb(null, user.id);
+});
+
+passport.deserializeUser(function (id, cb) {
+  User.findById(id, function (err, user) {
+    cb(err, user);
+  });
+});
+
 app.options('*', cors());
 require('./routes/index')(app);
 require('./routes/user')(app);
@@ -57,10 +77,10 @@ app.use(function (req, res, next) {
   err.status = 404;
   next(err);
 });
+require('./passport-configuration');
 
 // Error handler
 app.use(function (err, req, res, next) {
-  console.log(err);
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res

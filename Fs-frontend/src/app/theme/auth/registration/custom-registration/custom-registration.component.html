@@ -1,4 +1,4 @@
-<section class="login p-fixed d-flex text-center bg-primary common-img-bg">
+<section class="login p-fixed d-flex text-center bg-primary common-img-bg" *ngIf = "!regitered">
   <!-- Container-fluid starts -->
   <div class="container-fluid">
     <div class="row">
@@ -91,3 +91,8 @@
   </div>
   <!-- end of container-fluid -->
 </section>
+
+
+<app-message *ngIf = "regitered"
+[message] = "message">
+</app-message>

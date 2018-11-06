@@ -120,7 +120,8 @@ const routes: Routes = [
         loadChildren: './theme/landing/landing.module#LandingModule'
       }
     ]
-  }
+  },
+  { path: 'setup-profile', loadChildren: './wizard/wizard.component#WizardModule'}
 ];
 
 @NgModule({

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule } from 'ngx-toastr';
 import {ToggleFullScreenDirective} from './fullscreen/toggle-fullscreen.directive';
 import {AccordionAnchorDirective} from './accordion/accordionanchor.directive';
 import {AccordionLinkDirective} from './accordion/accordionlink.directive';
@@ -15,6 +16,7 @@ import {ModalAnimationComponent} from './modal-animation/modal-animation.compone
 import {SpinnerComponent} from './spinner/spinner.component';
 import {ClickOutsideModule} from 'ng-click-outside';
 
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -23,6 +25,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   imports: [
     CommonModule,
     NgbModule.forRoot(),
+    ToastrModule.forRoot(),
     HttpClientModule,
     PerfectScrollbarModule,
     ClickOutsideModule,

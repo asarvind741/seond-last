@@ -26,7 +26,7 @@ const routes: Routes = [
         loadChildren: './social-header-footer-reg/social-header-footer-reg.module#SocialHeaderFooterRegModule'
       },
        {
-         path: 'signup',
+         path: '',
          loadChildren: './custom-registration/custom-registration.module#CustomRegistrationModule'
        }
     ]

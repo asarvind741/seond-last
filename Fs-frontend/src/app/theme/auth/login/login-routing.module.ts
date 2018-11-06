@@ -24,6 +24,10 @@ const routes: Routes = [
       {
         path: 'social-header-footer',
         loadChildren: './social-header-footer-login/social-header-footer-login.module#SocialHeaderFooterLoginModule'
+      },
+      {
+        path: '',
+        loadChildren: './custom-login/custom-login.module#CustomLoginModule'
       }
     ]
   }
