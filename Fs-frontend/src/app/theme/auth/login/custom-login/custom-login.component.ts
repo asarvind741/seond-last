@@ -44,6 +44,7 @@ export class CustomLoginComponent implements OnInit {
 
   loginLinkedIn(){
     console.log("ssssssssss")
+    this.router.navigate(['/']);
   }
 
 }
