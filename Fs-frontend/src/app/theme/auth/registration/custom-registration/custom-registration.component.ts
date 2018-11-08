@@ -31,6 +31,12 @@ createSignupForm(){
     firstName: new FormControl(null, [Validators.required]),
     lastName: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.required, Validators.email]),
+    mobile: new FormControl(null, 
+      [Validators.required, 
+      Validators.maxLength(10), 
+      Validators.minLength(10),
+      Validators.pattern('[0-9]+')
+    ]),
     password: new FormControl(null, [Validators.required, Validators.minLength(6)])
   })
 }

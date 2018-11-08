@@ -49,6 +49,11 @@ const User = new Schema({
     unique: true,
     required: true,
   },
+  mobile: {
+    type: String,
+    unique: true,
+    required: true
+  },
   gender: {
     type: String,
     enum: ['Male', 'Female'],

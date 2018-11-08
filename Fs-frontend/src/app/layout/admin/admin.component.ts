@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {animate, AUTO_STYLE, state, style, transition, trigger} from '@angular/animations';
 import {MenuItems} from '../../shared/menu-items/menu-items';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -119,7 +121,11 @@ export class AdminComponent implements OnInit {
 
   public config: any;
 
-  constructor(public menuItems: MenuItems) {
+  constructor(
+    public menuItems: MenuItems,
+    private authService: AuthService,
+    private router: Router
+    ) {
     this.navType = 'st2';
     this.themeLayout = 'vertical';
     this.verticalPlacement = 'left';
@@ -212,6 +218,11 @@ export class AdminComponent implements OnInit {
     } else {
       this.navRight = 'nav-on';
     }
+  }
+
+  logoutUser(){
+    this.authService.logoutUser();
+    this.router.navigate(['/']);
   }
 
   setMenuAttributes(windowWidth) {

@@ -11,7 +11,9 @@ import { AuthComponent } from './layout/auth/auth.component';
 import {SharedModule} from './shared/shared.module';
 import {MenuItems} from './shared/menu-items/menu-items';
 import {BreadcrumbsComponent} from './layout/admin/breadcrumbs/breadcrumbs.component';
-import { FirstInterceptor } from './shared/interceptors/http.interceptors';
+import { CommonHeadersInterceptor } from './shared/interceptors/http.interceptors';
+import { TokenIterceptor } from './shared/interceptors/token.interceptor';
+import { AuthGuardService } from './services/auth-guard.service';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { FirstInterceptor } from './shared/interceptors/http.interceptors';
   ],
   providers: [
     MenuItems,
-    { provide: HTTP_INTERCEPTORS, useClass: FirstInterceptor, multi: true}
+    AuthGuardService,
+    { provide: HTTP_INTERCEPTORS, useClass: CommonHeadersInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass:TokenIterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

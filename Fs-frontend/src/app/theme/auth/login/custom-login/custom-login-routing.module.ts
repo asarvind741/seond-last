@@ -9,7 +9,8 @@ const routes: Routes = [
     component: CustomLoginComponent,
     data: {
       title: 'Simple Login'
-    }
+    },
+    pathMatch: 'full'
   },
   { path: 'one-time-password', component: TwoFactorAuthenticationComponent }
 ];

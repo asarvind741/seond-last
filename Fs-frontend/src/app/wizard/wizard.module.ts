@@ -6,15 +6,15 @@ import { WizardRoutingModule } from './wizard-routing.module';
 import { WizardComponent } from './wizard.component';
 
 @NgModule({
+  declarations: [
+    WizardComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     WizardRoutingModule,
     SharedModule
   ],
-  exports: [],
-  declarations: [
-    WizardComponent
-  ]
+  exports: []
 })
 export class WizardModule { }

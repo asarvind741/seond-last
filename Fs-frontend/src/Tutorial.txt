@@ -1,0 +1,32 @@
+Property 'on' in type 'MockDrake' is not assignable to the same property in base type 'DrakeWithModels
+
+--> @types/dragula@2.1.33
+
+
+httpClient-
+https://ryanchenkie.com/angular-authentication-using-the-http-client-and-http-interceptors
+
+
+relativeTo in Angular Router
+https://stackoverflow.com/questions/39124906/navigate-relative-with-angular-2-router-version-3/39125830
+
+bootstrap icons for social media login
+https://lipis.github.io/bootstrap-social/
+
+subject vs behavioursubject
+https://stackoverflow.com/questions/48639825/i-cant-get-data-when-i-subscribe-to-a-subject-as-observable-rxjs-5-5-2
+
+canactivate vs candeactivate
+https://www.concretepage.com/questions/597
+https://stackoverflow.com/questions/52328811/angular-6-how-to-register-candeactivate-guard-against-all-routes
+
+
+Connecting to local server_
+1) ssh username@SERVER_IP_ADDRESS
+2) if you want to connect to specific port then use ssh username@SERVER_IP_ADDRESS -p <port>
+3) if you are trying to connect to server using a private key then run below command-
+   ssh <your-user-name>@<server-public-IP-address> -p <port-number> -i <your-local-ssh-private-key-name>
+4) if are connecting first time it will give a warning.
+5) You can just time "YES" and continue.
+6) It will ask you to enter password. Please do that.
+7) run the command "ls" and see list of directory.

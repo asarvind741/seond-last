@@ -22,11 +22,9 @@
               <p class="text-inverse b-b-default text-left p-b-5">Sign in with your social account:</p>
                   <div class="row m-b-20">
                     <div class="col-md-6">
-                      <button 
-                      type="button" 
-                      class="btn btn-linkedin m-b-20" 
-                      (click) = "loginLinkedIn()"><i class="fa fa-linkedin"></i>Sign in with Linkedin</button>
+                      <button type="button" class="btn btn-linkedin m-b-20"><i class="fa fa-linkedin"></i>Sign in with Linkedin</button>
                     </div>
+                    
               </div>
               <div class="input-group">
                 <input 
@@ -62,6 +60,12 @@
                   <div class="forgot-phone text-right f-right">
                     <a [routerLink]="['/auth/forgot']" class="text-right f-w-600 text-inverse"> Forgot Password?</a>
                   </div>
+                </div>
+              </div>
+              <div class="row m-t-30">
+                <div class="col-md-12">
+                 <p class="signup-here">Don't have an account? 
+                   <strong><li><a [routerLink]="['/auth/registration']" class="signup-link">Sign up</a></li></strong> here.</p>
                 </div>
               </div>
               <div class="row m-t-30">

@@ -51,6 +51,22 @@
                 </div>
               </div>
               <div class="input-group">
+                <label class="label-signup">Mobile No:</label>
+              <input 
+              type="text" 
+              class="form-control" 
+              placeholder="Enter mobile number"
+              formControlName = "mobile">
+              <div *ngIf="signupForm.get('mobile').invalid && signupForm.get('mobile').touched" class="text-danger">
+                  <span *ngIf = "signupForm.get('mobile').errors.required">Mobile number is required!</span>
+                  <span *ngIf = "signupForm.get('mobile').errors.maxlength">Mobile number should have max 10 digits!</span>
+                  <span *ngIf = "signupForm.get('mobile').errors.minlength">Mobile number should have min 10 digits!</span>
+                  <span *ngIf = "signupForm.get('mobile').errors.pattern 
+                                 && !(signupForm.get('mobile').errors.minlength)
+                                 && !(signupForm.get('mobile').errors.maxlength)">Invalid number entered!</span>
+              </div>
+            </div>
+              <div class="input-group">
                 <label class="label-signup">Password(6 or more characters)</label>
                 <input 
                 type="password" 
@@ -68,8 +84,14 @@
                   <strong>Privacy Policy</strong> and <strong>Cookie Policy</strong>.
                 </p>
                 </div>
-                
               </div>
+
+              <div class="row m-t-30">
+                  <div class="col-md-12">
+                   <p class="signin-here">Already an account? 
+                     <strong><li><a [routerLink]="['/']" class="signin-link">Sign in</a></li></strong> here.</p>
+                  </div>
+                </div>
               <div class="row m-t-30">
                 <div class="col-md-12">
                   <button 

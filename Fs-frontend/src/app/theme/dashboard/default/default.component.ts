@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, OnDestroy} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
 
 declare const AmCharts: any;
@@ -11,6 +11,8 @@ import '../../../../assets/charts/amchart/light.js';
 import '../../../../assets/charts/amchart/ammap.js';
 import '../../../../assets/charts/amchart/worldLow.js';
 import '../../../../assets/charts/amchart/continentsLow.js';
+import { AuthService } from '../../../services/auth.service.js';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-default',
@@ -33,7 +35,10 @@ import '../../../../assets/charts/amchart/continentsLow.js';
     ])
   ]
 })
-export class DefaultComponent implements OnInit, AfterViewInit {
+export class DefaultComponent implements OnInit, AfterViewInit, OnDestroy {
+  tokenSubscription:Subscription;
+  token: String;
+
   public seoCard1Data: any;
   public seoCard2Data: any;
   public seoCard1Option: any;
@@ -50,10 +55,11 @@ export class DefaultComponent implements OnInit, AfterViewInit {
       position: ['bottom', 'right'],
     };
 
-    constructor() {
+    constructor(private authService: AuthService) {
     }
 
   ngOnInit() {
+    
   }
 
   ngAfterViewInit() {
@@ -201,6 +207,10 @@ export class DefaultComponent implements OnInit, AfterViewInit {
     }, 75);
   }
 
+  ngOnDestroy(){
+ 
+  }
+
 }
 
 function e(h, g, i) {
@@ -249,4 +259,8 @@ function f() {
     elements: {point: {radius: 4, borderWidth: 12}},
     layout: {padding: {left: 0, right: 0, top: 0, bottom: 0}}
   };
+
 }
+
+
+

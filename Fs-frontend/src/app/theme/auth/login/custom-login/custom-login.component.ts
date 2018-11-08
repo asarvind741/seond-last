@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
 import { HttpResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-custom-login',
@@ -12,6 +13,7 @@ import { HttpResponse } from '@angular/common/http';
 export class CustomLoginComponent implements OnInit {
 
   loginForm: FormGroup;
+  token:any;
 
   constructor(
     private router: Router,
@@ -20,7 +22,8 @@ export class CustomLoginComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-
+   
+    this.token = this.authService.getToken()
     this.createLoginForm();
   }
 
@@ -33,18 +36,15 @@ export class CustomLoginComponent implements OnInit {
 
   onSubmit(){
     const user = { email: this.loginForm.value.email, password: this.loginForm.value.password };
+    this.authService.currentLoggingUserSubject.next(user);
     this.authService.loginUser(user)
     .subscribe((response:HttpResponse<any>) => {
+      console.log("response", response)
       if(response.status === 200){
-        this.router.navigate(['../one-time-password'], { relativeTo: this.activatedRoute, queryParams: user});
+        this.router.navigate(['../one-time-password']);
       }
     })
    
-  }
-
-  loginLinkedIn(){
-    console.log("ssssssssss")
-    this.router.navigate(['/']);
   }
 
 }
