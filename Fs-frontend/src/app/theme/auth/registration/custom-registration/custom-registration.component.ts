@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthService } from '../../../../services/auth.service';
+import { AuthenticationService } from '../../../../services/auth.service';
 import { HttpResponse } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr'
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-basic-reg',
@@ -14,9 +14,11 @@ export class CustomRegistrationComponent implements OnInit {
   signupForm: FormGroup;
   regitered:Boolean = false;
   message:String = '';
+  passwordPattern: any = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}$"
 
 constructor(
-  private authService: AuthService){
+  private authService: AuthenticationService,
+  private toastrService: ToastrService){
 
 }
 
@@ -37,7 +39,7 @@ createSignupForm(){
       Validators.minLength(10),
       Validators.pattern('[0-9]+')
     ]),
-    password: new FormControl(null, [Validators.required, Validators.minLength(6)])
+    password: new FormControl(null, [Validators.required, Validators.pattern(this.passwordPattern)])
   })
 }
 
@@ -52,6 +54,10 @@ onSubmit(){
     else {
       this.regitered = false;
     }
+  }, (error) => {
+    console.log("errrrrrrrrrr", error.error.message);
+    const err = error.error.message;
+   this.toastrService.error(err, 'Error');
   })
 }
 

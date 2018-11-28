@@ -150,6 +150,14 @@ ngx-datatable.data-table {
   font-style: normal;
 }
 
+.datatable-icon-up:before {
+  content: "\eb28";
+    font-family: 'icofont';
+    font-style: normal;
+    transform: rotate(180deg);
+    display: inline-block;
+}
+
 .datatable-icon-prev:before {
   content: "\eb39";
   font-family: 'icofont';

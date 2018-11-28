@@ -12,4 +12,18 @@ module.exports = app => {
         passport.authenticate('local'),
         UserController.loginUser
     );
+    app.get('/auth/linkedin',
+        passport.authenticate('linkedin'));
+
+    app.get('/auth/linkedin/callback',
+        passport.authenticate('linkedin'),
+        function (req, res) {
+            res.redirect('http://localhost:4200/profile?' + req.user);
+        });
+    app.post(`${user}social-login`, UserController.sociaLoginUser);
+    app.get(`${user}`, UserController.getAllUsers);
+    app.post(`${user}update`, UserController.editUser);
+    app.get(`${user}:id`, UserController.getUser);
+    app.post(`${user}modify-status`, UserController.updateUserStates);
+    app.post(`${user}add`, UserController.addUserFromAdmin);
 };

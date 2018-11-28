@@ -1,6 +1,27 @@
 .logout-button {
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
-    margin-left: -5px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  margin-left: -5px;
+}
+
+.search-result {
+  display: none;
+}
+
+.search-result.show-dropdown {
+  color: black;
+  display: block;
+  position: absolute;
+  left: 32px;
+  width: 229px;
+  top: 44px;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(204, 204, 204, 0.5);
+  z-index: 99;
+}
+
+li.show-search-item {
+    display: block;
+    float: none !important;
 }

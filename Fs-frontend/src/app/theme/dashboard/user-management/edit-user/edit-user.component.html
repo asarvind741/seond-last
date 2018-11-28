@@ -1,0 +1,72 @@
+<div class="card">
+  <div class="card-header">
+    <h5>New User:</h5>
+  </div>
+  <div class="card-block">
+    <form [formGroup]="updateUserForm" (ngSubmit) = "updateUser()">
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">First Name</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="First Name" formControlName="firstName">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Last Name</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">E-mail</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="email" class="form-control" placeholder="E-mail" formControlName="email">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Password</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="password" class="form-control" placeholder="password" formControlName="password">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+          <label class="col-sm-4 col-lg-4 col-form-label">Status</label>
+          <div class="col-sm-8 col-lg-8">
+            <select name="status" class="input-group" formControlName="status">
+                <option [ngValue]="null" disabled>Select One</option>
+                <option *ngFor = "let status of statuss" [ngValue] = "status">
+                  {{ status }}
+                </option>
+            </select>
+          </div>
+        </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Mobile</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="mobile number" formControlName="mobile">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3 col-lg-3">
+          <button class="btn btn-primary btn-round" type="submit">Done</button>
+        </div>
+        <div class="col-sm-3 col-lg-3">
+          <button class="btn btn-warning btn-round" type="button" (click) = "closeModal()">Cancel</button>
+        </div>
+        <div class="col-sm-3 col-lg-3">
+          <button class="btn btn-info btn-round" type="button" (click) = "clearModal()">Clear</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

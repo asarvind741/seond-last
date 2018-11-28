@@ -75,7 +75,8 @@
                 formControlName = "password">
                 <div *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched" class="text-danger">
                     <span *ngIf = "signupForm.get('password').errors.required">Password is required!</span>
-                    <span *ngIf = "signupForm.get('password').errors.minlength">Password must be at least 6 characters</span>
+                    <span *ngIf = "signupForm.get('password').errors.pattern">Password not valid!
+                    </span>
                 </div>
               </div>
               <div class="row m-t-25 text-left">
@@ -88,7 +89,7 @@
 
               <div class="row m-t-30">
                   <div class="col-md-12">
-                   <p class="signin-here">Already an account? 
+                   <p class="signin-here">Already have an account? 
                      <strong><li><a [routerLink]="['/']" class="signin-link">Sign in</a></li></strong> here.</p>
                   </div>
                 </div>

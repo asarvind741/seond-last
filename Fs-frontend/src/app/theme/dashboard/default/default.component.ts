@@ -11,7 +11,7 @@ import '../../../../assets/charts/amchart/light.js';
 import '../../../../assets/charts/amchart/ammap.js';
 import '../../../../assets/charts/amchart/worldLow.js';
 import '../../../../assets/charts/amchart/continentsLow.js';
-import { AuthService } from '../../../services/auth.service.js';
+import { AuthenticationService } from '../../../services/auth.service.js';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -55,7 +55,7 @@ export class DefaultComponent implements OnInit, AfterViewInit, OnDestroy {
       position: ['bottom', 'right'],
     };
 
-    constructor(private authService: AuthService) {
+    constructor(private authService: AuthenticationService) {
     }
 
   ngOnInit() {

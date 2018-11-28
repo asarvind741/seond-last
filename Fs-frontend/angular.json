@@ -31,7 +31,9 @@
               "node_modules/bootstrap/scss/bootstrap.scss",
               "node_modules/font-awesome-scss/scss/font-awesome.scss",
               "src/assets/icon/themify-icons/themify-icons.css",
-              "src/scss/style.scss"
+              "src/scss/style.scss",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/angular2-multiselect-dropdown/themes/default.theme.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js"

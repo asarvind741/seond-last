@@ -17,6 +17,7 @@ import passport from 'passport';
 import User from './models/user';
 import Session from 'express-session';
 import flash from 'connect-flash';
+import path from 'path';
 mongoose.Promise = global.Promise;
 mongoose
   .connect(
@@ -28,15 +29,16 @@ mongoose
 const app = express();
 app.use(flash());
 app.use(logger('dev'));
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(
-  bodyParser.urlencoded({
+  express.urlencoded({
     extended: true
   })
 );
 app.use(Session({
   secret: 'secret'
 }));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -52,7 +54,7 @@ app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Methods', '*');
   res.setHeader(
     'Access-Control-Allow-Headers',
-    'X-Requested-With,content-type, Authorization'
+    'X-Requested-With,Content-type, Authorization'
   );
   next();
 });
@@ -69,9 +71,18 @@ passport.deserializeUser(function (id, cb) {
 });
 
 app.options('*', cors());
-require('./routes/index')(app);
 require('./routes/user')(app);
+require('./routes/category')(app);
+require('./routes/coupon')(app);
+require('./routes/module')(app);
+require('./routes/subscription-plans')(app);
+require('./routes/region-management')(app);
+require('./routes/vat-management')(app);
 
+
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'public') + '/index.html');
+});
 app.use(function (req, res, next) {
   const err = new Error('Not Found');
   err.status = 404;

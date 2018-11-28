@@ -16,11 +16,15 @@ const Subscription = new Schema(
       type: String,
       enum: statusTypes,
       default: 'Active',
-      select: false,
+      // select: false,
     },
     price: {
       type: Number,
       required: true,
+    },
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
     },
     VAT: Number,
     AdditionalTaxes: [
@@ -31,8 +35,8 @@ const Subscription = new Schema(
     ],
     duration: {
       type: String,
-      enum: ['yearly', 'monthly'],
-      default: 'monthly',
+      enum: ['Yearly', 'Monthly', 'Half Yearly', 'Quaterly'],
+      default: 'Monthly',
     },
     maxNumberOfMembers: {
       type: Number,

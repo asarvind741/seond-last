@@ -13,7 +13,7 @@
     width: 400px;
 }
 
-.ng-invalid.ng-touched {
+input.ng-invalid.ng-touched {
     border: 1px solid red !important;
     display: block;
     width: 100%;
@@ -31,3 +31,4 @@ a.signin-link {
     color: green;
     margin-right: 5px;
 }
+

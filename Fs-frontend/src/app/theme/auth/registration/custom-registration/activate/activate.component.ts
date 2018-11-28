@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { AuthService } from '../../../../../services/auth.service';
+import { AuthenticationService } from '../../../../../services/auth.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,7 +16,7 @@ export class ActivateComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private authService: AuthService,
+    private authService: AuthenticationService,
     private toastrService: ToastrService
   ) { }
 

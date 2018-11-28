@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {AdminComponent} from './layout/admin/admin.component';
-import {AuthComponent} from './layout/auth/auth.component';
+import { AdminComponent } from './layout/admin/admin.component';
+import { AuthComponent } from './layout/auth/auth.component';
 import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
@@ -16,11 +16,6 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'dashboard/default',
-        pathMatch: 'full'
-      },
-      {
-        path: 'dashboard',
         loadChildren: './theme/dashboard/dashboard.module#DashboardModule'
       },
       {
@@ -102,7 +97,8 @@ const routes: Routes = [
       {
         path: 'simple-page',
         loadChildren: './theme/simple-page/simple-page.module#SimplePageModule'
-      }
+      },
+      { path: 'setup-profile', loadChildren: './wizard/wizard.module#WizardModule' }
     ]
   },
   {
@@ -127,7 +123,7 @@ const routes: Routes = [
       }
     ]
   },
-  { path: 'setup-profile', loadChildren: './wizard/wizard.component#WizardModule'}
+
 ];
 
 @NgModule({

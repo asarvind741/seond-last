@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import * as elasticsearch from 'elasticsearch';
 import { AppRoutingModule } from './app-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -14,6 +15,8 @@ import {BreadcrumbsComponent} from './layout/admin/breadcrumbs/breadcrumbs.compo
 import { CommonHeadersInterceptor } from './shared/interceptors/http.interceptors';
 import { TokenIterceptor } from './shared/interceptors/token.interceptor';
 import { AuthGuardService } from './services/auth-guard.service';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -26,7 +29,9 @@ import { AuthGuardService } from './services/auth-guard.service';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     SharedModule
   ],

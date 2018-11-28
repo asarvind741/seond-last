@@ -58,6 +58,22 @@ const MENUITEMS = [
                 value: 'NEW'
               }
             ]
+          },
+          {
+            state: 'user-management',
+            name: 'User Management'
+          },
+          {
+            state: 'coupon-management',
+            name: 'Coupon Management'
+          },
+          {
+            state: 'subscription-management',
+            name: 'Subscription Management'
+          },
+          {
+            state: 'vat-management',
+            name: 'Vat Management'
           }
         ]
       },

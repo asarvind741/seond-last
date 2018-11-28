@@ -4,6 +4,16 @@ const Schema = mongoose.Schema;
 
 const statusTypes = ['Active', 'Inactive'];
 
+const Address = new Schema({
+  line1: String,
+  line2: String,
+  city: String,
+  state: String,
+  postalCode: String,
+  country: String
+});
+
+
 const permissionSchema = new Schema({
   isAdmin: {
     type: Boolean,
@@ -13,6 +23,14 @@ const permissionSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  isBuyer: {
+    type: Boolean,
+    default: false,
+  },
+  isSupplier: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 const WishList = new Schema({
@@ -35,6 +53,8 @@ const User = new Schema({
     ref: 'company',
     // required: true,
   },
+  firstName: String,
+  lastName: String,
   name: String,
   role: {
     type: String,
@@ -49,19 +69,27 @@ const User = new Schema({
     unique: true,
     required: true,
   },
+  address: [{
+    type: Address,
+    default: Address
+  }],
   mobile: {
     type: String,
     unique: true,
-    required: true
+    sparse: true
   },
   gender: {
     type: String,
     enum: ['Male', 'Female'],
     // required: true,
   },
+  meritalStatus: {
+    type: String,
+    enum: ['Married', 'Single'],
+    default: 'Single'
+  },
   password: {
     type: String,
-    required: true,
     select: false,
     set: shaEncrypt,
   },
@@ -78,6 +106,7 @@ const User = new Schema({
     enum: statusTypes,
     default: 'Inactive'
   },
+  dateOfBirth: Date,
   token: {
     type: String
   },
@@ -87,10 +116,19 @@ const User = new Schema({
   otp: {
     type: String
   },
+  social_login_provider_id: {
+    type: String
+  },
+  social_login_provider: {
+    type: String
+  },
+  skypeId: String,
   TwoFactorEnabled: {
     type: Boolean,
     default: false
-  }
+  },
+  description: String,
+  websiteAddress: String
 }, {
   timestamps: true,
 });

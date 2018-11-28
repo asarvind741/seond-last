@@ -6,7 +6,6 @@ import {
 } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-import { AuthService } from '../../services/auth.service';
 import { OnInit, Injectable } from '@angular/core';
 
 @Injectable()
@@ -14,7 +13,7 @@ import { OnInit, Injectable } from '@angular/core';
 
 export class TokenIterceptor implements HttpInterceptor, OnInit {
     token: String;
-    constructor(private authService: AuthService){
+    constructor(){
     
     }
 

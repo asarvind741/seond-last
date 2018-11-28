@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {environment } from '../../environments/environment';
-import { CustomRegistrationModule } from '../theme/auth/registration/custom-registration/custom-registration.module';
-import { Subject } from "rxjs/Subject";
-import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs';
 
 
@@ -13,7 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 
 
 
-export class AuthService {
+export class AuthenticationService {
 
     // private tokenSubject = new Subject<any>();
      public currentLoggingUserSubject = new BehaviorSubject<any>([]);
@@ -28,9 +25,6 @@ export class AuthService {
 
     activateUser(token) {
         const sendToken = { 'token': token}
-        const httpOptions = {
-            headers: new HttpHeaders({ 'Content-type': 'application/json' })
-        }
         return this.httpClient.post(`${environment.API_URL}/user/verify`, sendToken)
     }
 
@@ -42,6 +36,18 @@ export class AuthService {
         
         const otpVerify = { 'email': user.email, 'password': user.password, 'otp': oneTimePassword}
         return this.httpClient.post(`${environment.API_URL}/user/sign-in`, otpVerify)
+    }
+
+    socialLogin(social_login_provider_id, social_login_provider, email, name){
+
+        const socialData = { 
+            social_login_provider_id: social_login_provider_id, 
+            social_login_provider:social_login_provider,
+            email: email,
+            name: name
+        }
+        console.log("social data", socialData);
+        return this.httpClient.post(`${environment.API_URL}/user/social-login`, socialData)
     }
 
     // getToken():Observable<any>{
@@ -67,6 +73,7 @@ export class AuthService {
 
     logoutUser(){
         localStorage.clear();
+        
     }
 
     get isLoggedIn(){

@@ -20,6 +20,26 @@ const routes: Routes = [
       {
         path: 'analytics',
         loadChildren: './analytics/analytics.module#AnalyticsModule'
+      },
+      {
+        path: 'user-management',
+        loadChildren: './user-management/user-management.module#UserManagementModule'
+      },
+      {
+        path: 'coupon-management',
+        loadChildren: './coupon-management/coupon-management.module#CouponManagementModule'
+      },
+      {
+        path: 'subscription-management',
+        loadChildren: './subscription-management/subscription-management.module#SubscriptionManagementModule'
+      },
+      {
+        path: 'vat-management',
+        loadChildren: './vat-management/vat-management.module#VatManagementModule'
+      },
+      {
+        path: 'profile',
+        loadChildren: './profile/profile.module#ProfileModule'
       }
     ]
   }
