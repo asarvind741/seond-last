@@ -1,0 +1,9 @@
+<div class = "one-time-password">
+  <h4>Enter OTP:</h4>
+  <input 
+  class="otp-input"
+  type="text" 
+  [(ngModel)] = "otp" 
+  placeholder="One Time Password">
+  <button type="button" (click) = "verifyUser()">Send</button>
+</div>

@@ -1,0 +1,6 @@
+<div *ngIf = "role === 'buyer'; else supplier">
+  <app-buyer-profile [user] = "user"></app-buyer-profile>
+</div>
+<ng-template #supplier>
+    <app-supplier-profile [user] = "user"></app-supplier-profile>
+</ng-template>

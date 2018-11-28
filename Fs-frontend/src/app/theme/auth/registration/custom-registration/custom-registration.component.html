@@ -1,0 +1,121 @@
+<section class="login p-fixed d-flex text-center bg-primary common-img-bg" *ngIf = "!regitered">
+  <!-- Container-fluid starts -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- Authentication card start -->
+        <div class="signup-card card-block auth-body mr-auto ml-auto custom-signup-card">
+          <form class="md-float-material" [formGroup] = "signupForm" (ngSubmit) = "onSubmit()" novalidate>
+            <div class="text-center">
+              <img src="assets/images/logo.png" alt="Gradient Able">
+            </div>
+            <div class="auth-box">
+              <div class="row m-b-20">
+                <div class="col-md-12">
+                  <h3 class="text-center txt-primary">Sign up. It is fast and easy.</h3>
+                </div>
+              </div>
+              <hr/>
+              <div class="input-group">
+                <label class="label-signup">First name</label>
+                <input 
+                type="text" 
+                class="form-control" 
+                placeholder="First Name"
+                formControlName = "firstName">
+                <div *ngIf="signupForm.get('firstName').invalid && signupForm.get('firstName').touched" class="text-danger">
+                    <span *ngIf = "signupForm.get('firstName').errors.required">First name is required!</span>
+                </div>
+              </div>
+              <div class="input-group">
+                <label class="label-signup">Last name</label>
+                <input 
+                type="text" 
+                class="form-control" 
+                placeholder="Last Name"
+                formControlName = "lastName">
+                <div *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched" class="text-danger">
+                    <span *ngIf = "signupForm.get('lastName').errors.required">Last name is required!</span>
+                </div>
+              </div>
+              <div class="input-group">
+                  <label class="label-signup">E-mail</label>
+                <input 
+                type="email" 
+                class="form-control" 
+                placeholder="Email Address"
+                formControlName = "email">
+                <div *ngIf="signupForm.get('email').invalid && signupForm.get('email').touched" class="text-danger">
+                    <span *ngIf = "signupForm.get('email').errors.required">Email is required!</span>
+                    <span *ngIf = "signupForm.get('email').errors.email">Email must be a valid email address!</span>
+                </div>
+              </div>
+              <div class="input-group">
+                <label class="label-signup">Mobile No:</label>
+              <input 
+              type="text" 
+              class="form-control" 
+              placeholder="Enter mobile number"
+              formControlName = "mobile">
+              <div *ngIf="signupForm.get('mobile').invalid && signupForm.get('mobile').touched" class="text-danger">
+                  <span *ngIf = "signupForm.get('mobile').errors.required">Mobile number is required!</span>
+                  <span *ngIf = "signupForm.get('mobile').errors.maxlength">Mobile number should have max 10 digits!</span>
+                  <span *ngIf = "signupForm.get('mobile').errors.minlength">Mobile number should have min 10 digits!</span>
+                  <span *ngIf = "signupForm.get('mobile').errors.pattern 
+                                 && !(signupForm.get('mobile').errors.minlength)
+                                 && !(signupForm.get('mobile').errors.maxlength)">Invalid number entered!</span>
+              </div>
+            </div>
+              <div class="input-group">
+                <label class="label-signup">Password(6 or more characters)</label>
+                <input 
+                type="password" 
+                class="form-control" 
+                placeholder="Choose Password"
+                formControlName = "password">
+                <div *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched" class="text-danger">
+                    <span *ngIf = "signupForm.get('password').errors.required">Password is required!</span>
+                    <span *ngIf = "signupForm.get('password').errors.pattern">Password not valid!
+                    </span>
+                </div>
+              </div>
+              <div class="row m-t-25 text-left">
+                <div class="col-md-12">
+                 <p class="terms-and-conditions">By clicking Join Now, you agree to LinkedIn's <strong>User Agreement</strong>,
+                  <strong>Privacy Policy</strong> and <strong>Cookie Policy</strong>.
+                </p>
+                </div>
+              </div>
+
+              <div class="row m-t-30">
+                  <div class="col-md-12">
+                   <p class="signin-here">Already have an account? 
+                     <strong><li><a [routerLink]="['/']" class="signin-link">Sign in</a></li></strong> here.</p>
+                  </div>
+                </div>
+              <div class="row m-t-30">
+                <div class="col-md-12">
+                  <button 
+                  type="submit" 
+                  class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"
+                  [disabled] = "!signupForm.valid">Join now</button>
+                </div>
+              </div>
+              <hr/>
+            </div>
+          </form>
+          <!-- end of form -->
+        </div>
+        <!-- Authentication card end -->
+      </div>
+      <!-- end of col-sm-12 -->
+    </div>
+    <!-- end of row -->
+  </div>
+  <!-- end of container-fluid -->
+</section>
+
+
+<app-message *ngIf = "regitered"
+[message] = "message">
+</app-message>

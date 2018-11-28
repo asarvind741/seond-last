@@ -1,0 +1,24 @@
+.one-time-password {
+    color: black;
+    width: 400px;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 0 21px rgba(0, 0, 0, 0.2);
+}
+
+.one-time-password h4 {
+    font-size: 17px;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.otp-input {
+    // border: 1px solid black;
+    width: 70%;
+}

@@ -1,0 +1,34 @@
+.terms-and-conditions {
+    color: black;
+}
+
+.label-signup {
+    display: block;
+    color: black;
+    width: 100%;
+    text-align: left;
+}
+
+.custom-signup-card {
+    width: 400px;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid red !important;
+    display: block;
+    width: 100%;
+    text-align: left;
+}
+
+.signin-here{
+    display: inline-flex;
+    color: black;
+    list-style: none;
+}
+
+a.signin-link {
+    margin-left: 5px;
+    color: green;
+    margin-right: 5px;
+}
+

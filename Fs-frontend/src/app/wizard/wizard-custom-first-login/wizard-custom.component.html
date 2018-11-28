@@ -1,0 +1,73 @@
+<app-card [title]="'Update Details'">
+  <wizard #wizard class="arc-wizard arc-custom" navBarLayout="large-filled-symbols">
+    <wizard-step stepTitle="Profile" navigationSymbol="&#xf0b1;" navigationSymbolFontFamily="FontAwesome">
+      <div class="centered-content">
+        <form [formGroup] = "userProfileForm">
+          <div>
+            <div>
+              <label for="firstName">FirstName:</label>
+              <input type="text" formControlName = "firstName">
+            </div>
+            <div>
+              <label for="lastName">Last Name:</label>
+              <input type="text" formControlName = "lastName">
+            </div>
+            <div>
+              <label for="mobileNumber" >Mobile Number:</label>
+              <input type="text" formControlName = "mobile">
+            </div>
+            <div>
+              <label for="email">Email:</label>
+              <input type="email" formControlName = "email">
+            </div>
+          </div>
+        </form>
+        <div class="btn-group mt-10">
+          <button type="button" class="btn btn-primary btn-sm" nextStep>Continue</button>
+        </div>
+      </div>
+    </wizard-step>
+    <wizard-step stepTitle="Address" navigationSymbol="&#xf085;" navigationSymbolFontFamily="FontAwesome">
+      <div class="centered-content">
+        <form [formGroup] = "userProfileForm">
+          <div formArrayName = "address">
+            <div *ngFor="let addr of userProfileForm.get('address')['controls']; let i = index" [formGroupName]="i">
+              <label for="line1" >Line 1:</label>
+              <input type="text" formControlName = "line1">
+              <label for="line2" >Line 2:</label>
+              <input type="text" formControlName = "line2">
+              <label for="city" >City:</label>
+              <input type="text" formControlName = "city">
+              <label for="postalCode" >Postal Code:</label>
+              <input type="text" formControlName = "postalCode">
+              <label for="country" >Country:</label>
+              <input type="text" formControlName = "country">
+            </div>
+          </div>
+        </form>
+
+        <div class="btn-group mt-10">
+          <button type="button" class="btn btn-secondary btn-sm" previousStep>Back</button>
+          <button type="button" class="btn btn-primary btn-sm" nextStep>Continue</button>
+        </div>
+      </div>
+    </wizard-step>
+    <wizard-step stepTitle="Completed" navigationSymbol="&#xf00c;" navigationSymbolFontFamily="FontAwesome">
+      <div class="centered-content">
+        <form [formGroup] = "userProfileForm">
+          <div>
+            <div>
+                <input type="checkbox" formControlName="confirmUserProfileDetails">I confirm that all the details i have entered are correct to my knowledge.
+            </div>
+          </div>
+        </form>
+
+        <div class="btn-group mt-10">
+          <button type="button" class="btn btn-secondary btn-sm" previousStep>Back</button>
+          <!-- <button type="button" class="btn btn-danger btn-sm" resetWizard>Reset</button> -->
+          <button type="button" class="btn btn-primary btn-sm" nextStep (click) = "updateUserData()">Submit</button>
+        </div>
+      </div>
+    </wizard-step>
+  </wizard>
+</app-card>
