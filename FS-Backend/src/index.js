@@ -7,6 +7,7 @@ env.config({
   path: `${__dirname}/environments/${envfile}`
 });
 
+
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
@@ -18,6 +19,7 @@ import User from './models/user';
 import Session from 'express-session';
 import flash from 'connect-flash';
 import path from 'path';
+
 mongoose.Promise = global.Promise;
 mongoose
   .connect(
@@ -92,6 +94,7 @@ require('./passport-configuration');
 
 // Error handler
 app.use(function (err, req, res, next) {
+  console.log(err);
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res

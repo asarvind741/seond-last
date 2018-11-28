@@ -1,36 +1,47 @@
 import mongoose from 'mongoose';
-import Address from './address';
 const Schema = mongoose.Schema;
 
-const Company = new Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
-    address: {
-      type: Address,
-      default: Address,
-    },
-    description: String,
-    subscription: {
-      type: Schema.Types.ObjectId,
-      ref: 'Subscription',
-    },
-    subscriptionLastDate: Date,
-    subscriptionBilledAmount: {
-      type: Number,
-      required: true,
-      select: false,
-    },
-    createdBy: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
+const Address = new Schema({
+  line1: String,
+  line2: String,
+  city: String,
+  state: String,
+  postalCode: String,
+  country: String
+});
+const Company = new Schema({
+  name: {
+    type: String
   },
-  {
-    timestamps: true,
-  }
-);
+  address: {
+    type: Address,
+    default: Address,
+  },
+  primaryAdmin: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  description: String,
+  subscription: {
+    type: Schema.Types.ObjectId,
+    ref: 'Subscription',
+  },
+  subscriptionLastDate: Date,
+  subscriptionBilledAmount: {
+    type: Number,
+    select: false
+  },
+  maximumNoOfUsers: Number,
+  members: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }],
+  createdBy: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
+}, {
+  timestamps: true,
+});
 
 export default mongoose.model('Company', Company);

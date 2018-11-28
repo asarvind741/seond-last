@@ -6,5 +6,6 @@ module.exports = app => {
     app.post(`${plans}edit`, SubscriptionController.editPlan);
     app.post(`${plans}status-modify`, SubscriptionController.updatePlanStatus);
     app.get(`${plans}`, SubscriptionController.getPlans);
+    app.get(`${plans}get-user-plans`, SubscriptionController.getUserPlans);
 
 };

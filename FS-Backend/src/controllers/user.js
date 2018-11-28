@@ -1,4 +1,5 @@
 import User from '../models/user';
+import Company from '../models/company';
 import jwt from 'jsonwebtoken';
 import speakeasy from 'speakeasy';
 import {
@@ -16,11 +17,18 @@ async function addUser(req, res) {
             sendResponse(res, 400, 'User with this email id already exists');
         else {
             let company = await Company.create({
+                name: req.body['company.name'],
+                address: req.body['company.address'],
 
+                description: req.body['company.description'],
+                subscription: req.body['company.subscriptionId'],
+                subscriptionLastDate: req.body['company.subscriptionLastDate'],
+                subscriptionBilledAmount: req.body['company.subscriptionBilledAmount'],
+                maximumNoOfUsers: req.body['company.maximumNoOfUsers'],
 
             });
             req.body.company = company._id;
-            req.body.permissions.isAccountAdmin = true;
+            req.body['permissions.isAccountAdmin'] = true;
 
             req.body.speakeasy_secret = speakeasy.generateSecret({
                 length: 20
@@ -238,7 +246,7 @@ async function sociaLoginUser(req, res) {
             user = await new User(req.body).save();
 
         }
-        if (user.status === 'Inactive'){
+        if (user.status === 'Inactive') {
             sendResponse(res, 401, 'You account is deactivated. Please contact admin', user);
             return;
         }
@@ -287,6 +295,12 @@ async function getAllUsers(req, res) {
 
 async function editUser(req, res) {
     try {
+        if (req.body.dateOfBirth)
+            req.body.dateOfBirth = new Date(
+                req.body.dateOfBirth.year,
+                req.body.dateOfBirth.month,
+                req.body.dateOfBirth.day
+            );
         let id = req.body.id;
         delete req.body.id;
         if (req.body.firstName && req.body.lastName)
@@ -398,13 +412,19 @@ async function addFromInvitation(req, res) {
         let id = req.body.id;
         delete req.body.id;
         req.body.status = 'Active';
-        User.findOneAndUpdate({
+
+        let updateUser = await User.findOneAndUpdate({
             _id: id,
             status: 'Invited'
         }, {
             $set: req.body
         }, {
             new: true
+        });
+        let updateCompany = await User.findByIdAndUpdate(updateUser.company, {
+            $push: {
+                members: id
+            }
         });
         sendResponse(res, 200, 'sign up successful');
 

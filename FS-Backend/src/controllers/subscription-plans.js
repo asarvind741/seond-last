@@ -4,6 +4,7 @@ import {
     SendMail
 } from './functions';
 import Constants from './constant';
+import user from '../models/user';
 
 async function createPlan(req, res) {
     console.log('body', req.body);
@@ -74,7 +75,10 @@ async function getPlans(req, res) {
     try {
         let plans = await Plan.find({
             // status: 'Active'
-        }).populate('createdBy', { _id: 0, email: 1});
+        }).populate('createdBy', {
+            _id: 0,
+            email: 1
+        });
         console.log(plans);
 
         sendResponse(res, 200, 'Successful.', plans);
@@ -85,9 +89,35 @@ async function getPlans(req, res) {
 }
 
 
+async function getUserPlans(req, res) {
+    try {
+        let plans = await user.aggregate([{
+            $match: {
+                'permissions.isAccountAdmin': true
+            }
+        }, {
+            $lookup: {
+                from: 'companies',
+                localField: 'company',
+                foreignField: '_id',
+                as: 'subscription'
+            }
+        }, {
+            $unwind: '$subscription'
+        }]);
+        console.log(JSON.stringify(plans));
+        sendResponse(res, 200, 'Successful.', plans);
+
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected error', e);
+    }
+}
+
 module.exports = {
     createPlan,
     editPlan,
     updatePlanStatus,
-    getPlans
+    getPlans,
+    getUserPlans
 };
