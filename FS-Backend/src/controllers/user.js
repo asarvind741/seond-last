@@ -15,15 +15,33 @@ async function addUser(req, res) {
         if (user)
             sendResponse(res, 400, 'User with this email id already exists');
         else {
+            let company = await Company.create({
+
+
+            });
+            req.body.company = company._id;
+            req.body.permissions.isAccountAdmin = true;
+
             req.body.speakeasy_secret = speakeasy.generateSecret({
                 length: 20
             });
             req.body.name = req.body.firstName + req.body.lastName;
             let newUser = await new User(req.body).save();
+            let updateCompany = await Company.findByIdAndUpdate(company._id, {
+                $set: {
+                    primaryAdmin: newUser._id,
+                    createdBy: newUser._id
+
+                }
+            }, {
+                new: true
+            });
+            console.log(newUser);
             let token = jwt.sign({
                 data: newUser._id
             }, Constants.JWT_SECRET);
             let link = `http://localhost:4200/auth/registration/activate/${token}`;
+            console.log(link);
             let storeToken =
                 await User.findByIdAndUpdate(newUser._id, {
                     $set: {
@@ -38,6 +56,7 @@ async function addUser(req, res) {
         }
 
     } catch (e) {
+        console.log(e);
         sendResponse(res, 500, 'Unexpected error', e);
     }
 }
@@ -352,6 +371,51 @@ async function addUserFromAdmin(req, res) {
     }
 }
 
+async function inviteUser(req, res) {
+    console.log('req body', req.body);
+    try {
+        let company = Company.findById(req.body.id);
+        let user = await User.create({
+            email: req.body.email,
+            company: req.body.id,
+            status: 'Invited'
+        });
+        sendResponse(res, 200, 'Invited Successfully');
+
+        SendMail(Constants.MAIL_FROM, req.body.email, Constants.INVITE_USER_SUBJECT, `${Constants.INVITE_USER_TEXT} http://localhost:4200/invited/${user._id}`);
+
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected error', e);
+
+    }
+
+}
+
+async function addFromInvitation(req, res) {
+    console.log('req body', req.body);
+    try {
+        let id = req.body.id;
+        delete req.body.id;
+        req.body.status = 'Active';
+        User.findOneAndUpdate({
+            _id: id,
+            status: 'Invited'
+        }, {
+            $set: req.body
+        }, {
+            new: true
+        });
+        sendResponse(res, 200, 'sign up successful');
+
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected error', e);
+
+    }
+
+}
+
 
 module.exports = {
     addUser,
@@ -363,5 +427,7 @@ module.exports = {
     editUser,
     getUser,
     updateUserStates,
-    addUserFromAdmin
+    addUserFromAdmin,
+    inviteUser,
+    addFromInvitation
 };

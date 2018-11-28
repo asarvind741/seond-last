@@ -26,4 +26,6 @@ module.exports = app => {
     app.get(`${user}:id`, UserController.getUser);
     app.post(`${user}modify-status`, UserController.updateUserStates);
     app.post(`${user}add`, UserController.addUserFromAdmin);
+    app.post(`${user}invite`, UserController.inviteUser);
+    app.post(`${user}sign-up-invite`, UserController.addFromInvitation);
 };
