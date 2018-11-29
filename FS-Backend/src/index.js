@@ -80,7 +80,7 @@ require('./routes/module')(app);
 require('./routes/subscription-plans')(app);
 require('./routes/region-management')(app);
 require('./routes/vat-management')(app);
-
+require('./routes/product')(app);
 
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'public') + '/index.html');

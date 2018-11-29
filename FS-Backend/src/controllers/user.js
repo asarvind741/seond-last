@@ -46,7 +46,9 @@ async function addUser(req, res) {
             });
             console.log(newUser);
             let token = jwt.sign({
-                data: newUser._id
+                data: newUser._id,
+                exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
+
             }, Constants.JWT_SECRET);
             let link = `http://localhost:4200/auth/registration/activate/${token}`;
             console.log(link);

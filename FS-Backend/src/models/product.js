@@ -1,68 +1,79 @@
 import mongoose from 'mongoose';
+import mongoosastic from 'mongoosastic';
+import esClient from '../functions/elastic-search-connection';
 const Schema = mongoose.Schema;
+const statusTypes = ['Active', 'Inactive'];
 
-const Product = new Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    description: String,
-    gender: {
-      type: String,
-      enum: ['Men', 'Women', 'Boys', 'Girls', 'Kids'],
-    },
-    material: String,
-    assests: {
-      images: [String],
-    },
-    seller: {
+const Product = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  description: String,
+  gender: {
+    type: String,
+    enum: ['Men', 'Women', 'Boys', 'Girls', 'Kids'],
+  },
+  material: String,
+  assests: {
+    images: [String],
+  },
+  seller: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
+  serviceModule: {
+    name: String,
+    _id: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
-    serviceModule: {
-      name: String,
-      _id: {
-        type: Schema.Types.ObjectId,
-        ref: 'ServiceModule',
-      },
-    },
-    category: {
-      name: String,
-      _id: {
-        type: Schema.Types.ObjectId,
-        ref: 'Category',
-      },
-    },
-    SubCategory: {
-      name: String,
-      _id: {
-        type: Schema.Types.ObjectId,
-        ref: 'Category',
-      },
-    },
-    dimensions: {
-      width: String,
-      height: String,
-      length: String,
-    },
-    size: String,
-    productionCountry: String,
-    productRawData: {
-      type: Schema.Types.Mixed,
-    },
-    color: String,
-    quantity: {
-      type: Number,
+      ref: 'ServiceModule',
     },
   },
-  {
-    timestamps: true,
+  category: {
+    name: String,
+    _id: {
+      type: Schema.Types.ObjectId,
+      ref: 'Category',
+    },
+  },
+  SubCategory: {
+    name: String,
+    _id: {
+      type: Schema.Types.ObjectId,
+      ref: 'Category',
+    },
+  },
+  dimensions: {
+    width: String,
+    height: String,
+    length: String,
+  },
+  size: String,
+  productionCountry: String,
+  productRawData: {
+    type: Schema.Types.Mixed,
+    es_indexed: false
+
+  },
+  color: String,
+  quantity: {
+    type: Number,
+  },
+  status: {
+    type: String,
+    default: 'Active',
+    enum: statusTypes
   }
-);
+}, {
+  timestamps: true,
+});
+
+Product.plugin(mongoosastic, {
+  esClient: esClient
+});
 
 export default mongoose.model('Product', Product);
