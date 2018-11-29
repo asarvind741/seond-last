@@ -5,7 +5,7 @@
           <div>
             <div [@fadeInOutTranslate] class="m-t-15">
               <!-- personal card start -->
-              <form [formGroup]="myProfileForm" (ngSubmit)="onSubmit()">
+              <form [formGroup]="supplierProfileForm" (ngSubmit)="onSubmit()">
                 <div class="card">
                   <div class="card-header">
                     <h5 class="card-header-text">About Me</h5>
@@ -248,7 +248,7 @@
                       </div>
                       <div class="card-body user-desc">
                         <div class="view-desc" *ngIf="editAbout">
-                          <div class="col-md-12" *ngFor="let address of myProfileForm.get('address')['controls']; let i = index"
+                          <div class="col-md-12" *ngFor="let address of supplierProfileForm.get('address')['controls']; let i = index"
                             [formGroupName]="i">
                             <div class="input-group">
                               <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-location-pin">Line
@@ -268,7 +268,7 @@
                           </div>
                         </div>
                         <div class="edit-desc" *ngIf="!editAbout">
-                          <div class="col-md-12" *ngFor="let address of myProfileForm.get('address')['controls']; let i = index"
+                          <div class="col-md-12" *ngFor="let address of supplierProfileForm.get('address')['controls']; let i = index"
                             [formGroupName]="i">
                             <div class="input-group">
                               <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-location-pin">Line

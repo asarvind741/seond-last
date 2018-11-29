@@ -23,10 +23,13 @@ export class ProfileComponent implements OnInit {
     .subscribe((response: HttpResponse<any>) => {
       if(response.status === 200){
         this.user = response['data'];
-        console.log("user", this.currentUserId)
         this.permissions = this.user.permissions;
+        console.log("this.perminss", this.permissions)
         if (this.permissions.isAdmin) {
           this.role = 'admin'
+        }
+        else if(this.permissions.isBuyer){
+          this.role = 'buyer'
         }
         else if (this.permissions.isSubAdmin) {
           this.role = 'subadmin'
@@ -34,9 +37,11 @@ export class ProfileComponent implements OnInit {
         else if (this.permissions.isSupplier) {
           this.role = 'supplier'
         }
-        else {
-          this.role = 'buyer'
+        else 
+        {
+          this.role = "buyer"
         }
+        
       }
     })
     

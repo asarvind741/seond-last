@@ -25,8 +25,9 @@ export class UserService {
     }
 
     updateUser(id, data){
-        console.log("data", id, "data2", data)
         data.id = id;
+        console.log("aaaaaaaaaaaa", data)
+        // JSON.stringify(data);
         return this.httpClient.post(`${environment.API_URL}/user/update`, data)
     }
 

@@ -1,0 +1,161 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [title]="'Subscription Statistcs'" [classHeader]="true">
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Search</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" (ngModelChange)="onSearchInputChange($event)" placeholder="Search here..."
+            [(ngModel)]="search_input">
+        </div>
+      </div>
+      <ngx-datatable 
+      #mydatatable 
+      class="material data-table" 
+      [headerHeight]="50" 
+      [limit]="10" 
+      [columnMode]="'force'"
+      [scrollbarH]="true"
+      [footerHeight]="50" 
+      [rowHeight]="'auto'" 
+      [rows]="rows">
+        <ngx-datatable-column name="name">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Plan Name
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-lastName']">
+              {{value}}
+            </span>
+            <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text"
+              [value]="value" class="form-control" />
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="createdBy">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Customer Name
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span>
+              {{ value }}
+            </span>
+            <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text"
+              [value]="value" class="form-control" />
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="duration">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Plan Type
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span>
+              {{value}}
+            </span>
+            <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text"
+              [value]="value" class="form-control" />
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="price">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Price
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span>
+              {{value }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="price">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Pruchased On
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span>
+              {{value }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="status">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Status
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span>
+              {{ value }}
+            </span>
+            <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text"
+              [value]="value" class="form-control" />
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="price">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Max Subscriptions
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span>
+              {{value }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="price">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Used Subscriptions
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span>
+              {{value }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="price">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Subscriptions Left
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span>
+              {{value }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="createdAt">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Expires On
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span>
+              {{ value | date }}
+            </span>
+            <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text"
+              [value]="value" class="form-control" />
+          </ng-template>
+        </ngx-datatable-column>
+
+      </ngx-datatable>
+    </app-card>
+  </div>
+</div>

@@ -72,6 +72,10 @@ const MENUITEMS = [
             name: 'Subscription Management'
           },
           {
+            state: 'subscription-management',
+            name: 'Subscription Statistcs'
+          },
+          {
             state: 'vat-management',
             name: 'Vat Management'
           }

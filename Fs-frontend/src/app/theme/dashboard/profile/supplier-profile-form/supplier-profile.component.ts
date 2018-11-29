@@ -28,7 +28,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 export class SupplierProfileComponent implements OnInit {
   editProfile = true;
   editProfileIcon = 'icofont-edit';
-  myProfileForm: FormGroup;
+  supplierProfileForm: FormGroup;
 
   editAbout = true;
   editAboutIcon = 'icofont-edit';
@@ -59,7 +59,6 @@ export class SupplierProfileComponent implements OnInit {
   }
 
   createForm(){
-    console.log("current user", this.currentUser)
     let name = this.currentUser.name ? this.currentUser.name: ''
     let firstName = this.currentUser.firstName ? this.currentUser.firstName : '';
     let lastName = this.currentUser.lastName ? this.currentUser.lastName : '';
@@ -73,7 +72,7 @@ export class SupplierProfileComponent implements OnInit {
     let dateOfBirth = this.currentUser.dateOfBirth ? this.currentUser.dateOfBirth: '';
     let linkedInId = this.currentUser.linkedInId ? this.currentUser.linkedInId : '';
     let websiteAddress = this.currentUser.websiteAddress ? this.currentUser.websiteAddress: '';
-    this.myProfileForm = new FormGroup({
+    this.supplierProfileForm = new FormGroup({
       'firstName': new FormControl(firstName),
       'lastName': new FormControl(lastName),
       'name': new FormControl(name),
@@ -103,8 +102,8 @@ export class SupplierProfileComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log("this form values", this.myProfileForm.value);
-    this.userService.updateUser(this.currentUser._id, this.myProfileForm.value)
+    console.log("this form values", this.supplierProfileForm.value);
+    this.userService.updateUser(this.currentUser._id, this.supplierProfileForm.value)
     .subscribe((response: HttpResponse<any>) => {
       if(response.status === 200){
         this.userService.getUser(this.currentUser._id)

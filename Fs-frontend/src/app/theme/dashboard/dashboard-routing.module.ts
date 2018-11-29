@@ -34,6 +34,10 @@ const routes: Routes = [
         loadChildren: './subscription-management/subscription-management.module#SubscriptionManagementModule'
       },
       {
+        path: 'subscription-statistcs',
+        loadChildren: './subscription-statistcs/subscription-statistcs.module#SubscriptionStatistcsModule'
+      },
+      {
         path: 'vat-management',
         loadChildren: './vat-management/vat-management.module#VatManagementModule'
       },

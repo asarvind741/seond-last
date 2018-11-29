@@ -66,6 +66,9 @@ export class EditSubscriptionComponent implements OnInit {
     let maxNumberOfMembers = this.currentPlan.maxNumberOfMembers ? this.currentPlan.maxNumberOfMembers : null;
     let rolesAllowed = this.currentPlan.rolesAllowed ? this.currentPlan.rolesAllowed : null;
     let moduleIncluded = this.currentPlan.moduleIncluded ? this.currentPlan.moduleIncluded : null;
+    this.selectedRoles = rolesAllowed;
+    this.selectedModules = moduleIncluded;
+    
     this.editPlanForm = new FormGroup({
       'name': new FormControl(name),
       'duration': new FormControl(duration),

@@ -26,13 +26,6 @@ const Subscription = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User'
     },
-    VAT: Number,
-    AdditionalTaxes: [
-      {
-        name: String,
-        percentage: Number,
-      },
-    ],
     duration: {
       type: String,
       enum: ['Yearly', 'Monthly', 'Half Yearly', 'Quaterly'],
@@ -42,6 +35,9 @@ const Subscription = new Schema(
       type: Number,
       default: 0,
     },
+    rolesAllowed: [{
+      type: String
+    }],
     features: [String],
     moduleIncluded: [
       {
