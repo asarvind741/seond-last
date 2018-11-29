@@ -31,6 +31,14 @@ const permissionSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  isReseller: {
+    type: Boolean,
+    default: false,
+  },
+  isAgent: {
+    type: Boolean,
+    default: false,
+  },
   isAccountAdmin: {
     type: Boolean,
     default: false
@@ -54,7 +62,7 @@ const WishList = new Schema({
 const User = new Schema({
   company: {
     type: Schema.Types.ObjectId,
-    ref: 'company',
+    ref: 'Company',
     // required: true,
   },
   firstName: String,
@@ -62,7 +70,7 @@ const User = new Schema({
   name: String,
   role: {
     type: String,
-    enum: ['Buyer', 'Seller', 'Admin', 'SubAdmin'],
+    enum: ['Buyer', 'Seller', 'Admin', 'SubAdmin', 'Agent', 'Reseller'],
   },
   loginCount: {
     type: Number,
