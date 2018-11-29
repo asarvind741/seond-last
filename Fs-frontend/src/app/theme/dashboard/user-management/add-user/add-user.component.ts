@@ -14,6 +14,7 @@ export class AddUserComponent implements OnInit {
   newUserForm: FormGroup;
   showMessage: any;
   statuss: Array<String> = ['Active', 'Inactive'];
+  roles: Array<String> = ['Buyer', 'Seller', 'Admin', 'SubAdmin', 'Agent', 'Reseller'];
   constructor(
     public activeModal: NgbActiveModal,
     private userService: UserService
@@ -31,7 +32,8 @@ export class AddUserComponent implements OnInit {
       'email': new FormControl(null),
       'password': new FormControl(null),
       'mobile': new FormControl(null),
-      'status': new FormControl(null)
+      'status': new FormControl(null),
+      'role': new FormControl(null)
     })
   }
 

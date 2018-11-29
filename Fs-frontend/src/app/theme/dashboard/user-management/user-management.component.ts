@@ -73,7 +73,8 @@ export class UserManagementComponent implements OnInit {
           user.firstName && user.firstName.toLowerCase().indexOf(val) >= 0 ? true : false ||
           user.lastName && user.lastName.toLowerCase().indexOf(val) >= 0 ? true : false ||
           user.email && user.email.toLowerCase().indexOf(val) >= 0 ? true : false ||
-          user.status && user.status.toLowerCase().indexOf(val) >= 0 ? true : false
+          user.status && user.status.toLowerCase().indexOf(val) >= 0 ? true : false ||
+          user.role && user.role.toLowerCase().indexOf(val) >=0 ? true : false
         )
           return true;
       });

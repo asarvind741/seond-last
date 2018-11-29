@@ -49,6 +49,18 @@
             </span>
           </ng-template>
         </ngx-datatable-column>
+        <ngx-datatable-column name="role">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Role
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span>
+              {{value}}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
         <!-- <ngx-datatable-column name="password">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
             <span (click)="sort($event, sortDir, sortFn)">

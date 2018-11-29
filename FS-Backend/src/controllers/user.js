@@ -295,7 +295,7 @@ async function getAllUsers(req, res) {
 
 async function editUser(req, res) {
     try {
-        console.log('reqqq body date', req.body.dateOfBirth);
+        console.log('reqqq body date', req.body);
         if (req.body.dateOfBirth.year && req.body.dateOfBirth.month && req.body.dateOfBirth.day)
             req.body.dateOfBirth = new Date(
                 req.body.dateOfBirth.year,
@@ -312,6 +312,7 @@ async function editUser(req, res) {
         }, {
             new: true
         });
+        console.log('aaaaaaa', updateUser);
         sendResponse(res, 200, 'Updated Successfully.', updateUser);
 
     } catch (e) {
