@@ -138,7 +138,6 @@ async function getProductAndCategoriesFromElastic(req, res) {
 
 }
 
-getProductAndCategoriesFromElastic();
 module.exports = {
     createProduct,
     getProductFromElastic,

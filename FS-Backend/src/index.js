@@ -51,7 +51,7 @@ i18n.configure({
 });
 app.use(i18n.init);
 app.use(function (req, res, next) {
-  // console.log(JSON.parse(req.body.query));
+  console.log(req.body);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', '*');
   res.setHeader(
