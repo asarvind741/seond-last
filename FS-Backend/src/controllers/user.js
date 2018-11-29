@@ -46,7 +46,9 @@ async function addUser(req, res) {
             });
             console.log(newUser);
             let token = jwt.sign({
-                data: newUser._id
+                data: newUser._id,
+                exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
+
             }, Constants.JWT_SECRET);
             let link = `http://localhost:4200/auth/registration/activate/${token}`;
             console.log(link);
@@ -296,7 +298,7 @@ async function getAllUsers(req, res) {
 async function editUser(req, res) {
     try {
         console.log('reqqq body date', req.body);
-        if (req.body.dateOfBirth.year && req.body.dateOfBirth.month && req.body.dateOfBirth.day)
+        if (req.body.dateOfBirth && req.body.dateOfBirth.year && req.body.dateOfBirth.month && req.body.dateOfBirth.day)
             req.body.dateOfBirth = new Date(
                 req.body.dateOfBirth.year,
                 req.body.dateOfBirth.month,
@@ -316,6 +318,7 @@ async function editUser(req, res) {
         sendResponse(res, 200, 'Updated Successfully.', updateUser);
 
     } catch (e) {
+        console.log(e);
         sendResponse(res, 500, 'Unexpected error', e);
     }
 }

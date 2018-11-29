@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { animate, AUTO_STYLE, state, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  AUTO_STYLE,
+  state,
+  style,
+  transition,
+  trigger
+} from '@angular/animations';
 import { MenuItems } from '../../shared/menu-items/menu-items';
 import { AuthenticationService } from '../../services/auth.service';
 import { ElasticSearchService } from '../../services/elastic-search.service';
@@ -11,49 +18,55 @@ import { ElasticSearchService } from '../../services/elastic-search.service';
   styleUrls: ['./admin.component.scss'],
   animations: [
     trigger('notificationBottom', [
-      state('an-off, void',
+      state(
+        'an-off, void',
         style({
           overflow: 'hidden',
-          height: '0px',
+          height: '0px'
         })
       ),
-      state('an-animate',
+      state(
+        'an-animate',
         style({
           overflow: 'hidden',
-          height: AUTO_STYLE,
+          height: AUTO_STYLE
         })
       ),
-      transition('an-off <=> an-animate', [
-        animate('400ms ease-in-out')
-      ])
+      transition('an-off <=> an-animate', [animate('400ms ease-in-out')])
     ]),
     trigger('slideInOut', [
-      state('in', style({
-        width: '300px',
-        // transform: 'translate3d(0, 0, 0)'
-      })),
-      state('out', style({
-        width: '0',
-        // transform: 'translate3d(100%, 0, 0)'
-      })),
+      state(
+        'in',
+        style({
+          width: '300px'
+          // transform: 'translate3d(0, 0, 0)'
+        })
+      ),
+      state(
+        'out',
+        style({
+          width: '0'
+          // transform: 'translate3d(100%, 0, 0)'
+        })
+      ),
       transition('in => out', animate('400ms ease-in-out')),
       transition('out => in', animate('400ms ease-in-out'))
     ]),
     trigger('mobileHeaderNavRight', [
-      state('nav-off, void',
+      state(
+        'nav-off, void',
         style({
           overflow: 'hidden',
-          height: '0px',
+          height: '0px'
         })
       ),
-      state('nav-on',
+      state(
+        'nav-on',
         style({
-          height: AUTO_STYLE,
+          height: AUTO_STYLE
         })
       ),
-      transition('nav-off <=> nav-on', [
-        animate('400ms ease-in-out')
-      ])
+      transition('nav-off <=> nav-on', [animate('400ms ease-in-out')])
     ]),
     trigger('fadeInOutTranslate', [
       transition(':enter', [
@@ -71,7 +84,7 @@ export class AdminComponent implements OnInit {
   searchItem: String;
   itemsSearched: Array<any> = [];
   lastKeypress = 0;
-  categories: Array<String> = ['first', 'second', 'third', 'fourth']
+  categories: Array<String> = ['first', 'second', 'third', 'fourth'];
   public navType: string;
   public themeLayout: string;
   public verticalPlacement: string;
@@ -194,7 +207,6 @@ export class AdminComponent implements OnInit {
 
     // side-bar image
     /*this.setLayoutType('img');*/
-
   }
 
   ngOnInit() {
@@ -208,7 +220,11 @@ export class AdminComponent implements OnInit {
     this.setHeaderAttributes(this.windowWidth);
 
     let reSizeFlag = true;
-    if (this.pcodedDeviceType === 'tablet' && this.windowWidth >= 768 && this.windowWidth <= 1024) {
+    if (
+      this.pcodedDeviceType === 'tablet' &&
+      this.windowWidth >= 768 &&
+      this.windowWidth <= 1024
+    ) {
       reSizeFlag = false;
     } else if (this.pcodedDeviceType === 'mobile' && this.windowWidth < 768) {
       reSizeFlag = false;
@@ -235,15 +251,18 @@ export class AdminComponent implements OnInit {
   searchItems($event) {
     this.itemsSearched = [];
     if ($event.timeStamp - this.lastKeypress > 300) {
-      this.elasticSearchService.serchCategories(this.searchItem).then((response) => {
-        response.hits.hits.forEach((hit) => {
-          if (this.itemsSearched.indexOf(hit._source['CategoryName']) < 0)
-            this.itemsSearched.push(hit._source['CategoryName']);
-        })
-      })
+      this.elasticSearchService
+        .serchCategories(this.searchItem)
+        .then(response => {
+          console.log(response);
+          response.hits.hits.forEach(hit => {
+            console.log(hit._source['name']);
+            // if (this.itemsSearched.indexOf(hit._source['name']) < 0)
+            this.itemsSearched.push(hit._source['name']);
+          });
+        });
     }
     this.lastKeypress = $event.timeStamp;
-
   }
 
   setMenuAttributes(windowWidth) {
@@ -274,25 +293,41 @@ export class AdminComponent implements OnInit {
   }
 
   toggleLiveNotification() {
-    this.liveNotification = this.liveNotification === 'an-off' ? 'an-animate' : 'an-off';
-    this.liveNotificationClass = this.liveNotification === 'an-animate' ? 'active' : '';
+    this.liveNotification =
+      this.liveNotification === 'an-off' ? 'an-animate' : 'an-off';
+    this.liveNotificationClass =
+      this.liveNotification === 'an-animate' ? 'active' : '';
 
-    if (this.liveNotification === 'an-animate' && this.innerChatSlideInOut === 'in') {
+    if (
+      this.liveNotification === 'an-animate' &&
+      this.innerChatSlideInOut === 'in'
+    ) {
       this.toggleInnerChat();
     }
-    if (this.liveNotification === 'an-animate' && this.chatSlideInOut === 'in') {
+    if (
+      this.liveNotification === 'an-animate' &&
+      this.chatSlideInOut === 'in'
+    ) {
       this.toggleChat();
     }
   }
 
   toggleProfileNotification() {
-    this.profileNotification = this.profileNotification === 'an-off' ? 'an-animate' : 'an-off';
-    this.profileNotificationClass = this.profileNotification === 'an-animate' ? 'active' : '';
+    this.profileNotification =
+      this.profileNotification === 'an-off' ? 'an-animate' : 'an-off';
+    this.profileNotificationClass =
+      this.profileNotification === 'an-animate' ? 'active' : '';
 
-    if (this.profileNotification === 'an-animate' && this.innerChatSlideInOut === 'in') {
+    if (
+      this.profileNotification === 'an-animate' &&
+      this.innerChatSlideInOut === 'in'
+    ) {
       this.toggleInnerChat();
     }
-    if (this.profileNotification === 'an-animate' && this.chatSlideInOut === 'in') {
+    if (
+      this.profileNotification === 'an-animate' &&
+      this.chatSlideInOut === 'in'
+    ) {
       this.toggleChat();
     }
   }
@@ -313,7 +348,8 @@ export class AdminComponent implements OnInit {
   }
 
   toggleInnerChat() {
-    this.innerChatSlideInOut = this.innerChatSlideInOut === 'out' ? 'in' : 'out';
+    this.innerChatSlideInOut =
+      this.innerChatSlideInOut === 'out' ? 'in' : 'out';
   }
 
   searchOn() {
@@ -342,16 +378,23 @@ export class AdminComponent implements OnInit {
 
   toggleOpened() {
     if (this.windowWidth < 992) {
-      this.toggleOn = this.verticalNavType === 'offcanvas' ? true : this.toggleOn;
+      this.toggleOn =
+        this.verticalNavType === 'offcanvas' ? true : this.toggleOn;
       if (this.navRight === 'nav-on') {
         this.toggleHeaderNavRight();
       }
     }
-    this.verticalNavType = this.verticalNavType === 'expanded' ? 'offcanvas' : 'expanded';
+    this.verticalNavType =
+      this.verticalNavType === 'expanded' ? 'offcanvas' : 'expanded';
   }
 
   onClickedOutsideSidebar(e: Event) {
-    if ((this.windowWidth < 992 && this.toggleOn && this.verticalNavType !== 'offcanvas') || this.verticalEffect === 'overlay') {
+    if (
+      (this.windowWidth < 992 &&
+        this.toggleOn &&
+        this.verticalNavType !== 'offcanvas') ||
+      this.verticalEffect === 'overlay'
+    ) {
       this.toggleOn = true;
       this.verticalNavType = 'offcanvas';
     }
@@ -413,14 +456,18 @@ export class AdminComponent implements OnInit {
 
   setSidebarPosition() {
     this.isSidebarChecked = !this.isSidebarChecked;
-    this.pcodedSidebarPosition = this.isSidebarChecked === true ? 'fixed' : 'absolute';
-    this.sidebarFixedHeight = this.isHeaderChecked === true ? 'calc(100vh + 56px)' : 'calc(100vh - 56px)';
+    this.pcodedSidebarPosition =
+      this.isSidebarChecked === true ? 'fixed' : 'absolute';
+    this.sidebarFixedHeight =
+      this.isHeaderChecked === true
+        ? 'calc(100vh + 56px)'
+        : 'calc(100vh - 56px)';
   }
 
   setHeaderPosition() {
     this.isHeaderChecked = !this.isHeaderChecked;
-    this.pcodedHeaderPosition = this.isHeaderChecked === true ? 'fixed' : 'relative';
+    this.pcodedHeaderPosition =
+      this.isHeaderChecked === true ? 'fixed' : 'relative';
     this.headerFixedMargin = this.isHeaderChecked === true ? '56px' : '';
   }
-
 }

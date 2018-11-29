@@ -51,7 +51,7 @@ i18n.configure({
 });
 app.use(i18n.init);
 app.use(function (req, res, next) {
-  // console.log(JSON.parse(req.body.query));
+  console.log(req.body);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', '*');
   res.setHeader(
@@ -80,7 +80,7 @@ require('./routes/module')(app);
 require('./routes/subscription-plans')(app);
 require('./routes/region-management')(app);
 require('./routes/vat-management')(app);
-
+require('./routes/product')(app);
 
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'public') + '/index.html');

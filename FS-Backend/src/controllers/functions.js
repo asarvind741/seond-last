@@ -31,7 +31,7 @@ module.exports = {
         });
     },
     jwtAuth(req, res, next) {
-
+        console.log(req.body, 'jwt');
         // check header or url parameters or post parameters for token
         var token = req.body.token || req.query.token || req.headers['x-access-token'];
         console.log(token);
@@ -46,6 +46,7 @@ module.exports = {
                         message: 'Failed to authenticate token.'
                     });
                 } else {
+                    console.log(req.body, 'func');
                     // if everything is good, save to request for use in other routes
                     req.decoded = decoded;
                     next();

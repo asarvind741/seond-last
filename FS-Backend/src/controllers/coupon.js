@@ -6,7 +6,7 @@ import {
 import Constants from './constant';
 
 async function createCoupon(req, res) {
-    if (req.body.expiresOn)
+    if (req.body.expiresOn.year && req.body.expiresOn.month && req.body.expiresOn.day)
         req.body.expiresOn = new Date(
             req.body.expiresOn.year,
             req.body.expiresOn.month,
@@ -22,7 +22,7 @@ async function createCoupon(req, res) {
 }
 
 async function editCoupon(req, res) {
-    if (req.body.expiresOn)
+    if (req.body.expiresOn.year && req.body.expiresOn.month && req.body.expiresOn.day)
         req.body.expiresOn = new Date(
             req.body.expiresOn.year,
             req.body.expiresOn.month,
