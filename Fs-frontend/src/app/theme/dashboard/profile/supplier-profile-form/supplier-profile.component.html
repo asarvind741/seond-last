@@ -25,6 +25,10 @@
                                   <table class="table m-0">
                                     <tbody>
                                       <tr>
+                                        <th scope="row">First Name</th>
+                                        <td>{{ currentUser.firstName}}</td>
+                                      </tr>
+                                      <tr>
                                         <th scope="row">Full Name</th>
                                         <td>{{ currentUser.name}}</td>
                                       </tr>
@@ -40,10 +44,6 @@
                                         <th scope="row">Marital Status</th>
                                         <td>{{ currentUser.meritalStatus}}</td>
                                       </tr>
-                                      <tr>
-                                        <th scope="row">Address</th>
-                                        <td>{{ currentUser.address}}</td>
-                                      </tr>
                                     </tbody>
                                   </table>
                                 </div>
@@ -53,6 +53,10 @@
                                 <div class="table-responsive">
                                   <table class="table">
                                     <tbody>
+                                      <tr>
+                                        <th scope="row">Last Name</th>
+                                        <td><a href="javascript:;">{{ currentUser.lastName}}</a></td>
+                                      </tr>
                                       <tr>
                                         <th scope="row">Email</th>
                                         <td><a href="javascript:;">{{ currentUser.email}}</a></td>
@@ -64,10 +68,6 @@
                                       <tr>
                                         <th scope="row">LinkedIn Id</th>
                                         <td>{{ currentUser.linkedInId}}</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row">Password</th>
-                                        <td>{{ currentUser.password}}</td>
                                       </tr>
                                       <tr>
                                         <th scope="row">Website</th>
@@ -122,14 +122,15 @@
                                             <div class="group-add-on">
                                               <div class="radio radiofill radio-inline">
                                                 <label>
-                                                  <input type="radio" name="radio" value = "Male"><i class="helper" formControlName="gender"></i>
+                                                  <input type="radio" name="gender" value="Male" formControlName="gender"><i
+                                                    class="helper"></i>
                                                   Male
                                                 </label>
                                               </div>
                                               <div class="radio radiofill radio-inline">
                                                 <label>
-                                                  <input type="radio" name="radio" value = "Female"><i class="helper"
-                                                    formControlName="gender"></i> Female
+                                                  <input type="radio" name="gender" value="Female" formControlName="gender"><i
+                                                    class="helper"></i> Female
                                                 </label>
                                               </div>
                                             </div>
@@ -183,7 +184,8 @@
                                         <td>
                                           <div class="input-group">
                                             <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-mobile-phone"></i></label></span>
-                                            <input type="text" class="form-control" formControlName="mobile" placeholder="Mobile Number">
+                                            <input type="number" class="form-control" formControlName="mobile"
+                                              placeholder="Mobile Number">
                                           </div>
                                         </td>
                                       </tr>
@@ -193,15 +195,6 @@
                                             <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-social-linkedin"></i></label></span>
                                             <input type="text" class="form-control" formControlName="linkedInId"
                                               placeholder="Linkedin Id">
-                                          </div>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td>
-                                          <div class="input-group">
-                                            <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-ui-password"></i></label></span>
-                                            <input type="password" class="form-control" formControlName="password"
-                                              placeholder="Password">
                                           </div>
                                         </td>
                                       </tr>
@@ -236,55 +229,74 @@
                   </div>
                   <!-- end of card-body -->
                 </div>
+  
                 <div class="row">
                   <div class="col-lg-12">
                     <div class="card">
                       <div class="card-header">
-                        <h5 class="card-header-text">Address:</h5>
+                        <h5 class="card-header-text">Address</h5>
                         <button id="edit-info-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
-                          (click)="toggleEditAbout()">
-                          <i class="icofont {{ editAboutIcon }}"></i>
+                          (click)="toggleEditAddress()">
+                          <i class="icofont {{ editAddressIcon }}"></i>
                         </button>
                       </div>
                       <div class="card-body user-desc">
-                        <div class="view-desc" *ngIf="editAbout">
-                          <div class="col-md-12" *ngFor="let address of supplierProfileForm.get('address')['controls']; let i = index"
-                            [formGroupName]="i">
-                            <div class="input-group">
-                              <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-location-pin">Line
-                                    1</i></label></span>
-                              <div>{{address.line1}}</div>
-                              <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-location-pin">Line
-                                    2</i></label></span>
-                                    <div>{{address.line2}}</div>
-                              <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-location-pin">City</i></label></span>
-                              <div>{{address.city}}</div>
-                              <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-location-pin">Postal
-                                    Code</i></label></span>
-                                    <div>{{address.postalCode}}</div>
-                              <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-location-pin">Country</i></label></span>
-                              <div>{{address.country}}</div>
+                        <div class="view-desc" *ngIf="editAddress">
+                          <div formArrayName="address">
+                            <div *ngFor="let addr of supplierProfileForm.get('address')['controls']; let i = index"
+                              [formGroupName]="i">
+                              <h4>Address{{i+1}}</h4>
+                              <div class="input-group">
+                                <label>Line 1</label>
+                                <input type="text" class="form-control" formControlName="line1" readonly>
+                              </div>
+                              <div class="input-group">
+                                <label>Line 2</label>
+                                <input type="text" class="form-control" formControlName="line2" readonly>
+                              </div>
+                              <div class="input-group">
+                                <label>Zip Code</label>
+                                <input type="text" class="form-control" formControlName="postalCode" readonly>
+                              </div>
+                              <div class="input-group">
+                                <label>city</label>
+                                <input type="text" class="form-control" formControlName="city" readonly>
+                              </div>
+                              <div class="input-group">
+                                <label>Country</label>
+                                <input type="text" class="form-control" formControlName="country" readonly>
+                              </div>
                             </div>
                           </div>
                         </div>
-                        <div class="edit-desc" *ngIf="!editAbout">
-                          <div class="col-md-12" *ngFor="let address of supplierProfileForm.get('address')['controls']; let i = index"
-                            [formGroupName]="i">
-                            <div class="input-group">
-                              <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-location-pin">Line
-                                    1</i></label></span>
-                              <input type="text" formControlName="line1">
-                              <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-location-pin">Line
-                                    2</i></label></span>
-                              <input type="text" formControlName="line2">
-                              <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-location-pin">City</i></label></span>
-                              <input type="text" formControlName="city">
-                              <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-location-pin">Postal
-                                    Code</i></label></span>
-                              <input type="number" formControlName="postalCode">
-                              <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-location-pin">Country</i></label></span>
-                              <input type="text" formControlName="country">
-                            </div>
+                        <div class="edit-desc" *ngIf="!editAddress">
+                          <div class="col-md-12">
+                              <div formArrayName="address">
+                                  <div *ngFor="let addr of supplierProfileForm.get('address')['controls']; let i = index"
+                                    [formGroupName]="i">
+                                    <h4>Address{{i+1}}</h4>
+                                    <div class="input-group">
+                                      <label>Line 1</label>
+                                      <input type="text" class="form-control" formControlName="line1">
+                                    </div>
+                                    <div class="input-group">
+                                      <label>Line 2</label>
+                                      <input type="text" class="form-control" formControlName="line2">
+                                    </div>
+                                    <div class="input-group">
+                                      <label>Zip Code</label>
+                                      <input type="text" class="form-control" formControlName="postalCode">
+                                    </div>
+                                    <div class="input-group">
+                                      <label>city</label>
+                                      <input type="text" class="form-control" formControlName="city">
+                                    </div>
+                                    <div class="input-group">
+                                      <label>Country</label>
+                                      <input type="text" class="form-control" formControlName="country">
+                                    </div>
+                                  </div>
+                                </div>
                           </div>
                           <div class="text-center">
                             <button type="submit" class="btn btn-primary">Save</button>
@@ -295,6 +307,7 @@
                     </div>
                   </div>
                 </div>
+  
                 <div class="row">
                   <div class="col-lg-12">
                     <div class="card">
@@ -307,13 +320,14 @@
                       </div>
                       <div class="card-body user-desc">
                         <div class="view-desc" *ngIf="editAbout">
-                          <div [innerHTML]="editorContent"></div>
+                          <div>{{ supplierProfileForm.value.description }}</div>
                         </div>
                         <div class="edit-desc" *ngIf="!editAbout">
                           <div class="col-md-12">
                             <div class="input-group">
                               <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-earth"></i></label></span>
-                              <textarea type="text" class="form-control" rows="12" value="www.demo.com" placeholder="website">{{editorContent}}</textarea>
+                              <textarea type="text" class="form-control" rows="12" placeholder="Enter description about yourself..."
+                                formControlName="description"></textarea>
                             </div>
                           </div>
                           <div class="text-center">

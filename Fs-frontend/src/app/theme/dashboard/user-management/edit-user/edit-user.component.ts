@@ -14,6 +14,7 @@ export class EditUserComponent implements OnInit {
   updateUserForm: FormGroup;
   showMessage: any;
   statuss: Array<String> = ['Active', 'Inactive'];
+  roles: Array<String> = ['Buyer', 'Seller', 'Admin', 'SubAdmin'];
   @Input() currentUser;
   constructor(
     public activeModal: NgbActiveModal,
@@ -32,13 +33,15 @@ export class EditUserComponent implements OnInit {
     let password = this.currentUser.password ? this.currentUser.password : '';
     let status = this.currentUser.status ? this.currentUser.status: '';
     let mobile = this.currentUser.mobile ? this.currentUser.mobile : null;
+    let role = this.currentUser.role ? this.currentUser.role : null;
     this.updateUserForm = new FormGroup({
       'firstName': new FormControl(firstName),
       'lastName': new FormControl(lastName),
       'email': new FormControl(email),
       'password': new FormControl(password),
       'status': new FormControl(status),
-      'mobile': new FormControl(mobile)
+      'mobile': new FormControl(mobile),
+      'role': new FormControl(role)
     })
   }
 
@@ -51,6 +54,7 @@ export class EditUserComponent implements OnInit {
       }
     }, (error) => {
       this.closeModal();
+      console.log("eror", error)
       this.showMessage = error.error['message']
       this.openUnscuccessSwal();
     })

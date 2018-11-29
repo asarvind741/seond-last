@@ -2,15 +2,15 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import swal from 'sweetalert2';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { UserService } from '../../../../services/user.servivce';
+import { UserService } from '../../../services/user.servivce';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-supplier-profile',
-  templateUrl: './supplier-profile.component.html',
+  selector: 'app-company-profile',
+  templateUrl: './company-profile.component.html',
   styleUrls: [
-    './supplier-profile.component.scss',
-    '../../../../../assets/icon/icofont/css/icofont.scss'
+    './company-profile.component.scss',
+    '../../../../assets/icon/icofont/css/icofont.scss'
   ],
   animations: [
     trigger('fadeInOutTranslate', [
@@ -25,10 +25,10 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
     ])
   ]
 })
-export class SupplierProfileComponent implements OnInit {
+export class CompanyProfileComponent implements OnInit {
   editProfile = true;
   editProfileIcon = 'icofont-edit';
-  supplierProfileForm: FormGroup;
+  myProfileForm: FormGroup;
 
   editAbout = true;
   editAboutIcon = 'icofont-edit';
@@ -62,6 +62,7 @@ export class SupplierProfileComponent implements OnInit {
   }
 
   createForm() {
+    console.log("current user", this.currentUser.address);
     // let address1 = this.fb.array([]);
     let address = new FormArray([]);
     if (this.currentUser['address']) {
@@ -90,7 +91,7 @@ export class SupplierProfileComponent implements OnInit {
     let linkedInId = this.currentUser.linkedInId ? this.currentUser.linkedInId : '';
     let websiteAddress = this.currentUser.websiteAddress ? this.currentUser.websiteAddress : '';
     let description = this.currentUser.description ? this.currentUser.description : '';
-    this.supplierProfileForm = new FormGroup({
+    this.myProfileForm = new FormGroup({
       'firstName': new FormControl(firstName),
       'lastName': new FormControl(lastName),
       'name': new FormControl(name),
@@ -125,10 +126,11 @@ export class SupplierProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    const values = this.supplierProfileForm.value;
+    const values = this.myProfileForm.value;
     this.userService.updateUser(this.currentUser._id, values)
       .subscribe((response: HttpResponse<any>) => {
         if (response.status === 200) {
+          console.log("response", response)
           this.userService.getUser(this.currentUser._id)
             .subscribe((response: HttpResponse<any>) => {
               if (response.status === 200) {
@@ -138,6 +140,7 @@ export class SupplierProfileComponent implements OnInit {
           this.openSuccessSwal()
         }
       }, (error: HttpResponse<any>) => {
+        console.log("error", error)
         this.openUnscuccessSwal();
       })
 

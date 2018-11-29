@@ -229,7 +229,7 @@
                 </div>
                 <!-- end of card-body -->
               </div>
-              
+
               <div class="row">
                 <div class="col-lg-12">
                   <div class="card">
@@ -242,14 +242,61 @@
                     </div>
                     <div class="card-body user-desc">
                       <div class="view-desc" *ngIf="editAddress">
-                        <div [innerHTML]="editorContent"></div>
+                        <div formArrayName="address">
+                          <div *ngFor="let addr of myProfileForm.get('address')['controls']; let i = index"
+                            [formGroupName]="i">
+                            <h4>Address{{i+1}}</h4>
+                            <div class="input-group">
+                              <label>Line 1</label>
+                              <input type="text" class="form-control" formControlName="line1" readonly>
+                            </div>
+                            <div class="input-group">
+                              <label>Line 2</label>
+                              <input type="text" class="form-control" formControlName="line2" readonly>
+                            </div>
+                            <div class="input-group">
+                              <label>Zip Code</label>
+                              <input type="text" class="form-control" formControlName="postalCode" readonly>
+                            </div>
+                            <div class="input-group">
+                              <label>city</label>
+                              <input type="text" class="form-control" formControlName="city" readonly>
+                            </div>
+                            <div class="input-group">
+                              <label>Country</label>
+                              <input type="text" class="form-control" formControlName="country" readonly>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <div class="edit-desc" *ngIf="!editAddress">
                         <div class="col-md-12">
-                          <div class="input-group">
-                            <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-earth"></i></label></span>
-                            <textarea type="text" class="form-control" rows="12"  placeholder="Enter description about yourself..." formControlName = "description"></textarea>
-                          </div>
+                            <div formArrayName="address">
+                                <div *ngFor="let addr of myProfileForm.get('address')['controls']; let i = index"
+                                  [formGroupName]="i">
+                                  <h4>Address{{i+1}}</h4>
+                                  <div class="input-group">
+                                    <label>Line 1</label>
+                                    <input type="text" class="form-control" formControlName="line1">
+                                  </div>
+                                  <div class="input-group">
+                                    <label>Line 2</label>
+                                    <input type="text" class="form-control" formControlName="line2">
+                                  </div>
+                                  <div class="input-group">
+                                    <label>Zip Code</label>
+                                    <input type="text" class="form-control" formControlName="postalCode">
+                                  </div>
+                                  <div class="input-group">
+                                    <label>city</label>
+                                    <input type="text" class="form-control" formControlName="city">
+                                  </div>
+                                  <div class="input-group">
+                                    <label>Country</label>
+                                    <input type="text" class="form-control" formControlName="country">
+                                  </div>
+                                </div>
+                              </div>
                         </div>
                         <div class="text-center">
                           <button type="submit" class="btn btn-primary">Save</button>
@@ -273,13 +320,14 @@
                     </div>
                     <div class="card-body user-desc">
                       <div class="view-desc" *ngIf="editAbout">
-                        <div [innerHTML]="editorContent"></div>
+                        <div>{{ myProfileForm.value.description }}</div>
                       </div>
                       <div class="edit-desc" *ngIf="!editAbout">
                         <div class="col-md-12">
                           <div class="input-group">
                             <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-earth"></i></label></span>
-                            <textarea type="text" class="form-control" rows="12"  placeholder="Enter description about yourself..." formControlName = "description"></textarea>
+                            <textarea type="text" class="form-control" rows="12" placeholder="Enter description about yourself..."
+                              formControlName="description"></textarea>
                           </div>
                         </div>
                         <div class="text-center">
