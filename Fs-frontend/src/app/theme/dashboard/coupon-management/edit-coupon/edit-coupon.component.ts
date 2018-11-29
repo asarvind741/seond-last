@@ -14,6 +14,7 @@ import * as moment from 'moment';
 export class EditCouponComponent implements OnInit {
   editCouponForm: FormGroup;
   showMessage: any;
+  statuss: Array<String> = ['Active', 'Inactive'];
   modules: Array<String> = ['First Module', 'Second Module', 'Third Module']
   @Input() currentCoupon;
   constructor(
@@ -45,16 +46,11 @@ export class EditCouponComponent implements OnInit {
       'description': new FormControl(description)
     })
 
-
-    console.log("sssssssssssss", expiresOn);
-
     this.editCouponForm.get('expiresOn').setValue({
       year: parseInt(moment(expiresOn).format('YYYY')),
       month: parseInt(moment(expiresOn).format('M')),
       day: parseInt(moment(expiresOn).format('D'))
     });
-
-    console.log("aaaaaaaaa", this.editCouponForm.value.expiresOn)
   }
 
   editCoupon(){

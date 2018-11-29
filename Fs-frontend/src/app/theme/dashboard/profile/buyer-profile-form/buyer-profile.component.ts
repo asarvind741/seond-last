@@ -4,6 +4,7 @@ import swal from 'sweetalert2';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { UserService } from '../../../../services/user.servivce';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-buyer-profile',
@@ -34,6 +35,9 @@ export class BuyerProfileComponent implements OnInit {
   editAboutIcon = 'icofont-edit';
   editAddress = true;
   editAddressIcon = 'icofont-edit';
+  editCompany = true;
+  editCompanyIcon = 'iconfont-edit';
+
 
   public editor;
   public editorContent: string;
@@ -53,7 +57,8 @@ export class BuyerProfileComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private fb: FormBuilder
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
   }
 
@@ -123,6 +128,10 @@ export class BuyerProfileComponent implements OnInit {
   toggleEditAbout() {
     this.editAboutIcon = (this.editAboutIcon === 'icofont-close') ? 'icofont-edit' : 'icofont-close';
     this.editAbout = !this.editAbout;
+  }
+
+  showCompanyForm() {
+   this.router.navigate(['../../company-profile'], { relativeTo: this.activatedRoute})
   }
 
   onSubmit() {

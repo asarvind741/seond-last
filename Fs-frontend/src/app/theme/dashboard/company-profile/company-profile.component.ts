@@ -28,7 +28,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 export class CompanyProfileComponent implements OnInit {
   editProfile = true;
   editProfileIcon = 'icofont-edit';
-  myProfileForm: FormGroup;
+  companyProfile: FormGroup;
 
   editAbout = true;
   editAboutIcon = 'icofont-edit';
@@ -49,7 +49,7 @@ export class CompanyProfileComponent implements OnInit {
   loadingIndicator = true;
   reorderable = true;
   statuss: Array<String> = ['Married', 'Single'];
-  @Input('user') currentUser: any;
+
 
   constructor(
     private userService: UserService,
@@ -62,49 +62,49 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   createForm() {
-    console.log("current user", this.currentUser.address);
+    // console.log("current user", this.currentUser.address);
     // let address1 = this.fb.array([]);
     let address = new FormArray([]);
-    if (this.currentUser['address']) {
-      for(let addr of this.currentUser['address'])
-       {
-        address.push(
-          new FormGroup({
-            'line1': new FormControl(addr.line1),
-            'line2': new FormControl(addr.line2),
-            'city': new FormControl(addr.city),
-            'postalCode': new FormControl(addr.postalCode),
-            'country': new FormControl(addr.country)
-          })
-        );
-      }
-    }
-    let name = this.currentUser.name ? this.currentUser.name : ''
-    let firstName = this.currentUser.firstName ? this.currentUser.firstName : '';
-    let lastName = this.currentUser.lastName ? this.currentUser.lastName : '';
-    let email = this.currentUser.email ? this.currentUser.email : '';
-    let gender = this.currentUser.gender ? this.currentUser.gender : '';
-    let meritalStatus = this.currentUser.meritalStatus ? this.currentUser.meritalStatus : '';
-    let status = this.currentUser.status ? this.currentUser.status : '';
-    let mobile = this.currentUser.mobile ? this.currentUser.mobile : '';
-    let dateOfBirth = this.currentUser.dateOfBirth ? this.currentUser.dateOfBirth : '';
-    let linkedInId = this.currentUser.linkedInId ? this.currentUser.linkedInId : '';
-    let websiteAddress = this.currentUser.websiteAddress ? this.currentUser.websiteAddress : '';
-    let description = this.currentUser.description ? this.currentUser.description : '';
-    this.myProfileForm = new FormGroup({
-      'firstName': new FormControl(firstName),
-      'lastName': new FormControl(lastName),
-      'name': new FormControl(name),
-      'email': new FormControl(email),
-      'status': new FormControl(status),
-      'mobile': new FormControl(mobile),
-      'gender': new FormControl(gender),
-      'address': address,
-      'linkedInId': new FormControl(linkedInId),
-      'websiteAddress': new FormControl(websiteAddress),
-      'meritalStatus': new FormControl(meritalStatus),
-      'dateOfBirth': new FormControl(dateOfBirth),
-      'description': new FormControl(description)
+    // if (this.currentUser['address']) {
+    //   for(let addr of this.currentUser['address'])
+    //    {
+    //     address.push(
+    //       new FormGroup({
+    //         'line1': new FormControl(addr.line1),
+    //         'line2': new FormControl(addr.line2),
+    //         'city': new FormControl(addr.city),
+    //         'postalCode': new FormControl(addr.postalCode),
+    //         'country': new FormControl(addr.country)
+    //       })
+    //     );
+    //   }
+    // }
+    // let name = this.currentUser.name ? this.currentUser.name : ''
+    // let firstName = this.currentUser.firstName ? this.currentUser.firstName : '';
+    // let lastName = this.currentUser.lastName ? this.currentUser.lastName : '';
+    // let email = this.currentUser.email ? this.currentUser.email : '';
+    // let gender = this.currentUser.gender ? this.currentUser.gender : '';
+    // let meritalStatus = this.currentUser.meritalStatus ? this.currentUser.meritalStatus : '';
+    // let status = this.currentUser.status ? this.currentUser.status : '';
+    // let mobile = this.currentUser.mobile ? this.currentUser.mobile : '';
+    // let dateOfBirth = this.currentUser.dateOfBirth ? this.currentUser.dateOfBirth : '';
+    // let linkedInId = this.currentUser.linkedInId ? this.currentUser.linkedInId : '';
+    // let websiteAddress = this.currentUser.websiteAddress ? this.currentUser.websiteAddress : '';
+    // let description = this.currentUser.description ? this.currentUser.description : '';
+    this.companyProfile = new FormGroup({
+      'firstName': new FormControl(null),
+      'lastName': new FormControl(null),
+      'name': new FormControl(null),
+      'email': new FormControl(null),
+      'status': new FormControl(null),
+      'mobile': new FormControl(null),
+      'gender': new FormControl(null),
+      'address': new FormControl(null),
+      'linkedInId': new FormControl(null),
+      'websiteAddress': new FormControl(null),
+      'meritalStatus': new FormControl(null),
+      'dateOfBirth': new FormControl(null),
+      'description': new FormControl(null)
     })
   }
 
@@ -126,23 +126,23 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    const values = this.myProfileForm.value;
-    this.userService.updateUser(this.currentUser._id, values)
-      .subscribe((response: HttpResponse<any>) => {
-        if (response.status === 200) {
-          console.log("response", response)
-          this.userService.getUser(this.currentUser._id)
-            .subscribe((response: HttpResponse<any>) => {
-              if (response.status === 200) {
-                this.currentUser = response['data']
-              }
-            })
-          this.openSuccessSwal()
-        }
-      }, (error: HttpResponse<any>) => {
-        console.log("error", error)
-        this.openUnscuccessSwal();
-      })
+    // const values = this.companyProfile.value;
+    // this.userService.updateUser(this.currentUser._id, values)
+    //   .subscribe((response: HttpResponse<any>) => {
+    //     if (response.status === 200) {
+    //       console.log("response", response)
+    //       this.userService.getUser(this.currentUser._id)
+    //         .subscribe((response: HttpResponse<any>) => {
+    //           if (response.status === 200) {
+    //             this.currentUser = response['data']
+    //           }
+    //         })
+    //       this.openSuccessSwal()
+    //     }
+    //   }, (error: HttpResponse<any>) => {
+    //     console.log("error", error)
+    //     this.openUnscuccessSwal();
+    //   })
 
 
   }

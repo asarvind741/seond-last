@@ -5,7 +5,7 @@
               <div>
                 <div [@fadeInOutTranslate] class="m-t-15">
                   <!-- personal card start -->
-                  <form [formGroup]="myProfileForm" (ngSubmit)="onSubmit()">
+                  <form [formGroup]="companyProfile" (ngSubmit)="onSubmit()">
                     <div class="card">
                       <div class="card-header">
                         <h5 class="card-header-text">About Me</h5>
@@ -243,7 +243,7 @@
                           <div class="card-body user-desc">
                             <div class="view-desc" *ngIf="editAddress">
                               <div formArrayName="address">
-                                <div *ngFor="let addr of myProfileForm.get('address')['controls']; let i = index"
+                                <div *ngFor="let addr of companyProfile.get('address')['controls']; let i = index"
                                   [formGroupName]="i">
                                   <h4>Address{{i+1}}</h4>
                                   <div class="input-group">
@@ -272,7 +272,7 @@
                             <div class="edit-desc" *ngIf="!editAddress">
                               <div class="col-md-12">
                                   <div formArrayName="address">
-                                      <div *ngFor="let addr of myProfileForm.get('address')['controls']; let i = index"
+                                      <div *ngFor="let addr of companyProfile.get('address')['controls']; let i = index"
                                         [formGroupName]="i">
                                         <h4>Address{{i+1}}</h4>
                                         <div class="input-group">
@@ -320,7 +320,7 @@
                           </div>
                           <div class="card-body user-desc">
                             <div class="view-desc" *ngIf="editAbout">
-                              <div>{{ myProfileForm.value.description }}</div>
+                              <div>{{ companyProfile.value.description }}</div>
                             </div>
                             <div class="edit-desc" *ngIf="!editAbout">
                               <div class="col-md-12">
