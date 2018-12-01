@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
+const statusTypes = ['Active', 'Inactive', 'Invited'];
 
 const Vat = new Schema({
     country: {
@@ -17,9 +18,14 @@ const Vat = new Schema({
     paymentMode: [{
         name: String,
         id: Number
-    }]
+    }],
+    status: {
+        type: String,
+        enum: statusTypes,
+        default: 'Active'
+    }
 }, {
-    timestamps: true,
-});
+        timestamps: true,
+    });
 
 export default mongoose.model('Vat', Vat);

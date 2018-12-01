@@ -1,4 +1,5 @@
 import Company from '../models/company';
+import User from '../models/user';
 import fs from 'fs';
 
 import {
@@ -6,17 +7,20 @@ import {
     SendMail
 } from './functions';
 import Constants from './constant';
+import user from '../models/user';
 
 
 async function editCompany(req, res) {
     try {
         let id = req.body.id;
         delete req.body.id;
+        if (req.body.subscription == '')
+            delete req.body.subscription;
         let updatedCompany = await Company.findByIdAndUpdate(id, {
             $set: req.body
         }, {
-            new: true
-        });
+                new: true
+            });
         sendResponse(res, 200, 'Company updated Successfully.', updatedCompany);
 
     } catch (e) {
@@ -35,8 +39,8 @@ async function deleteCompany(req, res) {
                 status: 'Inactive'
             }
         }, {
-            new: true
-        });
+                new: true
+            });
 
         sendResponse(res, 200, 'Company deleted Successfully.', updatedCompany);
 
@@ -51,8 +55,15 @@ async function getCompany(req, res) {
     try {
         let id = req.params.id;
         delete req.params.id;
-        let company = await Company.findById(id);
+        let company = await Company.findById(id).populate('subscription members createdBy primaryAdmin').lean();
+        let totalEmployees = await User.find({
+            company: id
+        }).count();
+        let data = {};
+        company.totalEmployees = totalEmployees;
+        delete company.address._id;
         console.log(company);
+
         sendResponse(res, 200, 'Successful.', company);
 
     } catch (e) {
