@@ -13,7 +13,7 @@
       </div>
       <ngx-datatable #mydatatable class="material data-table" [headerHeight]="50" [limit]="10" [columnMode]="'force'"
         [footerHeight]="50" [rowHeight]="'auto'" [rows]="rows">
-        <ngx-datatable-column name="country">
+        <ngx-datatable-column name="country" prop="country.name">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
             <span (click)="sort($event, sortDir, sortFn)">
               Country
@@ -21,7 +21,7 @@
           </ng-template>
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <span>
-              {{ value.name }}
+              {{ value }}
             </span>
           </ng-template>
         </ngx-datatable-column>
