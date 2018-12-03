@@ -23,7 +23,7 @@ export class EditVatComponent implements OnInit {
   states: Array<Object> = [];
   vatForm: FormGroup;
   paymentMode = [
-    { 'id': 1, 'itemName': 'Paypal' },
+    { 'id': 1, '  ': 'Paypal' },
     { 'id': 2, 'itemName': 'Stripe' },
     { 'id': 3, 'itemName': 'Bank Transfer' }
   ]

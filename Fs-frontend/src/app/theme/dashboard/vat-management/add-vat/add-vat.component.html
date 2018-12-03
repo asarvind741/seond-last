@@ -6,9 +6,9 @@
           {{ country.name }}
         </li> -->
   
-        <li *ngFor="let country of countries" (click)="selectCountry(country)" [routerLink]="[country.id]"
-          routerLinkActive="active">
-          {{ country.name }}
+        <li *ngFor="let country of countries"> <a (click)="selectCountry(country)" [routerLink]="[country.id]"
+          routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          {{ country.name }}</a>
         </li>
       </div>
     </div>
