@@ -13,10 +13,10 @@ const Company = new Schema({
   name: {
     type: String
   },
-  address: {
+  address: [{
     type: Address,
     default: Address,
-  },
+  }],
   primaryAdmin: {
     type: Schema.Types.ObjectId,
     ref: 'User'
@@ -41,7 +41,7 @@ const Company = new Schema({
     ref: 'User',
   },
 }, {
-  timestamps: true,
-});
+    timestamps: true,
+  });
 
 export default mongoose.model('Company', Company);

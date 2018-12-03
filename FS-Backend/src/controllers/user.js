@@ -8,6 +8,8 @@ import {
 } from './functions';
 import Constants from './constant';
 import sendSMS from '../functions/nexmo';
+
+// SendMail('test@gmail.com', 'shuklas@synapseindia.email', 'test', 'test');
 async function addUser(req, res) {
     try {
         let user = await User.findOne({
@@ -110,8 +112,9 @@ async function sendOTPLogin(req, res) {
                         otp: otp
                     }
                 });
+                sendResponse(res, 200, '6 digit Code has been sent to your registered email', otp);
+
                 sendSMS(otp, user.mobile);
-                // sendResponse(res, 200, '6 digit Code has been sent to your registered email', otp);
                 SendMail(
                     Constants.MAIL_FROM,
                     req.body.email,
@@ -233,10 +236,33 @@ async function sociaLoginUser(req, res) {
         }
 
         if (!user) {
+            let company = await Company.create({
+                name: req.body['company.name'],
+                address: req.body['company.address'],
+
+                description: req.body['company.description'],
+                subscription: req.body['company.subscriptionId'],
+                subscriptionLastDate: req.body['company.subscriptionLastDate'],
+                subscriptionBilledAmount: req.body['company.subscriptionBilledAmount'],
+                maximumNoOfUsers: req.body['company.maximumNoOfUsers']
+            });
+            req.body.company = company._id;
+            req.body['permissions.isAccountAdmin'] = true;
+
             req.body.status = 'Active';
             if (req.body.firstName && req.body.lastName)
                 req.body.name = req.body.firstName + req.body.lastName;
             user = await new User(req.body).save();
+            let updateCompany = await Company.findByIdAndUpdate(
+                company._id, {
+                    $set: {
+                        primaryAdmin: user._id,
+                        createdBy: user._id
+                    }
+                }, {
+                    new: true
+                }
+            );
         }
         if (user.status === 'Inactive') {
             sendResponse(

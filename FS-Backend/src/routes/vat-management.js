@@ -6,5 +6,6 @@ module.exports = app => {
     app.post(`${vat}edit`, VatController.editVat);
     app.post(`${vat}delete`, VatController.deleteVat);
     app.get(`${vat}`, VatController.getVat);
+    app.post(`${vat}status-modify`, VatController.updateVatStatus);
 
 };

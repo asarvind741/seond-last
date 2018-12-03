@@ -81,6 +81,7 @@ require('./routes/subscription-plans')(app);
 require('./routes/region-management')(app);
 require('./routes/vat-management')(app);
 require('./routes/product')(app);
+require('./routes/company')(app);
 
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'public') + '/index.html');

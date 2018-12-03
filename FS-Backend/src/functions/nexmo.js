@@ -1,20 +1,15 @@
-import nexmo from 'nexmo';
-
-const Nexmo = new nexmo({
-    apiKey: 'a2efc576',
-    apiSecret: 'NxVPjKUUS6Pvb2Zk'
-})
-
-
-const from = 'Nexmo';
-
+import Twilio from 'twilio';
+import constants from '../controllers/constant';
+var client = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 let sendSMS = (otp, mobile) => {
-    console.log("otp", otp, "moble", mobile);
-    const text = `Your otp is: ${otp}`
-    Nexmo.message.sendSms(from, '9315849265', text, (err, data) => {
-        console.log("data", data);
-        console.log("err", err);
-    })
-}
+        client.messages.create({
+                        body: `${constants.SEND_OTP_TEXT}: ${otp}`,
+                        to: '+91' + mobile,
+                        from: process.env.TWILIO_NUMBER // From a valid Twilio number
+                })
+                .then((message) => console.log(message.sid))
+                .catch((err) => console.log(err));
+};
+
 
 module.exports = sendSMS;
