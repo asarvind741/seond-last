@@ -58,7 +58,7 @@ async function deleteVat(req, res) {
 async function getVat(req, res) {
     try {
         let Vats = await Vat.find({
-            status: 'Active'
+//            status: 'Active'
         });
 
         sendResponse(res, 200, 'Successful.', Vats);
@@ -72,10 +72,44 @@ async function getVat(req, res) {
 
 }
 
+async function updateVatStatus(req, res) {
+    try {
+        let id = req.body.id;
+        delete req.body.id;
+        let status;
+        let vat = await Vat.findById(id);
+        if (vat) {
+            if (vat.status === 'Active')
+                status = 'Inactive';
+            else
+                status = 'Active';
+
+
+            let updatedVat = await Vat.findByIdAndUpdate(
+                id, {
+                    $set: {
+                        status: status
+                    }
+                }, {
+                    new: true
+                }
+            );
+            sendResponse(res, 200, 'Vat updated Successfully.', updatedVat);
+        } else {
+            sendResponse(res, 400, 'Vat not found.');
+
+        }
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected error', e);
+    }
+}
+
 
 module.exports = {
     createVat,
     editVat,
     deleteVat,
-    getVat
+    getVat,
+    updateVatStatus
 };

@@ -112,8 +112,9 @@ async function sendOTPLogin(req, res) {
                         otp: otp
                     }
                 });
+                sendResponse(res, 200, '6 digit Code has been sent to your registered email', otp);
+
                 sendSMS(otp, user.mobile);
-                // sendResponse(res, 200, '6 digit Code has been sent to your registered email', otp);
                 SendMail(
                     Constants.MAIL_FROM,
                     req.body.email,
