@@ -6,9 +6,9 @@
           <div>
             <h4>Select State</h4>
             <angular2-multiselect [data]="states" [(ngModel)]="selectedStates" [settings]="settings" (onSelect)="onItemSelect($event)"
-              (onDeSelect)="onDeSelectAll($event)">
-            </angular2-multiselect>elect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
-              formControlName="states
+              (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
+              formControlName="states">
+            </angular2-multiselect>
           </div>
         </form>
         <div class="btn-group mt-10">

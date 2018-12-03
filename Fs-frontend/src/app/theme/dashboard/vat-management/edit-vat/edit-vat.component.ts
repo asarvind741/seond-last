@@ -23,7 +23,7 @@ export class EditVatComponent implements OnInit {
   states: Array<Object> = [];
   vatForm: FormGroup;
   paymentMode = [
-    { 'id': 1, '  ': 'Paypal' },
+    { 'id': 1, 'itemName': 'Paypal' },
     { 'id': 2, 'itemName': 'Stripe' },
     { 'id': 3, 'itemName': 'Bank Transfer' }
   ]
@@ -41,8 +41,7 @@ export class EditVatComponent implements OnInit {
 
     this.currentVat.state.forEach(state => {
       if (state.name) {
-        let element = { 'id': state.id, 'itemName': state.name };
-        this.selectedStates.push(element);
+        this.selectedStates.push({ 'id':  (state.id).toString(), 'itemName': (state.name).toString() });
       }
     })
 
