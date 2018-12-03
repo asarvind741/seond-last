@@ -37,7 +37,6 @@ export class VatManagementComponent implements OnInit {
     this.vatService.getVat()
       .subscribe(vat => {
         this.rows = vat['data'];
-        console.log("this rowsssssssssssss", this.rows);
         this.temp_rows = vat['data'];
       })
   }
@@ -47,10 +46,26 @@ export class VatManagementComponent implements OnInit {
       val = val.toLowerCase();
       let data = this.temp_rows;
       data = data.filter(vat => {
-        console.log("vat to filter", vat);
+        let temp='';
+        let temp1 = '';
+        let temp2 = '';
+        vat.state.forEach(element => {
+          temp=temp+element.name
+        });       
+
+        vat.paymentMode.forEach(element => {
+          temp1=temp1+element.name
+        });
+
+        vat.taxes.forEach(element => {
+          temp2=temp2+element.name
+        });
         if (
           vat.country && vat.country['name'].toLowerCase().indexOf(val) >= 0 ? true : false ||
-            vat.status && vat.status.toLowerCase().indexOf(val) >= 0 ? true : false
+          vat.status && vat.status.toLowerCase().indexOf(val) >= 0 ? true : false ||
+          temp && temp.toLowerCase().indexOf(val) >= 0 ? true : false ||
+          temp1 && temp1.toLowerCase().indexOf(val) >= 0 ? true : false ||
+          temp2 && temp2.toLowerCase().indexOf(val) >= 0 ? true : false
         )
           return true;
       });
@@ -163,6 +178,10 @@ export class VatManagementComponent implements OnInit {
       .catch((error) => {
         this.getVats();
       });
+  }
+
+  sort(event, sort1, sort2){
+    console.log('seeeeeeeeee', event)
   }
 
 

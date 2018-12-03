@@ -4,12 +4,12 @@
       <h4>Select Country</h4>
       <div class="country">
         <!-- <li *ngFor="let country of countries" [routerLink]= "[country.id]", routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            {{ country.name }}
-          </li> -->
-        
-        <li *ngFor="let country of countries" (click)="selectCountry(country)" [routerLink]="[country.id]"
-          routerLinkActive="active">
           {{ country.name }}
+        </li> -->
+
+        <li *ngFor="let country of countries"> <a (click)="selectCountry(country)" [routerLink]="[country.id]"
+            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            {{ country.name }}</a>
         </li>
       </div>
     </div>
