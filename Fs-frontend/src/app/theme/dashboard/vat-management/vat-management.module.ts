@@ -8,7 +8,9 @@ import { VatManagementRoutingModule } from './vat-management-routing.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { VatManagementComponent } from './vat-management.component';
-import { SelectedCountryWizardComponent } from './selected-country-wizard/selected-country-wizard.component'
+import { SelectedCountryWizardComponent } from './add-vat/selected-country-wizard/selected-country-wizard.component'
+import { AddVatComponent } from './add-vat/add-vat.component';
+import { EditVatComponent } from './edit-vat/edit-vat.component';
 
 @NgModule({
   imports: [
@@ -24,9 +26,12 @@ import { SelectedCountryWizardComponent } from './selected-country-wizard/select
   ],
   declarations: [
     VatManagementComponent,
+    AddVatComponent,
+    EditVatComponent,
     SelectedCountryWizardComponent
   ],
   entryComponents: [
+    EditVatComponent
   ]
 })
 export class VatManagementModule {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { VatManagementService } from '../../../../services/vat-management.service';
+import { VatManagementService } from '../../../../../services/vat-management.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
 import swal from 'sweetalert2';
@@ -19,6 +19,7 @@ export class SelectedCountryWizardComponent implements OnInit {
   selectedStates: any;
   selectedPaymentMode: any;
   states: Array<Object> = [];
+  state: any = [];
   vatForm: FormGroup;
   paymentMode = [
     { 'id': 1, 'itemName': 'Paypal' },
@@ -44,6 +45,8 @@ export class SelectedCountryWizardComponent implements OnInit {
             response['data'].forEach(state => {
               let element = { 'id': state['id'], 'itemName': state['name'] };
               this.states.push(element)
+              this.state = [];
+              this.state = this.states
             })
           }
         })
@@ -104,12 +107,24 @@ export class SelectedCountryWizardComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("form values", this.vatForm.value)
    const data = this.vatForm.value;
+   data.country.id = this.selectedCountry['id'];
+   data.country.name = this.selectedCountry['name'];
+  data.states.forEach(element => {
+     element.name = element.itemName;
+     delete element.itemName
+   });
+   data.paymentMode.forEach(element => {
+    element.name = element.itemName;
+    delete element.itemName;
+  });
+   data.state = data.states;
+   delete data.states;
    this.vatManagementService.createVat(data)
    .subscribe((response: HttpResponse<any>) => {
      if(response.status === 200){
        this.openSuccessSwal()
+       location.reload();
      }
      else {
        this.openUnscuccessSwal();

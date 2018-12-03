@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import swal from 'sweetalert2';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { UserService } from '../../../../services/user.servivce';
+import { AuthenticationService } from '../../../../services/auth.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -57,6 +58,7 @@ export class BuyerProfileComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private authService: AuthenticationService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
@@ -131,6 +133,7 @@ export class BuyerProfileComponent implements OnInit {
   }
 
   showCompanyForm() {
+    this.authService.currentLoggingUserSubject.next(this.currentUser);
    this.router.navigate(['../../company-profile'], { relativeTo: this.activatedRoute})
   }
 

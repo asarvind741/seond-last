@@ -44,11 +44,9 @@ const Coupon = new Schema({
 
 Coupon.pre('save', function(next) {
   const coupon = this;
-  console.log('pre save');
   let url = 'http://40.71.47.14:5000/coupon';
   let couponUrl = `${url}/${coupon.name}`;
   coupon.couponUrl = couponUrl;
-  console.log('coupon url generated', coupon.couponUrl);
   next();
 });
 

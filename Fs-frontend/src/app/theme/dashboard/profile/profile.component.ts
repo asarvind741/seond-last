@@ -39,7 +39,7 @@ export class ProfileComponent implements OnInit {
         }
         else 
         {
-          this.role = "buyer"
+          this.role = "buyer";
         }
         
       }

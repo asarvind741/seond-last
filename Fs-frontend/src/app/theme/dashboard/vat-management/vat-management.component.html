@@ -1,17 +1,116 @@
 <div class="row">
-  <div class="col-lg-4 col-sm-4 col-md-4 col-xs-4">
-    <h4>Select Country</h4>
-    <div class="country">
-      <!-- <li *ngFor="let country of countries" [routerLink]= "[country.id]", routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        {{ country.name }}
-      </li> -->
+  <div class="col-sm-12">
+    <app-card [title]="'VAT Management'" [classHeader]="true">
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Search</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" (ngModelChange)="onSearchInputChange($event)" placeholder="Search here..."
+            [(ngModel)]="search_input">
+        </div>
+        <div class="col-sm-4">
+          <button class="btn btn-primary btn-round" (click)="onAddNewVat()"><i class="fa fa-plus"></i>New Vat</button>
+        </div>
+      </div>
+      <ngx-datatable #mydatatable class="material data-table" [headerHeight]="50" [limit]="10" [columnMode]="'force'"
+        [footerHeight]="50" [rowHeight]="'auto'" [rows]="rows">
+        <ngx-datatable-column name="country">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Country
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span>
+              {{ value.name }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="state">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              State
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span>
+              <div *ngFor="let element of value">
+                {{ element.name }}
+              </div>
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="paymentMode">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Payment Methods
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span>
+              <div *ngFor="let element of value">
+                {{ element.name }}
+              </div>
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="taxes">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Taxes
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span>
+              <div *ngFor="let element of value">
+                {{ element.name }} - {{ element.value }}%
+              </div>
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+        <!-- <ngx-datatable-column name="password">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Password
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span>
+              {{value}}
+            </span>
+          </ng-template>
+        </ngx-datatable-column> -->
+        <ngx-datatable-column name="status">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Status
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span>
+              {{value}}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
 
-      <li *ngFor="let country of countries" (click)= "selectCountry(country)"  [routerLink]="[country.id]" routerLinkActive="active" >
-          {{ country.name }}
-        </li>
-    </div>
-  </div>
-  <div class="col-lg-8 col-sm-8 col-md-8 col-xs-8">
-    <router-outlet></router-outlet>
+        <ngx-datatable-column name="Action" prop="id" [sortable]="false">
+          <ng-template let-rowIndex="rowIndex" let-id="value" let-row="row" ngx-datatable-cell-template>
+            <button class="btn btn-sm btn-info" (click)="editVat(row)">
+              <i class="fa fa-edit"></i> Edit
+            </button>
+            <div *ngIf="row['status'] === 'Active' ; else activate">
+              <button class="btn btn-sm btn-danger" (click)="deactivateVat(row)">
+                <i class="fa fa-trash"></i> Deactivate
+              </button>
+            </div>
+            <ng-template #activate>
+              <button class="btn btn-sm btn-primary" (click)="activateVat(row)">
+                <i class="fa fa-lightbulb"></i> Activate
+              </button>
+            </ng-template>
+          </ng-template>
+        </ngx-datatable-column>
+
+      </ngx-datatable>
+    </app-card>
   </div>
 </div>

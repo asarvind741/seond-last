@@ -31,7 +31,20 @@ export class VatManagementService {
     }
 
     createVat(data){
-        return this.httpClient.post(`${environment.API_URL}/vat/create/`, data)
+        return this.httpClient.post(`${environment.API_URL}/vat/create/`, data);
+    }
+
+    editVat(data, id){
+        data.id = id;
+        return this.httpClient.post(`${environment.API_URL}/vat/edit/`, data);
+    }
+
+    getVat(){
+        return this.httpClient.get(`${environment.API_URL}/vat/`);
+    }
+
+    modifyStatusOfVat(id){
+        return this.httpClient.post(`${environment.API_URL}/vat/status-modify`, {id: id})
     }
 
 }

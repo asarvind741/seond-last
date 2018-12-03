@@ -1,350 +1,313 @@
-<div class="page-body">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="md-tabs md-card-tabs">
-              <div>
-                <div [@fadeInOutTranslate] class="m-t-15">
-                  <!-- personal card start -->
-                  <form [formGroup]="companyProfile" (ngSubmit)="onSubmit()">
-                    <div class="card">
-                      <div class="card-header">
-                        <h5 class="card-header-text">About Me</h5>
-                        <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
-                          (click)="toggleEditProfile()">
-                          <i class="icofont {{ editProfileIcon }}"></i>
-                        </button>
-                      </div>
-                      <div class="card-body">
-                        <div class="view-info" *ngIf="editProfile">
+<div *ngIf = "isCompanyAvailable" class="page-body">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="md-tabs md-card-tabs">
+        <div>
+          <div [@fadeInOutTranslate] class="m-t-15">
+            <!-- personal card start -->
+            <form [formGroup]="companyProfileForm" (ngSubmit)="onSubmit()">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-header-text"> Company Overview</h5>
+                  <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                    (click)="toggleEditCompanyProfile()">
+                    <i class="icofont {{ editCompanyIcon }}"></i>
+                  </button>
+                </div>
+                <div class="card-body">
+                  <div class="view-info" *ngIf="editCompany">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="general-info">
                           <div class="row">
-                            <div class="col-lg-12">
-                              <div class="general-info">
-                                <div class="row">
-                                  <div class="col-lg-12 col-xl-6">
-                                    <div class="table-responsive">
-                                      <table class="table m-0">
-                                        <tbody>
-                                          <tr>
-                                            <th scope="row">First Name</th>
-                                            <td>{{ currentUser.firstName}}</td>
-                                          </tr>
-                                          <tr>
-                                            <th scope="row">Full Name</th>
-                                            <td>{{ currentUser.name}}</td>
-                                          </tr>
-                                          <tr>
-                                            <th scope="row">Gender</th>
-                                            <td>{{ currentUser.gender}}</td>
-                                          </tr>
-                                          <tr>
-                                            <th scope="row">Birth Date</th>
-                                            <td>{{ currentUser.dateOfBirth}}</td>
-                                          </tr>
-                                          <tr>
-                                            <th scope="row">Marital Status</th>
-                                            <td>{{ currentUser.meritalStatus}}</td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  </div>
-                                  <!-- end of table col-lg-6 -->
-                                  <div class="col-lg-12 col-xl-6">
-                                    <div class="table-responsive">
-                                      <table class="table">
-                                        <tbody>
-                                          <tr>
-                                            <th scope="row">Last Name</th>
-                                            <td><a href="javascript:;">{{ currentUser.lastName}}</a></td>
-                                          </tr>
-                                          <tr>
-                                            <th scope="row">Email</th>
-                                            <td><a href="javascript:;">{{ currentUser.email}}</a></td>
-                                          </tr>
-                                          <tr>
-                                            <th scope="row">Mobile Number</th>
-                                            <td>{{ currentUser.mobile}}</td>
-                                          </tr>
-                                          <tr>
-                                            <th scope="row">LinkedIn Id</th>
-                                            <td>{{ currentUser.linkedInId}}</td>
-                                          </tr>
-                                          <tr>
-                                            <th scope="row">Website</th>
-                                            <td><a href="javascript:;">{{ currentUser.websiteAddress}}</a></td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  </div>
-                                  <!-- end of table col-lg-6 -->
-                                </div>
-                                <!-- end of row -->
+                            <div class="col-lg-12 col-xl-6">
+                              <div class="table-responsive">
+                                <table class="table m-0">
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">Name</th>
+                                      <td>{{ companyProfileForm.value.name}}</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">Admin</th>
+                                      <td>{{ companyProfileForm.value.primaryAdmin.name}}</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">Subscription Name</th>
+                                      <td>{{ companyProfileForm.value.subscription.name}}</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">Last subscribed on</th>
+                                      <td>{{ companyProfileForm.value.subscriptionLastDate }}</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
                               </div>
-                              <!-- end of general info -->
                             </div>
-                            <!-- end of col-lg-12 -->
+                            <!-- end of table col-lg-6 -->
+                            <div class="col-lg-12 col-xl-6">
+                              <div class="table-responsive">
+                                <table class="table">
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">Subscription Amount</th>
+                                      <td><a href="javascript:;">{{ companyProfileForm.value.subscriptionBilledAmount}}</a></td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">Maximum Users</th>
+                                      <td><a href="javascript:;">{{ companyProfileForm.value.subscription.maximumNoOfUsers}}</a></td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">Total Subscribed Members</th>
+                                      <td>{{ companyProfileForm.value.members.length }}</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">Created By</th>
+                                      <td>{{ companyProfileForm.value.createdBy.name}}</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                            <!-- end of table col-lg-6 -->
                           </div>
                           <!-- end of row -->
                         </div>
-                        <!-- end of view-info -->
-                        <div class="edit-info" *ngIf="!editProfile">
+                        <!-- end of general info -->
+                      </div>
+                      <!-- end of col-lg-12 -->
+                    </div>
+                    <!-- end of row -->
+                  </div>
+                  <!-- end of view-info -->
+                  <div class="edit-info" *ngIf="!editCompany">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="general-info">
                           <div class="row">
-                            <div class="col-lg-12">
-                              <div class="general-info">
-                                <div class="row">
-                                  <div class="col-lg-6">
-                                    <div class="table-responsive">
-                                      <table class="table">
-                                        <tbody>
-                                          <tr>
-                                            <td>
-                                              <div class="input-group">
-                                                <span class="input-group-prepend"><label class="input-group-text"> <i class="icofont icofont-user"></i></label></span>
-                                                <input type="text" class="form-control" placeholder="First Name"
-                                                  formControlName="firstName">
-                                              </div>
-                                            </td>
-                                          </tr>
-                                          <tr>
-                                            <td>
-                                              <div class="input-group">
-                                                <span class="input-group-prepend"><label class="input-group-text"> <i class="icofont icofont-user"></i></label></span>
-                                                <input type="text" class="form-control" placeholder="Full Name"
-                                                  formControlName="name">
-                                              </div>
-                                            </td>
-                                          </tr>
-      
-                                          <tr>
-                                            <td>
-                                              <div class="form-radio">
-                                                <div class="group-add-on">
-                                                  <div class="radio radiofill radio-inline">
-                                                    <label>
-                                                      <input type="radio" name="gender" value="Male" formControlName="gender"><i
-                                                        class="helper"></i>
-                                                      Male
-                                                    </label>
-                                                  </div>
-                                                  <div class="radio radiofill radio-inline">
-                                                    <label>
-                                                      <input type="radio" name="gender" value="Female" formControlName="gender"><i
-                                                        class="helper"></i> Female
-                                                    </label>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </td>
-                                          </tr>
-                                          <tr>
-                                            <td>
-                                              <input id="dropper-default" class="form-control" type="text" formControlName="dateOfBirth"
-                                                placeholder="Select Your Birth Date" ngbDatepicker #d="ngbDatepicker" />
-                                              <button type="button" (click)="d.toggle()"><i class="fa fa-calendar"></i></button>
-                                            </td>
-                                          </tr>
-                                          <tr>
-                                            <td>
-                                              <select id="hello-single" class="form-control" formControlName="meritalStatus">
-                                                <option [ngValue]="null" disabled>Select Merital Status</option>
-                                                <option *ngFor="let status of statuss" [ngValue]="status">
-                                                  {{ status }}
-                                                </option>
-                                              </select>
-                                            </td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  </div>
-                                  <!-- end of table col-lg-6 -->
-                                  <div class="col-lg-6">
-                                    <div class="table-responsive">
-                                      <table class="table">
-                                        <tbody>
-                                          <tr>
-                                            <td>
-                                              <div class="input-group">
-                                                <span class="input-group-prepend"><label class="input-group-text"> <i class="icofont icofont-user"></i></label></span>
-                                                <input type="text" class="form-control" placeholder="Last Name"
-                                                  formControlName="lastName">
-                                              </div>
-                                            </td>
-                                          </tr>
-                                          <tr>
-                                            <td>
-                                              <div class="input-group">
-                                                <span class="input-group-prepend"><label class="input-group-text"> <i class="icofont icofont-user"></i></label></span>
-                                                <input type="email" class="form-control" placeholder="Email" formControlName="email">
-                                              </div>
-                                            </td>
-                                          </tr>
-                                          <tr>
-                                            <td>
-                                              <div class="input-group">
-                                                <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-mobile-phone"></i></label></span>
-                                                <input type="number" class="form-control" formControlName="mobile"
-                                                  placeholder="Mobile Number">
-                                              </div>
-                                            </td>
-                                          </tr>
-                                          <tr>
-                                            <td>
-                                              <div class="input-group">
-                                                <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-social-linkedin"></i></label></span>
-                                                <input type="text" class="form-control" formControlName="linkedInId"
-                                                  placeholder="Linkedin Id">
-                                              </div>
-                                            </td>
-                                          </tr>
-                                          <tr>
-                                            <td>
-                                              <div class="input-group">
-                                                <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-earth"></i></label></span>
-                                                <input type="text" class="form-control" formControlName="websiteAddress"
-                                                  placeholder="website">
-                                              </div>
-                                            </td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  </div>
-                                  <!-- end of table col-lg-6 -->
-                                </div>
-                                <!-- end of row -->
-                                <div class="text-center">
-                                  <button type="submit" class="btn btn-primary">Save</button>
-                                  <button type="button" class="btn btn-warning" (click)="toggleEditProfile()">Cancel</button>
-                                </div>
+                            <div class="col-lg-6">
+                              <div class="table-responsive">
+                                <table class="table">
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <div class="input-group">
+                                          <span class="input-group-prepend"><label class="input-group-text"> Company
+                                              Name<i class="icofont icofont-user"></i></label></span>
+                                          <input type="text" class="form-control" placeholder="Company name"
+                                            formControlName="name">
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <div class="input-group">
+                                          <span class="input-group-prepend"><label class="input-group-text">Owner <i
+                                                class="icofont icofont-user"></i></label></span>
+                                          <input type="text" class="form-control" placeholder="Addmin" formControlName="primaryAdmin" readonly>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <div class="input-group">
+                                          <span class="input-group-prepend"><label class="input-group-text">
+                                              Subscription Name<i class="icofont icofont-user"></i></label></span>
+                                          <input type="text" class="form-control" readonly formControlName="subscriptionName">
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
                               </div>
-                              <!-- end of edit info -->
                             </div>
-                            <!-- end of col-lg-12 -->
+                            <!-- end of table col-lg-6 -->
+                            <div class="col-lg-6">
+                              <div class="table-responsive">
+                                <table class="table">
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <div class="input-group">
+                                          <span class="input-group-prepend"><label class="input-group-text">Last Subscribed on <i class="icofont icofont-user"></i></label></span>
+                                          <input id="dropper-default" class="form-control" type="text" formControlName="subscriptionLastDate"
+                                            readonly />
+                                        </div>
+                                      </td>
+                                    </tr>
+
+                                    <tr>
+                                      <td>
+                                        <div class="input-group">
+                                          <span class="input-group-prepend"><label class="input-group-text">Max subscriptions <i class="icofont icofont-user"></i></label></span>
+                                          <input id="dropper-default" class="form-control" type="text" formControlName="maximumNoOfUsers"
+                                            readonly />
+                                        </div>
+                                      </td>
+                                    </tr>
+
+                                    <tr>
+                                      <td>
+                                        <div class="input-group">
+                                          <span class="input-group-prepend"><label class="input-group-text">Subscription Amount<i class="icofont icofont-user"></i></label></span>
+                                          <input id="dropper-default" class="form-control" type="text" formControlName="subscriptionBilledAmount"
+                                            readonly />
+                                        </div>
+                                      </td>
+                                    </tr>
+
+                                    <tr>
+                                      <td>
+                                        <div class="input-group">
+                                          <span class="input-group-prepend"><label class="input-group-text">
+                                              Total Employees<i class="icofont icofont-user"></i></label></span>
+                                          <input type="text" class="form-control" formControlName="toalEmployees">
+                                        </div>
+                                      </td>
+                                    </tr>
+
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                            <!-- end of table col-lg-6 -->
                           </div>
                           <!-- end of row -->
-                        </div>
-                        <!-- end of edit-info -->
-                      </div>
-                      <!-- end of card-body -->
-                    </div>
-      
-                    <div class="row">
-                      <div class="col-lg-12">
-                        <div class="card">
-                          <div class="card-header">
-                            <h5 class="card-header-text">Address</h5>
-                            <button id="edit-info-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
-                              (click)="toggleEditAddress()">
-                              <i class="icofont {{ editAddressIcon }}"></i>
-                            </button>
+                          <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-warning" (click)="toggleEditProfile()">Cancel</button>
                           </div>
-                          <div class="card-body user-desc">
-                            <div class="view-desc" *ngIf="editAddress">
-                              <div formArrayName="address">
-                                <div *ngFor="let addr of companyProfile.get('address')['controls']; let i = index"
-                                  [formGroupName]="i">
-                                  <h4>Address{{i+1}}</h4>
-                                  <div class="input-group">
-                                    <label>Line 1</label>
-                                    <input type="text" class="form-control" formControlName="line1" readonly>
-                                  </div>
-                                  <div class="input-group">
-                                    <label>Line 2</label>
-                                    <input type="text" class="form-control" formControlName="line2" readonly>
-                                  </div>
-                                  <div class="input-group">
-                                    <label>Zip Code</label>
-                                    <input type="text" class="form-control" formControlName="postalCode" readonly>
-                                  </div>
-                                  <div class="input-group">
-                                    <label>city</label>
-                                    <input type="text" class="form-control" formControlName="city" readonly>
-                                  </div>
-                                  <div class="input-group">
-                                    <label>Country</label>
-                                    <input type="text" class="form-control" formControlName="country" readonly>
-                                  </div>
-                                </div>
-                              </div>
+                        </div>
+                        <!-- end of edit info -->
+                      </div>
+                      <!-- end of col-lg-12 -->
+                    </div>
+                    <!-- end of row -->
+                  </div>
+                  <!-- end of edit-info -->
+                </div>
+                <!-- end of card-body -->
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-header-text">Address</h5>
+                      <button id="edit-info-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                        (click)="toggleEditAddress()">
+                        <i class="icofont {{ editAddressIcon }}"></i>
+                      </button>
+                    </div>
+                    <div class="card-body user-desc">
+                      <div class="view-desc" *ngIf="editAddress">
+                        <div formArrayName="address">
+                          <div *ngFor="let addr of companyProfileForm.get('address')['controls']; let i = index"
+                            [formGroupName]="i">
+                            <h4>Address{{i+1}}</h4>
+                            <div class="input-group">
+                              <label>Line 1</label>
+                              <input type="text" class="form-control" formControlName="line1" readonly>
                             </div>
-                            <div class="edit-desc" *ngIf="!editAddress">
-                              <div class="col-md-12">
-                                  <div formArrayName="address">
-                                      <div *ngFor="let addr of companyProfile.get('address')['controls']; let i = index"
-                                        [formGroupName]="i">
-                                        <h4>Address{{i+1}}</h4>
-                                        <div class="input-group">
-                                          <label>Line 1</label>
-                                          <input type="text" class="form-control" formControlName="line1">
-                                        </div>
-                                        <div class="input-group">
-                                          <label>Line 2</label>
-                                          <input type="text" class="form-control" formControlName="line2">
-                                        </div>
-                                        <div class="input-group">
-                                          <label>Zip Code</label>
-                                          <input type="text" class="form-control" formControlName="postalCode">
-                                        </div>
-                                        <div class="input-group">
-                                          <label>city</label>
-                                          <input type="text" class="form-control" formControlName="city">
-                                        </div>
-                                        <div class="input-group">
-                                          <label>Country</label>
-                                          <input type="text" class="form-control" formControlName="country">
-                                        </div>
-                                      </div>
-                                    </div>
-                              </div>
-                              <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                                <button type="button" class="btn btn-warning" (click)="toggleEditProfile()">Cancel</button>
-                              </div>
+                            <div class="input-group">
+                              <label>Line 2</label>
+                              <input type="text" class="form-control" formControlName="line2" readonly>
+                            </div>
+                            <div class="input-group">
+                              <label>Zip Code</label>
+                              <input type="text" class="form-control" formControlName="postalCode" readonly>
+                            </div>
+                            <div class="input-group">
+                              <label>city</label>
+                              <input type="text" class="form-control" formControlName="city" readonly>
+                            </div>
+                            <div class="input-group">
+                              <label>State</label>
+                              <input type="text" class="form-control" formControlName="state" readonly>
+                            </div>
+                            <div class="input-group">
+                              <label>Country</label>
+                              <input type="text" class="form-control" formControlName="country" readonly>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-      
-                    <div class="row">
-                      <div class="col-lg-12">
-                        <div class="card">
-                          <div class="card-header">
-                            <h5 class="card-header-text">Description About Me</h5>
-                            <button id="edit-info-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
-                              (click)="toggleEditAbout()">
-                              <i class="icofont {{ editAboutIcon }}"></i>
-                            </button>
-                          </div>
-                          <div class="card-body user-desc">
-                            <div class="view-desc" *ngIf="editAbout">
-                              <div>{{ companyProfile.value.description }}</div>
-                            </div>
-                            <div class="edit-desc" *ngIf="!editAbout">
-                              <div class="col-md-12">
-                                <div class="input-group">
-                                  <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-earth"></i></label></span>
-                                  <textarea type="text" class="form-control" rows="12" placeholder="Enter description about yourself..."
-                                    formControlName="description"></textarea>
-                                </div>
+                      <div class="edit-desc" *ngIf="!editAddress">
+                        <div class="col-md-12">
+                          <div formArrayName="address">
+                            <div *ngFor="let addr of companyProfileForm.get('address')['controls']; let i = index"
+                              [formGroupName]="i">
+                              <h4>Address{{i+1}}</h4>
+                              <div class="input-group">
+                                <label>Line 1</label>
+                                <input type="text" class="form-control" formControlName="line1">
                               </div>
-                              <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                                <button type="button" class="btn btn-warning" (click)="toggleEditProfile()">Cancel</button>
+                              <div class="input-group">
+                                <label>Line 2</label>
+                                <input type="text" class="form-control" formControlName="line2">
+                              </div>
+                              <div class="input-group">
+                                <label>Zip Code</label>
+                                <input type="text" class="form-control" formControlName="postalCode">
+                              </div>
+                              <div class="input-group">
+                                <label>city</label>
+                                <input type="text" class="form-control" formControlName="city">
+                              </div>
+                              <div class="input-group">
+                                <label>Country</label>
+                                <input type="text" class="form-control" formControlName="country">
                               </div>
                             </div>
                           </div>
                         </div>
+                        <div class="text-center">
+                          <button type="submit" class="btn btn-primary">Save</button>
+                          <button type="button" class="btn btn-warning" (click)="toggleEditProfile()">Cancel</button>
+                        </div>
                       </div>
                     </div>
-                    <!-- personal card end-->
-                  </form>
+                  </div>
                 </div>
               </div>
-            </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-header-text">Description About Company</h5>
+                      <button id="edit-info-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                        (click)="toggleEditAbout()">
+                        <i class="icofont {{ editAboutIcon }}"></i>
+                      </button>
+                    </div>
+                    <div class="card-body user-desc">
+                      <div class="view-desc" *ngIf="editAbout">
+                        <div>{{ company.description }}</div>
+                      </div>
+                      <div class="edit-desc" *ngIf="!editAbout">
+                        <div class="col-md-12">
+                          <div class="input-group">
+                            <span class="input-group-prepend"><label class="input-group-text"><i class="icofont icofont-earth"></i></label></span>
+                            <textarea type="text" class="form-control" rows="12" placeholder="Enter description about your company..."
+                              formControlName="description"></textarea>
+                          </div>
+                        </div>
+                        <div class="text-center">
+                          <button type="submit" class="btn btn-primary">Save</button>
+                          <button type="button" class="btn btn-warning" (click)="toggleEditAbout()">Cancel</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- personal card end-->
+            </form>
           </div>
         </div>
       </div>
-      
+    </div>
+  </div>
+</div>
+

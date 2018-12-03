@@ -1,4 +1,4 @@
-<app-card [title]="'Right Nav Wizard'">
+<app-card [title]="'Edit Vat-' + selectedCountry">
   <wizard #wizard class="arc-wizard" navBarLayout="large-empty-symbols" navBarLocation="left">
     <wizard-step stepTitle="Select State" navigationSymbol="1">
       <div class="centered-content">
@@ -22,9 +22,9 @@
         <form [formGroup]="vatForm">
           <div>
             <h4>Select Payment Mode</h4>
-            <angular2-multiselect [data]="paymentMode" [(ngModel)]="selectedPaymentMode" [settings]="settings2" (onSelect)="onItemSelect($event)"
-              (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
-              formControlName="paymentMode">
+            <angular2-multiselect [data]="paymentMode" [(ngModel)]="selectedPaymentMode" [settings]="settings2"
+              (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+              (onDeSelectAll)="onDeSelectAll($event)" formControlName="paymentMode">
             </angular2-multiselect>
           </div>
         </form>
@@ -57,16 +57,27 @@
     </wizard-step>
     <wizard-step stepTitle="Finished" navigationSymbol="4">
       <div class="centered-content">
-       <form [formGroup] = "vatForm"></form>
+        <form [formGroup]="vatForm"></form>
         <div>
           <p>You are about to submit the Taxes.</p>
         </div>
         <div class="btn-group mt-10">
           <button type="button" class="btn btn-secondary btn-sm" previousStep>Back</button>
           <button type="button" class="btn btn-danger btn-sm" resetWizard>Reset</button>
-          <button type="button" class="btn btn-primary btn-sm" (click) = "onSubmit()">Submit</button>
+          <button type="button" class="btn btn-primary btn-sm" (click)="onSubmit()">Submit</button>
         </div>
       </div>
     </wizard-step>
   </wizard>
+  <div class="row">
+    <div class="col-sm-3 col-lg-3">
+      <button class="btn btn-primary btn-round" type="button" (click)="onSubmit()">Done</button>
+    </div>
+    <div class="col-sm-3 col-lg-3">
+      <button class="btn btn-warning btn-round" type="button" (click)="closeModal()">Cancel</button>
+    </div>
+    <div class="col-sm-3 col-lg-3">
+      <button class="btn btn-info btn-round" type="button" (click)="clearModal()">Clear</button>
+    </div>
+  </div>
 </app-card>

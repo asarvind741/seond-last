@@ -3,7 +3,10 @@ import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import swal from 'sweetalert2';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { UserService } from '../../../services/user.servivce';
+import { AuthenticationService } from '../../../services/auth.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CompanyService } from '../../../services/company.service';
 
 @Component({
   selector: 'app-company-profile',
@@ -26,14 +29,13 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
   ]
 })
 export class CompanyProfileComponent implements OnInit {
-  editProfile = true;
-  editProfileIcon = 'icofont-edit';
-  companyProfile: FormGroup;
-
+  editCompany = true;
   editAbout = true;
-  editAboutIcon = 'icofont-edit';
-  editAddress = true;
-  editAddressIcon = 'icofont-edit';
+  isCompanyAvailable: Boolean = false;;
+  editAboutIcon = 'iconfont-edit'
+  editCompanyIcon = 'icofont-edit';
+  companyProfileForm: FormGroup;
+
 
   public editor;
   public editorContent: string;
@@ -44,123 +46,169 @@ export class CompanyProfileComponent implements OnInit {
   public sortBy = '';
   public sortOrder = 'desc';
   profitChartOption: any;
-  userId: any;
   rowsContact = [];
   loadingIndicator = true;
   reorderable = true;
-  statuss: Array<String> = ['Married', 'Single'];
-
+  company: any;
+  currentUser: any;
 
   constructor(
-    private userService: UserService,
-    private fb: FormBuilder
+    private companyService: CompanyService,
+    private authService: AuthenticationService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
   }
 
   ngOnInit() {
-    this.createForm();
+    this.authService.currentLoggingUserSubject
+      .subscribe(response => {
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.companyService.getCompany(this.currentUser['company'])
+          .subscribe((response: HttpResponse<any>) => {
+            if (response.status === 200) {
+              this.company = response['data'];
+              if(!this.company){
+                this.company = {
+                  name: "Demo Pvt Ltd",
+                  primaryAdmin: "Arvind Singh",
+                  description: "Demo company created by Arvind Singh",
+                  subscription: { name: "Test Subscription", maximumNoOfUsers: 100 },
+                  subscriptionLastDate: "21/12/2018",
+                  subscriptionBilledAmount: "$500",
+                  members: ['1', '2', '3'],
+                  createdBy: "Arvind SIngh",
+                  toalEmployees: 4000,
+                  address: {
+                    line1: "Line 1 address",
+                    line2: "Line 2 address",
+                    postalCode: 201301,
+                    city: "Noida",
+                    state: "UP",
+                    country: "India"
+                  }
+
+                }
+              }
+              this.createForm();
+            }
+            else {
+
+            }
+          }, (error: HttpErrorResponse) => {
+          })
+      })
+
   }
 
   createForm() {
-    // console.log("current user", this.currentUser.address);
-    // let address1 = this.fb.array([]);
+
+
     let address = new FormArray([]);
-    // if (this.currentUser['address']) {
-    //   for(let addr of this.currentUser['address'])
-    //    {
-    //     address.push(
-    //       new FormGroup({
-    //         'line1': new FormControl(addr.line1),
-    //         'line2': new FormControl(addr.line2),
-    //         'city': new FormControl(addr.city),
-    //         'postalCode': new FormControl(addr.postalCode),
-    //         'country': new FormControl(addr.country)
-    //       })
-    //     );
-    //   }
-    // }
-    // let name = this.currentUser.name ? this.currentUser.name : ''
-    // let firstName = this.currentUser.firstName ? this.currentUser.firstName : '';
-    // let lastName = this.currentUser.lastName ? this.currentUser.lastName : '';
-    // let email = this.currentUser.email ? this.currentUser.email : '';
-    // let gender = this.currentUser.gender ? this.currentUser.gender : '';
-    // let meritalStatus = this.currentUser.meritalStatus ? this.currentUser.meritalStatus : '';
-    // let status = this.currentUser.status ? this.currentUser.status : '';
-    // let mobile = this.currentUser.mobile ? this.currentUser.mobile : '';
-    // let dateOfBirth = this.currentUser.dateOfBirth ? this.currentUser.dateOfBirth : '';
-    // let linkedInId = this.currentUser.linkedInId ? this.currentUser.linkedInId : '';
-    // let websiteAddress = this.currentUser.websiteAddress ? this.currentUser.websiteAddress : '';
-    // let description = this.currentUser.description ? this.currentUser.description : '';
-    this.companyProfile = new FormGroup({
-      'firstName': new FormControl(null),
-      'lastName': new FormControl(null),
-      'name': new FormControl(null),
-      'email': new FormControl(null),
-      'status': new FormControl(null),
-      'mobile': new FormControl(null),
-      'gender': new FormControl(null),
-      'address': new FormControl(null),
-      'linkedInId': new FormControl(null),
-      'websiteAddress': new FormControl(null),
-      'meritalStatus': new FormControl(null),
-      'dateOfBirth': new FormControl(null),
-      'description': new FormControl(null)
-    })
+    if (this.company['address']) {
+      for (let addr of this.company['address']) {
+        address.push(
+          new FormGroup({
+            'line1': new FormControl(addr.line1),
+            'line2': new FormControl(addr.line2),
+            'city': new FormControl(addr.city),
+            'state': new FormControl(addr.state),
+            'postalCode': new FormControl(addr.postalCode),
+            'country': new FormControl(addr.country)
+          })
+        );
+      }
+    }
+
+    if (!!this.company) {
+      this.isCompanyAvailable = true;
+
+      let name = this.company.name ? this.company.name : '';
+      let primaryAdmin = this.company.primaryAdmin ? this.company.primaryAdmin : '';
+      let description = this.company.description ? this.company.description : '';
+      let subscription = this.company.subscription ? this.company.subscription : '';
+      let subscriptionLastDate = this.company.subscriptionLastDate ? this.company.subscriptionLastDate : '';
+      let subscriptionBilledAmount = this.company.subscriptionBilledAmount ? this.company.subscriptionBilledAmount : '';
+      let members = this.company.members ? this.company.members : '';
+      let createdBy = this.company.createdBy ? this.company.createdBy : '';
+      let toalEmployees = this.company.toalEmployees ? this.company.toalEmployees : '';
+
+      this.companyProfileForm = new FormGroup({
+        'name': new FormControl(name),
+        'address': address,
+        'primaryAdmin': new FormControl(primaryAdmin),
+        'description': new FormControl(description),
+        'subscription': new FormControl(subscription),
+        'maximumNoOfUsers': new FormControl(subscription.maximumNoOfUsers),
+        'subscriptionName': new FormControl(subscription.name),
+        'subscriptionLastDate': new FormControl(subscriptionLastDate),
+        'subscriptionBilledAmount': new FormControl(subscriptionBilledAmount),
+        'members': new FormControl(members),
+        'toalEmployees': new FormControl(toalEmployees),
+        'createdBy': new FormControl(createdBy)
+      })
+    }
   }
 
 
 
-  toggleEditProfile() {
-    this.editProfileIcon = (this.editProfileIcon === 'icofont-close') ? 'icofont-edit' : 'icofont-close';
-    this.editProfile = !this.editProfile;
+    toggleEditCompanyProfile() {
+      this.editCompanyIcon = (this.editCompanyIcon === 'icofont-close') ? 'icofont-edit' : 'icofont-close';
+      this.editCompany = !this.editCompany;
+    }
+
+    toggleEditAbout(){
+      this.editAboutIcon = (this.editAboutIcon === 'icofont-close') ? 'icofont-edit' : 'icofont-close';
+      this.editAbout = !this.editAbout;
+    }
+
+
+
+    showCompanyForm() {
+      this.router.navigate(['../../company-profile'], { relativeTo: this.activatedRoute })
+    }
+
+    onSubmit() {
+      const values = this.companyProfileForm.value;
+      console.log("test", values);
+      this.companyService.updateCompany(this.currentUser._id, values)
+        .subscribe((response: HttpResponse<any>) => {
+          if (response.status === 200) {
+            console.log("response", response)
+            this.companyService.getCompany(this.currentUser.company)
+              .subscribe((response: HttpResponse<any>) => {
+                if (response.status === 200) {
+                  console.log("get company========>", response['data'])
+                  this.currentUser['company'] = response['data']
+                  this.openSuccessSwal();
+                }
+                else {
+                  console.log("Inside else block")
+                }
+              })
+          }
+        }, (error: HttpResponse<any>) => {
+          console.log("error", error)
+          this.openUnscuccessSwal();
+        })
+
+
+    }
+
+    openSuccessSwal() {
+      swal({
+        title: 'Successful!',
+        text: 'User updated successfully!',
+        type: 'success'
+      }).catch(swal.noop);
+    }
+
+    openUnscuccessSwal() {
+      swal({
+        title: 'Cancelled!',
+        text: "Error Occured",
+        type: 'error'
+      }).catch(swal.noop);
+    }
+
   }
-
-  toggleEditAddress() {
-    this.editAddressIcon = (this.editAddressIcon === 'icofont-close') ? 'icofont-edit' : 'icofont-close';
-    this.editAddress = !this.editAddress;
-  }
-
-  toggleEditAbout() {
-    this.editAboutIcon = (this.editAboutIcon === 'icofont-close') ? 'icofont-edit' : 'icofont-close';
-    this.editAbout = !this.editAbout;
-  }
-
-  onSubmit() {
-    // const values = this.companyProfile.value;
-    // this.userService.updateUser(this.currentUser._id, values)
-    //   .subscribe((response: HttpResponse<any>) => {
-    //     if (response.status === 200) {
-    //       console.log("response", response)
-    //       this.userService.getUser(this.currentUser._id)
-    //         .subscribe((response: HttpResponse<any>) => {
-    //           if (response.status === 200) {
-    //             this.currentUser = response['data']
-    //           }
-    //         })
-    //       this.openSuccessSwal()
-    //     }
-    //   }, (error: HttpResponse<any>) => {
-    //     console.log("error", error)
-    //     this.openUnscuccessSwal();
-    //   })
-
-
-  }
-
-  openSuccessSwal() {
-    swal({
-      title: 'Successful!',
-      text: 'User updated successfully!',
-      type: 'success'
-    }).catch(swal.noop);
-  }
-
-  openUnscuccessSwal() {
-    swal({
-      title: 'Cancelled!',
-      text: "Error Occured",
-      type: 'error'
-    }).catch(swal.noop);
-  }
-
-}

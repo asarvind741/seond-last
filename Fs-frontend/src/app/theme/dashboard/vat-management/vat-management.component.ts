@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
-import { HttpResponse } from '@angular/common/http';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { VatManagementService } from '../../../services/vat-management.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { EditVatComponent } from './edit-vat/edit-vat.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-vat-management',
+  selector: '<app-vat-management></app-vat-management>',
   templateUrl: './vat-management.component.html',
   styleUrls: [
     './vat-management.component.scss',
@@ -13,43 +15,129 @@ import { VatManagementService } from '../../../services/vat-management.service';
   ]
 })
 export class VatManagementComponent implements OnInit {
-  countries: Array<Object> = [];
-  addClass: Boolean = false;
-  selectedCountry: Object;
+  deleting: Boolean;
+  showMessage: any;
   constructor(
-    private vatManagementService: VatManagementService,
+    private vatService: VatManagementService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private ngbModal: NgbModal
   ) {
-    this.getCountries();
+    this.getVats();
   }
+  search_input: string = null;
+  editing = {};
+  rows = [];
+  temp_rows = [];
   ngOnInit() {
 
   }
 
-  getCountries() {
-    this.vatManagementService.getCountryList()
-    .subscribe((response: HttpResponse<any>) => {
-     if(response.status === 200){
-       this.countries = response['data'];
-     }
-    })
+  getVats() {
+    this.vatService.getVat()
+      .subscribe(vat => {
+        this.rows = vat['data'];
+        console.log("this rowsssssssssssss", this.rows);
+        this.temp_rows = vat['data'];
+      })
   }
 
-  selectCountry(country) {
-    this.addClass = true;
-    this.vatManagementService.selectedCountrySubject.next(country);
-    // this.router.navigate([country.id], { relativeTo: this.activatedRoute});
+  onSearchInputChange(val) {
+    if (val) {
+      val = val.toLowerCase();
+      let data = this.temp_rows;
+      data = data.filter(vat => {
+        console.log("vat to filter", vat);
+        if (
+          vat.country && vat.country['name'].toLowerCase().indexOf(val) >= 0 ? true : false ||
+            vat.status && vat.status.toLowerCase().indexOf(val) >= 0 ? true : false
+        )
+          return true;
+      });
+      this.rows = data;
+    } else {
+      this.rows = this.temp_rows;
+    }
   }
 
-  
+  activateVat(row) {
+    swal({
+      title: 'Are you sure?',
+      text: 'You not be able to revert this!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, activate it!',
+      cancelButtonText: 'Not now!',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger mr-sm'
+    }).then((result) => {
+      if (result.value) {
+        this.vatService.modifyStatusOfVat(row._id).subscribe((response: HttpResponse<any>) => {
+          if (response.status === 200) {
+            this.getVats();
+            swal(
+              'Success!',
+              'Your have activated VAT successfully.',
+              'success'
+            );
+          }
+        });
 
-  
+      } else if (result.dismiss) {
+        swal(
+          'Cancelled',
+          'You have cancelled activation request.)',
+          'error'
+        );
+      }
+    });
+  }
+
+
+  deactivateVat(row) {
+    swal({
+      title: 'Are you sure?',
+      text: 'You not be able to revert this!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger mr-sm'
+    }).then((result) => {
+      if (result.value) {
+        this.vatService.modifyStatusOfVat(row._id).subscribe((response: HttpResponse<any>) => {
+          if (response.status === 200) {
+            this.getVats();
+            swal(
+              'Deleted!',
+              'Your have deactivated VAT successfully.',
+              'success'
+            );
+          }
+          else {
+
+          }
+        });
+
+      } else if (result.dismiss) {
+        swal(
+          'Cancelled',
+          'You have cancelled deletion request.)',
+          'error'
+        );
+      }
+    });
+  }
 
   openSuccessSwal() {
     swal({
       title: 'Successful!',
-      text: 'Plan updated successfully!',
+      text: 'Vat status updated successfully!',
       type: 'success'
     }).catch(swal.noop);
   }
@@ -57,49 +145,28 @@ export class VatManagementComponent implements OnInit {
   openUnscuccessSwal() {
     swal({
       title: 'Cancelled!',
-      text: 'Please try again',
+      text: this.showMessage,
       type: 'error'
     }).catch(swal.noop);
   }
 
- 
+  onAddNewVat() {
+    this.router.navigate(['./add'], { relativeTo: this.activatedRoute });
+  }
 
-  // openSuccessCancelSwal(name) {
-  //   this.deleting = true;
-  //   swal({
-  //     title: 'Are you sure?',
-  //     text: 'You not be able to revert this!',
-  //     type: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#3085d6',
-  //     cancelButtonColor: '#d33',
-  //     confirmButtonText: 'Yes, deactivate it!',
-  //     cancelButtonText: 'Not now!',
-  //     confirmButtonClass: 'btn btn-success',
-  //     cancelButtonClass: 'btn btn-danger mr-sm'
-  //   }).then((result) => {
-  //     if (result.value) {
-  //       this.planService.modifyStatus(name._id).subscribe((response: HttpResponse<any>) => {
-  //         console.log(response)
-  //         if (response.status === 200) {
-  //           this.getPlans();
-  //           swal(
-  //             'Deactivated!',
-  //             'Your have deactivated coupon successfully.',
-  //             'success'
-  //           );
-  //         }
-  //       });
+  editVat(vat) {
+    const modalRef = this.ngbModal.open(EditVatComponent);
+    modalRef.componentInstance.currentVat = vat;
+    modalRef.result.then((result) => {
+      this.getVats();
+    })
+      .catch((error) => {
+        this.getVats();
+      });
+  }
 
-  //     } else if (result.dismiss) {
-  //       swal(
-  //         'Cancelled',
-  //         'Deactivation request cancelled.)',
-  //         'error'
-  //       );
-  //     }
-  //   });
-  //   this.deleting = false;
 
-  // }
+
+
+
 }
