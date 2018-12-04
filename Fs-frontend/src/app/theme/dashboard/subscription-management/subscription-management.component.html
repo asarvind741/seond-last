@@ -71,13 +71,13 @@
 
         
 
-        <ngx-datatable-column name="moduleIncluded">
+        <!-- <ngx-datatable-column name="moduleIncluded">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
             <span (click)="sort($event, sortDir, sortFn)">
               Modules
             </span>
           </ng-template>
-          <!-- <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
             <span>
               <div *ngFor="let element of value">
                 {{ element.name }}
