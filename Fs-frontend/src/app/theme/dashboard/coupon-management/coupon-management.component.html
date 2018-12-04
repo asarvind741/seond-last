@@ -20,7 +20,7 @@
             </span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-            <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
+            <span>
               {{value}}
             </span>
           </ng-template>
@@ -92,7 +92,7 @@
             </span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-            <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
+            <span>
               {{value | date }}
             </span>
           </ng-template>
@@ -105,7 +105,7 @@
             </span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-            <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
+            <span class="label" [ngClass] = "value === 'Active' ? 'label-primary': 'label-danger'">
               {{ value }}
             </span>
           </ng-template>

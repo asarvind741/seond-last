@@ -36,12 +36,15 @@ export class SubscriptionManagementComponent implements OnInit {
   getPlans() {
     this.planService.getPlans()
       .subscribe(plans => {
-        plans['data'].forEach(plan => {
-          plan.createdBy = plan.createdBy.email;
-        })
-        this.rows = plans['data'];
-        
-        this.temp_rows = plans['data'];
+        console.log("plans total", plans);
+        if (plans['data'].length > 0) {
+          plans['data'].forEach(plan => {
+            plan.createdBy = plan.createdBy.email;
+          })
+          this.rows = plans['data'];
+
+          this.temp_rows = plans['data'];
+        }
       })
   }
 
@@ -49,17 +52,17 @@ export class SubscriptionManagementComponent implements OnInit {
     this.editing[row + '-' + cell] = false;
     this.temp_rows[row][cell] = event.target.value;
     this.rows = this.temp_rows;
-   this.planService.updatePlan(this.rows[row]._id,this.rows[row])
-   .subscribe((response: HttpResponse<any>) => {
-     if(response.status === 200){
-       this.getPlans();
-       this.openSuccessSwal();
-     }
-   }, (error) => {
-     this.showMessage = error.error['message'];
-     this.getPlans();
-     this.openUnscuccessSwal()
-   })
+    this.planService.updatePlan(this.rows[row]._id, this.rows[row])
+      .subscribe((response: HttpResponse<any>) => {
+        if (response.status === 200) {
+          this.getPlans();
+          this.openSuccessSwal();
+        }
+      }, (error) => {
+        this.showMessage = error.error['message'];
+        this.getPlans();
+        this.openUnscuccessSwal()
+      })
   }
 
   onSearchInputChange(val) {
@@ -68,124 +71,126 @@ export class SubscriptionManagementComponent implements OnInit {
       let data = this.rows;
       data = data.filter(plan => {
         if (
-          plan.name ? plan.name.toLowerCase().indexOf(val) >= 0 : null ||
-          plan.duration ? plan.duration.toLowerCase().indexOf(val) >= 0 : null ||
-          plan.status ? plan.status.toLowerCase().indexOf(val) >= 0 : null ||
-          plan.createdAt ? moment(plan.createdAt).format("MMM DD, YYYY").toLowerCase().indexOf(val) >= 0 : null
+          plan.name && plan.name.toLowerCase().indexOf(val) >= 0 ? true : false ||
+          plan.duration && plan.duration.toLowerCase().indexOf(val) >= 0 ? true : false ||
+          plan.status && plan.status.toLowerCase().indexOf(val) >= 0 ?  true : false ||
+          plan.createdAt && moment(plan.createdAt).format("MMM DD, YYYY").toLowerCase().indexOf(val) >= 0 ? true : false ||
+          plan.createdBy && plan.createdBy.toLowerCase().indexOf(val) >= 0 ? true: false ||
+          plan.price && plan.price.toString().indexOf(val) >= 0 ? true : false ||
+          plan.maxNumberOfMembers && plan.maxNumberOfMembers.toString().indexOf(val) >= 0 ? true : false
         )
-          return true;
+      return true;
+    });
+    this.rows = data;
+  } else this.rows = this.temp_rows;
+  }
+
+openSuccessSwal() {
+  swal({
+    title: 'Successful!',
+    text: 'Plan updated successfully!',
+    type: 'success'
+  }).catch(swal.noop);
+}
+
+openUnscuccessSwal() {
+  swal({
+    title: 'Cancelled!',
+    text: this.showMessage,
+    type: 'error'
+  }).catch(swal.noop);
+}
+
+activateCouppon(name) {
+  swal({
+    title: 'Are you sure?',
+    text: 'You not be able to revert this!',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, activate it!',
+    cancelButtonText: 'Not now!',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger mr-sm'
+  }).then((result) => {
+    if (result.value) {
+      this.planService.modifyStatus(name._id).subscribe((response: HttpResponse<any>) => {
+        if (response.status === 200) {
+          this.getPlans();
+          swal(
+            'Activated!',
+            'Your have activated plan successfully.',
+            'success'
+          );
+        }
       });
-      this.rows = data;
-    } else this.rows = this.temp_rows;
-  }
 
-  openSuccessSwal() {
-    swal({
-      title: 'Successful!',
-      text: 'Plan updated successfully!',
-      type: 'success'
-    }).catch(swal.noop);
-  }
+    } else if (result.dismiss) {
+      swal(
+        'Cancelled',
+        'Activation request cancelled.)',
+        'error'
+      );
+    }
+  });
+}
 
-  openUnscuccessSwal() {
-    swal({
-      title: 'Cancelled!',
-      text: this.showMessage,
-      type: 'error'
-    }).catch(swal.noop);
-  }
+openSuccessCancelSwal(name) {
+  this.deleting = true;
+  swal({
+    title: 'Are you sure?',
+    text: 'You not be able to revert this!',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, deactivate it!',
+    cancelButtonText: 'Not now!',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger mr-sm'
+  }).then((result) => {
+    if (result.value) {
+      this.planService.modifyStatus(name._id).subscribe((response: HttpResponse<any>) => {
+        if (response.status === 200) {
+          this.getPlans();
+          swal(
+            'Deactivated!',
+            'Your have deactivated coupon successfully.',
+            'success'
+          );
+        }
+      });
 
-  activateCouppon(name){
-    swal({
-      title: 'Are you sure?',
-      text: 'You not be able to revert this!',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, activate it!',
-      cancelButtonText: 'Not now!',
-      confirmButtonClass: 'btn btn-success',
-      cancelButtonClass: 'btn btn-danger mr-sm'
-    }).then((result) => {
-      if (result.value) {
-        this.planService.modifyStatus(name._id).subscribe((response: HttpResponse<any>) => {
-          if (response.status === 200) {
-            this.getPlans();
-            swal(
-              'Activated!',
-              'Your have activated plan successfully.',
-              'success'
-            );
-          }
-        });
+    } else if (result.dismiss) {
+      swal(
+        'Cancelled',
+        'Deactivation request cancelled.)',
+        'error'
+      );
+    }
+  });
+  this.deleting = false;
 
-      } else if (result.dismiss) {
-        swal(
-          'Cancelled',
-          'Activation request cancelled.)',
-          'error'
-        );
-      }
-    });
-  }
+}
 
-  openSuccessCancelSwal(name) {
-    this.deleting = true;
-    swal({
-      title: 'Are you sure?',
-      text: 'You not be able to revert this!',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, deactivate it!',
-      cancelButtonText: 'Not now!',
-      confirmButtonClass: 'btn btn-success',
-      cancelButtonClass: 'btn btn-danger mr-sm'
-    }).then((result) => {
-      if (result.value) {
-        this.planService.modifyStatus(name._id).subscribe((response: HttpResponse<any>) => {
-          console.log(response)
-          if (response.status === 200) {
-            this.getPlans();
-            swal(
-              'Deactivated!',
-              'Your have deactivated coupon successfully.',
-              'success'
-            );
-          }
-        });
+openFormModal() {
+  const modalRef = this.modalService.open(AddSubscriptionComponent);
+  modalRef.result.then((result) => {
+    this.getPlans();
+  }).catch((error) => {
+    this.getPlans();
+  });
+}
 
-      } else if (result.dismiss) {
-        swal(
-          'Cancelled',
-          'Deactivation request cancelled.)',
-          'error'
-        );
-      }
-    });
-    this.deleting = false;
-
-  }
-
-  openFormModal() {
-    const modalRef = this.modalService.open(AddSubscriptionComponent);
-    modalRef.result.then((result) => {
-      this.getPlans();
-    }).catch((error) => {
-      this.getPlans();
-    });
-  }
-
-  openEditFormModal(plan){
-    const modalRef = this.modalService.open(EditSubscriptionComponent);
-    modalRef.componentInstance.currentPlan = plan;
-    modalRef.result.then((result) => {
-      this.getPlans();
-    })
+openEditFormModal(plan) {
+  const modalRef = this.modalService.open(EditSubscriptionComponent);
+  modalRef.componentInstance.currentPlan = plan;
+  modalRef.result.then((result) => {
+    this.getPlans();
+  })
     .catch((error) => {
       this.getPlans();
     });
-  }
+}
 }

@@ -54,6 +54,38 @@
           </ng-template>
         </ngx-datatable-column>
 
+        
+
+        <ngx-datatable-column name="maxNumberOfMembers">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Max Users
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span>
+              {{ value }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        
+
+        <ngx-datatable-column name="moduleIncluded">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Modules
+            </span>
+          </ng-template>
+          <!-- <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span>
+              <div *ngFor="let element of value">
+                {{ element.name }}
+              </div>
+            </span>
+          </ng-template>
+        </ngx-datatable-column> -->
+
         <ngx-datatable-column name="status">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
             <span (click)="sort($event, sortDir, sortFn)">
@@ -61,7 +93,7 @@
             </span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-            <span>
+            <span class="label" [ngClass] = "value === 'Active' ? 'label-primary': 'label-danger'">
               {{ value }}
             </span>
             <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text"
