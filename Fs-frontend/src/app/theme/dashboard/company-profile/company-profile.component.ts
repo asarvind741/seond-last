@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import swal from 'sweetalert2';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { UserService } from '../../../services/user.servivce';
 import { AuthenticationService } from '../../../services/auth.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -31,8 +30,11 @@ import { CompanyService } from '../../../services/company.service';
 export class CompanyProfileComponent implements OnInit {
   editCompany = true;
   editAbout = true;
+  editAddress = true;
+  editAddressIcon = 'icofont-edit';
+  isAddressAvailable: Boolean = false;
   isCompanyAvailable: Boolean = false;;
-  editAboutIcon = 'iconfont-edit'
+  editAboutIcon = 'icofont-edit'
   editCompanyIcon = 'icofont-edit';
   companyProfileForm: FormGroup;
 
@@ -61,51 +63,49 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authService.currentLoggingUserSubject
-      .subscribe(response => {
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        this.companyService.getCompany(this.currentUser['company'])
-          .subscribe((response: HttpResponse<any>) => {
-            if (response.status === 200) {
-              this.company = response['data'];
-              if(!this.company){
-                this.company = {
-                  name: "Demo Pvt Ltd",
-                  primaryAdmin: "Arvind Singh",
-                  description: "Demo company created by Arvind Singh",
-                  subscription: { name: "Test Subscription", maximumNoOfUsers: 100 },
-                  subscriptionLastDate: "21/12/2018",
-                  subscriptionBilledAmount: "$500",
-                  members: ['1', '2', '3'],
-                  createdBy: "Arvind SIngh",
-                  toalEmployees: 4000,
-                  address: {
-                    line1: "Line 1 address",
-                    line2: "Line 2 address",
-                    postalCode: 201301,
-                    city: "Noida",
-                    state: "UP",
-                    country: "India"
-                  }
 
-                }
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.companyService.getCompany(this.currentUser['company'])
+      .subscribe((response: HttpResponse<any>) => {
+        if (response.status === 200) {
+          this.company = response['data'];
+            this.isAddressAvailable = true;
+         if (!this.company) {
+           this.isAddressAvailable = false;
+            this.company = {
+              name: "N/A",
+              primaryAdmin: "N/A",
+              description: "N/A",
+              subscription: { name: "N/A", maximumNoOfUsers: 0 },
+              subscriptionLastDate: "N/A",
+              subscriptionBilledAmount: "N/A",
+              createdBy: "N/A",
+              toalEmployees: 4000,
+              address: {
+                line1: "N/A",
+                line2: "N/A",
+                postalCode: 12345,
+                city: "N/A",
+                state: "N/A",
+                country: "N/A"
               }
-              this.createForm();
-            }
-            else {
 
             }
-          }, (error: HttpErrorResponse) => {
-          })
+          }
+          this.createForm();
+        }
+        else {
+
+        }
+      }, (error: HttpErrorResponse) => {
       })
 
   }
 
   createForm() {
-
-
     let address = new FormArray([]);
-    if (this.company['address']) {
+    if (this.company['address'].length > 0) {
+      this.isAddressAvailable = true;
       for (let addr of this.company['address']) {
         address.push(
           new FormGroup({
@@ -122,7 +122,6 @@ export class CompanyProfileComponent implements OnInit {
 
     if (!!this.company) {
       this.isCompanyAvailable = true;
-
       let name = this.company.name ? this.company.name : '';
       let primaryAdmin = this.company.primaryAdmin ? this.company.primaryAdmin : '';
       let description = this.company.description ? this.company.description : '';
@@ -136,7 +135,7 @@ export class CompanyProfileComponent implements OnInit {
       this.companyProfileForm = new FormGroup({
         'name': new FormControl(name),
         'address': address,
-        'primaryAdmin': new FormControl(primaryAdmin),
+        'primaryAdmin': new FormControl(primaryAdmin.name),
         'description': new FormControl(description),
         'subscription': new FormControl(subscription),
         'maximumNoOfUsers': new FormControl(subscription.maximumNoOfUsers),
@@ -152,63 +151,99 @@ export class CompanyProfileComponent implements OnInit {
 
 
 
-    toggleEditCompanyProfile() {
-      this.editCompanyIcon = (this.editCompanyIcon === 'icofont-close') ? 'icofont-edit' : 'icofont-close';
-      this.editCompany = !this.editCompany;
-    }
+  toggleEditCompanyProfile() {
+    this.editCompanyIcon = (this.editCompanyIcon === 'icofont-close') ? 'icofont-edit' : 'icofont-close';
+    this.editCompany = !this.editCompany;
+  }
 
-    toggleEditAbout(){
-      this.editAboutIcon = (this.editAboutIcon === 'icofont-close') ? 'icofont-edit' : 'icofont-close';
-      this.editAbout = !this.editAbout;
-    }
+  toggleEditAbout() {
+    this.editAboutIcon = (this.editAboutIcon === 'icofont-close') ? 'icofont-edit' : 'icofont-close';
+    this.editAbout = !this.editAbout;
+  }
+
+  toggleEditAddress() {
+    this.isAddressAvailable = true;
+    this.editAddressIcon = (this.editAddressIcon === 'icofont-close') ? 'icofont-edit' : 'icofont-close';
+    this.editAddress = !this.editAddress;
+  }
+
+  addAddress() {
+    this.isAddressAvailable = true;
+    this.editAddressIcon = (this.editAddressIcon === 'icofont-close') ? 'icofont-edit' : 'icofont-close';
+    this.editAddress = !this.editAddress;
+    const control = new FormGroup({
+      'line1': new FormControl(null),
+      'line2': new FormControl(null),
+      'city': new FormControl(null),
+      'postalCode': new FormControl(null),
+      'state': new FormControl(null),
+      'country': new FormControl(null)
+    });
+    (<FormArray>this.companyProfileForm.get('address')).push(control);
+  }
 
 
 
-    showCompanyForm() {
-      this.router.navigate(['../../company-profile'], { relativeTo: this.activatedRoute })
-    }
+  showCompanyForm() {
+    this.router.navigate(['../../company-profile'], { relativeTo: this.activatedRoute })
+  }
 
-    onSubmit() {
-      const values = this.companyProfileForm.value;
-      console.log("test", values);
-      this.companyService.updateCompany(this.currentUser._id, values)
-        .subscribe((response: HttpResponse<any>) => {
-          if (response.status === 200) {
-            console.log("response", response)
-            this.companyService.getCompany(this.currentUser.company)
-              .subscribe((response: HttpResponse<any>) => {
-                if (response.status === 200) {
-                  console.log("get company========>", response['data'])
-                  this.currentUser['company'] = response['data']
-                  this.openSuccessSwal();
-                }
-                else {
-                  console.log("Inside else block")
-                }
-              })
+  getCompanyDetails(){
+    this.companyService.getCompany(this.currentUser['company'])
+    .subscribe((response: HttpResponse<any>) => {
+      if(response.status === 200){
+        this.company = response['data']
+      }
+      else {
+        this.openUnscuccessSwal();
+      }
+    })
+  }
+
+  onSubmit() {
+    this.company.primaryAdmin.name = this.companyProfileForm.value.primaryAdmin;
+    this.companyProfileForm.value.primaryAdmin = this.company.primaryAdmin;
+    this.isAddressAvailable = true;
+    const values = this.companyProfileForm.value;
+    this.companyService.updateCompany(this.currentUser.company, values)
+      .subscribe((response: HttpResponse<any>) => {
+        if (response.status === 200) {
+          this.openSuccessSwal();
+          this.getCompanyDetails();
+          if (!this.editAddress) {
+            this.toggleEditAddress();
           }
-        }, (error: HttpResponse<any>) => {
-          console.log("error", error)
+          else if (!this.editCompany) {
+            this.toggleEditCompanyProfile()
+          }
+          else if (!this.editAbout) {
+            this.toggleEditAbout()
+          }
+        }
+        else {
           this.openUnscuccessSwal();
-        })
+        }
+      }, (error: HttpResponse<any>) => {
+        this.openUnscuccessSwal();
+      })
 
-
-    }
-
-    openSuccessSwal() {
-      swal({
-        title: 'Successful!',
-        text: 'User updated successfully!',
-        type: 'success'
-      }).catch(swal.noop);
-    }
-
-    openUnscuccessSwal() {
-      swal({
-        title: 'Cancelled!',
-        text: "Error Occured",
-        type: 'error'
-      }).catch(swal.noop);
-    }
 
   }
+
+  openSuccessSwal() {
+    swal({
+      title: 'Successful!',
+      text: 'Company updated successfully!',
+      type: 'success'
+    }).catch(swal.noop);
+  }
+
+  openUnscuccessSwal() {
+    swal({
+      title: 'Cancelled!',
+      text: "Error Occured",
+      type: 'error'
+    }).catch(swal.noop);
+  }
+
+}

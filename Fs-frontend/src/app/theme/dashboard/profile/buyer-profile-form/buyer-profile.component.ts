@@ -6,6 +6,7 @@ import { UserService } from '../../../../services/user.servivce';
 import { AuthenticationService } from '../../../../services/auth.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CompanyService } from '../../../../services/company.service';
 
 @Component({
   selector: 'app-buyer-profile',
@@ -54,27 +55,36 @@ export class BuyerProfileComponent implements OnInit {
   loadingIndicator = true;
   reorderable = true;
   statuss: Array<String> = ['Married', 'Single'];
+  isAddressAvailable: Boolean = false;
   @Input('user') currentUser: any;
+  currentUserComapany: any;
 
   constructor(
     private userService: UserService,
     private authService: AuthenticationService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private companyService: CompanyService
   ) {
   }
 
   ngOnInit() {
+    this.currentUserComapany = {};
+    this.companyService.getCompany(JSON.parse(localStorage.getItem('currentUser'))['company'])
+      .subscribe((response: HttpResponse<any>) => {
+        if (response.status === 200) {
+          this.currentUserComapany = response['data'];
+        }
+      })
     this.createForm();
   }
 
   createForm() {
-    console.log("current user", this.currentUser.address);
     // let address1 = this.fb.array([]);
     let address = new FormArray([]);
-    if (this.currentUser['address']) {
-      for(let addr of this.currentUser['address'])
-       {
+    if (this.currentUser['address'].length > 0) {
+      this.isAddressAvailable = true;
+      for (let addr of this.currentUser['address']) {
         address.push(
           new FormGroup({
             'line1': new FormControl(addr.line1),
@@ -127,6 +137,20 @@ export class BuyerProfileComponent implements OnInit {
     this.editAddress = !this.editAddress;
   }
 
+  addAddress() {
+    this.isAddressAvailable = true;
+    this.editAddressIcon = (this.editAddressIcon === 'icofont-close') ? 'icofont-edit' : 'icofont-close';
+    this.editAddress = !this.editAddress;
+    const control = new FormGroup({
+      'line1': new FormControl(null),
+      'line2': new FormControl(null),
+      'city': new FormControl(null),
+      'postalCode': new FormControl(null),
+      'country': new FormControl(null)
+    });
+    (<FormArray>this.myProfileForm.get('address')).push(control);
+  }
+
   toggleEditAbout() {
     this.editAboutIcon = (this.editAboutIcon === 'icofont-close') ? 'icofont-edit' : 'icofont-close';
     this.editAbout = !this.editAbout;
@@ -134,25 +158,33 @@ export class BuyerProfileComponent implements OnInit {
 
   showCompanyForm() {
     this.authService.currentLoggingUserSubject.next(this.currentUser);
-   this.router.navigate(['../../company-profile'], { relativeTo: this.activatedRoute})
+    this.router.navigate(['../../company-profile'], { relativeTo: this.activatedRoute })
   }
 
   onSubmit() {
+    this.isAddressAvailable = true;
     const values = this.myProfileForm.value;
     this.userService.updateUser(this.currentUser._id, values)
       .subscribe((response: HttpResponse<any>) => {
         if (response.status === 200) {
-          console.log("response", response)
           this.userService.getUser(this.currentUser._id)
             .subscribe((response: HttpResponse<any>) => {
               if (response.status === 200) {
                 this.currentUser = response['data']
               }
             })
-          this.openSuccessSwal()
+          this.openSuccessSwal();
+          if (!this.editAbout) {
+            this.toggleEditAbout();
+          }
+          else if (!this.editAddress) {
+            this.toggleEditAddress()
+          }
+          else if (!this.editProfile) {
+            this.toggleEditProfile()
+          }
         }
       }, (error: HttpResponse<any>) => {
-        console.log("error", error)
         this.openUnscuccessSwal();
       })
 

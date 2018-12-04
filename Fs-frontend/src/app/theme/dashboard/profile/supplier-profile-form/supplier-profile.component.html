@@ -274,7 +274,7 @@
                               <div formArrayName="address">
                                   <div *ngFor="let addr of supplierProfileForm.get('address')['controls']; let i = index"
                                     [formGroupName]="i">
-                                    <h4>Address{{i+1}}</h4>
+                                    <h6 class="address-header">Address{{i+1}}</h6>
                                     <div class="input-group">
                                       <label>Line 1</label>
                                       <input type="text" class="form-control" formControlName="line1">

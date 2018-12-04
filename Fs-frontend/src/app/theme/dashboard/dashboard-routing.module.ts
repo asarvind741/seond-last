@@ -48,6 +48,10 @@ const routes: Routes = [
       {
         path: 'company-profile',
         loadChildren: './company-profile/company-profile.module#CompanyProfileModule'
+      },
+      {
+        path: 'company-profile2',
+        loadChildren: './company-profile2/company-profile2.module#CompanyProfile2Module'
       }
     ]
   }

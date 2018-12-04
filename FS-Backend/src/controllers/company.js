@@ -14,7 +14,7 @@ async function editCompany(req, res) {
     try {
         let id = req.body.id;
         delete req.body.id;
-        if (req.body.subscription == '')
+        if (req.body.subscription === '')
             delete req.body.subscription;
         let updatedCompany = await Company.findByIdAndUpdate(id, {
             $set: req.body
@@ -24,7 +24,6 @@ async function editCompany(req, res) {
         sendResponse(res, 200, 'Company updated Successfully.', updatedCompany);
 
     } catch (e) {
-        console.log(e);
         sendResponse(res, 500, 'Unexpected error', e);
 
     }
@@ -45,7 +44,6 @@ async function deleteCompany(req, res) {
         sendResponse(res, 200, 'Company deleted Successfully.', updatedCompany);
 
     } catch (e) {
-        console.log(e);
         sendResponse(res, 500, 'Unexpected error', e);
 
     }
@@ -62,12 +60,10 @@ async function getCompany(req, res) {
         let data = {};
         company.totalEmployees = totalEmployees;
         delete company.address._id;
-        console.log(company);
 
         sendResponse(res, 200, 'Successful.', company);
 
     } catch (e) {
-        console.log(e);
         sendResponse(res, 500, 'Unexpected error', e);
 
     }

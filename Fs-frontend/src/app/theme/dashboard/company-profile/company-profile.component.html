@@ -1,4 +1,4 @@
-<div *ngIf = "isCompanyAvailable" class="page-body">
+<div *ngIf="isCompanyAvailable" class="page-body">
   <div class="row">
     <div class="col-lg-12">
       <div class="md-tabs md-card-tabs">
@@ -55,7 +55,8 @@
                                     </tr>
                                     <tr>
                                       <th scope="row">Maximum Users</th>
-                                      <td><a href="javascript:;">{{ companyProfileForm.value.subscription.maximumNoOfUsers}}</a></td>
+                                      <td><a href="javascript:;">{{
+                                          companyProfileForm.value.subscription.maximumNoOfUsers}}</a></td>
                                     </tr>
                                     <tr>
                                       <th scope="row">Total Subscribed Members</th>
@@ -104,7 +105,8 @@
                                         <div class="input-group">
                                           <span class="input-group-prepend"><label class="input-group-text">Owner <i
                                                 class="icofont icofont-user"></i></label></span>
-                                          <input type="text" class="form-control" placeholder="Addmin" formControlName="primaryAdmin" readonly>
+                                          <input type="text" class="form-control" placeholder="Addmin" formControlName="primaryAdmin"
+                                            readonly>
                                         </div>
                                       </td>
                                     </tr>
@@ -129,7 +131,8 @@
                                     <tr>
                                       <td>
                                         <div class="input-group">
-                                          <span class="input-group-prepend"><label class="input-group-text">Last Subscribed on <i class="icofont icofont-user"></i></label></span>
+                                          <span class="input-group-prepend"><label class="input-group-text">Last
+                                              Subscribed on <i class="icofont icofont-user"></i></label></span>
                                           <input id="dropper-default" class="form-control" type="text" formControlName="subscriptionLastDate"
                                             readonly />
                                         </div>
@@ -139,7 +142,8 @@
                                     <tr>
                                       <td>
                                         <div class="input-group">
-                                          <span class="input-group-prepend"><label class="input-group-text">Max subscriptions <i class="icofont icofont-user"></i></label></span>
+                                          <span class="input-group-prepend"><label class="input-group-text">Max
+                                              subscriptions <i class="icofont icofont-user"></i></label></span>
                                           <input id="dropper-default" class="form-control" type="text" formControlName="maximumNoOfUsers"
                                             readonly />
                                         </div>
@@ -149,7 +153,8 @@
                                     <tr>
                                       <td>
                                         <div class="input-group">
-                                          <span class="input-group-prepend"><label class="input-group-text">Subscription Amount<i class="icofont icofont-user"></i></label></span>
+                                          <span class="input-group-prepend"><label class="input-group-text">Subscription
+                                              Amount<i class="icofont icofont-user"></i></label></span>
                                           <input id="dropper-default" class="form-control" type="text" formControlName="subscriptionBilledAmount"
                                             readonly />
                                         </div>
@@ -193,41 +198,51 @@
                 <div class="col-lg-12">
                   <div class="card">
                     <div class="card-header">
-                      <h5 class="card-header-text">Address</h5>
-                      <button id="edit-info-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                      <h5 class="card-header-text">Address Details</h5>
+                      <button *ngIf="isAddressAvailable" id="edit-info-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
                         (click)="toggleEditAddress()">
                         <i class="icofont {{ editAddressIcon }}"></i>
+                      </button>
+
+                      <button *ngIf="!isAddressAvailable" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                        (click)="addAddress()">
+                        <i class="fa fa-plus"></i>Add Address
                       </button>
                     </div>
                     <div class="card-body user-desc">
                       <div class="view-desc" *ngIf="editAddress">
-                        <div formArrayName="address">
-                          <div *ngFor="let addr of companyProfileForm.get('address')['controls']; let i = index"
-                            [formGroupName]="i">
-                            <h4>Address{{i+1}}</h4>
-                            <div class="input-group">
-                              <label>Line 1</label>
-                              <input type="text" class="form-control" formControlName="line1" readonly>
-                            </div>
-                            <div class="input-group">
-                              <label>Line 2</label>
-                              <input type="text" class="form-control" formControlName="line2" readonly>
-                            </div>
-                            <div class="input-group">
-                              <label>Zip Code</label>
-                              <input type="text" class="form-control" formControlName="postalCode" readonly>
-                            </div>
-                            <div class="input-group">
-                              <label>city</label>
-                              <input type="text" class="form-control" formControlName="city" readonly>
-                            </div>
-                            <div class="input-group">
-                              <label>State</label>
-                              <input type="text" class="form-control" formControlName="state" readonly>
-                            </div>
-                            <div class="input-group">
-                              <label>Country</label>
-                              <input type="text" class="form-control" formControlName="country" readonly>
+                        <div *ngFor="let addr of company.address; let i = index">
+                          <h6 class="address-header">Address{{i+1}}</h6>
+                          <div class="col-lg-12 col-xl-12">
+                            <div class="table-responsive">
+                              <table class="table m-0">
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">Line1</th>
+                                    <td>{{ addr.line1 }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Lin2</th>
+                                    <td>{{ addr.line2}}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Zip Code</th>
+                                    <td>{{ addr.postalCode }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">City</th>
+                                    <td>{{ addr.city }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">State</th>
+                                    <td>{{ addr.state }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Country</th>
+                                    <td>{{ addr.country }}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
                             </div>
                           </div>
                         </div>
@@ -251,8 +266,12 @@
                                 <input type="text" class="form-control" formControlName="postalCode">
                               </div>
                               <div class="input-group">
-                                <label>city</label>
+                                <label>City</label>
                                 <input type="text" class="form-control" formControlName="city">
+                              </div>
+                              <div class="input-group">
+                                <label>State</label>
+                                <input type="text" class="form-control" formControlName="state">
                               </div>
                               <div class="input-group">
                                 <label>Country</label>
@@ -260,15 +279,18 @@
                               </div>
                             </div>
                           </div>
+                          <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-warning" (click)="toggleEditAddress()">Cancel</button>
+                          </div>
                         </div>
-                        <div class="text-center">
-                          <button type="submit" class="btn btn-primary">Save</button>
-                          <button type="button" class="btn btn-warning" (click)="toggleEditProfile()">Cancel</button>
-                        </div>
+
                       </div>
                     </div>
                   </div>
                 </div>
+
+
               </div>
 
               <div class="row">
@@ -283,7 +305,10 @@
                     </div>
                     <div class="card-body user-desc">
                       <div class="view-desc" *ngIf="editAbout">
-                        <div>{{ company.description }}</div>
+                        <div *ngIf = "company.description; else noDescription">{{ company.description }}</div>
+                        <ng-template #noDescription>
+                          <div>No description added</div>
+                        </ng-template>
                       </div>
                       <div class="edit-desc" *ngIf="!editAbout">
                         <div class="col-md-12">
@@ -310,4 +335,3 @@
     </div>
   </div>
 </div>
-
