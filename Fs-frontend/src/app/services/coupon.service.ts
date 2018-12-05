@@ -34,5 +34,10 @@ export class CouponService {
         return this.httpClient.post(`${environment.API_URL}/coupon/status-modify`, {id: id})
     }
 
+    
+    deleteCoupon(id){
+        return this.httpClient.post(`${environment.API_URL}/coupon/delete`, { id: id})
+    }
+
 
 }

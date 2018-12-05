@@ -36,16 +36,17 @@ const Subscription = new Schema(
       default: 0,
     },
     rolesAllowed: [{
-      type: String
+      roleName: String
     }],
     features: [String],
     moduleIncluded: [
       {
-        name: String,
-        _id: {
-          type: Schema.Types.ObjectId,
-          ref: 'ServiceModule',
-        },
+        // name: String,
+        // _id: {
+        //   type: Schema.Types.ObjectId,
+        //   ref: 'ServiceModule',
+        // },
+        moduleName: String
       },
     ],
   },

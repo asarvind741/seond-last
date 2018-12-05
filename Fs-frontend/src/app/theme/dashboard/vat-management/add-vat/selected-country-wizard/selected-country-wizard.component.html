@@ -1,7 +1,7 @@
 <app-card [title]="'Add Vat'">
-  <wizard #wizard class="arc-wizard" navBarLayout="large-empty-symbols" navBarLocation="left">
+  <wizard #wizard class="arc-wizard" navBarLayout="large-empty-symbols" navBarLocation="top">
     <wizard-step stepTitle="Select State" navigationSymbol="1">
-      <div class="centered-content">
+      <div class=" centered-content">
         <form [formGroup]="vatForm">
           <div>
             <h4>Select State</h4>
@@ -11,7 +11,7 @@
             </angular2-multiselect>
           </div>
         </form>
-        <div class="btn-group mt-10">
+        <div class="btn-group mt-10 margn-tp">
           <button type="button" class="btn btn-secondary btn-sm" previousStep>Back</button>
           <button type="button" class="btn btn-primary btn-sm" nextStep>Continue</button>
         </div>
@@ -22,14 +22,14 @@
         <form [formGroup]="vatForm">
           <div>
             <h4>Select Payment Mode</h4>
-            <angular2-multiselect [data]="paymentMode" [(ngModel)]="selectedPaymentMode" [settings]="settings2" (onSelect)="onItemSelect($event)"
-              (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
-              formControlName="paymentMode">
+            <angular2-multiselect [data]="paymentMode" [(ngModel)]="selectedPaymentMode" [settings]="settings2"
+              (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+              (onDeSelectAll)="onDeSelectAll($event)" formControlName="paymentMode">
             </angular2-multiselect>
           </div>
         </form>
 
-        <div class="btn-group mt-10">
+        <div class="btn-group mt-10 margn-tp">
           <button type="button" class="btn btn-secondary btn-sm" previousStep>Back</button>
           <button type="button" class="btn btn-primary btn-sm" nextStep>Continue</button>
         </div>
@@ -40,16 +40,20 @@
         <form [formGroup]="vatForm">
           <div formArrayName="taxes">
             <div *ngFor="let tax of vatForm.get('taxes')['controls']; let i = index" [formGroupName]="i">
-              <label for="name">Name:</label>
-              <input type="text" formControlName="name">
-              <label for="value">Percentage(%):</label>
-              <input type="number" formControlName="value">
+              <div class="col-lg-12 input-group center-input">
+                <label for="name">Name:</label>
+                <input type="text" formControlName="name" />
+              </div>
+              <div class="col-lg-12 input-group center-input">
+                <label for="value">Percentage(%):</label>
+                <input type="number" formControlName="value" />
+              </div>
             </div>
           </div>
           <button class="btn btn-primary" (click)="addNewTax()"><i class="fa fa-plus"></i>Add Tax</button>
         </form>
 
-        <div class="btn-group mt-10">
+        <div class="btn-group mt-10 margn-tp">
           <button type="button" class="btn btn-secondary btn-sm" previousStep>Back</button>
           <button type="button" class="btn btn-primary btn-sm" nextStep>Continue</button>
         </div>
@@ -57,14 +61,14 @@
     </wizard-step>
     <wizard-step stepTitle="Finished" navigationSymbol="4">
       <div class="centered-content">
-       <form [formGroup] = "vatForm"></form>
+        <form [formGroup]="vatForm"></form>
         <div>
           <p>You are about to submit the Taxes.</p>
         </div>
         <div class="btn-group mt-10">
           <button type="button" class="btn btn-secondary btn-sm" previousStep>Back</button>
           <button type="button" class="btn btn-danger btn-sm" resetWizard>Reset</button>
-          <button type="button" class="btn btn-primary btn-sm" (click) = "onSubmit()">Submit</button>
+          <button type="button" class="btn btn-primary btn-sm" (click)="onSubmit()">Submit</button>
         </div>
       </div>
     </wizard-step>

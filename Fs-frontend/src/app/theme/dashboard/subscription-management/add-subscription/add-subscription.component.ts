@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import swal from 'sweetalert2';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { PlanService } from '../../../../services/plan.service';
 import { HttpResponse } from '@angular/common/http';
+import { id } from '@swimlane/ngx-datatable/release/utils';
 
 @Component({
   selector: 'app-add-coupon',
@@ -15,18 +16,18 @@ export class AddSubscriptionComponent implements OnInit {
   statuss: Array<String> = ['Active', 'Inactive'];
   duration: Array<String> = ['Yearly', 'Half Yearly', 'Quaterly', 'Monthly'];
   role: Array<Object> = [
-    {'id': 1, 'itemName': 'Buyer' }, 
-    {'id': 2, 'itemName': 'Supplier' }, 
-    {'id': 3, 'itemName': 'Agent' }, 
-    {'id': 4, 'itemName': 'Reseller' }];
-    modulesToInclude: Array<Object> = [
-      {'id': 1, 'itemName': 'First Module' }, 
-      {'id': 2, 'itemName': 'Second Module' }, 
-      {'id': 3, 'itemName': 'Third Module' }, 
-      {'id': 4, 'itemName': 'Fourth Module' }];
+    { 'id': 0, 'itemName': 'Buyer' },
+    { 'id': 1, 'itemName': 'Supplier' },
+    { 'id': 2, 'itemName': 'Agent' },
+    { 'id': 3, 'itemName': 'Reseller' }];
+  modulesToInclude: Array<Object> = [
+    { 'id': 0, 'itemName': 'First Module' },
+    { 'id': 1, 'itemName': 'Second Module' },
+    { 'id': 2, 'itemName': 'Third Module' },
+    { 'id': 3, 'itemName': 'Fourth Module' }];
   selectedModules: any;
   selectedRoles: any;
-  settings:any;
+  settings: any;
   settings1: any;
   showMessage: any;
   constructor(
@@ -58,6 +59,7 @@ export class AddSubscriptionComponent implements OnInit {
   }
 
   createForm() {
+    let features = new FormArray([]);
     this.newPlanForm = new FormGroup({
       'name': new FormControl(null),
       'duration': new FormControl(null),
@@ -66,34 +68,55 @@ export class AddSubscriptionComponent implements OnInit {
       'description': new FormControl(null),
       'maxNumberOfMembers': new FormControl(null),
       'rolesAllowed': new FormControl([]),
-      'moduleIncluded': new FormControl([])
+      'moduleIncluded': new FormControl([]),
+      'features': features
     })
   }
 
+  addNewFeature() {
+    const control = new FormControl('');
+    (<FormArray>this.newPlanForm.get('features')).push(control);
+  }
+
   addNewPlan() {
-    console.log(this.newPlanForm.value)
+    const modulesArrary = this.newPlanForm.value.moduleIncluded;
+    const rolesArray = this.newPlanForm.value.rolesAllowed;
+    if (modulesArrary.length > 0) {
+      modulesArrary.forEach(module => {
+        module.moduleName = module.itemName;
+        delete module.itemName;
+      });
+    }
+
+    if (rolesArray.length > 0) {
+      rolesArray.forEach(role => {
+        role.roleName = role.itemName;
+        delete role.itemName;
+      });
+    }
+
+
     this.planService.addPlan(this.newPlanForm.value).subscribe((response: HttpResponse<any>) => {
-        console.log("responseaaaaa", response);
-        if (response.status === 200) {
-          this.closeModal();
-          this.openSuccessSwal();
-        }
-        else if (response.status !== 200) {
-          this.closeModal();
-          this.showMessage = response['date'];
-          this.openUnscuccessSwal();
-        }
-      }, (error) => {
-       
+      if (response.status === 200) {
         this.closeModal();
-        this.showMessage = error.error['message']
+        this.openSuccessSwal();
+      }
+      else if (response.status !== 200) {
+        this.closeModal();
+        this.showMessage = response['date'];
         this.openUnscuccessSwal();
-      })
+      }
+    }, (error) => {
+
+      this.closeModal();
+      this.showMessage = error.error['message']
+      this.openUnscuccessSwal();
+    })
 
   }
 
   onSelectValue(event) {
-    
+
   }
 
 

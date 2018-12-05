@@ -46,124 +46,159 @@ export class CouponManagementComponent implements OnInit {
       data = data.filter(coupon => {
         if (
           coupon.name && coupon.name.toLowerCase().indexOf(val) >= 0 ? true : false ||
-          coupon.module && coupon.module.toLowerCase().indexOf(val) >= 0 ? true : false ||
-          coupon.discount && coupon.discount.toString().indexOf(val) >= 0 ? true : false ||
-          coupon.status && coupon.status.toLowerCase().indexOf(val) >= 0 ? true : false ||
-          coupon.expiresOn && moment(coupon.expiresOn).format("MMM DD, YYYY").toLowerCase().indexOf(val) >= 0 ? true : false
+            coupon.module && coupon.module.toLowerCase().indexOf(val) >= 0 ? true : false ||
+              coupon.discount && coupon.discount.toString().indexOf(val) >= 0 ? true : false ||
+                coupon.status && coupon.status.toLowerCase().indexOf(val) >= 0 ? true : false ||
+                  coupon.expiresOn && moment(coupon.expiresOn).format("MMM DD, YYYY").toLowerCase().indexOf(val) >= 0 ? true : false
         )
-      return true;
-    });
-    this.rows = data;
-  } else this.rows = this.temp_rows;
+          return true;
+      });
+      this.rows = data;
+    } else this.rows = this.temp_rows;
   }
 
-openSuccessSwal() {
-  swal({
-    title: 'Successful!',
-    text: 'Coupon updated successfully!',
-    type: 'success'
-  }).catch(swal.noop);
-}
+  openSuccessSwal() {
+    swal({
+      title: 'Successful!',
+      text: 'Coupon updated successfully!',
+      type: 'success'
+    }).catch(swal.noop);
+  }
 
-openUnscuccessSwal() {
-  swal({
-    title: 'Cancelled!',
-    text: this.showMessage,
-    type: 'error'
-  }).catch(swal.noop);
-}
+  openUnscuccessSwal() {
+    swal({
+      title: 'Cancelled!',
+      text: this.showMessage,
+      type: 'error'
+    }).catch(swal.noop);
+  }
 
-activateCouppon(name) {
+  activateCouppon(name) {
 
-  swal({
-    title: 'Are you sure?',
-    text: 'You not be able to revert this!',
-    type: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, activate it!',
-    cancelButtonText: 'Not now!',
-    confirmButtonClass: 'btn btn-success',
-    cancelButtonClass: 'btn btn-danger mr-sm'
-  }).then((result) => {
-    if (result.value) {
-      this.couponService.modifyStatus(name._id).subscribe((response: HttpResponse<any>) => {
-        if (response.status === 200) {
-          this.getCoupons();
-          swal(
-            'Success!',
-            'Your have activated coupon successfully.',
-            'success'
-          );
-        }
-      });
+    swal({
+      title: 'Are you sure?',
+      text: 'You not be able to revert this!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, activate it!',
+      cancelButtonText: 'Not now!',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger mr-sm'
+    }).then((result) => {
+      if (result.value) {
+        this.couponService.modifyStatus(name._id).subscribe((response: HttpResponse<any>) => {
+          if (response.status === 200) {
+            this.getCoupons();
+            swal(
+              'Success!',
+              'Your have activated coupon successfully.',
+              'success'
+            );
+          }
+        });
 
-    } else if (result.dismiss) {
-      swal(
-        'Cancelled',
-        'You have cancelled activation request.)',
-        'error'
-      );
-    }
-  });
-}
+      } else if (result.dismiss) {
+        swal(
+          'Cancelled',
+          'You have cancelled activation request.)',
+          'error'
+        );
+      }
+    });
+  }
 
-openSuccessCancelSwal(name) {
-  this.deleting = true;
-  swal({
-    title: 'Are you sure?',
-    text: 'You not be able to revert this!',
-    type: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, deactivate it!',
-    cancelButtonText: 'Not now!',
-    confirmButtonClass: 'btn btn-success',
-    cancelButtonClass: 'btn btn-danger mr-sm'
-  }).then((result) => {
-    if (result.value) {
-      this.couponService.modifyStatus(name._id).subscribe((response: HttpResponse<any>) => {
-        if (response.status === 200) {
-          this.getCoupons();
-          swal(
-            'Deleted!',
-            'Your have deactivated coupon successfully.',
-            'success'
-          );
-        }
-      });
+  openSuccessCancelSwal(name) {
+    this.deleting = true;
+    swal({
+      title: 'Are you sure?',
+      text: 'You not be able to revert this!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, deactivate it!',
+      cancelButtonText: 'Not now!',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger mr-sm'
+    }).then((result) => {
+      if (result.value) {
+        this.couponService.modifyStatus(name._id).subscribe((response: HttpResponse<any>) => {
+          if (response.status === 200) {
+            this.getCoupons();
+            swal(
+              'Deleted!',
+              'Your have deactivated coupon successfully.',
+              'success'
+            );
+          }
+        });
 
-    } else if (result.dismiss) {
-      swal(
-        'Cancelled',
-        'You have cancelled deactivation request.)',
-        'error'
-      );
-    }
-  });
-  this.deleting = false;
+      } else if (result.dismiss) {
+        swal(
+          'Cancelled',
+          'You have cancelled deactivation request.)',
+          'error'
+        );
+      }
+    });
+    this.deleting = false;
 
-}
+  }
 
-openFormModal() {
-  const modalRef = this.modalService.open(AddCouponComponent);
-  modalRef.result.then((result) => {
-    this.getCoupons();
-  }).catch((error) => {
-    this.getCoupons();
-  });
-}
-
-openEditFormModal(coupon) {
-  const modalRef = this.modalService.open(EditCouponComponent);
-  modalRef.componentInstance.currentCoupon = coupon;
-  modalRef.result.then((result) => {
-    this.getCoupons();
-  })
-    .catch((error) => {
+  openFormModal() {
+    const modalRef = this.modalService.open(AddCouponComponent);
+    modalRef.result.then((result) => {
+      this.getCoupons();
+    }).catch((error) => {
       this.getCoupons();
     });
-}
+  }
+
+  openEditFormModal(coupon) {
+    const modalRef = this.modalService.open(EditCouponComponent);
+    modalRef.componentInstance.currentCoupon = coupon;
+    modalRef.result.then((result) => {
+      this.getCoupons();
+    })
+      .catch((error) => {
+        this.getCoupons();
+      });
+  }
+
+  deleteCoupon(coupon) {
+    swal({
+      title: 'Are you sure to delete coupon?',
+      text: 'You not be able to revert this!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Not now!',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger mr-sm'
+    }).then((result) => {
+      if (result.value) {
+        this.couponService.deleteCoupon(coupon._id).subscribe((response: HttpResponse<any>) => {
+          if (response.status === 200) {
+            this.getCoupons();
+            swal(
+              'Success!',
+              'Your have deleted coupon successfully.',
+              'success'
+            );
+          }
+        });
+
+      } else if (result.dismiss) {
+        swal(
+          'Cancelled',
+          'You have cancelled deletion request.)',
+          'error'
+        );
+      }
+    });
+  }
 }

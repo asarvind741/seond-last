@@ -80,6 +80,23 @@ async function updateCouponStatus(req, res) {
     }
 }
 
+async function deleteCoupoon(req, res) {
+    try {
+        let id = req.body.id;
+        delete req.body.id;
+        let coupon = await Coupon.findByIdAndRemove(id);
+        if (coupon) {
+            sendResponse(res, 200, 'Coupon deleted Successfully.', coupon);
+        } else {
+            sendResponse(res, 400, 'Coupon not found.');
+
+        }
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected error', e);
+    }
+}
+
 async function getCoupons(req, res) {
     try {
         let modules = await Coupon.find({
@@ -98,5 +115,6 @@ module.exports = {
     createCoupon,
     editCoupon,
     updateCouponStatus,
-    getCoupons
+    getCoupons,
+    deleteCoupoon
 };

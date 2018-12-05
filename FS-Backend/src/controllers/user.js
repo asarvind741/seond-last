@@ -425,6 +425,22 @@ async function updateUserStates(req, res) {
     }
 }
 
+async function deleteUser(req, res) {
+    try {
+        let id = req.body.id;
+        delete req.body.id;
+        let user = await User.findByIdAndRemove(id);
+        if (user) {
+            sendResponse(res, 200, 'User status deleted Successfully.', user);
+        } else {
+            sendResponse(res, 400, 'User not found.');
+        }
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected error', e);
+    }
+}
+
 async function addUserFromAdmin(req, res) {
     try {
         let user = await User.findOne({
@@ -529,5 +545,6 @@ module.exports = {
     addUserFromAdmin,
     inviteUser,
     addFromInvitation,
-    refreshTokenStrategy
+    refreshTokenStrategy,
+    deleteUser
 };

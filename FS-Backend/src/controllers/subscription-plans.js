@@ -71,6 +71,24 @@ async function updatePlanStatus(req, res) {
     }
 }
 
+async function deleteSubscriptionPlan(req, res) {
+    console.log('req status', req.body);
+    try {
+        let id = req.body.id;
+        delete req.body.id;
+        let plan = await Plan.findById(id);
+        if (plan) {
+            sendResponse(res, 200, 'Plan deleted Successfully.', plan);
+        } else {
+            sendResponse(res, 400, 'Plan not found.');
+
+        }
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected error', e);
+    }
+}
+
 async function getPlans(req, res) {
     try {
         let plans = await Plan.find({
@@ -119,5 +137,6 @@ module.exports = {
     editPlan,
     updatePlanStatus,
     getPlans,
-    getUserPlans
+    getUserPlans,
+    deleteSubscriptionPlan
 };

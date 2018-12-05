@@ -193,4 +193,40 @@ export class UserManagementComponent implements OnInit {
       }
     });
   }
+
+  deleteUser(user){
+    swal({
+      title: 'Are you sure to delete user?',
+      text: 'You not be able to revert this!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Not now!',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger mr-sm'
+    }).then((result) => {
+      if (result.value) {
+        this.userService.deleteUser(user._id).subscribe((response: HttpResponse<any>) => {
+          console.log(response)
+          if (response.status === 200) {
+            this.getUsers();
+            swal(
+              'Success!',
+              'Your have deleted user successfully.',
+              'success'
+            );
+          }
+        });
+
+      } else if (result.dismiss) {
+        swal(
+          'Cancelled',
+          'You have cancelled deletion request.)',
+          'error'
+        );
+      }
+    });
+  }
 }
