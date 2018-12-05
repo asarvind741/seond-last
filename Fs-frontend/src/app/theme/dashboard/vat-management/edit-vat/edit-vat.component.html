@@ -1,5 +1,5 @@
 <app-card [title]="'Edit Vat-' + selectedCountry['name']">
-  <wizard #wizard class="arc-wizard" navBarLayout="large-empty-symbols" navBarLocation="left">
+  <wizard #wizard class="arc-wizard" navBarLayout="large-empty-symbols" navBarLocation="top">
     <wizard-step stepTitle="Select State" navigationSymbol="1">
       <div class="centered-content">
         <form [formGroup]="vatForm">
@@ -69,15 +69,9 @@
       </div>
     </wizard-step>
   </wizard>
-  <div class="row">
-    <div class="col-sm-3 col-lg-3">
-      <button class="btn btn-primary btn-round" type="button" (click)="onSubmit()">Done</button>
-    </div>
-    <div class="col-sm-3 col-lg-3">
-      <button class="btn btn-warning btn-round" type="button" (click)="closeModal()">Cancel</button>
-    </div>
-    <div class="col-sm-3 col-lg-3">
-      <button class="btn btn-info btn-round" type="button" (click)="clearModal()">Clear</button>
-    </div>
+  <div class="row btn-grp-bottom">
+    <button class="btn btn-primary" type="button" (click)="onSubmit()">Done</button>
+    <button class="btn btn-warning" type="button" (click)="closeModal()">Cancel</button>
+    <button class="btn btn-info" type="button" (click)="clearModal()">Clear</button>
   </div>
 </app-card>

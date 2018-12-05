@@ -8,7 +8,7 @@ import swal from 'sweetalert2';
 @Component({
   selector: 'app-selected-country-wizard',
   templateUrl: './selected-country-wizard.component.html',
-  styleUrls: ['./selected-country-wizardcomponent.scss']
+  styleUrls: ['./selected-country-wizard.component.scss']
 })
 export class SelectedCountryWizardComponent implements OnInit {
   id: any;

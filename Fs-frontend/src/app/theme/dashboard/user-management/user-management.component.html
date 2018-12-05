@@ -2,13 +2,13 @@
   <div class="col-sm-12">
     <app-card [title]="'User Management'" [classHeader]="true">
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Search</label>
-        <div class="col-sm-6">
+        <div class="col-sm-6 search-icon-con">
           <input type="text" class="form-control" (ngModelChange)="onSearchInputChange($event)" placeholder="Search here..."
             [(ngModel)]="search_input">
+          <i class="fa fa-search" aria-hidden="true"></i>
         </div>
         <div class="col-sm-4">
-          <button class="btn btn-primary btn-round" (click)="openFormModal()"><i class="fa fa-plus"></i>Add</button>
+          <button class="btn btn-primary new-vat" (click)="openFormModal()"><i class="fa fa-plus"></i>Add</button>
         </div>
       </div>
       <ngx-datatable #mydatatable class="material data-table" [headerHeight]="50" [limit]="10" [columnMode]="'force'"
@@ -74,17 +74,17 @@
           </ng-template>
         </ngx-datatable-column> -->
         <ngx-datatable-column name="status">
-            <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
-              <span (click)="sort($event, sortDir, sortFn)">
-                Status
-              </span>
-            </ng-template>
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-              <span class="label" [ngClass] = "value === 'Active' ? 'label-primary': 'label-danger'">
-                {{value}}
-              </span>
-            </ng-template>
-          </ngx-datatable-column>
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span (click)="sort($event, sortDir, sortFn)">
+              Status
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span class="label" [ngClass]="value === 'Active' ? 'label-primary': 'label-danger'">
+              {{value}}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
 
         <ngx-datatable-column name="Action" prop="id" [sortable]="false">
           <ng-template let-rowIndex="rowIndex" let-id="value" let-row="row" ngx-datatable-cell-template>

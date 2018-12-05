@@ -2,13 +2,13 @@
   <div class="col-sm-12">
     <app-card [title]="'VAT Management'" [classHeader]="true">
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Search</label>
-        <div class="col-sm-6">
+        <div class="col-sm-5 search-icon-con">
           <input type="text" class="form-control" (ngModelChange)="onSearchInputChange($event)" placeholder="Search here..."
             [(ngModel)]="search_input">
+          <i class="fa fa-search" aria-hidden="true"></i>
         </div>
-        <div class="col-sm-4">
-          <button class="btn btn-primary btn-round" (click)="onAddNewVat()"><i class="fa fa-plus"></i>New Vat</button>
+        <div class="col-sm-7">
+          <button class="btn btn-primary new-vat" (click)="onAddNewVat()"><i class="fa fa-plus"></i>New Vat</button>
         </div>
       </div>
       <ngx-datatable #mydatatable class="material data-table" [headerHeight]="50" [limit]="10" [columnMode]="'force'"
@@ -86,7 +86,7 @@
             </span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-            <span class="label" [ngClass] = "value === 'Active' ? 'label-primary': 'label-danger'">
+            <span class="label" [ngClass]="value === 'Active' ? 'label-primary': 'label-danger'">
               {{value}}
             </span>
           </ng-template>
