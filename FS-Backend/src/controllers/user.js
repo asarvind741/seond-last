@@ -8,7 +8,8 @@ import {
 } from './functions';
 import Constants from './constant';
 import sendSMS from '../functions/nexmo';
-
+import Redis from '../functions/redis';
+import uniqid from 'uniqid';
 // SendMail('test@gmail.com', 'shuklas@synapseindia.email', 'test', 'test');
 async function addUser(req, res) {
     try {
@@ -148,6 +149,9 @@ async function loginUser(req, res) {
                 if (otpValidate || user.otp !== req.body.otp) {
                     sendResponse(res, 400, 'Invalid OTP or OTP Expired');
                 } else {
+                    let refreshToken = uniqid();
+                    Redis.storeRefreshToken(user._id, refreshToken);
+                    console.log(Redis.getRefreshToken(user._id));
                     let token = jwt.sign({
                             exp: Math.floor(Date.now() / 1000) + 60 * 60,
                             data: user._id
@@ -156,6 +160,7 @@ async function loginUser(req, res) {
                     );
                     let data = user;
                     data.token = token;
+                    data.refreshToken = refreshToken;
                     let updateLoginCountAndSaveToken = await User.findByIdAndUpdate(
                         user._id, {
                             $inc: {
@@ -181,6 +186,38 @@ async function loginUser(req, res) {
         }
     } catch (e) {
         sendResponse(res, 500, 'Unexpected error', e);
+    }
+}
+
+async function refreshTokenStrategy(req, res) {
+    const user = req.body;
+    const userId = user._id;
+    if (user.refreshToken) {
+        try {
+            const refreshTokenAvailable = await Redis.getRefreshToken(userId);
+            console.log(refreshTokenAvailable);
+            if (refreshTokenAvailable && refreshTokenAvailable === user.refreshToken) {
+                let token = jwt.sign({
+                        exp: Math.floor(Date.now() / 1000) + 60 * 60,
+                        data: userId
+                    },
+                    Constants.JWT_SECRET
+                );
+                user.token = token;
+                user.refreshToken = refreshTokenAvailable;
+                sendResponse(res, 200, 'Token refreshed Successfully.', user);
+            } else {
+                sendResponse(res, 400, 'No refresh token available. Please procced to login.');
+
+            }
+
+
+        } catch (e) {
+            sendResponse(res, 500, 'Unexpected error', e);
+        }
+    } else {
+        sendResponse(res, 400, 'Refresh token is not available');
+
     }
 }
 
@@ -491,5 +528,6 @@ module.exports = {
     updateUserStates,
     addUserFromAdmin,
     inviteUser,
-    addFromInvitation
+    addFromInvitation,
+    refreshTokenStrategy
 };
