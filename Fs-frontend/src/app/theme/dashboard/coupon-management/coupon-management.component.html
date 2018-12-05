@@ -11,11 +11,17 @@
           <button class="btn btn-primary new-vat" (click)="openFormModal()"><i class="fa fa-plus"></i>Create</button>
         </div>
       </div>
-      <ngx-datatable #mydatatable class="material data-table" [headerHeight]="50" [limit]="10" [columnMode]="'force'"
-        [footerHeight]="50" [rowHeight]="'auto'" [rows]="rows">
+      <ngx-datatable #mydatatable class="material data-table" 
+      [headerHeight]="50" 
+      [limit]="6" 
+      [columnMode]="'force'"
+      [scrollbarH]="true"
+      [footerHeight]="50" 
+      [rowHeight]="'auto'" 
+      [rows]="rows">
         <ngx-datatable-column name="name">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
-            <span (click)="sort($event, sortDir, sortFn)">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
               Name
             </span>
           </ng-template>
@@ -27,7 +33,7 @@
         </ngx-datatable-column>
         <ngx-datatable-column name="module">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
-            <span (click)="sort($event, sortDir, sortFn)">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
               Module Name
             </span>
           </ng-template>
@@ -39,7 +45,7 @@
         </ngx-datatable-column>
         <ngx-datatable-column name="noOfUsersAllowed">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
-            <span (click)="sort($event, sortDir, sortFn)">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
               Max. Users
             </span>
           </ng-template>
@@ -51,7 +57,7 @@
         </ngx-datatable-column>
         <ngx-datatable-column name="couponUrl">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
-            <span (click)="sort($event, sortDir, sortFn)">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
               URL
             </span>
           </ng-template>
@@ -63,7 +69,7 @@
         </ngx-datatable-column>
         <ngx-datatable-column name="description">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
-            <span (click)="sort($event, sortDir, sortFn)">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
               Description
             </span>
           </ng-template>
@@ -75,7 +81,7 @@
         </ngx-datatable-column>
         <ngx-datatable-column name="discount">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
-            <span (click)="sort($event, sortDir, sortFn)">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
               Discount(%)
             </span>
           </ng-template>
@@ -87,7 +93,7 @@
         </ngx-datatable-column>
         <ngx-datatable-column name="expiresOn">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
-            <span (click)="sort($event, sortDir, sortFn)">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
               Expiry Date
             </span>
           </ng-template>
@@ -100,7 +106,7 @@
 
         <ngx-datatable-column name="status">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
-            <span (click)="sort($event, sortDir, sortFn)">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
               Status
             </span>
           </ng-template>
@@ -113,8 +119,16 @@
         <ngx-datatable-column name="Action" prop="id" [sortable]="false">
           <ng-template let-rowIndex="rowIndex" let-id="value" let-row="row" ngx-datatable-cell-template>
             <button class="btn btn-sm btn-info" (click)="openEditFormModal(row)">
-              <i class="fa fa-edit"></i> Edit
+              <i class="fa fa-edit"></i>
             </button>
+            <button class="btn btn-sm btn-danger" (click)="deleteCoupon(row)">
+              <i class="fa fa-trash-o"></i>
+            </button>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Activate/Deactivate" prop="id" [sortable]="false">
+          <ng-template let-rowIndex="rowIndex" let-id="value" let-row="row" ngx-datatable-cell-template>
             <div *ngIf="row['status'] === 'Active' ; else activate">
               <button class="btn btn-sm btn-danger" (click)="openSuccessCancelSwal(row)">
                 <i class="fa fa-trash"></i> Deactivate
