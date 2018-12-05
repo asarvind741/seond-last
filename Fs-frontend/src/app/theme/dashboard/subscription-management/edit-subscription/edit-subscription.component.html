@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="row">
-        <label class="col-sm-4 col-lg-4 col-form-label">Roles</label>
+        <label class="col-sm-4 col-lg-4 col-form-label">Plan For</label>
         <div class="col-sm-8 col-lg-8">
           <angular2-multiselect [data]="role" [(ngModel)]="selectedRoles" [settings]="settings" (onSelect)="onItemSelect($event)"
             (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
@@ -77,6 +77,21 @@
               </option>
             </select>
           </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Features</label>
+        <div class="col-sm-8 col-lg-8">
+          <div formArrayName="features">
+            <div *ngFor="let feature of editPlanForm.get('features')['controls']; let i = index">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Add feature..." [formControlName]="i">
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-primary waves-effect waves-light f-right" (click)="addNewFeature()" type="button"><i
+              class="fa fa-plus"></i>Add Features</button>
         </div>
       </div>
 

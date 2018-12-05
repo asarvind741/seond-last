@@ -2,7 +2,6 @@
   <div class="col-sm-12">
     <app-card [title]="'Subscription Management'" [classHeader]="true">
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Search</label>
         <div class="col-sm-6">
           <input type="text" class="form-control" (ngModelChange)="onSearchInputChange($event)" placeholder="Search here..."
             [(ngModel)]="search_input">
@@ -71,7 +70,7 @@
 
         
 
-        <!-- <ngx-datatable-column name="moduleIncluded">
+        <ngx-datatable-column name="moduleIncluded">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
             <span (click)="sort($event, sortDir, sortFn)">
               Modules
@@ -80,11 +79,11 @@
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
             <span>
               <div *ngFor="let element of value">
-                {{ element.name }}
+                {{ element.moduleName }}
               </div>
             </span>
           </ng-template>
-        </ngx-datatable-column> -->
+        </ngx-datatable-column>
 
         <ngx-datatable-column name="status">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">

@@ -76,7 +76,7 @@ const MENUITEMS = [
             name: 'Subscription Management'
           },
           {
-            state: 'subscription-management',
+            state: 'subscription-statistcs',
             name: 'Subscription Statistcs'
           },
           {

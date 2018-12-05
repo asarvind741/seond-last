@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import swal from 'sweetalert2';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { HttpResponse } from '@angular/common/http';
 import {PlanService } from '../../../../services/plan.service';
 
@@ -16,17 +16,17 @@ export class EditSubscriptionComponent implements OnInit {
   statuss: Array<String> = ['Active', 'Inactive'];
   duration: Array<String> = ['Yearly', 'Half Yearly', 'Quarterly', 'Monthly'];
   role: Array<Object> = [
-    {'id': 1, 'itemName': 'Buyer' }, 
-    {'id': 2, 'itemName': 'Supplier' }, 
-    {'id': 3, 'itemName': 'Agent' }, 
-    {'id': 4, 'itemName': 'Reseller' }];
+    {'id': 0, 'itemName': 'Buyer' }, 
+    {'id': 1, 'itemName': 'Supplier' }, 
+    {'id': 2, 'itemName': 'Agent' }, 
+    {'id': 3, 'itemName': 'Reseller' }];
     modulesToInclude: Array<Object> = [
-      {'id': 1, 'itemName': 'First Module' }, 
-      {'id': 2, 'itemName': 'Second Module' }, 
-      {'id': 3, 'itemName': 'Third Module' }, 
-      {'id': 4, 'itemName': 'Fourth Module' }];
-      selectedModules: any;
-      selectedRoles: any;
+      {'id': 0, 'itemName': 'First Module' }, 
+      {'id': 1, 'itemName': 'Second Module' }, 
+      {'id': 2, 'itemName': 'Third Module' }, 
+      {'id': 3, 'itemName': 'Fourth Module' }];
+      selectedModules: any = [];
+      selectedRoles: any = [];
       settings1: any;
       settings: any;
 
@@ -66,8 +66,29 @@ export class EditSubscriptionComponent implements OnInit {
     let maxNumberOfMembers = this.currentPlan.maxNumberOfMembers ? this.currentPlan.maxNumberOfMembers : null;
     let rolesAllowed = this.currentPlan.rolesAllowed ? this.currentPlan.rolesAllowed : null;
     let moduleIncluded = this.currentPlan.moduleIncluded ? this.currentPlan.moduleIncluded : null;
-    this.selectedRoles = rolesAllowed;
-    this.selectedModules = moduleIncluded;
+
+    let features = new FormArray([]);
+
+    if(this.currentPlan.features){
+      this.currentPlan.features.forEach((feature: String) => {
+        features.push(new FormControl(feature))
+      })
+    }
+
+    if(rolesAllowed){
+      rolesAllowed.forEach((role, i) => {
+        let element = { 'id': i, 'itemName': role.roleName };
+        this.selectedRoles.push(element);
+        console.log("this selected", this.selectedRoles);
+      })
+    }
+    if(moduleIncluded){
+      moduleIncluded.forEach((mod, i) => {
+        let element = { 'id': i, 'itemName': mod.moduleName };
+        this.selectedModules.push(element);
+        console.log("this selected", this.selectedModules);
+      })
+    }
     
     this.editPlanForm = new FormGroup({
       'name': new FormControl(name),
@@ -77,11 +98,34 @@ export class EditSubscriptionComponent implements OnInit {
       'status': new FormControl(status),
       'maxNumberOfMembers': new FormControl(maxNumberOfMembers),
       'rolesAllowed': new FormControl(rolesAllowed),
-      'moduleIncluded': new FormControl(moduleIncluded)
+      'moduleIncluded': new FormControl(moduleIncluded),
+      'features': features
     })
   }
 
+  addNewFeature(){
+    const control = new FormControl('');
+    (<FormArray>this.editPlanForm.get('features')).push(control);
+  }
+
   editPlan(){
+
+    const modulesArrary = this.editPlanForm.value.moduleIncluded;
+    const rolesArray = this.editPlanForm.value.rolesAllowed;
+    if (modulesArrary.length > 0) {
+      modulesArrary.forEach(module => {
+        module.moduleName = module.itemName;
+        delete module.itemName;
+      });
+    }
+
+    if (rolesArray.length > 0) {
+      rolesArray.forEach(role => {
+        role.roleName = role.itemName;
+        delete role.itemName;
+      });
+    }
+
     this.planService.updatePlan(this.currentPlan._id, this.editPlanForm.value)
     .subscribe((response: HttpResponse<any>) => {
       if(response.status === 200){

@@ -36,7 +36,6 @@ export class SubscriptionManagementComponent implements OnInit {
   getPlans() {
     this.planService.getPlans()
       .subscribe(plans => {
-        console.log("plans total", plans);
         if (plans['data'].length > 0) {
           plans['data'].forEach(plan => {
             plan.createdBy = plan.createdBy.email;
@@ -68,8 +67,9 @@ export class SubscriptionManagementComponent implements OnInit {
   onSearchInputChange(val) {
     if (val) {
       val = val.toLowerCase();
-      let data = this.rows;
+      let data = this.temp_rows;
       data = data.filter(plan => {
+        console.log("plan duration", plan);
         if (
           plan.name && plan.name.toLowerCase().indexOf(val) >= 0 ? true : false ||
           plan.duration && plan.duration.toLowerCase().indexOf(val) >= 0 ? true : false ||

@@ -102,3 +102,6 @@ converting circular structure to json due to formarray
 
 #smart admin
 https://wrapbootstrap.com/theme/smartadmin-responsive-webapp-WB0573SK0
+
+#ngb-rating issues
+it does not take ngModal, it takes on rate
