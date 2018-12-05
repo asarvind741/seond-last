@@ -136,6 +136,43 @@ activateCouppon(name) {
   });
 }
 
+deleteSubscription(subscription){
+  swal({
+    title: 'Are you sure to delete subscription plan?',
+    text: 'You not be able to revert this!',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'Not now!',
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger mr-sm'
+  }).then((result) => {
+    if (result.value) {
+      this.planService.deleteSubscription(subscription._id).subscribe((response: HttpResponse<any>) => {
+        if (response.status === 200) {
+          this.getPlans();
+          swal(
+            'Activated!',
+            'Your have deleted subscription plan successfully.',
+            'success'
+          );
+        }
+      });
+
+    } else if (result.dismiss) {
+      swal(
+        'Cancelled',
+        'delettion request cancelled.)',
+        'error'
+      );
+    }
+  });
+}
+
+
+
 openSuccessCancelSwal(name) {
   this.deleting = true;
   swal({

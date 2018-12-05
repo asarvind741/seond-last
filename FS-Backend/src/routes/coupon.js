@@ -5,6 +5,7 @@ module.exports = app => {
     app.post(`${coupon}create`, CouponController.createCoupon);
     app.post(`${coupon}edit`, CouponController.editCoupon);
     app.post(`${coupon}status-modify`, CouponController.updateCouponStatus);
+    app.post(`${coupon}delete`, CouponController.deleteCoupoon);
     app.get(`${coupon}`, CouponController.getCoupons);
 
 };

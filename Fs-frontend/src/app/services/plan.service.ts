@@ -38,5 +38,9 @@ export class PlanService {
         return this.httpClient.post(`${environment.API_URL}/plan/status-modify`, {id: id})
     }
 
+    deleteSubscription(id){
+        return this.httpClient.post(`${environment.API_URL}/plan/delete`, {id: id})
+    }
+
 
 }
