@@ -82,7 +82,8 @@ require('./routes/region-management')(app);
 require('./routes/vat-management')(app);
 require('./routes/product')(app);
 require('./routes/company')(app);
-
+require('./routes/restful')(app);
+require('./functions/redis').connectToRedis();
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'public') + '/index.html');
 });
