@@ -7,5 +7,6 @@ module.exports = app => {
     app.post(`${category}list`, CategoryController.getCategoryFromElastic);
     app.post(`${category}edit`, CategoryController.editCategory);
     app.post(`${category}delete`, CategoryController.deleteCategory);
+    app.get(`${category}`, CategoryController.getCategories);
 
 };

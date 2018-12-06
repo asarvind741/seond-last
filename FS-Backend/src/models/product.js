@@ -9,30 +9,29 @@ const Product = new Schema({
     type: String,
     required: true,
   },
-  title: {
-    type: String,
-    required: true,
-  },
+  // title: {
+  //   type: String,
+  //   required: true,
+  // },
   description: String,
   gender: {
     type: String,
     enum: ['Men', 'Women', 'Boys', 'Girls', 'Kids'],
   },
   material: String,
-  assests: {
-    images: [String],
-  },
+  images: [String],
+
   seller: {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
-  serviceModule: {
+  modules: [{
     name: String,
     _id: {
       type: Schema.Types.ObjectId,
       ref: 'ServiceModule',
     },
-  },
+  }],
   category: {
     name: String,
     _id: {
@@ -54,6 +53,10 @@ const Product = new Schema({
   },
   size: String,
   productionCountry: String,
+  regions: [{
+    id: String,
+    name: String
+  }],
   productRawData: {
     type: Schema.Types.Mixed,
     es_indexed: false

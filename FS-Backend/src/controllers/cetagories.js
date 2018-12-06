@@ -127,9 +127,25 @@ async function deleteCategory(req, res) {
   }
 }
 
+
+async function getCategories(req, res) {
+  try {
+    let category = await Category.find({}, {
+      name: 1
+    });
+    sendResponse(res, 200, 'Successful.', category);
+
+  } catch (e) {
+    console.log(e);
+    sendResponse(res, 500, 'Unexpected error', e);
+
+  }
+}
+
 module.exports = {
   createCategory,
   getCategoryFromElastic,
   editCategory,
-  deleteCategory
+  deleteCategory,
+  getCategories
 };
