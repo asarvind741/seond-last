@@ -52,6 +52,10 @@ const routes: Routes = [
       {
         path: 'company-profile2',
         loadChildren: './company-profile2/company-profile2.module#CompanyProfile2Module'
+      },
+      {
+        path: 'product-management',
+        loadChildren: './product-management/product-management.module#ProductManagementModule'
       }
     ]
   }

@@ -1,0 +1,129 @@
+<div class="card">
+  <div class="card-header">
+    <h5>New Product</h5>
+  </div>
+  <div class="card-block">
+    <form [formGroup]="newProductForm" (ngSubmit)="addNewProduct()">
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Name</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Enter product name" formControlName="name">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Select Categories</label>
+        <div class="col-sm-8 col-lg-8">
+          <angular2-multiselect [data]="allCategory" [(ngModel)]="selectedCategories" [settings]="settings2" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
+            formControlName="categories">
+          </angular2-multiselect>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Price</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="number" class="form-control" placeholder="Enter price" formControlName="price" min="0">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Description</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <textarea type="text" class="form-control" placeholder="Enter description" formControlName="description"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Select Regoin</label>
+        <div class="col-sm-8 col-lg-8">
+          <angular2-multiselect [data]="allCountry" [(ngModel)]="selectedRegions" [settings]="settings3" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
+            formControlName="regions">
+          </angular2-multiselect>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Select Modules</label>
+        <div class="col-sm-8 col-lg-8">
+          <angular2-multiselect [data]="allModules" [(ngModel)]="selectedModules" [settings]="settings1" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
+            formControlName="modules">
+          </angular2-multiselect>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Dimensions</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <label>Width</label>
+            <input type="text" class="form-control"  formControlName="width">
+            <label>Height</label>
+            <input type="text" class="form-control"  formControlName="height">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Size</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Enter size" formControlName="size">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Status</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <select class="input-group" name="status" formControlName="status">
+              <option [ngValue]="null" disabled>Select One</option>
+              <option *ngFor="let stat of statuss" [ngValue]="stat">
+                {{ stat }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Images</label>
+        <div class="col-sm-8 col-lg-8">
+          <div formArrayName="images">
+            <div *ngFor="let image of newProductForm.get('images')['controls']; let i = index">
+              <div class="input-group">
+                <input type="file" class="form-control" placeholder="Add image..." [formControlName]="i" (change)="onFileChanged($event, i)">
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-primary waves-effect waves-light f-right" (click)="addImage()" type="button"><i
+              class="fa fa-plus"></i>Add Images</button>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-sm-3 col-lg-3">
+          <button class="btn btn-primary btn-round" type="submit">Done</button>
+        </div>
+        <div class="col-sm-3 col-lg-3">
+          <button class="btn btn-warning btn-round" type="button" (click)="closeModal()">Cancel</button>
+        </div>
+        <div class="col-sm-3 col-lg-3">
+          <button class="btn btn-info btn-round" type="button" (click)="clearModal()">Clear</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

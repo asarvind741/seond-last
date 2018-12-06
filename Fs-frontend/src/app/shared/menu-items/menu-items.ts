@@ -64,6 +64,10 @@ const MENUITEMS = [
             name: 'User Management'
           },
           {
+            state: 'product-management',
+            name: 'Product Management'
+          },
+          {
             state: 'company-profile',
             name: 'Company Profile'
           },
