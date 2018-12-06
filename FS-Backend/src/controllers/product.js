@@ -103,6 +103,33 @@ async function editProduct(req, res) {
     }
 }
 
+async function getProducts(req, res) {
+    try {
+        let id = req.body.id;
+        delete req.body.id;
+        let product = await Product.find({});
+        sendResponse(res, 200, 'Successful.', product);
+
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected error', e);
+
+    }
+}
+
+async function getProduct(req, res) {
+    try {
+        let id = req.params.id;
+        let product = await Product.findById(id);
+        sendResponse(res, 200, 'Successful.', product);
+
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected error', e);
+
+    }
+}
+
 async function deleteProduct(req, res) {
     try {
         let id = req.body.id;
@@ -143,5 +170,7 @@ module.exports = {
     getProductFromElastic,
     editProduct,
     deleteProduct,
-    getProductAndCategoriesFromElastic
+    getProductAndCategoriesFromElastic,
+    getProducts,
+    getProduct
 };

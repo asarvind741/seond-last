@@ -1,10 +1,9 @@
 import redis from 'redis';
 import bluebird from 'bluebird';
-bluebird.promisifyAll(redis.RedisClient.prototype);
-bluebird.promisifyAll(redis.Multi.prototype);
+
 
 let client = redis.createClient();
-
+// let client = null;
 
 async function connectToRedis() {
     try {

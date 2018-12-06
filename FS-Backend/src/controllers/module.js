@@ -58,7 +58,7 @@ async function deleteModule(req, res) {
 async function getModule(req, res) {
     try {
         let modules = await ServiceModule.find({
-            status: 'Active'
+            // status: 'Active'
         });
 
         sendResponse(res, 200, 'Successful.', modules);

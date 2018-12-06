@@ -7,4 +7,7 @@ module.exports = app => {
     app.post(`${product}edit`, ProductController.editProduct);
     app.post(`${product}delete`, ProductController.deleteProduct);
     app.get(`${product}search`, ProductController.getProductAndCategoriesFromElastic);
+    app.get(`${product}`, ProductController.getProducts);
+    app.get(`${product}:id`, ProductController.getProduct);
+
 };
