@@ -19,7 +19,7 @@ export class SubscriptionStatistcsComponent implements OnInit {
   constructor(
     private planService: PlanService
   ) {
-    this.getPlans();
+    this.getUserPlans();
   }
   search_input: string = null;
   editing = {};
@@ -29,12 +29,10 @@ export class SubscriptionStatistcsComponent implements OnInit {
 
   }
 
-  getPlans() {
-    this.planService.getPlans()
+  getUserPlans() {
+    this.planService.getUserPlans()
       .subscribe(plans => {
-        plans['data'].forEach(plan => {
-          plan.createdBy = plan.createdBy.email;
-        })
+        console.log("plans are", plans)
         this.rows = plans['data'];
         
         this.temp_rows = plans['data'];
@@ -48,12 +46,12 @@ export class SubscriptionStatistcsComponent implements OnInit {
    this.planService.updatePlan(this.rows[row]._id,this.rows[row])
    .subscribe((response: HttpResponse<any>) => {
      if(response.status === 200){
-       this.getPlans();
+       this.getUserPlans();
        this.openSuccessSwal();
      }
    }, (error) => {
      this.showMessage = error.error['message'];
-     this.getPlans();
+     this.getUserPlans();
      this.openUnscuccessSwal()
    })
   }
@@ -107,7 +105,7 @@ export class SubscriptionStatistcsComponent implements OnInit {
       if (result.value) {
         this.planService.modifyStatus(name._id).subscribe((response: HttpResponse<any>) => {
           if (response.status === 200) {
-            this.getPlans();
+            this.getUserPlans();
             swal(
               'Activated!',
               'Your have activated plan successfully.',
@@ -144,7 +142,7 @@ export class SubscriptionStatistcsComponent implements OnInit {
         this.planService.modifyStatus(name._id).subscribe((response: HttpResponse<any>) => {
           console.log(response)
           if (response.status === 200) {
-            this.getPlans();
+            this.getUserPlans();
             swal(
               'Deactivated!',
               'Your have deactivated coupon successfully.',
