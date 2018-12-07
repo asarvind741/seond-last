@@ -58,7 +58,7 @@ async function updateFilterStatus(req, res) {
                     new: true
                 }
             );
-            sendResponse(res, 200, 'Filter deleted Successfully.', updatedFilter);
+            sendResponse(res, 200, 'Successful.', updatedFilter);
         } else {
             sendResponse(res, 400, 'Filter not found.');
 
@@ -90,7 +90,7 @@ async function getFilters(req, res) {
     try {
         let filter = await Filter.find({
             // status: 'Active'
-        });
+        }).populate('createdBy');
         console.log(filter);
 
         sendResponse(res, 200, 'Successful.', filter);
@@ -104,5 +104,6 @@ module.exports = {
     createFilter,
     editFilter,
     updateFilterStatus,
-    getFilters
+    getFilters,
+    deleteFilter
 };
