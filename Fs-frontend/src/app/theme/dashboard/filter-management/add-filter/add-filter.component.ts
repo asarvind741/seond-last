@@ -2,22 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import swal from 'sweetalert2';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
-import { CouponService } from '../../../../services/coupon.service';
 import { HttpResponse } from '@angular/common/http';
+import { FilterService } from '../../../../services/filter.service';
 
 @Component({
-  selector: 'app-add-coupon',
-  templateUrl: './add-coupon.component.html',
-  styleUrls: ['./add-coupon.component.scss']
+  selector: 'app-add-filter',
+  templateUrl: './add-filter.component.html',
+  styleUrls: ['./add-filter.component.scss']
 })
-export class AddCouponComponent implements OnInit {
-  newCouponForm: FormGroup;
-  modules: Array<String> = ['First Module', 'Second Module', 'Third Module'];
+export class AddFilterComponent implements OnInit {
+  newFilterForm: FormGroup;
+  filterTypes: Array<String> = ['Product', 'Subscription', 'Special'];
   statuss: Array<String> = ['Active', 'Inactive'];
   showMessage: any;
   constructor(
     public activeModal: NgbActiveModal,
-    private couponService: CouponService
+    private filterService: FilterService
   ) { }
 
   ngOnInit() {
@@ -26,20 +26,19 @@ export class AddCouponComponent implements OnInit {
   }
 
   createForm() {
-    this.newCouponForm = new FormGroup({
+    let value = new FormArray([]);
+
+    this.newFilterForm = new FormGroup({
       'name': new FormControl(null, [Validators.required]),
-      'module': new FormControl(null, [ Validators.required ]),
-      'discount': new FormControl(null, [Validators.required, Validators.min(1), Validators.max(100)]),
-      'expiresOn': new FormControl(null, [ Validators.required]),
-      'status': new FormControl(null),
-      'noOfUsersAllowed': new FormControl(null, [ Validators.min(1)]),
-      'description': new FormControl(null)
+      'type': new FormControl(null, [ Validators.required ]),
+      'status': new FormControl(null, [Validators.required]),
+      'value': value
     })
   }
 
-  addNewCoupon() {
-    console.log(this.newCouponForm.value)
-    this.couponService.addCoupon(this.newCouponForm.value).subscribe((response: HttpResponse<any>) => {
+  addNewFilter() {
+    console.log(this.newFilterForm.value)
+    this.filterService.addFilter(this.newFilterForm.value).subscribe((response: HttpResponse<any>) => {
         if (response.status === 200) {
           this.closeModal();
           this.openSuccessSwal();
@@ -58,15 +57,20 @@ export class AddCouponComponent implements OnInit {
 
   }
 
+  addNewValue(){
+    const control = new FormControl(null);
+    (<FormArray>this.newFilterForm.get('value')).push(control);
+  }
+
   onSelectValue(event) {
-    console.log("value", this.newCouponForm.value)
+    console.log("value", this.newFilterForm.value)
   }
 
 
   openSuccessSwal() {
     swal({
       title: 'Successful!',
-      text: 'Coupon created successfully!',
+      text: 'Filter created successfully!',
       type: 'success'
     }).catch(swal.noop);
   }
@@ -83,8 +87,13 @@ export class AddCouponComponent implements OnInit {
     this.activeModal.close('Modal Closed');
   }
 
+  cancelNewUserAddition() {
+    this.newFilterForm.reset();
+    this.closeModal();
+  }
+
   clearModal() {
-    this.newCouponForm.reset();
+    this.newFilterForm.reset();
   }
 
 }

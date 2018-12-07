@@ -102,7 +102,7 @@
           <div formArrayName="images">
             <div *ngFor="let image of newProductForm.get('images')['controls']; let i = index">
               <div class="input-group">
-                <input type="file" class="form-control" placeholder="Add image..." [formControlName]="i" (change)="onFileChanged($event, i)">
+                <input type="file" class="form-control" placeholder="Add image..." [formControlName]="i" (change)="onSelectFile($event)">
               </div>
             </div>
           </div>

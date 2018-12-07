@@ -56,6 +56,10 @@ const routes: Routes = [
       {
         path: 'product-management',
         loadChildren: './product-management/product-management.module#ProductManagementModule'
+      },
+      {
+        path: 'filter-management',
+        loadChildren: './filter-management/filter-management.module#FilterManagementModule'
       }
     ]
   }

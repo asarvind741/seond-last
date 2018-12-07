@@ -26,6 +26,7 @@ export class AddProductComponent implements OnInit {
   settings1: any;
   settings2: any;
   settings3: any;
+  urls: any = [];
   moduleList: any;
   countryList: any;
   uploadedImages: any = [];
@@ -136,11 +137,20 @@ export class AddProductComponent implements OnInit {
     (<FormArray>this.newProductForm.get('images')).push(control);
   }
 
-  onFileChanged(event) {
-    console.log("event target image", event.target.files);
-    this.newProductForm.controls['images'].setValue(event.target.files);
+  onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+        var filesAmount = event.target.files.length;
+        for (let i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
 
+                reader.onload = (event) => {
+                  console.log(event.target['result']);
+                   this.urls.push(event.target['result']); 
+                }
 
+                reader.readAsDataURL(event.target.files[i]);
+        }
+    }
   }
 
   openSuccessSwal() {
