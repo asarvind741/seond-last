@@ -100,10 +100,25 @@ async function getFilters(req, res) {
     }
 }
 
+async function getCategoryFilters(req, res) {
+    try {
+        let filter = await Filter.find({
+            type: 'Category'
+        });
+        console.log(filter);
+
+        sendResponse(res, 200, 'Successful.', filter);
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected error', e);
+    }
+}
+
 module.exports = {
     createFilter,
     editFilter,
     updateFilterStatus,
     getFilters,
-    deleteFilter
+    deleteFilter,
+    getCategoryFilters
 };

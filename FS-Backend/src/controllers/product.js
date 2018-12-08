@@ -165,6 +165,29 @@ async function getProductAndCategoriesFromElastic(req, res) {
 
 }
 
+// async function getDataFromElastic() {
+//     let data = {
+
+//     }
+//     if(data._index === 'categorys') {
+
+//     }
+// }
+
+// {
+//     "_index": "categorys",
+//     "_type": "category",
+//     "_id": "5c0baee43020c198c9998857",
+//     "_score": 1,
+//     "_source": {
+//     "name": "Belt",
+//     "description": "this is belt category",
+//     "createdBy": "5c012fde9baf385b940f7daf",
+//     "status": "Active",
+//     "updatedAt": "2018-12-08T11:45:40.540Z",
+//     "createdAt": "2018-12-08T11:45:40.540Z"
+//     }
+
 module.exports = {
     createProduct,
     getProductFromElastic,

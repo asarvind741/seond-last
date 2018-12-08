@@ -8,5 +8,9 @@ module.exports = app => {
     app.post(`${category}edit`, CategoryController.editCategory);
     app.post(`${category}delete`, CategoryController.deleteCategory);
     app.get(`${category}`, CategoryController.getCategories);
+    app.get(`${category}all`, CategoryController.getAllCategories);
+    app.post(`${category}add-filter`, CategoryController.getAllCategories);
+    app.post(`${category}status-modify`, CategoryController.updateCategoryStatus);
+
 
 };

@@ -8,5 +8,6 @@ module.exports = app => {
     app.post(`${filter}delete`, FilterController.deleteFilter);
 
     app.get(`${filter}`, FilterController.getFilters);
+    app.get(`${filter}category-filters`, FilterController.getCategoryFilters);
 
 };

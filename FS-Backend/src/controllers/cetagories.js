@@ -142,10 +142,78 @@ async function getCategories(req, res) {
   }
 }
 
+async function getAllCategories(req, res) {
+  try {
+    let category = await Category.find({}).populate('createdBy');
+    sendResponse(res, 200, 'Successful.', category);
+
+  } catch (e) {
+    console.log(e);
+    sendResponse(res, 500, 'Unexpected error', e);
+
+  }
+}
+
+async function addFilters(req, res) {
+  try {
+    let id = req.body.id;
+    delete req.body.id;
+    let updatedCategory = await Category.findByIdAndUpdate(id, {
+      $push: {
+        filter: req.body.filter_id
+      }
+    }, {
+      new: true
+    });
+    sendResponse(res, 200, 'Category updated Successfully.', updatedCategory);
+
+  } catch (e) {
+    console.log(e);
+    sendResponse(res, 500, 'Unexpected error', e);
+
+  }
+}
+
+async function updateCategoryStatus(req, res) {
+  try {
+    let id = req.body.id;
+    delete req.body.id;
+    let status;
+    let category = await Category.findById(id);
+    if (category) {
+      if (category.status === 'Active')
+        status = 'Inactive';
+      else
+        status = 'Active';
+
+
+      let updatedCategory = await Category.findByIdAndUpdate(
+        id, {
+          $set: {
+            status: status
+          }
+        }, {
+          new: true
+        }
+      );
+      sendResponse(res, 200, 'Successful.', updatedCategory);
+    } else {
+      sendResponse(res, 400, 'Category not found.');
+
+    }
+  } catch (e) {
+    console.log(e);
+    sendResponse(res, 500, 'Unexpected error', e);
+  }
+}
+
 module.exports = {
   createCategory,
   getCategoryFromElastic,
   editCategory,
   deleteCategory,
-  getCategories
+  getCategories,
+  getAllCategories,
+  addFilters,
+  updateCategoryStatus
 };

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const filterTypes = ['Product', 'Subscription', 'Special'];
+const filterTypes = ['Product', 'Subscription', 'Special', 'Category'];
 const statusTypes = ['Active', 'Inactive'];
 const Filter = new Schema({
     serviceCategory: {
