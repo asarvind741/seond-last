@@ -14,44 +14,45 @@ const Product = new Schema({
   //   required: true,
   // },
   description: String,
-  gender: {
-    type: String,
-    enum: ['Men', 'Women', 'Boys', 'Girls', 'Kids'],
-  },
-  material: String,
+  // gender: {
+  //   type: String,
+  //   enum: ['Men', 'Women', 'Boys', 'Girls', 'Kids'],
+  // },
+  // material: String,
   images: [String],
-
-  seller: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
+  price: Number,
+  // seller: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'User',
+  // },
   modules: [{
     name: String,
-    _id: {
+    id: {
       type: Schema.Types.ObjectId,
       ref: 'ServiceModule',
     },
   }],
   category: {
     name: String,
-    _id: {
+    id: {
       type: Schema.Types.ObjectId,
       ref: 'Category',
     },
   },
   SubCategory: {
     name: String,
-    _id: {
+    id: {
       type: Schema.Types.ObjectId,
       ref: 'Category',
     },
   },
-  dimensions: {
-    width: String,
-    height: String,
-    length: String,
-  },
-  size: String,
+
+  width: String,
+
+  height: String,
+  length: String,
+
+  // size: String,
   productionCountry: String,
   regions: [{
     id: String,
@@ -62,14 +63,25 @@ const Product = new Schema({
     es_indexed: false
 
   },
-  color: String,
-  quantity: {
-    type: Number,
-  },
+  filters: [{
+    name: String,
+    value: [String],
+    id: Schema.Types.ObjectId
+  }],
+  // color: String,
+  // quantity: {
+  //   type: Number,
+  // },
   status: {
     type: String,
     default: 'Active',
     enum: statusTypes
+  },
+  createdBy: {
+    id: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
   }
 }, {
   timestamps: true,

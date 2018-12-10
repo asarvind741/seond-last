@@ -9,5 +9,5 @@ module.exports = app => {
 
     app.get(`${filter}`, FilterController.getFilters);
     app.get(`${filter}category-filters`, FilterController.getCategoryFilters);
-
+    app.get(`${filter}getFiltersByCategory/:id`, FilterController.getFiltersByCategory);
 };
