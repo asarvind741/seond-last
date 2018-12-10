@@ -1,4 +1,5 @@
 import Filter from '../models/filter';
+import Category from '../models/category';
 import {
     sendResponse,
     SendMail
@@ -58,7 +59,7 @@ async function updateFilterStatus(req, res) {
                     new: true
                 }
             );
-            sendResponse(res, 200, 'Filter deleted Successfully.', updatedFilter);
+            sendResponse(res, 200, 'Successful.', updatedFilter);
         } else {
             sendResponse(res, 400, 'Filter not found.');
 
@@ -90,6 +91,20 @@ async function getFilters(req, res) {
     try {
         let filter = await Filter.find({
             // status: 'Active'
+        }).populate('createdBy');
+        console.log(filter);
+
+        sendResponse(res, 200, 'Successful.', filter);
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected error', e);
+    }
+}
+
+async function getCategoryFilters(req, res) {
+    try {
+        let filter = await Filter.find({
+            type: 'Category'
         });
         console.log(filter);
 
@@ -100,9 +115,42 @@ async function getFilters(req, res) {
     }
 }
 
+async function getFiltersByCategory(req, res) {
+    try {
+        let category = await Category.findById(req.params.id).lean();
+        if (!category)
+            return sendResponse(res, 400, 'category not found');
+        let filters = category.filter;
+        console.log('filters', filters);
+        let data = [];
+        // for (let filter in filters) {
+        //     let filterData = await Filter.findById(filters[filter].id);
+        //     data.push(filterData);
+        //     console.log(filterData, 'data', filter);
+        // }
+
+        Promise.all(filters.map(function (filter) {
+            return Filter.findById(filter.id).then((data) => {
+                return data;
+            });
+        })).then((data) => {
+            console.log(data);
+            sendResponse(res, 200, 'Successful.', data);
+
+        });
+
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected error', e);
+    }
+}
+
 module.exports = {
     createFilter,
     editFilter,
     updateFilterStatus,
-    getFilters
+    getFilters,
+    deleteFilter,
+    getCategoryFilters,
+    getFiltersByCategory
 };

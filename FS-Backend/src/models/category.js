@@ -4,7 +4,17 @@ import client from '../functions/elastic-search-connection';
 const Schema = mongoose.Schema;
 
 const statusTypes = ['Active', 'Inactive'];
+const filter = [{
+  id: {
+    type: Schema.Types.ObjectId,
+    ref: 'Filter'
 
+  },
+  name: {
+    type: String,
+    es_indexed: true
+  }
+}];
 const Category = new Schema({
   name: {
     type: String,
@@ -26,6 +36,10 @@ const Category = new Schema({
     enum: statusTypes,
     default: 'Active'
   },
+  filter: {
+    type: filter,
+    es_indexed: false
+  }
 }, {
   timestamps: true
 });

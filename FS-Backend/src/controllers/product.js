@@ -1,4 +1,6 @@
 import Product from '../models/product';
+import Category from '../models/category';
+import Filter from '../models/filter';
 import fs from 'fs';
 import esClient from '../functions/elastic-search-connection';
 import {
@@ -36,6 +38,20 @@ function callSync() {
 
 
 async function createProduct(req, res) {
+    let filters = req.body.filters;
+    delete req.body.filters;
+
+
+    let data = filters.map((filter) => {
+        console.log(filter, 'filter');
+        filter.value = filter.value.map((value) => {
+            return value.itemName;
+        });
+        return filter;
+    });
+    req.body.filters = data;
+    req.body.category = req.body.category[0];
+    console.log(filters, '=======', JSON.stringify(data));
     try {
         let product = await new Product(req.body).save();
         product.on('es-indexed', function (err, response) {
@@ -89,6 +105,20 @@ async function editProduct(req, res) {
     try {
         let id = req.body.id;
         delete req.body.id;
+        let filters = req.body.filters;
+        delete req.body.filters;
+
+
+        let data = filters.map((filter) => {
+            console.log(filter, 'filter');
+            filter.value = filter.value.map((value) => {
+                return value.itemName;
+            });
+            return filter;
+        });
+        req.body.filters = data;
+        req.body.category = req.body.category[0];
+        console.log(filters, '=======', JSON.stringify(data));
         let updatedProduct = await Product.findByIdAndUpdate(id, {
             $set: req.body
         }, {
@@ -130,6 +160,40 @@ async function getProduct(req, res) {
     }
 }
 
+
+async function updateProductStatus(req, res) {
+    try {
+        let id = req.body.id;
+        delete req.body.id;
+        let status;
+        let product = await Product.findById(id);
+        if (product) {
+            if (product.status === 'Active')
+                status = 'Inactive';
+            else
+                status = 'Active';
+
+
+            let updatedProduct = await Product.findByIdAndUpdate(
+                id, {
+                    $set: {
+                        status: status
+                    }
+                }, {
+                    new: true
+                }
+            );
+            sendResponse(res, 200, 'Successful.', updatedProduct);
+        } else {
+            sendResponse(res, 400, 'Product not found.');
+
+        }
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected error', e);
+    }
+}
+
 async function deleteProduct(req, res) {
     try {
         let id = req.body.id;
@@ -165,6 +229,53 @@ async function getProductAndCategoriesFromElastic(req, res) {
 
 }
 
+async function getDataFromElastic() {
+    let data = {
+        index: 'categorys',
+        type: 'category',
+        _id: '5c0baee43020c198c9998857',
+        score: 1,
+        _source: {
+            name: 'Belt',
+            description: 'this is belt category',
+            createdBy: '5c012fde9baf385b940f7daf',
+            status: 'Active',
+            updatedAt: '2018-12-08T11:45:40.540Z',
+            createdAt: '2018-12-08T11:45:40.540Z'
+        }
+    };
+    console.log(data.index, 'data._index');
+    if (data.index === 'categorys') {
+        let categoryId = data._id;
+        let category = await Category.findById(categoryId).populate('filter.id');
+        console.log(JSON.stringify(category), 'category');
+        const response = await esClient.search({
+            query: {
+                match_phrase_prefix: {
+                    name: data._source.name,
+                    index: 'products'
+                }
+            }
+        });
+        console.log(JSON.stringify(response), 'response');
+        // console.log(data);
+    }
+}
+getDataFromElastic();
+// {
+//     '_index': 'categorys',
+//     '_type': 'category',
+//     '_id': '5c0baee43020c198c9998857',
+//     '_score': 1,
+//     '_source': {
+//     'name': 'Belt',
+//     'description': 'this is belt category',
+//     'createdBy': '5c012fde9baf385b940f7daf',
+//     'status': 'Active',
+//     'updatedAt': '2018-12-08T11:45:40.540Z',
+//     'createdAt': '2018-12-08T11:45:40.540Z'
+//     }
+
 module.exports = {
     createProduct,
     getProductFromElastic,
@@ -172,5 +283,6 @@ module.exports = {
     deleteProduct,
     getProductAndCategoriesFromElastic,
     getProducts,
-    getProduct
+    getProduct,
+    updateProductStatus
 };
