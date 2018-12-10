@@ -14,13 +14,43 @@
       </div>
 
       <div class="row">
-        <label class="col-sm-4 col-lg-4 col-form-label">Select Categories</label>
+        <label class="col-sm-4 col-lg-4 col-form-label">Select Category</label>
         <div class="col-sm-8 col-lg-8">
-          <angular2-multiselect [data]="allCategory" [(ngModel)]="selectedCategories" [settings]="settings2" (onSelect)="onItemSelect($event)"
+          <angular2-multiselect [data]="allCategories" [(ngModel)]="selectedCategories" [settings]="settings2" (onSelect)="onItemSelectCat($event)"
             (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
-            formControlName="categories">
+            formControlName="category">
           </angular2-multiselect>
         </div>
+      </div>
+
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Select Filters</label>
+        <div class="col-sm-8 col-lg-8" formArrayName="filters">
+          <div *ngFor="let filter of newProductForm.get('filters')['controls']; let i = index" [formGroupName]="i">
+
+            <div class="col-sm-8 col-lg-8">
+              <div class="input-group">
+                <select class="input-group" name="name" formControlName="name" (change)="onChange($event)">
+                  <option [ngValue]="null" disabled>Select Name</option>
+                  <option *ngFor="let name of allCategoryFilters" [ngValue]="name">
+                    {{ name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-sm-8 col-lg-8">
+              <angular2-multiselect [data]="selectedCategoryFilterValues" [(ngModel)]="filterValue[i]"
+                [settings]="settings4" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"
+                (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)" formControlName="value">
+              </angular2-multiselect>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-primary waves-effect waves-light f-right" (click)="addNewFilter()" type="button"><i
+              class="fa fa-plus"></i>Add Filter</button>
+        </div>
+
       </div>
 
       <div class="row">
@@ -66,18 +96,9 @@
         <div class="col-sm-8 col-lg-8">
           <div class="input-group">
             <label>Width</label>
-            <input type="text" class="form-control"  formControlName="width">
+            <input type="text" class="form-control" formControlName="width">
             <label>Height</label>
-            <input type="text" class="form-control"  formControlName="height">
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <label class="col-sm-4 col-lg-4 col-form-label">Size</label>
-        <div class="col-sm-8 col-lg-8">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Enter size" formControlName="size">
+            <input type="text" class="form-control" formControlName="height">
           </div>
         </div>
       </div>
@@ -99,15 +120,14 @@
       <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Images</label>
         <div class="col-sm-8 col-lg-8">
-          <div formArrayName="images">
-            <div *ngFor="let image of newProductForm.get('images')['controls']; let i = index">
-              <div class="input-group">
-                <input type="file" class="form-control" placeholder="Add image..." [formControlName]="i" (change)="onSelectFile($event)">
-              </div>
-            </div>
-          </div>
-          <button class="btn btn-sm btn-primary waves-effect waves-light f-right" (click)="addImage()" type="button"><i
-              class="fa fa-plus"></i>Add Images</button>
+          <image-upload url="http://40.71.47.14:5000/image"
+          [max]="10"
+          [maxFileSize]=""
+          [fileTooLargeMessage]="'Image too large!'"
+          [extensions]="['jpg','jpeg', 'png','gif']"
+          (removed)="onRemoved($event)"
+          (uploadFinished)="onUploadFinished($event)"
+          (uploadStateChanged)="onUploadStateChanged($event)"></image-upload>
         </div>
       </div>
 

@@ -60,6 +60,10 @@ const routes: Routes = [
       {
         path: 'filter-management',
         loadChildren: './filter-management/filter-management.module#FilterManagementModule'
+      },
+      {
+        path: 'category-management',
+        loadChildren: './category-management/category-management.module#CategoryManagementModule'
       }
     ]
   }

@@ -16,6 +16,10 @@ export class FilterService {
         return this.httpClient.get(`${environment.API_URL}/filter/`);
     }
 
+    getSelectedCategoryFilters(id){
+        return this.httpClient.get(`${environment.API_URL}/filter/getFiltersByCategory/${id}`);
+    }
+
     getFilter(id){
         return this.httpClient.get(`${environment.API_URL}/filter/${id}`)
     }

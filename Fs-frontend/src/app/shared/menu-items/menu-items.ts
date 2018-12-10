@@ -72,6 +72,10 @@ const MENUITEMS = [
             name: 'Filter Management'
           },
           {
+            state: 'category-management',
+            name: 'Category Management'
+          },
+          {
             state: 'company-profile',
             name: 'Company Profile'
           },

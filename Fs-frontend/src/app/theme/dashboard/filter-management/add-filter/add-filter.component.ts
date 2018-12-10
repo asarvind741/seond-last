@@ -12,7 +12,7 @@ import { FilterService } from '../../../../services/filter.service';
 })
 export class AddFilterComponent implements OnInit {
   newFilterForm: FormGroup;
-  filterTypes: Array<String> = ['Product', 'Subscription', 'Special'];
+  filterTypes: Array<String> = ['Product', 'Subscription', 'Special', 'Category'];
   statuss: Array<String> = ['Active', 'Inactive'];
   showMessage: any;
   constructor(

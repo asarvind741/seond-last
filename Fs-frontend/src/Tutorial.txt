@@ -105,3 +105,18 @@ https://wrapbootstrap.com/theme/smartadmin-responsive-webapp-WB0573SK0
 
 #ngb-rating issues
 it does not take ngModal, it takes on rate
+
+
+https://stackoverflow.com/questions/41474011/what-causes-the-control-registeronchange-is-not-a-function-error
+
+https://stackoverflow.com/questions/42786445/angular-2-cant-set-form-array-value
+
+https://stackoverflow.com/questions/51209125/control-setparent-is-not-a-function-when-dymanically-creating-formgroup/51210612
+
+https://stackoverflow.com/questions/34576724/mapper-parsing-exception-in-new-elasticsearch-2-1-1-version/34576862
+
+https://stackoverflow.com/questions/33700266/how-can-i-get-new-selection-in-select-in-angular-2
+
+https://aberezkin.github.io/ng2-image-upload/#/readme
+https://coderanch.com/t/696247/angular-typescript-spa-javascript/languages/angular-image-upload-unable-hold
+https://aberezkin.github.io/ng2-image-upload/#/demo
