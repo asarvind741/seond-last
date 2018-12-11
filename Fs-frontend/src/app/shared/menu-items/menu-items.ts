@@ -98,6 +98,20 @@ const MENUITEMS = [
         ]
       },
       {
+        state: 'report',
+        short_label: 'R',
+        name: 'Report Management',
+        type: 'sub',
+        icon: 'ti-home',
+        children: [
+          {
+            state: 'restful-management',
+            name: 'Restful Settings'
+          }
+        ]
+      },
+      
+      {
         state: 'navigation',
         short_label: 'N',
         name: 'Navigation',

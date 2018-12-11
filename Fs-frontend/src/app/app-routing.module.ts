@@ -19,6 +19,10 @@ const routes: Routes = [
         loadChildren: './theme/dashboard/dashboard.module#DashboardModule'
       },
       {
+        path: 'report',
+        loadChildren: './theme/report/report.module#ReportModule'
+      },
+      {
         path: 'navigation',
         loadChildren: './theme/navigation/navigation.module#NavigationModule'
       },

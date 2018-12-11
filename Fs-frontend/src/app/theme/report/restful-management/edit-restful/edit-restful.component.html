@@ -1,0 +1,120 @@
+<div class="card">
+    <div class="card-header">
+      <h5>Create new Coupon Code:</h5>
+    </div>
+    <div class="card-block">
+      <form [formGroup]="editCouponForm" (ngSubmit)="editCoupon()">
+        <div class="row">
+          <label class="col-sm-4 col-lg-4 col-form-label">Name</label>
+          <div class="col-sm-8 col-lg-8">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Enter Name" formControlName="name">
+            </div>
+            <div *ngIf="editCouponForm.get('name').invalid && editCouponForm.get('name').touched" class="text-danger">
+              <span *ngIf="editCouponForm.get('name').errors.required">Coupon name is required!</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row">
+          <label class="col-sm-4 col-lg-4 col-form-label">Module:</label>
+          <div class="col-sm-8 col-lg-8">
+            <select class="input-group" name="module" formControlName="module">
+              <option [ngValue]="null" disabled>Select One</option>
+              <option *ngFor="let module of modules" [ngValue]="module">
+                {{ module }}
+              </option>
+            </select>
+            <div *ngIf="editCouponForm.get('module').invalid && editCouponForm.get('module').touched" class="text-danger">
+              <span *ngIf="editCouponForm.get('module').errors.required">Module name is required!</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <label class="col-sm-4 col-lg-4 col-form-label">No. of Users</label>
+          <div class="col-sm-8 col-lg-8">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Enter Name" formControlName="noOfUsersAllowed">
+              <div *ngIf="editCouponForm.get('noOfUsersAllowed').invalid && editCouponForm.get('noOfUsersAllowed').touched"
+                class="text-danger">
+                <span *ngIf="editCouponForm.get('noOfUsersAllowed').errors.min">Minimum users(1) required!</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <label class="col-sm-4 col-lg-4 col-form-label">Discount</label>
+          <div class="col-sm-8 col-lg-8">
+            <div class="input-group">
+              <input type="number" class="form-control" placeholder="Enter discount(%)" formControlName="discount" min="1"
+                max="100">
+              <div *ngIf="editCouponForm.get('discount').invalid && editCouponForm.get('discount').touched" class="text-danger">
+                <span *ngIf="editCouponForm.get('discount').errors.required">Discount is required!</span>
+                <span *ngIf="editCouponForm.get('discount').errors.min">Minimum discount(1%) required!</span>
+                <span *ngIf="editCouponForm.get('discount').errors.max">Maximum discount(100%) required!</span>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row">
+          <label class="col-sm-4 col-lg-4 col-form-label">Status</label>
+          <div class="col-sm-8 col-lg-8">
+            <div class="input-group">
+              <select class="input-group" name="status" formControlName="status">
+                <option [ngValue]="null" disabled>Select One</option>
+                <option *ngFor="let stat of statuss" [ngValue]="stat">
+                  {{ stat }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <label class="col-sm-4 col-lg-4 col-form-label">Valid Up to:</label>
+          <div class="col-sm-8 col-lg-8">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Enter expiry date" formControlName="expiresOn" 
+                ngbDatepicker #d="ngbDatepicker">
+              <button type="button" (click)="d.toggle()"><i class="fa fa-calendar"></i></button>
+              <div *ngIf="editCouponForm.get('expiresOn').invalid && editCouponForm.get('expiresOn').touched" class="text-danger">
+                <span *ngIf="editCouponForm.get('expiresOn').errors.required">Expiry date is required!</span>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row">
+          <label class="col-sm-4 col-lg-4 col-form-label">Description</label>
+          <div class="col-sm-8 col-lg-8">
+            <div class="input-group">
+              <textarea type="text" 
+              class="form-control" 
+              placeholder="Enter description about coupon" 
+              formControlName="description">
+              </textarea>
+              <div *ngIf="editCouponForm.get('description').invalid && editCouponForm.get('description').touched"
+                class="text-danger">
+                <span *ngIf="editCouponForm.get('description').errors.required">Description required!</span>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+  
+  
+        <div class="row">
+          <div class="col-sm-3 col-lg-3">
+            <button class="btn btn-primary btn-round" type="submit">Done</button>
+          </div>
+          <div class="col-sm-3 col-lg-3">
+            <button class="btn btn-warning btn-round" type="button" (click)="closeModal()">Cancel</button>
+          </div>
+          <div class="col-sm-3 col-lg-3">
+            <button class="btn btn-info btn-round" type="button" (click)="clearModal()">Clear</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
