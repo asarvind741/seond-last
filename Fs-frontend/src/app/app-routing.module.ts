@@ -19,10 +19,6 @@ const routes: Routes = [
         loadChildren: './theme/dashboard/dashboard.module#DashboardModule'
       },
       {
-        path: 'report',
-        loadChildren: './theme/report/report.module#ReportModule'
-      },
-      {
         path: 'navigation',
         loadChildren: './theme/navigation/navigation.module#NavigationModule'
       },
@@ -104,6 +100,14 @@ const routes: Routes = [
       },
       { path: 'setup-profile', loadChildren: './wizard/wizard.module#WizardModule' }
     ]
+  },
+  {
+    path: 'report',
+    loadChildren: './theme/report/report.module#ReportModule'
+  },
+  {
+    path: 'search',
+    loadChildren: './theme/search-products/search.module#SearchModule'
   },
   {
     path: '',

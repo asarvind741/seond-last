@@ -1,19 +1,15 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import { SearchComponent } from './search.component';
 
 const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Report',
+      title: 'Search',
       status: false
     },
-    children: [
-      {
-        path: 'restful-management',
-        loadChildren: './restful-management/restful-management.module#RestfulManagementModule'
-      }
-    ]
+    component: SearchComponent
   }
 ];
 
@@ -21,4 +17,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ReportRoutingModule { }
+export class SearchRoutingModule { }
