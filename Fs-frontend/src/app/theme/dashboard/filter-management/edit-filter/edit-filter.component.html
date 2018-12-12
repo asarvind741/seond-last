@@ -1,0 +1,78 @@
+<div class="card">
+    <div class="card-header">
+      <h5>New Filter</h5>
+    </div>
+    <div class="card-block">
+      <form [formGroup]="editFilterForm" (ngSubmit)="editFilter()">
+        <div class="row">
+          <label class="col-sm-4 col-lg-4 col-form-label">Name</label>
+          <div class="col-sm-8 col-lg-8">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Enter Name" formControlName="name">
+            </div>
+            <div *ngIf="editFilterForm.get('name').invalid && editFilterForm.get('name').touched" class="text-danger">
+              <span *ngIf="editFilterForm.get('name').errors.required">Filter name is required!</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row">
+          <label class="col-sm-4 col-lg-4 col-form-label">Filter Type</label>
+          <div class="col-sm-8 col-lg-8">
+            <select class="input-group" name="type" formControlName="type">
+              <option [ngValue]="null" disabled>Select One</option>
+              <option *ngFor="let filterType of filterTypes" [ngValue]="filterType">
+                {{ filterType }}
+              </option>
+            </select>
+            <div *ngIf="editFilterForm.get('type').invalid && editFilterForm.get('type').touched" class="text-danger">
+              <span *ngIf="editFilterForm.get('type').errors.required">Filter type is required!</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row">
+          <label class="col-sm-4 col-lg-4 col-form-label">Value</label>
+          <div class="col-sm-8 col-lg-8">
+              <div formArrayName="value">
+                <div *ngFor="let val of editFilterForm.get('value')['controls']; let i = index">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Add value..." [formControlName]="i" >
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-sm btn-primary waves-effect waves-light f-right" (click)="addNewValue()" type="button"><i
+                  class="fa fa-plus"></i>Add Value</button>
+            </div>
+        </div>
+  
+  
+        <div class="row">
+          <label class="col-sm-4 col-lg-4 col-form-label">Status</label>
+          <div class="col-sm-8 col-lg-8">
+            <div class="input-group">
+              <select class="input-group" name="status" formControlName="status">
+                <option [ngValue]="null" disabled>Select One</option>
+                <option *ngFor="let stat of statuss" [ngValue]="stat">
+                  {{ stat }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-sm-3 col-lg-3">
+            <button class="btn btn-primary btn-round" type="submit">Done</button>
+          </div>
+          <div class="col-sm-3 col-lg-3">
+            <button class="btn btn-warning btn-round" type="button" (click)="closeModal()">Cancel</button>
+          </div>
+          <div class="col-sm-3 col-lg-3">
+            <button class="btn btn-info btn-round" type="button" (click)="clearModal()">Clear</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

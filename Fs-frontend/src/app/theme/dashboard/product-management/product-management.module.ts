@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductManagementRoutingModule } from './product-management-routing.module';
 import { CommonModule } from '@angular/common';
+import { ImageUploadModule } from "angular2-image-upload";
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProductManagementComponent } from './product-management.component';
@@ -16,6 +17,7 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     ProductManagementRoutingModule,
     NgbModule.forRoot(),
     AngularMultiSelectModule,
+    ImageUploadModule.forRoot(),
     SharedModule,
     NgxDatatableModule,
     ReactiveFormsModule,

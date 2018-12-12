@@ -68,6 +68,14 @@ const MENUITEMS = [
             name: 'Product Management'
           },
           {
+            state: 'filter-management',
+            name: 'Filter Management'
+          },
+          {
+            state: 'category-management',
+            name: 'Category Management'
+          },
+          {
             state: 'company-profile',
             name: 'Company Profile'
           },
@@ -89,6 +97,20 @@ const MENUITEMS = [
           }
         ]
       },
+      {
+        state: 'report',
+        short_label: 'R',
+        name: 'Report Management',
+        type: 'sub',
+        icon: 'ti-home',
+        children: [
+          {
+            state: 'restful-management',
+            name: 'Restful Settings'
+          }
+        ]
+      },
+      
       {
         state: 'navigation',
         short_label: 'N',

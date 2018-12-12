@@ -1,81 +1,149 @@
 <div class="card">
   <div class="card-header">
-    <h5>New User:</h5>
+    <h5>Edit Product</h5>
   </div>
   <div class="card-block">
-    <form [formGroup]="updateUserForm" (ngSubmit) = "updateUser()">
+    <form [formGroup]="editProductForm" (ngSubmit)="editProduct()">
       <div class="row">
-        <label class="col-sm-4 col-lg-4 col-form-label">First Name</label>
+        <label class="col-sm-4 col-lg-4 col-form-label">Name</label>
         <div class="col-sm-8 col-lg-8">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="First Name" formControlName="firstName">
+            <input type="text" class="form-control" placeholder="Enter product name" formControlName="name">
           </div>
         </div>
       </div>
+
       <div class="row">
-        <label class="col-sm-4 col-lg-4 col-form-label">Last Name</label>
+        <label class="col-sm-4 col-lg-4 col-form-label">Select Category</label>
+        <div class="col-sm-8 col-lg-8">
+          <angular2-multiselect 
+          [data]="allCategories" [(ngModel)]="selectedCategories" [settings]="settings2" (onSelect)="onItemSelectCat($event)"
+            (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
+            formControlName="category">
+          </angular2-multiselect>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Select Filters</label>
+        <div class="col-sm-8 col-lg-8" formArrayName="filters">
+          <div *ngFor="let filter of editProductForm.get('filters')['controls']; let i = index" [formGroupName]="i">
+
+            <div class="col-sm-8 col-lg-8">
+              <div class="input-group">
+                <select class="input-group" name="name" formControlName="name" (change)="onChange($event)">
+                  <option [ngValue]="null" disabled>Select Name</option>
+                  <option *ngFor="let name of allCategoryFilters" [ngValue]="name">
+                    {{ name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="col-sm-8 col-lg-8">
+              <angular2-multiselect [data]="selectedCategoryFilterValues" [(ngModel)]="filterValue[i]"
+                [settings]="settings4" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"
+                (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)" formControlName="value">
+              </angular2-multiselect>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-primary waves-effect waves-light f-right" (click)="addNewFilter()" type="button"><i
+              class="fa fa-plus"></i>Add Filter</button>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Price</label>
         <div class="col-sm-8 col-lg-8">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName">
+            <input type="number" class="form-control" placeholder="Enter price" formControlName="price" min="0">
           </div>
         </div>
       </div>
+
       <div class="row">
-        <label class="col-sm-4 col-lg-4 col-form-label">E-mail</label>
+        <label class="col-sm-4 col-lg-4 col-form-label">Description</label>
         <div class="col-sm-8 col-lg-8">
           <div class="input-group">
-            <input type="email" class="form-control" placeholder="E-mail" formControlName="email">
+            <textarea type="text" class="form-control" placeholder="Enter description" formControlName="description"></textarea>
           </div>
         </div>
       </div>
+
       <div class="row">
-        <label class="col-sm-4 col-lg-4 col-form-label">Password</label>
+        <label class="col-sm-4 col-lg-4 col-form-label">Select Regoin</label>
+        <div class="col-sm-8 col-lg-8">
+          <angular2-multiselect [data]="allCountry" [(ngModel)]="selectedRegions" [settings]="settings3" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
+            formControlName="regions">
+          </angular2-multiselect>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Select Modules</label>
+        <div class="col-sm-8 col-lg-8">
+          <angular2-multiselect [data]="allModules" [(ngModel)]="selectedModules" [settings]="settings1" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
+            formControlName="modules">
+          </angular2-multiselect>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Dimensions</label>
         <div class="col-sm-8 col-lg-8">
           <div class="input-group">
-            <input type="password" class="form-control" placeholder="password" formControlName="password">
+            <label>Width</label>
+            <input type="text" class="form-control" formControlName="width">
+            <label>Height</label>
+            <input type="text" class="form-control" formControlName="height">
           </div>
         </div>
       </div>
+
       <div class="row">
-        <label class="col-sm-4 col-lg-4 col-form-label">Role:</label>
+        <label class="col-sm-4 col-lg-4 col-form-label">Status</label>
         <div class="col-sm-8 col-lg-8">
-          <select class="input-group" name="role" formControlName="role">
-            <option [ngValue]="null" disabled>Select Role</option>
-            <option *ngFor="let role of roles" [ngValue]="role">
-              {{ role }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="row">
-          <label class="col-sm-4 col-lg-4 col-form-label">Status</label>
-          <div class="col-sm-8 col-lg-8">
-            <select name="status" class="input-group" formControlName="status">
-                <option [ngValue]="null" disabled>Select One</option>
-                <option *ngFor = "let status of statuss" [ngValue] = "status">
-                  {{ status }}
-                </option>
+          <div class="input-group">
+            <select class="input-group" name="status" formControlName="status">
+              <option [ngValue]="null" disabled>Select One</option>
+              <option *ngFor="let stat of statuss" [ngValue]="stat">
+                {{ stat }}
+              </option>
             </select>
           </div>
         </div>
+      </div>
+
       <div class="row">
-        <label class="col-sm-4 col-lg-4 col-form-label">Mobile</label>
+        <label class="col-sm-4 col-lg-4 col-form-label">Images</label>
         <div class="col-sm-8 col-lg-8">
-          <div class="input-group">
-            <input type="number" class="form-control" placeholder="mobile number" formControlName="mobile">
-          </div>
+          <image-upload url="http://40.71.47.14:5000/image"
+          [max]="10"
+          [maxFileSize]=""
+          [fileTooLargeMessage]="'Image too large!'"
+          [extensions]="['jpg','jpeg', 'png','gif']"
+          (removed)="onRemoved($event)"
+          [uploadedFiles]="images"
+          (uploadFinished)="onUploadFinished($event)"
+          (uploadStateChanged)="onUploadStateChanged($event)"></image-upload>
         </div>
       </div>
+
+
 
       <div class="row">
         <div class="col-sm-3 col-lg-3">
           <button class="btn btn-primary btn-round" type="submit">Done</button>
         </div>
         <div class="col-sm-3 col-lg-3">
-          <button class="btn btn-warning btn-round" type="button" (click) = "closeModal()">Cancel</button>
+          <button class="btn btn-warning btn-round" type="button" (click)="closeModal()">Cancel</button>
         </div>
         <div class="col-sm-3 col-lg-3">
-          <button class="btn btn-info btn-round" type="button" (click) = "clearModal()">Clear</button>
+          <button class="btn btn-info btn-round" type="button" (click)="clearModal()">Clear</button>
         </div>
       </div>
     </form>

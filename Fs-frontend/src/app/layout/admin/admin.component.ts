@@ -353,15 +353,15 @@ export class AdminComponent implements OnInit {
   }
 
   searchOn() {
-    document.querySelector('#main-search').classList.add('open');
-    const searchInterval = setInterval(() => {
-      if (this.searchWidth >= 200) {
-        clearInterval(searchInterval);
-        return false;
-      }
-      this.searchWidth = this.searchWidth + 15;
-      this.searchWidthString = this.searchWidth + 'px';
-    }, 35);
+    // document.querySelector('#main-search').classList.add('open');
+    // const searchInterval = setInterval(() => {
+    //   if (this.searchWidth >= 200) {
+    //     clearInterval(searchInterval);
+    //     return false;
+    //   }
+    //   this.searchWidth = this.searchWidth + 15;
+    //   this.searchWidthString = this.searchWidth + 'px';
+    // }, 35);
   }
 
   searchOff() {

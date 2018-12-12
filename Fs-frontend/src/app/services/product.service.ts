@@ -33,7 +33,7 @@ export class ProductService {
     
 
     modifyStatus(id){
-        return this.httpClient.post(`${environment.API_URL}/product/modify-status`, {id: id})
+        return this.httpClient.post(`${environment.API_URL}/product/status-modify`, {id: id})
     }
 
     deleteProduct(id){

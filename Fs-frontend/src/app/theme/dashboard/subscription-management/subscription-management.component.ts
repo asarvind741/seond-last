@@ -69,7 +69,6 @@ export class SubscriptionManagementComponent implements OnInit {
       val = val.toLowerCase();
       let data = this.temp_rows;
       data = data.filter(plan => {
-        console.log("plan duration", plan);
         if (
           plan.name && plan.name.toLowerCase().indexOf(val) >= 0 ? true : false ||
           plan.duration && plan.duration.toLowerCase().indexOf(val) >= 0 ? true : false ||

@@ -66,7 +66,7 @@ export class AddCouponComponent implements OnInit {
   openSuccessSwal() {
     swal({
       title: 'Successful!',
-      text: 'User created successfully!',
+      text: 'Coupon created successfully!',
       type: 'success'
     }).catch(swal.noop);
   }
@@ -81,11 +81,6 @@ export class AddCouponComponent implements OnInit {
 
   closeModal() {
     this.activeModal.close('Modal Closed');
-  }
-
-  cancelNewUserAddition() {
-    this.newCouponForm.reset();
-    this.closeModal();
   }
 
   clearModal() {

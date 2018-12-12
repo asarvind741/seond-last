@@ -18,6 +18,12 @@ var MENUITEMS = [
                 icon: 'ti-home'
             },
             {
+                state: 'report',
+                name: 'Report',
+                type: 'link',
+                icon: 'ti-home'
+            },
+            {
                 state: 'widget',
                 name: 'Widget',
                 type: 'link',

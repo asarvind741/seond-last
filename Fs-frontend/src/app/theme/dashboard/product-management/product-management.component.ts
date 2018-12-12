@@ -5,6 +5,7 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { HttpResponse } from '@angular/common/http';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { ProductService } from '../../../services/product.service';
+import { FilterService } from '../../../services/filter.service';
 import { CategoryService } from '../../../services/category.service';
 import { ModuleService } from '../../../services/module.service';
 
@@ -22,16 +23,28 @@ export class ProductManagementComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
+    private filterService: FilterService,
     private modalService: NgbModal
   ) {
-    this.getProducts();
+   
   }
   search_input: string = null;
   editing = {};
+  productFilterList: any = [];
   rows = [];
   temp_rows = [];
   ngOnInit() {
-  
+    this.getProducts();
+    this.getPrdocutFilterList();
+  }
+
+  getPrdocutFilterList(){
+    this.filterService.getFilters()
+    .subscribe((response: HttpResponse<any>) => {
+      if(response.status === 200 ){
+        
+      }
+    })
   }
 
   getProducts() {
@@ -105,7 +118,7 @@ export class ProductManagementComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonText: 'Yes, deactivate it!',
       cancelButtonText: 'No, cancel!',
       confirmButtonClass: 'btn btn-success',
       cancelButtonClass: 'btn btn-danger mr-sm'
@@ -116,7 +129,7 @@ export class ProductManagementComponent implements OnInit {
             this.getProducts();
             swal(
               'Deleted!',
-              'Your have delete product successfully.',
+              'Your have deactivated product successfully.',
               'success'
             );
           }
@@ -125,7 +138,7 @@ export class ProductManagementComponent implements OnInit {
       } else if (result.dismiss) {
         swal(
           'Cancelled',
-          'You have cancelled deletion request.)',
+          'You have cancelled deactviated request.)',
           'error'
         );
       }
@@ -142,9 +155,9 @@ export class ProductManagementComponent implements OnInit {
     });
   }
 
-  openEditFormModal(user) {
+  openEditFormModal(product) {
     const modalRef = this.modalService.open(EditProductComponent);
-    modalRef.componentInstance.currentUser = user;
+    modalRef.componentInstance.currentProduct = product;
     modalRef.result.then((result) => {
       this.getProducts();
     })
