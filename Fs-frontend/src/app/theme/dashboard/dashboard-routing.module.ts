@@ -64,6 +64,10 @@ const routes: Routes = [
       {
         path: 'category-management',
         loadChildren: './category-management/category-management.module#CategoryManagementModule'
+      },
+      {
+        path: 'module-management',
+        loadChildren: './module-management/module-management.module#ModuleManagementModule'
       }
     ]
   }

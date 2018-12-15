@@ -94,6 +94,10 @@ const MENUITEMS = [
           {
             state: 'vat-management',
             name: 'Vat Management'
+          },
+          {
+            state: 'module-management',
+            name: 'Module Management'
           }
         ]
       },

@@ -229,52 +229,176 @@ async function getProductAndCategoriesFromElastic(req, res) {
 
 }
 
-async function getDataFromElastic() {
-    let data = {
-        index: 'categorys',
-        type: 'category',
-        _id: '5c0baee43020c198c9998857',
-        score: 1,
-        _source: {
-            name: 'Belt',
-            description: 'this is belt category',
-            createdBy: '5c012fde9baf385b940f7daf',
-            status: 'Active',
-            updatedAt: '2018-12-08T11:45:40.540Z',
-            createdAt: '2018-12-08T11:45:40.540Z'
-        }
-    };
+async function getDataFromElastic(data) {
+
     console.log(data.index, 'data._index');
     if (data.index === 'categorys') {
         let categoryId = data._id;
-        let category = await Category.findById(categoryId).populate('filter.id');
-        console.log(JSON.stringify(category), 'category');
+        let category = await Category.findById(categoryId).populate('filter.id').lean();
+        let filters = category.filter;
+        console.log(JSON.stringify(filters), 'category filters');
         const response = await esClient.search({
-            query: {
-                match_phrase_prefix: {
-                    name: data._source.name,
-                    index: 'products'
+            index: 'products',
+            body: {
+                query: {
+                    match: {
+                        'category.name': data._source.name
+
+                    }
+                },
+                aggs: {
+                    filters: {
+                        terms: {
+                            field: 'filters.name'
+                        }
+                    }
                 }
             }
+
         });
         console.log(JSON.stringify(response), 'response');
         // console.log(data);
+    } else if (data.index === 'products') {
+        const response = await esClient.search({
+            index: 'products',
+            body: {
+                query: {
+                    match: {
+                        name: data._source.name
+
+                    }
+                },
+                aggs: {
+                    filters: {
+                        terms: {
+                            field: 'filters.name'
+                        }
+                    }
+                }
+            }
+
+        });
+        console.log(JSON.stringify(response), 'product response');
+        let categoryId = data._source.category.id;
+        let category = await Category.findById(categoryId).populate('filter.id').lean();
+        let filters = category.filter;
+        console.log(JSON.stringify(filters), 'product filters');
+        // let categoryName = category.name;
+        // const relatedCategory = await esClient.search({
+        //     index: 'categorys',
+        //     body: {
+
+        //         query: {
+        //             bool: {
+        //                 must: [{
+        //                     query_string: {
+        //                         default_field: '_all',
+        //                         query: categoryName
+        //                     }
+        //                 }]
+        //             }
+        //         }
+        //     }
+
+        // });
+        // console.log(relatedCategory, 'relatedCategory');
+        let query = {
+            bool: {
+                must: {
+                    match: {
+                        name: data._source.name
+
+                    }
+                },
+                filter: []
+            }
+
+        };
+        let obj = {};
+        obj['filters.value'] = 'red';
+        console.log(obj, 'obj===');
+        query.bool.filter.push({
+            term: obj
+        });
+        obj = {};
+        obj['filters.value'] = 'xl';
+        query.bool.filter.push({
+            term: obj
+        });
+        console.log(JSON.stringify(query), 'query');
+        const filteredData = await esClient.search({
+            index: 'products',
+            body: {
+                query: query,
+                aggs: {
+                    filters: {
+                        terms: {
+                            field: 'filters.name'
+                        }
+                    }
+                }
+            }
+        });
+
+        console.log('product data==>', JSON.stringify(filteredData));
+
     }
 }
-getDataFromElastic();
-// {
-//     '_index': 'categorys',
-//     '_type': 'category',
-//     '_id': '5c0baee43020c198c9998857',
-//     '_score': 1,
-//     '_source': {
-//     'name': 'Belt',
-//     'description': 'this is belt category',
-//     'createdBy': '5c012fde9baf385b940f7daf',
-//     'status': 'Active',
-//     'updatedAt': '2018-12-08T11:45:40.540Z',
-//     'createdAt': '2018-12-08T11:45:40.540Z'
-//     }
+getDataFromElastic({
+
+    index: 'categorys',
+    _type: 'category',
+    _id: '5c0e3c1e255323425122e2a5',
+    _version: 31,
+    _score: 1,
+    _source: {
+        name: 'Casual',
+        description: 'Casual category',
+        createdBy: '5c012fde9baf385b940f7daf',
+        status: 'Active',
+        updatedAt: '2018-12-10T10:12:46.062Z',
+        createdAt: '2018-12-10T10:12:46.062Z'
+    }
+
+});
+
+getDataFromElastic({
+    index: 'products',
+    _type: 'product',
+    _id: '5c0fb0277e18df8e27c26f93',
+    _version: 7,
+    _score: 1,
+    _source: {
+        name: 'Apple 6',
+        description: 'dsds',
+        price: 345,
+
+        category: {
+            name: 'Shirt',
+            id: '5c0fadfa7e18df8e27c26f77'
+        },
+        width: '34',
+        height: '5',
+        filters: [{
+                name: 'Color',
+                value: [
+                    'Red'
+                ],
+                _id: '5c0fb0277e18df8e27c26f98'
+            },
+            {
+                name: 'Size',
+                value: [
+                    'XL',
+                    'L'
+                ],
+                _id: '5c0fb0277e18df8e27c26f97'
+            }
+        ]
+
+    }
+});
+
 
 module.exports = {
     createProduct,
