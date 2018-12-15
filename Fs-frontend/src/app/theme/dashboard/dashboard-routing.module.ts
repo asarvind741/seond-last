@@ -68,6 +68,10 @@ const routes: Routes = [
       {
         path: 'module-management',
         loadChildren: './module-management/module-management.module#ModuleManagementModule'
+      },
+      {
+        path: 'rfp-management',
+        loadChildren: './rfp-management/rfp-management.module#RfpManagementModule'
       }
     ]
   }
