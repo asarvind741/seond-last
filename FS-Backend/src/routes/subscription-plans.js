@@ -8,5 +8,6 @@ module.exports = app => {
     app.post(`${plans}delete`, SubscriptionController.deleteSubscriptionPlan);
     app.get(`${plans}`, SubscriptionController.getPlans);
     app.get(`${plans}get-user-plans`, SubscriptionController.getUserPlans);
+    app.get(`${plans}:id`, SubscriptionController.getPlan);
 
 };

@@ -1,0 +1,124 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [title]="'Feature Management'" [classHeader]="true">
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <input type="text" class="form-control" (ngModelChange)="onSearchInputChange($event)" placeholder="Search here..."
+            [(ngModel)]="search_input">
+        </div>
+        <div class="col-sm-4">
+          <button class="btn btn-primary btn-round" (click)="openFormModal()"><i class="fa fa-plus"></i>Create</button>
+        </div>
+      </div>
+      <ngx-datatable #mydatatable class="material data-table" [headerHeight]="50" [limit]="10" [columnMode]="'force'"
+        [scrollbarH]="true" [footerHeight]="50" [rowHeight]="'auto'" [rows]="rows">
+        <ngx-datatable-column name="name">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
+              Name
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-lastName']">
+              {{value}}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="role">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
+              Role
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-lastName']">
+              {{value}}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+        
+        <ngx-datatable-column name="feature">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
+              Features
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span>
+              <div *ngFor="let element of value">
+                {{ element.name }} - {{ element.value }}
+              </div>
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="status">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
+              Status
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span class="label" [ngClass]="value === 'Active' ? 'label-primary': 'label-danger'">
+              {{ value }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="createdAt">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
+              Created On
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span>
+              {{ value | date }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="createdBy">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
+              Created By
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span>
+              {{ value.name }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Action" prop="id" [sortable]="false">
+          <ng-template let-rowIndex="rowIndex" let-id="value" let-row="row" ngx-datatable-cell-template>
+            <button class="btn btn-sm btn-info" (click)="openEditFormModal(row)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="deleteSubscription(row)">
+              <i class="fa fa-trash"></i>
+            </button>
+
+          </ng-template>
+        </ngx-datatable-column>
+
+
+        <ngx-datatable-column name="Activate/Deactivate" prop="id" [sortable]="false">
+          <ng-template let-rowIndex="rowIndex" let-id="value" let-row="row" ngx-datatable-cell-template>
+            <div *ngIf="row['status'] === 'Active' ; else activate">
+              <button class="btn btn-sm btn-danger" (click)="openSuccessCancelSwal(row)">
+                Deactivate
+              </button>
+            </div>
+            <ng-template #activate>
+              <button class="btn btn-sm btn-primary" (click)="activateCouppon(row)">
+                Activate
+              </button>
+            </ng-template>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </app-card>
+  </div>
+</div>

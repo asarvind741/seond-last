@@ -1,14 +1,14 @@
-import ServiceModule from '../models/module';
+import Features from '../models/features';
 import {
     sendResponse,
     SendMail
 } from './functions';
 import Constants from './constant';
 
-async function createModule(req, res) {
+async function createFeatures(req, res) {
     try {
-        let module = await new ServiceModule(req.body).save();
-        sendResponse(res, 200, 'Module created Successfully.', module);
+        let features = await new Features(req.body).save();
+        sendResponse(res, 200, 'Feature created Successfully.', features);
 
     } catch (e) {
         console.log(e);
@@ -17,16 +17,16 @@ async function createModule(req, res) {
     }
 }
 
-async function editModule(req, res) {
+async function editFeatures(req, res) {
     try {
         let id = req.body.id;
         delete req.body.id;
-        let updatedModule = await ServiceModule.findByIdAndUpdate(id, {
+        let updatedFeatures = await Features.findByIdAndUpdate(id, {
             $set: req.body
         }, {
             new: true
         });
-        sendResponse(res, 200, 'Module updated Successfully.', updatedModule);
+        sendResponse(res, 200, 'Feature updated Successfully.', updatedFeatures);
 
     } catch (e) {
         console.log(e);
@@ -35,12 +35,12 @@ async function editModule(req, res) {
     }
 }
 
-async function deleteModule(req, res) {
+async function deleteFeatures(req, res) {
     try {
         let id = req.body.id;
         delete req.body.id;
-        let updatedModule = await ServiceModule.findByIdAndRemove(id);
-        sendResponse(res, 200, 'Module deleted Successfully.', updatedModule);
+        let updatedFeatures = await Features.findByIdAndRemove(id);
+        sendResponse(res, 200, 'Feature deleted Successfully.', updatedFeatures);
 
     } catch (e) {
         console.log(e);
@@ -49,13 +49,13 @@ async function deleteModule(req, res) {
     }
 }
 
-async function getModule(req, res) {
+async function getFeatures(req, res) {
     try {
-        let modules = await ServiceModule.find({
+        let featuress = await Features.find({
             // status: 'Active'
-        });
+        }).populate('createdBy');
 
-        sendResponse(res, 200, 'Successful.', modules);
+        sendResponse(res, 200, 'Successful.', featuress);
 
     } catch (e) {
         console.log(e);
@@ -66,20 +66,20 @@ async function getModule(req, res) {
 
 }
 
-async function updateModuleStatus(req, res) {
+async function updateFeaturesStatus(req, res) {
     try {
         let id = req.body.id;
         delete req.body.id;
         let status;
-        let module = await ServiceModule.findById(id);
-        if (module) {
-            if (module.status === 'Active')
+        let features = await Features.findById(id);
+        if (features) {
+            if (features.status === 'Active')
                 status = 'Inactive';
             else
                 status = 'Active';
 
 
-            let updatedModule = await ServiceModule.findByIdAndUpdate(
+            let updatedFeatures = await Features.findByIdAndUpdate(
                 id, {
                     $set: {
                         status: status
@@ -88,9 +88,9 @@ async function updateModuleStatus(req, res) {
                     new: true
                 }
             );
-            sendResponse(res, 200, 'Module deleted Successfully.', updatedModule);
+            sendResponse(res, 200, 'Features deleted Successfully.', updatedFeatures);
         } else {
-            sendResponse(res, 400, 'Module not found.');
+            sendResponse(res, 400, 'Features not found.');
 
         }
     } catch (e) {
@@ -101,9 +101,9 @@ async function updateModuleStatus(req, res) {
 
 
 module.exports = {
-    createModule,
-    editModule,
-    deleteModule,
-    getModule,
-    updateModuleStatus
+    createFeatures,
+    editFeatures,
+    deleteFeatures,
+    getFeatures,
+    updateFeaturesStatus
 };
