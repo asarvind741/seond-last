@@ -28,10 +28,19 @@ export class AddModuleComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.getCategories();
+
+    this.moduleService.getCategory()
+      .subscribe((response: HttpResponse<any>) => {
+        if (response.status === 200) {
+          response['data'].forEach(cat => {
+            let element = { 'id': cat._id, 'itemName': cat.name };
+            this.allCategories.push(element);
+          })
+        }
+      })
 
     this.settings2 = {
-      singleSelection: true,
+      singleSelection: false,
       text: "Select Category",
       enableSearchFilter: true
     };
@@ -60,24 +69,27 @@ export class AddModuleComponent implements OnInit {
     this.images.forEach(element => {
       this.newModuleForm.value.images.push(element)
     });
-    this.newModuleForm.value.categories = [this.categories]
-    console.log("------------------>>>>>>>>>>", this.newModuleForm.value)
-    // this.moduleService.addModule(this.newModuleForm.value).subscribe((response: HttpResponse<any>) => {
-    //     if (response.status === 200) {
-    //       this.closeModal();
-    //       this.openSuccessSwal();
-    //     }
-    //     else if (response.status !== 200) {
-    //       this.closeModal();
-    //       this.showMessage = response['date'];
-    //       this.openUnscuccessSwal();
-    //     }
-    //   }, (error) => {
-    //     console.log(error);
-    //     this.closeModal();
-    //     this.showMessage = error.error['message']
-    //     this.openUnscuccessSwal();
-    //   })
+    let data = this.newModuleForm.value;
+    data.categories.forEach(element => {
+      element.name = element.itemName;
+      delete element.itemName
+    });
+    this.moduleService.addModule(data).subscribe((response: HttpResponse<any>) => {
+        if (response.status === 200) {
+          this.closeModal();
+          this.openSuccessSwal();
+        }
+        else if (response.status !== 200) {
+          this.closeModal();
+          this.showMessage = response['date'];
+          this.openUnscuccessSwal();
+        }
+      }, (error) => {
+        console.log(error);
+        this.closeModal();
+        this.showMessage = error.error['message']
+        this.openUnscuccessSwal();
+      })
   }
 
   onSelectValue(event) {
@@ -88,7 +100,7 @@ export class AddModuleComponent implements OnInit {
   openSuccessSwal() {
     swal({
       title: 'Successful!',
-      text: 'Coupon created successfully!',
+      text: 'Module created successfully!',
       type: 'success'
     }).catch(swal.noop);
   }
@@ -119,7 +131,6 @@ export class AddModuleComponent implements OnInit {
 
   onUploadFinished(file: FileHolder) {
     this.images.push(file.serverResponse.response['_body']);
-    console.log("--------------------->>",this.images)
   }
 
   OnItemDeSelect(item: any) {
@@ -133,19 +144,7 @@ export class AddModuleComponent implements OnInit {
     this.selectedFilterVal = []
   }
 
-  // onItemSelectCat(item: any) {
-  //   this.allCategoryFilters = [];
-  //   this.filterService.getSelectedCategoryFilters(item.id)
-  //     .subscribe((response: HttpResponse<any>) => {
-  //       this.categoryList = response['data'];
-  //       this.categoryList.forEach(category => {
-  //         this.allCategoryFilters.push(category.name);
-  //         category.value.forEach((val, i) => {
-  //           let element = { 'id': i, 'itemName': val }
-  //           this.allFilterValues.push(element);
-  //         })
+  onItemSelectCat(item: any) {
 
-  //       })
-  //     })
-  // }
+  }
 }

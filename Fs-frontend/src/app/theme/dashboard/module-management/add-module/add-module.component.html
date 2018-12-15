@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header">
-    <h5>Create new Coupon Code:</h5>
+    <h5>Create new Module</h5>
   </div>
   <div class="card-block">
     <form [formGroup]="newModuleForm" (ngSubmit)="addNewModule()">
@@ -11,41 +11,29 @@
             <input type="text" class="form-control" placeholder="Enter Name" formControlName="name">
           </div>
           <div *ngIf="newModuleForm.get('name').invalid && newModuleForm.get('name').touched" class="text-danger">
-            <span *ngIf="newModuleForm.get('name').errors.required">Coupon is required!</span>
+            <span *ngIf="newModuleForm.get('name').errors.required">Module Name is required!</span>
           </div>
         </div>
       </div>
       <div class="row">
-        <label class="col-sm-4 col-lg-4 col-form-label">Category:</label>
+        <label class="col-sm-4 col-lg-4 col-form-label">Select Category</label>
         <div class="col-sm-8 col-lg-8">
-          <select class="input-group" name="categories" [(ngModel)]="categories">
-            <option [ngValue]="null" disabled>Select One</option>
-            <option *ngFor="let category of categories" [ngValue]="category.name">
-              {{ category.name }}
-            </option>
-          </select>
-          <!-- <angular2-multiselect [data]="allCategories" [(ngModel)]="selectedCategories" [settings]="settings2" (onSelect)="onItemSelectCat($event)"
-            (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
-            formControlName="categories">
-            <button class="btn btn-sm btn-primary waves-effect waves-light f-right" (click)="addNewFilter()" type="button"><i
-              class="fa fa-plus"></i>Add Filter</button> -->
-          <!-- <div *ngIf="newModuleForm.get('categories').invalid && newModuleForm.get('categories').touched" class="text-danger">
+          <angular2-multiselect [data]="allCategories" [(ngModel)]="selectedCategories" [settings]="settings2"
+            (onSelect)="onItemSelectCat($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+            (onDeSelectAll)="onDeSelectAll($event)" formControlName="categories">
+          </angular2-multiselect>
+          <div *ngIf="newModuleForm.get('categories').invalid && newModuleForm.get('categories').touched" class="text-danger">
             <span *ngIf="newModuleForm.get('categories').errors.required">Category is required!</span>
-          </div> -->
+          </div>
         </div>
       </div>
       <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Image</label>
         <div class="col-sm-8 col-lg-8">
           <div class="input-group">
-                  <image-upload url="http://40.71.47.14:5000/image"
-                  [max]="10"
-                  [maxFileSize]=""
-                  [fileTooLargeMessage]="'Image too large!'"
-                  [extensions]="['jpg','jpeg', 'png','gif']"
-                  (removed)="onRemoved($event)"
-                  (uploadFinished)="onUploadFinished($event)"
-                  (uploadStateChanged)="onUploadStateChanged($event)"></image-upload>
+            <image-upload url="http://40.71.47.14:5000/image" [max]="10" [maxFileSize]="" [fileTooLargeMessage]="'Image too large!'"
+              [extensions]="['jpg','jpeg', 'png','gif']" (removed)="onRemoved($event)" (uploadFinished)="onUploadFinished($event)"
+              (uploadStateChanged)="onUploadStateChanged($event)"></image-upload>
           </div>
         </div>
       </div>

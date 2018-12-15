@@ -23,19 +23,19 @@ export class ModuleService {
         return this.httpClient.get(`${environment.API_URL}/module/`);
     }
 
-    getCoupon(id){
-        return this.httpClient.get(`${environment.API_URL}/coupon/${id}`)
-    }
+    // getCoupon(id){
+    //     return this.httpClient.get(`${environment.API_URL}/coupon/${id}`)
+    // }
 
     addModule(modules){
         console.log("module value", modules, this.httpClient.post(`${environment.API_URL}/module/create`, modules));
         return this.httpClient.post(`${environment.API_URL}/module/create`, modules);
     }
 
-    updateCoupon(id, data){
+    updateModule(id, data){
         console.log("data", id, "data2", data)
         data.id = id;
-        return this.httpClient.post(`${environment.API_URL}/coupon/edit`, data)
+        return this.httpClient.post(`${environment.API_URL}/module/edit`, data)
     }
 
     modifyStatus(id){
