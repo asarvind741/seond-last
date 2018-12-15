@@ -123,7 +123,7 @@ export class AddSubscriptionComponent implements OnInit {
   openSuccessSwal() {
     swal({
       title: 'Successful!',
-      text: 'User created successfully!',
+      text: 'Subscription created successfully!',
       type: 'success'
     }).catch(swal.noop);
   }

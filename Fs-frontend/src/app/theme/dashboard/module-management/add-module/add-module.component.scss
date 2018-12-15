@@ -1,0 +1,20 @@
+.dropdown-menu {
+    background-color: #fff;
+    padding: 0;
+    width: 100%;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
+
+.dropdown-input {
+    cursor: pointer;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid red !important;
+    display: block;
+    width: 100%;
+    text-align: left;
+}

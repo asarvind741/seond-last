@@ -38,12 +38,13 @@
                 <div class="input-group">
                   <!-- <span class="input-group-prepend search-close" (click)="searchOff()"><i class="ti-close input-group-text"></i></span> -->
                   <!-- <input class="form-control" [style.width]="searchWidthString" [(ngModel)] = "searchItem" (keyup) = "searchItems($event)"> -->
-                  <input class="form-control"  style="width: 500px" [(ngModel)] = "searchItem" (keyup) = "searchItems($event)">
-                  <span class="input-group-append search-btn" (click)="searchOn()"><i class="ti-search input-group-text"></i></span>
+                  <input class="form-control"  style="width: 500px" [(ngModel)] = "searchItem" [ngbTypeahead]="search">
+                  <span class="input-group-append search-btn" (click)="onSeachButtonClicked()"><i class="ti-search input-group-text"></i></span>
                 </div>
                 <div class="search-result" [ngClass] = "searchItem ? 'show-dropdown': ''">
                     <div>
-                      <li *ngFor = "let category of itemsSearched" class="show-search-item">{{ category }}</li>
+                      <li [ngClass]="{'hide-class': showResult}" style="cursor: pointer" 
+                      *ngFor = "let item of itemsSearched" class="show-search-item" (click)="selectFromSearch(item)">{{ item._source['name'] }}</li>
                     </div>
                   </div>
               </div>

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 export interface BadgeItem {
   type: string;
@@ -64,6 +64,10 @@ const MENUITEMS = [
             name: 'User Management'
           },
           {
+            state: 'feature-management',
+            name: 'Feature Management'
+          },
+          {
             state: 'product-management',
             name: 'Product Management'
           },
@@ -94,6 +98,10 @@ const MENUITEMS = [
           {
             state: 'vat-management',
             name: 'Vat Management'
+          },
+          {
+            state: 'module-management',
+            name: 'Module Management'
           }
         ]
       },
@@ -110,7 +118,7 @@ const MENUITEMS = [
           }
         ]
       },
-      
+
       {
         state: 'navigation',
         short_label: 'N',
