@@ -1,0 +1,78 @@
+<div class="card">
+  <div class="card-header">
+    <h5>Edit Feature Module:</h5>
+  </div>
+  <div class="card-block">
+    <form [formGroup]="editFeatureModuleForm" (ngSubmit)="editFeatureModule()">
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Feature Module Name</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Enter Name" formControlName="name">
+          </div>
+          <div *ngIf="editFeatureModuleForm.get('name').invalid && editFeatureModuleForm.get('name').touched" class="text-danger">
+            <span *ngIf="editFeatureModuleForm.get('name').errors.required">Feature module name is required!</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Select Role</label>
+        <div class="col-sm-8 col-lg-8">
+          <angular2-multiselect [data]="role" [(ngModel)]="selectedRole" [settings]="settings" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
+            formControlName="role">
+          </angular2-multiselect>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Status</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <select class="input-group" name="status" formControlName="status">
+              <option [ngValue]="null" disabled>Select One</option>
+              <option *ngFor="let stat of statuss" [ngValue]="stat">
+                {{ stat }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Features</label>
+        <div class="col-sm-8 col-lg-8">
+          <div formArrayName="feature">
+            <div *ngFor="let tax of editFeatureModuleForm.get('feature')['controls']; let i = index" [formGroupName]="i">
+              <div class="col-lg-12 input-group center-input">
+                <label for="name">Enter Name :</label>
+                <input type="text" formControlName="name" />
+              </div>
+              <div class="col-lg-12 input-group center-input">
+                <label for="value">Enter value:</label>
+                <input type="value" formControlName="value" />
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-primary waves-effect waves-light f-right" (click)="addNewFeature()" type="button"><i
+              class="fa fa-plus"></i>Add Features</button>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-sm-3 col-lg-3">
+          <button class="btn btn-primary btn-round" type="submit">Done</button>
+        </div>
+        <div class="col-sm-3 col-lg-3">
+          <button class="btn btn-warning btn-round" type="button" (click)="closeModal()">Cancel</button>
+        </div>
+        <div class="col-sm-3 col-lg-3">
+          <button class="btn btn-info btn-round" type="button" (click)="clearModal()">Clear</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
