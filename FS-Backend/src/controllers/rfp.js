@@ -1,14 +1,14 @@
-import ServiceModule from '../models/module';
+import Rfp from '../models/rfp';
 import {
     sendResponse,
     SendMail
 } from './functions';
 import Constants from './constant';
 
-async function createModule(req, res) {
+async function createRfp(req, res) {
     try {
-        let module = await new ServiceModule(req.body).save();
-        sendResponse(res, 200, 'Module created Successfully.', module);
+        let rfp = await new Rfp(req.body).save();
+        sendResponse(res, 200, 'Feature created Successfully.', rfp);
 
     } catch (e) {
         console.log(e);
@@ -17,16 +17,16 @@ async function createModule(req, res) {
     }
 }
 
-async function editModule(req, res) {
+async function editRfp(req, res) {
     try {
         let id = req.body.id;
         delete req.body.id;
-        let updatedModule = await ServiceModule.findByIdAndUpdate(id, {
+        let updatedRfp = await Rfp.findByIdAndUpdate(id, {
             $set: req.body
         }, {
             new: true
         });
-        sendResponse(res, 200, 'Module updated Successfully.', updatedModule);
+        sendResponse(res, 200, 'Feature updated Successfully.', updatedRfp);
 
     } catch (e) {
         console.log(e);
@@ -35,12 +35,12 @@ async function editModule(req, res) {
     }
 }
 
-async function deleteModule(req, res) {
+async function deleteRfp(req, res) {
     try {
         let id = req.body.id;
         delete req.body.id;
-        let updatedModule = await ServiceModule.findByIdAndRemove(id);
-        sendResponse(res, 200, 'Module deleted Successfully.', updatedModule);
+        let updatedRfp = await Rfp.findByIdAndRemove(id);
+        sendResponse(res, 200, 'Feature deleted Successfully.', updatedRfp);
 
     } catch (e) {
         console.log(e);
@@ -49,13 +49,13 @@ async function deleteModule(req, res) {
     }
 }
 
-async function getModule(req, res) {
+async function getRfp(req, res) {
     try {
-        let modules = await ServiceModule.find({
+        let rfp = await Rfp.find({
             // status: 'Active'
-        });
+        }).populate('createdBy');
 
-        sendResponse(res, 200, 'Successful.', modules);
+        sendResponse(res, 200, 'Successful.', rfp);
 
     } catch (e) {
         console.log(e);
@@ -66,20 +66,20 @@ async function getModule(req, res) {
 
 }
 
-async function updateModuleStatus(req, res) {
+async function updateRfpStatus(req, res) {
     try {
         let id = req.body.id;
         delete req.body.id;
         let status;
-        let module = await ServiceModule.findById(id);
-        if (module) {
-            if (module.status === 'Active')
+        let rfp = await Rfp.findById(id);
+        if (rfp) {
+            if (rfp.status === 'Active')
                 status = 'Inactive';
             else
                 status = 'Active';
 
 
-            let updatedModule = await ServiceModule.findByIdAndUpdate(
+            let updatedRfp = await Rfp.findByIdAndUpdate(
                 id, {
                     $set: {
                         status: status
@@ -88,9 +88,9 @@ async function updateModuleStatus(req, res) {
                     new: true
                 }
             );
-            sendResponse(res, 200, 'Module deleted Successfully.', updatedModule);
+            sendResponse(res, 200, 'Rfp deleted Successfully.', updatedRfp);
         } else {
-            sendResponse(res, 400, 'Module not found.');
+            sendResponse(res, 400, 'Rfp not found.');
 
         }
     } catch (e) {
@@ -101,9 +101,9 @@ async function updateModuleStatus(req, res) {
 
 
 module.exports = {
-    createModule,
-    editModule,
-    deleteModule,
-    getModule,
-    updateModuleStatus
+    createRfp,
+    editRfp,
+    deleteRfp,
+    getRfp,
+    updateRfpStatus
 };

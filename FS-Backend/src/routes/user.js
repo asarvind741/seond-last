@@ -31,4 +31,5 @@ module.exports = app => {
     app.post(`${user}invite`, jwtAuth, UserController.inviteUser);
     app.post(`${user}sign-up-invite`, jwtAuth, UserController.addFromInvitation);
     app.post(`${user}token`, UserController.refreshTokenStrategy);
+    app.post(`${user}create`, UserController.addUserFromWebsite);
 };

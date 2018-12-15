@@ -106,6 +106,21 @@ async function getPlans(req, res) {
     }
 }
 
+async function getPlan(req, res) {
+    try {
+        let plans = await Plan.findById(req.params.id).populate('createdBy', {
+            _id: 0,
+            email: 1
+        });
+        console.log(plans);
+
+        sendResponse(res, 200, 'Successful.', plans);
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected error', e);
+    }
+}
+
 
 async function getUserPlans(req, res) {
     try {
@@ -138,5 +153,6 @@ module.exports = {
     updatePlanStatus,
     getPlans,
     getUserPlans,
-    deleteSubscriptionPlan
+    deleteSubscriptionPlan,
+    getPlan
 };

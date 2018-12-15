@@ -65,6 +65,7 @@ const User = new Schema({
     ref: 'Company',
     // required: true,
   },
+  username: String,
   firstName: String,
   lastName: String,
   name: String,

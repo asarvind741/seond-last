@@ -7,7 +7,6 @@ env.config({
   path: `${__dirname}/environments/${envfile}`
 });
 
-
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
@@ -18,9 +17,8 @@ import passport from 'passport';
 import User from './models/user';
 import Session from 'express-session';
 import flash from 'connect-flash';
+import compression from 'compression';
 import path from 'path';
-import multer from 'multer';
-
 mongoose.Promise = global.Promise;
 mongoose
   .connect(
@@ -38,23 +36,23 @@ app.use(
     extended: true
   })
 );
+app.use(compression())
+
 app.use(Session({
   secret: 'secret'
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/file', express.static(path.join(__dirname, '../uploads')));
-console.log(path.join(__dirname, '../uploads'));
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
-i18n.configure({
+/* i18n.configure({
   locales: ['en', 'zh'],
   directory: `${__dirname}/locales`,
   defaultLocale: 'en'
 });
-app.use(i18n.init);
+app.use(i18n.init); */
 app.use(function (req, res, next) {
-  console.log(req.body);
+  // console.log(JSON.parse(req.body.query));
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', '*');
   res.setHeader(
@@ -65,7 +63,7 @@ app.use(function (req, res, next) {
 });
 
 
-passport.serializeUser(function (user, cb) {
+/* passport.serializeUser(function (user, cb) {
   cb(null, user.id);
 });
 
@@ -73,40 +71,14 @@ passport.deserializeUser(function (id, cb) {
   User.findById(id, function (err, user) {
     cb(err, user);
   });
-});
+}); */
 
 app.options('*', cors());
-
-require('./routes/user')(app);
-require('./routes/category')(app);
+/*require('./routes/user')(app);
 require('./routes/coupon')(app);
 require('./routes/module')(app);
-require('./routes/subscription-plans')(app);
-require('./routes/region-management')(app);
-require('./routes/vat-management')(app);
-require('./routes/product')(app);
-require('./routes/company')(app);
-require('./routes/restful')(app);
-require('./routes/filter')(app);
-require('./routes/features')(app);
-require('./routes/rfp')(app);
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './uploads');
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + '.png');
-  }
-});
+require('./routes/subscription-plans')(app);*/
 
-var upload = multer({
-  storage: storage
-});
-require('./functions/redis').connectToRedis();
-app.post('/image', upload.single('image'), (req, res) => {
-  console.log(req.file);
-  res.status(200).json(`http://40.71.47.14:5000/file/${req.file.filename}`);
-});
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'public') + '/index.html');
 });
@@ -115,11 +87,10 @@ app.use(function (req, res, next) {
   err.status = 404;
   next(err);
 });
-require('./passport-configuration');
+// require('./passport-configuration');
 
 // Error handler
 app.use(function (err, req, res, next) {
-  console.log(err);
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res
