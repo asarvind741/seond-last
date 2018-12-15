@@ -60,7 +60,7 @@ export class ModuleManagementComponent implements OnInit {
   openSuccessSwal() {
     swal({
       title: 'Successful!',
-      text: 'Coupon updated successfully!',
+      text: 'module updated successfully!',
       type: 'success'
     }).catch(swal.noop);
   }
@@ -74,7 +74,6 @@ export class ModuleManagementComponent implements OnInit {
   }
 
   activateModule(name) {
-    console.log("------------->>",name)
     swal({
       title: 'Are you sure?',
       text: 'You not be able to revert this!',
@@ -93,7 +92,7 @@ export class ModuleManagementComponent implements OnInit {
             this.getModules();
             swal(
               'Success!',
-              'Your have activated coupon successfully.',
+              'Your have activated module successfully.',
               'success'
             );
           }
@@ -129,7 +128,7 @@ export class ModuleManagementComponent implements OnInit {
             this.getModules();
             swal(
               'Deleted!',
-              'Your have deactivated coupon successfully.',
+              'Your have deactivated module successfully.',
               'success'
             );
           }
@@ -158,7 +157,7 @@ export class ModuleManagementComponent implements OnInit {
 
   openEditFormModal(modules) {
     const modalRef = this.modalService.open(EditModuleComponent);
-    modalRef.componentInstance.currentCoupon = modules;
+    modalRef.componentInstance.currentModule = modules;
     modalRef.result.then((result) => {
       this.getModules();
     })
@@ -167,9 +166,9 @@ export class ModuleManagementComponent implements OnInit {
       });
   }
 
-  deleteModule(coupon) {
+  deleteModule(modules) {
     swal({
-      title: 'Are you sure to delete coupon?',
+      title: 'Are you sure to delete module?',
       text: 'You not be able to revert this!',
       type: 'warning',
       showCancelButton: true,
@@ -181,12 +180,12 @@ export class ModuleManagementComponent implements OnInit {
       cancelButtonClass: 'btn btn-danger mr-sm'
     }).then((result) => {
       if (result.value) {
-        this.moduleService.deleteModule(coupon._id).subscribe((response: HttpResponse<any>) => {
+        this.moduleService.deleteModule(modules._id).subscribe((response: HttpResponse<any>) => {
           if (response.status === 200) {
             this.getModules();
             swal(
               'Success!',
-              'Your have deleted coupon successfully.',
+              'Your have deleted module successfully.',
               'success'
             );
           }

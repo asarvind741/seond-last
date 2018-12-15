@@ -37,18 +37,6 @@
             </span>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="images">
-          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
-            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
-              Images
-            </span>
-          </ng-template>
-          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-            <span>
-              {{value}}
-            </span>
-          </ng-template>
-        </ngx-datatable-column>
         <ngx-datatable-column name="categories">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
             <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
@@ -57,7 +45,9 @@
           </ng-template>
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <span>
-              {{value}}
+              <div *ngFor="let element of value">
+                {{ element.name }}
+              </div>
             </span>
           </ng-template>
         </ngx-datatable-column>
