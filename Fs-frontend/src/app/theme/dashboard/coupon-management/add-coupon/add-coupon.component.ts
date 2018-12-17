@@ -38,7 +38,7 @@ export class AddCouponComponent implements OnInit {
   }
 
   addNewCoupon() {
-    console.log(this.newCouponForm.value)
+    console.log("-------------",JSON.stringify(this.newCouponForm.value))
     this.couponService.addCoupon(this.newCouponForm.value).subscribe((response: HttpResponse<any>) => {
         if (response.status === 200) {
           this.closeModal();

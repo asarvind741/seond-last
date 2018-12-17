@@ -31,7 +31,11 @@ export class RfpManagementComponent implements OnInit {
   }
 
   getRfp() {
-
+    this.rfpService.getRfp().subscribe((rfp) => {
+      //console.log("DATA ------------------>>>>>>>>>",JSON.stringify(rfp['data']))
+      this.rows = rfp['data'];
+      this.temp_rows = rfp['data'];
+    })
   }
 
   onSearchInputChange(val) {

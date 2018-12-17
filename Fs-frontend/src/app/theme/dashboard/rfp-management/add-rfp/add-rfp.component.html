@@ -1,39 +1,39 @@
 <div class="card">
   <div class="card-header">
-    <h5>Create new Module</h5>
+    <h5>Create new RFP</h5>
   </div>
   <div class="card-block">
-    <form [formGroup]="newModuleForm" (ngSubmit)="addNewModule()">
+    <form [formGroup]="newRfpForm" (ngSubmit)="addNewRfp()">
       <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Name</label>
         <div class="col-sm-8 col-lg-8">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Enter Name" formControlName="name">
           </div>
-          <div *ngIf="newModuleForm.get('name').invalid && newModuleForm.get('name').touched" class="text-danger">
-            <span *ngIf="newModuleForm.get('name').errors.required">Module Name is required!</span>
+          <div *ngIf="newRfpForm.get('name').invalid && newRfpForm.get('name').touched" class="text-danger">
+            <span *ngIf="newRfpForm.get('name').errors.required">RFP Name is required!</span>
           </div>
         </div>
       </div>
       <div class="row">
-        <label class="col-sm-4 col-lg-4 col-form-label">Select Category</label>
-        <div class="col-sm-8 col-lg-8">
-          <angular2-multiselect [data]="allCategories" [(ngModel)]="selectedCategories" [settings]="settings2"
-            (onSelect)="onItemSelectCat($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
-            (onDeSelectAll)="onDeSelectAll($event)" formControlName="categories">
-          </angular2-multiselect>
-          <div *ngIf="newModuleForm.get('categories').invalid && newModuleForm.get('categories').touched" class="text-danger">
-            <span *ngIf="newModuleForm.get('categories').errors.required">Category is required!</span>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <label class="col-sm-4 col-lg-4 col-form-label">Image</label>
+        <label class="col-sm-4 col-lg-4 col-form-label">Email</label>
         <div class="col-sm-8 col-lg-8">
           <div class="input-group">
-            <image-upload url="http://40.71.47.14:5000/image" [max]="10" [maxFileSize]="" [fileTooLargeMessage]="'Image too large!'"
-              [extensions]="['jpg','jpeg', 'png','gif']" (removed)="onRemoved($event)" (uploadFinished)="onUploadFinished($event)"
-              (uploadStateChanged)="onUploadStateChanged($event)"></image-upload>
+            <input type="text" class="form-control" placeholder="Enter Email" formControlName="email">
+          </div>
+          <div *ngIf="newRfpForm.get('email').invalid && newRfpForm.get('email').touched" class="text-danger">
+            <span *ngIf="newRfpForm.get('email').errors.required">Email is required!</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Mobile</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Enter mobile" formControlName="mobile">
+          </div>
+          <div *ngIf="newRfpForm.get('mobile').invalid && newRfpForm.get('mobile').touched" class="text-danger">
+            <span *ngIf="newRfpForm.get('mobile').errors.required">Mobile is required!</span>
           </div>
         </div>
       </div>
@@ -50,21 +50,46 @@
           </div>
         </div>
       </div>
-
       <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Description</label>
         <div class="col-sm-8 col-lg-8">
           <div class="input-group">
             <textarea type="text" class="form-control" placeholder="Enter description about coupon" formControlName="description">
             </textarea>
-            <div *ngIf="newModuleForm.get('description').invalid && newModuleForm.get('description').touched" class="text-danger">
-              <span *ngIf="newModuleForm.get('description').errors.required">Description required!</span>
+            <div *ngIf="newRfpForm.get('description').invalid && newRfpForm.get('description').touched" class="text-danger">
+              <span *ngIf="newRfpForm.get('description').errors.required">Description required!</span>
             </div>
           </div>
         </div>
       </div>
-
-
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Time Start</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="date" class="form-control" placeholder="Enter starting date" formControlName="timeStart"
+              ngbDatepicker #d1="ngbDatepicker">
+            <button type="button" (click)="d1.toggle()"><i class="fa fa-calendar"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Time End</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="date" class="form-control" placeholder="Enter expiry date" formControlName="timeEnd"
+              ngbDatepicker #d2="ngbDatepicker">
+            <button type="button" (click)="d2.toggle()"><i class="fa fa-calendar"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Document</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="file" class="form-control" (change)=fileEvent($event)>
+          </div>
+        </div>
+      </div>
 
       <div class="row">
         <div class="col-sm-3 col-lg-3">
