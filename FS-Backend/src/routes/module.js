@@ -6,5 +6,6 @@ module.exports = app => {
     app.post(`${module}edit`, ModuleController.editModule);
     app.post(`${module}delete`, ModuleController.deleteModule);
     app.get(`${module}`, ModuleController.getModule);
+    app.post(`${module}status-modify`, ModuleController.updateModuleStatus);
 
 };

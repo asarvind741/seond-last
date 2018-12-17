@@ -1,0 +1,82 @@
+<div class="card">
+  <div class="card-header">
+    <h5>Create new Module</h5>
+  </div>
+  <div class="card-block">
+    <form [formGroup]="newModuleForm" (ngSubmit)="addNewModule()">
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Name</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Enter Name" formControlName="name">
+          </div>
+          <div *ngIf="newModuleForm.get('name').invalid && newModuleForm.get('name').touched" class="text-danger">
+            <span *ngIf="newModuleForm.get('name').errors.required">Module Name is required!</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Select Category</label>
+        <div class="col-sm-8 col-lg-8">
+          <angular2-multiselect [data]="allCategories" [(ngModel)]="selectedCategories" [settings]="settings2"
+            (onSelect)="onItemSelectCat($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+            (onDeSelectAll)="onDeSelectAll($event)" formControlName="categories">
+          </angular2-multiselect>
+          <div *ngIf="newModuleForm.get('categories').invalid && newModuleForm.get('categories').touched" class="text-danger">
+            <span *ngIf="newModuleForm.get('categories').errors.required">Category is required!</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Image</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <image-upload url="http://40.71.47.14:5000/image" [max]="10" [maxFileSize]="" [fileTooLargeMessage]="'Image too large!'"
+              [extensions]="['jpg','jpeg', 'png','gif']" (removed)="onRemoved($event)" (uploadFinished)="onUploadFinished($event)"
+              (uploadStateChanged)="onUploadStateChanged($event)"></image-upload>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Status</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <select class="input-group" name="status" formControlName="status">
+              <option [ngValue]="null" disabled>Select One</option>
+              <option *ngFor="let stat of statuss" [ngValue]="stat">
+                {{ stat }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Description</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <textarea type="text" class="form-control" placeholder="Enter description about coupon" formControlName="description">
+            </textarea>
+            <div *ngIf="newModuleForm.get('description').invalid && newModuleForm.get('description').touched" class="text-danger">
+              <span *ngIf="newModuleForm.get('description').errors.required">Description required!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-sm-3 col-lg-3">
+          <button class="btn btn-primary btn-round" type="submit">Done</button>
+        </div>
+        <div class="col-sm-3 col-lg-3">
+          <button class="btn btn-warning btn-round" type="button" (click)="closeModal()">Cancel</button>
+        </div>
+        <div class="col-sm-3 col-lg-3">
+          <button class="btn btn-info btn-round" type="button" (click)="clearModal()">Clear</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

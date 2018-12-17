@@ -70,8 +70,13 @@ const routes: Routes = [
         loadChildren: './module-management/module-management.module#ModuleManagementModule'
       },
       {
+<<<<<<< HEAD
+        path: 'rfp-management',
+        loadChildren: './rfp-management/rfp-management.module#RfpManagementModule'
+=======
         path: 'feature-management',
         loadChildren: './feature-management/feature-management.module#FeatureManagementModule'
+>>>>>>> bcdf252463c598cae537c9ce8e1b52ea867622a4
       }
     ]
   }
