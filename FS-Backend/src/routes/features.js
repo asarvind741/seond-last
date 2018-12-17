@@ -7,5 +7,7 @@ module.exports = app => {
     app.post(`${features}delete`, FeaturesController.deleteFeatures);
     app.get(`${features}`, FeaturesController.getFeatures);
     app.post(`${features}status-modify`, FeaturesController.updateFeaturesStatus);
+    app.get(`${features}role/:role`, FeaturesController.getFeaturesByRole);
+    app.get(`${features}all/:role`, FeaturesController.getAllFeaturesByRole);
 
 };
