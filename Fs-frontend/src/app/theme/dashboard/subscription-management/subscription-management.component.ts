@@ -75,8 +75,7 @@ export class SubscriptionManagementComponent implements OnInit {
               plan.status && plan.status.toLowerCase().indexOf(val) >= 0 ? true : false ||
                 plan.createdAt && moment(plan.createdAt).format("MMM DD, YYYY").toLowerCase().indexOf(val) >= 0 ? true : false ||
                   plan.createdBy && plan.createdBy.toLowerCase().indexOf(val) >= 0 ? true : false ||
-                    plan.price && plan.price.toString().indexOf(val) >= 0 ? true : false ||
-                      plan.maxNumberOfMembers && plan.maxNumberOfMembers.toString().indexOf(val) >= 0 ? true : false
+                    plan.price && plan.price.toString().indexOf(val) >= 0 ? true : false
         )
           return true;
       });

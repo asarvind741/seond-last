@@ -65,7 +65,6 @@ export class AddSubscriptionComponent implements OnInit {
       'price': new FormControl(null),
       'status': new FormControl(null),
       'description': new FormControl(null),
-      'maxNumberOfMembers': new FormControl(null),
       'rolesAllowed': new FormControl([]),
       'moduleIncluded': new FormControl([]),
       'features': new FormControl()

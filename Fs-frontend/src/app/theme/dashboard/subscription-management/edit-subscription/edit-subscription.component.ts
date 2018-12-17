@@ -113,7 +113,6 @@ export class EditSubscriptionComponent implements OnInit {
       'price': new FormControl(price),
       'description': new FormControl(description),
       'status': new FormControl(status),
-      'maxNumberOfMembers': new FormControl(maxNumberOfMembers),
       'rolesAllowed': new FormControl(rolesAllowed),
       'moduleIncluded': new FormControl(moduleIncluded),
       'features': features
