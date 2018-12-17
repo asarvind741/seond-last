@@ -10,6 +10,7 @@ import Constants from './constant';
 import sendSMS from '../functions/nexmo';
 import Redis from '../functions/redis';
 import Stripe from "../controllers/stripe";
+import Plan from '../models/subscriptions';
 import uniqid from 'uniqid';
 // SendMail('test@gmail.com', 'shuklas@synapseindia.email', 'test', 'test');
 async function addUser(req, res) {
@@ -541,15 +542,34 @@ async function addUserFromWebsite(req, res) {
         });
         if (user) sendResponse(res, 400, 'User with this email id already exists');
         else {
-            let charge = await Stripe.createCharge((req.body.payment.amount * 100), 'usd', req.body.payment.tokenId, 'test');
+            console.log(req.body.payment.subscriptionId);
+            let plan = await Plan.findById(req.body.payment.subscriptionId);
+            if (!plan)
+                return sendResponse(res, 400, 'Plan not found');
+            console.log(plan, 'plan');
+            let charge = await Stripe.createCharge((req.body.payment.amount * 100), 'EUR', req.body.payment.tokenId, 'test');
             console.log(charge, 'charge');
+
             if (charge.status === 'succeeded') {
+                let subscriptionLastDate = new Date();
+                if (plan.duration === 'Yearly') {
+                    subscriptionLastDate = new Date(subscriptionLastDate.setFullYear(subscriptionLastDate.getFullYear() + 1));
+                } else if (plan.duration === 'Quaterly') {
+                    subscriptionLastDate = new Date(subscriptionLastDate.setMonth(subscriptionLastDate.getMonth() + 3));
+                } else if (plan.duration === 'Half Yearly') {
+                    subscriptionLastDate = new Date(subscriptionLastDate.setMonth(subscriptionLastDate.getMonth() + 6));
+                } else if (plan.duration === 'Monthly') {
+                    subscriptionLastDate = new Date(subscriptionLastDate.setMonth(subscriptionLastDate.getMonth() + 1));
+
+                } else {
+                    return sendResponse(res, 400, 'Plan duration not found.');
+                }
                 let company = await Company.create({
 
-                    subscription: req.body['payment.subscriptionId'],
-                    // subscriptionLastDate: req.body['company.subscriptionLastDate'],
+                    subscription: req.body.payment.subscriptionId,
+                    subscriptionLastDate: subscriptionLastDate,
                     subscriptionBilledAmount: (req.body.payment.amount * 100),
-                    // maximumNoOfUsers: req.body['company.maximumNoOfUsers']
+                    maximumNoOfUsers: plan.maxNumberOfMembers
                 });
                 req.body.company = company._id;
                 req.body['permissions.isAccountAdmin'] = true;

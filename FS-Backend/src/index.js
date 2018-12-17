@@ -20,7 +20,6 @@ import Session from 'express-session';
 import flash from 'connect-flash';
 import path from 'path';
 import multer from 'multer';
-
 mongoose.Promise = global.Promise;
 mongoose
   .connect(
@@ -43,6 +42,7 @@ app.use(Session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/file', express.static(path.join(__dirname, '../uploads')));
+
 console.log(path.join(__dirname, '../uploads'));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -95,7 +95,7 @@ var storage = multer.diskStorage({
     cb(null, './uploads');
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + '.png');
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
 });
 

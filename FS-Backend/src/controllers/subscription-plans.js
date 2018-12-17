@@ -78,7 +78,8 @@ async function deleteSubscriptionPlan(req, res) {
         delete req.body.id;
         let plan = await Plan.findById(id);
         if (plan) {
-            sendResponse(res, 200, 'Plan deleted Successfully.', plan);
+            let deletePlan = await Plan.findByIdAndRemove(id);
+            sendResponse(res, 200, 'Plan deleted Successfully.');
         } else {
             sendResponse(res, 400, 'Plan not found.');
 
@@ -147,6 +148,37 @@ async function getUserPlans(req, res) {
     }
 }
 
+async function getPlansForWebsite(req, res) {
+    console.log(req.params);
+    try {
+        let query = {};
+        if (req.params.role === 'Buyer') {
+            query = {
+                rolesAllowed: {
+                    $elemMatch: {
+                        roleName: 'Buyer'
+                    }
+                }
+            };
+        } else if (req.params.role === 'Supplier') {
+            query = {
+                rolesAllowed: {
+                    $elemMatch: {
+                        roleName: 'Supplier'
+                    }
+                }
+            };
+        }
+        let plans = await Plan.find(query).populate('features._id');
+        console.log(plans);
+
+        sendResponse(res, 200, 'Successful.', plans);
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected error', e);
+    }
+}
+
 module.exports = {
     createPlan,
     editPlan,
@@ -154,5 +186,6 @@ module.exports = {
     getPlans,
     getUserPlans,
     deleteSubscriptionPlan,
-    getPlan
+    getPlan,
+    getPlansForWebsite
 };
