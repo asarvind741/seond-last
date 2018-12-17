@@ -42,7 +42,7 @@ import { ProductDetailsComponent } from './theme/product-list/product-details/pr
   providers: [
     MenuItems,
     AuthGuardService,
-    { provide: HTTP_INTERCEPTORS, useClass: CommonHeadersInterceptor, multi: true},
+    // { provide: HTTP_INTERCEPTORS, useClass: CommonHeadersInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass:TokenIterceptor, multi: true}
   ],
   bootstrap: [AppComponent]

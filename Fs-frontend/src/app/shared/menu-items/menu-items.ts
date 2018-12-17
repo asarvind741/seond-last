@@ -102,6 +102,10 @@ const MENUITEMS = [
           {
             state: 'module-management',
             name: 'Module Management'
+          },
+          {
+            state: 'rfp-management',
+            name: 'RFP Management'
           }
         ]
       },
