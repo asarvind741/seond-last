@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../../../../../services/auth.service';
-import { HttpResponse } from '@angular/common/http';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-two-factor-authentication',
@@ -36,7 +37,20 @@ export class TwoFactorAuthenticationComponent implements OnInit {
         this.authService.saveUser(response['data']);
         this.router.navigate(['../dashboard/default'], { relativeTo: this.activatedRoute})
       }
+      else {
+        this.openUnscuccessSwal();
+      }
+    }, (error: HttpErrorResponse) => {
+      this.openUnscuccessSwal();
     })
+  }
+
+  openUnscuccessSwal() {
+    swal({
+      title: 'Cancelled!',
+      text: "Error Occured",
+      type: 'error'
+    }).catch(swal.noop);
   }
 
 }

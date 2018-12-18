@@ -74,6 +74,12 @@ export class BuyerProfileComponent implements OnInit {
       .subscribe((response: HttpResponse<any>) => {
         if (response.status === 200) {
           this.currentUserComapany = response['data'];
+          if(!this.currentUserComapany.primaryAdmin){
+            this.currentUserComapany.primaryAdmin.name == 'N/A'
+          }
+          if(!this.currentUserComapany.name){
+            this.currentUserComapany.name = "N/A"
+          }
         }
       })
     this.createForm();
@@ -194,7 +200,7 @@ export class BuyerProfileComponent implements OnInit {
   openSuccessSwal() {
     swal({
       title: 'Successful!',
-      text: 'User updated successfully!',
+      text: 'Profile updated successfully!',
       type: 'success'
     }).catch(swal.noop);
   }

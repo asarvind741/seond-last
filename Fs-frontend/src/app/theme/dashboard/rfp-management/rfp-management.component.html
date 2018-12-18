@@ -98,7 +98,7 @@
             </ng-template>
             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
               <span>
-                {{ value }}
+                {{ value | date }}
               </span>
             </ng-template>
           </ngx-datatable-column>
@@ -111,7 +111,7 @@
             </ng-template>
             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
               <span>
-                {{ value }}
+                {{ value | date }}
               </span>
             </ng-template>
           </ngx-datatable-column>

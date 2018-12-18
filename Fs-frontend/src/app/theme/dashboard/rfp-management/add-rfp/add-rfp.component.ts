@@ -15,8 +15,9 @@ import { formatDate } from '@angular/common';
 export class AddRfpComponent implements OnInit {
   newRfpForm: FormGroup;
   showMessage: any;
+  documentCount: number = 0;
   statuss: Array<String> = ['Active', 'Inactive'];
-  documents: any;
+  documents: any = [];
   constructor(
     public activeModal: NgbActiveModal,
     private rfpService: RfpService
@@ -28,6 +29,9 @@ export class AddRfpComponent implements OnInit {
   }
 
   createForm() {
+
+    let docs = new FormArray([]);
+    docs.push(new FormControl());
     this.newRfpForm = new FormGroup({
       'name': new FormControl(null, [Validators.required]),
       'company': new FormControl(null, [Validators.required]),
@@ -36,13 +40,20 @@ export class AddRfpComponent implements OnInit {
       'description': new FormControl(null),
       'timeStart': new FormControl(null),
       'timeEnd': new FormControl(null),
-      'status': new FormControl(null)
+      'status': new FormControl(null),
+      'docs': docs
     })
   }
 
+  addMoreDocs(){
+    let control = new FormControl(null);
+    (<FormArray>this.newRfpForm.get('docs')).push(control);
+  }
+
   addNewRfp() {
-    console.log("--------------------->>>>>>", this.newRfpForm.value.timeEnd,this.newRfpForm.value.timeStart)
+    console.log('sdsd')
     let data = this.newRfpForm.value;
+    delete this.newRfpForm.value.docs;
 
     data.timeEnd = new Date(this.newRfpForm.value.timeEnd.year, this.newRfpForm.value.timeEnd.month, this.newRfpForm.value.timeEnd.day);
 
@@ -51,11 +62,6 @@ export class AddRfpComponent implements OnInit {
     data.documents = this.documents;
 
     data.createdBy = JSON.parse(localStorage.getItem('currentUser'))._id;
-    data.company = JSON.parse(localStorage.getItem('currentUser')).company;
-
-    console.log("DATA===================>>>>", data.timeEnd) 
-    console.log("DATA===================>>>>", data.timeStart) 
-    console.log("DATA===================>>>>", JSON.stringify(data)) 
 
     this.rfpService.addRfp(data).subscribe((response: HttpResponse<any>) => {
       if (response.status === 200) {
@@ -78,7 +84,8 @@ export class AddRfpComponent implements OnInit {
   fileEvent($event) {
     const fileSelected: File = $event.target.files[0];
     this.rfpService.uploadDoc(fileSelected).subscribe((response: HttpResponse<any>) => {
-      this.documents = JSON.stringify(response);
+      this.documents.push(JSON.stringify(response));
+      this.documentCount = this.documentCount + 1;
     }, (error) => {
       console.log(error);
       this.closeModal();
