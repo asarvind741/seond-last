@@ -77,7 +77,7 @@
         <label class="col-sm-4 col-lg-4 col-form-label">Time Start</label>
         <div class="col-sm-8 col-lg-8">
           <div class="input-group">
-            <input type="date" class="form-control" placeholder="Enter starting date" formControlName="timeStart"
+            <input type="text" class="form-control" placeholder="Enter starting date" formControlName="timeStart"
               ngbDatepicker #d1="ngbDatepicker">
             <button type="button" (click)="d1.toggle()"><i class="fa fa-calendar"></i></button>
           </div>
@@ -87,7 +87,7 @@
         <label class="col-sm-4 col-lg-4 col-form-label">Time End</label>
         <div class="col-sm-8 col-lg-8">
           <div class="input-group">
-            <input type="date" class="form-control" placeholder="Enter expiry date" formControlName="timeEnd"
+            <input type="text" class="form-control" placeholder="Enter expiry date" formControlName="timeEnd"
               ngbDatepicker #d2="ngbDatepicker">
             <button type="button" (click)="d2.toggle()"><i class="fa fa-calendar"></i></button>
           </div>

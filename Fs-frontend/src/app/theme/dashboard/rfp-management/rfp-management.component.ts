@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import swal from 'sweetalert2';
+import * as moment from 'moment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse } from '@angular/common/http';
 import { RfpService } from '../../../services/rfp.service';
@@ -45,10 +46,12 @@ export class RfpManagementComponent implements OnInit {
       data = data.filter(rfp => {
         if (
           rfp.name && rfp.name.toLowerCase().indexOf(val) >= 0 ? true : false ||
-            rfp.company && rfp.company.toLowerCase().indexOf(val) >= 0 ? true : false ||
-              rfp.email && rfp.email.toLowerCase().indexOf(val) >= 0 ? true : false ||
-                rfp.description && rfp.description.toLowerCase().indexOf(val) >= 0 ? true : false ||
-                  rfp.status && rfp.status.toLowerCase().indexOf(val) >= 0 ? true : false
+          rfp.company && rfp.company.toLowerCase().indexOf(val) >= 0 ? true : false ||
+          rfp.email && rfp.email.toLowerCase().indexOf(val) >= 0 ? true : false ||
+          rfp.description && rfp.description.toLowerCase().indexOf(val) >= 0 ? true : false ||
+          rfp.status && rfp.status.toLowerCase().indexOf(val) >= 0 ? true : false ||
+          rfp.timeStart && moment(rfp.timeStart).format("MMM DD, YYYY").toLowerCase().indexOf(val) >= 0 ? true : false ||
+          rfp.timeEnd && moment(rfp.timeEnd).format("MMM DD, YYYY").toLowerCase().indexOf(val) >= 0 ? true : false
         )
           return true;
       });

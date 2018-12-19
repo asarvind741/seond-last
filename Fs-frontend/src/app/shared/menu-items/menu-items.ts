@@ -799,6 +799,10 @@ const MENUITEMS1 = [
           {
             state: 'rfp-management',
             name: 'My RFQs'
+          },
+          {
+            state: 'search-history',
+            name: 'View Search History'
           }
          
         ]

@@ -76,6 +76,10 @@ const routes: Routes = [
       {
         path: 'feature-management',
         loadChildren: './feature-management/feature-management.module#FeatureManagementModule'
+      },
+      {
+        path: 'search-history',
+        loadChildren: './search-history/search-history.module#SearchHistoryModule'
       }
     ]
   }
