@@ -6,6 +6,7 @@ module.exports = app => {
     app.post(`${rfp}edit`, RfpController.editRfp);
     app.post(`${rfp}delete`, RfpController.deleteRfp);
     app.get(`${rfp}`, RfpController.getRfp);
+    app.get(`${rfp}:id`, RfpController.getRfp);
     app.post(`${rfp}status-modify`, RfpController.updateRfpStatus);
 
 };

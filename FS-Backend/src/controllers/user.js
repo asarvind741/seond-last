@@ -151,9 +151,9 @@ async function loginUser(req, res) {
                 if (otpValidate || user.otp !== req.body.otp) {
                     sendResponse(res, 400, 'Invalid OTP or OTP Expired');
                 } else {
-                    // let refreshToken = uniqid();
-                    // Redis.storeRefreshToken(user._id, refreshToken);
-                    // console.log(Redis.getRefreshToken(user._id));
+                    let refreshToken = uniqid();
+                    Redis.storeRefreshToken(user._id, refreshToken);
+                    console.log(Redis.getRefreshToken(user._id));
                     let token = jwt.sign({
                             exp: Math.floor(Date.now() / 1000) + 60 * 60,
                             data: user._id
@@ -162,7 +162,7 @@ async function loginUser(req, res) {
                     );
                     let data = user;
                     data.token = token;
-                    // data.refreshToken = refreshToken;
+                    data.refreshToken = refreshToken;
                     let updateLoginCountAndSaveToken = await User.findByIdAndUpdate(
                         user._id, {
                             $inc: {

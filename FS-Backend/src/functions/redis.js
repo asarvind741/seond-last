@@ -17,7 +17,15 @@ async function connectToRedis() {
 
 async function storeRefreshToken(userId, refreshToken) {
     try {
-        client.set(userId, refreshToken);
+        client.set(userId.toString(), refreshToken);
+    } catch (e) {
+        console.log('Refresh token not stored to redis db');
+    }
+}
+
+async function storeSocketId(userId, socketId) {
+    try {
+        client.set(`socket_${userId.toString()}`, socketId);
     } catch (e) {
         console.log('Refresh token not stored to redis db');
     }
@@ -25,7 +33,21 @@ async function storeRefreshToken(userId, refreshToken) {
 
 function getRefreshToken(userId) {
     return new Promise(function (resolve, reject) {
-        client.get(userId, function (err, value) {
+        client.get(userId.toString(), function (err, value) {
+            console.log(err, value);
+            if (err)
+                reject(err);
+            else
+                resolve(value);
+        });
+
+    });
+
+}
+
+function getSocketId(userId) {
+    return new Promise(function (resolve, reject) {
+        client.get(`socket_${userId.toString()}`, function (err, value) {
             console.log(err, value);
             if (err)
                 reject(err);
@@ -40,5 +62,7 @@ function getRefreshToken(userId) {
 module.exports = {
     connectToRedis,
     storeRefreshToken,
-    getRefreshToken
+    getRefreshToken,
+    getSocketId,
+    storeSocketId
 };
