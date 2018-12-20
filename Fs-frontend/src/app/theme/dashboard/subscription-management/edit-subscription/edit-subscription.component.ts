@@ -4,6 +4,7 @@ import swal from 'sweetalert2';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { HttpResponse } from '@angular/common/http';
 import {PlanService } from '../../../../services/plan.service';
+import { FeatureService } from '../../../../services/feature.service';
 
 @Component({
   selector: 'app-subscription-plan',
@@ -13,6 +14,7 @@ import {PlanService } from '../../../../services/plan.service';
 export class EditSubscriptionComponent implements OnInit {
   editPlanForm: FormGroup;
   showMessage: any;
+  featureModules: any;
   statuss: Array<String> = ['Active', 'Inactive'];
   duration: Array<String> = ['Yearly', 'Half Yearly', 'Quarterly', 'Monthly'];
   role: Array<Object> = [
@@ -33,17 +35,17 @@ export class EditSubscriptionComponent implements OnInit {
   @Input() currentPlan;
   constructor(
     public activeModal: NgbActiveModal,
-    private planService: PlanService
+    private planService: PlanService,
+    private featureService: FeatureService
     ) { }
 
   ngOnInit() {
+
+  
     this.settings = {
-      singleSelection: false,
+      singleSelection: true,
       text: "Select Roles",
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
       enableSearchFilter: true,
-      badgeShowLimit: 3
     };
 
     this.settings1 = {
@@ -66,14 +68,29 @@ export class EditSubscriptionComponent implements OnInit {
     let maxNumberOfMembers = this.currentPlan.maxNumberOfMembers ? this.currentPlan.maxNumberOfMembers : null;
     let rolesAllowed = this.currentPlan.rolesAllowed ? this.currentPlan.rolesAllowed : null;
     let moduleIncluded = this.currentPlan.moduleIncluded ? this.currentPlan.moduleIncluded : null;
+    
+    // let features = new FormArray([]);
 
-    let features = new FormArray([]);
+    // if(this.currentPlan.features){
+    //   this.currentPlan.features.forEach((feature: String) => {
+    //     features.push(new FormControl(feature))
+    //   })
+    // }
 
-    if(this.currentPlan.features){
-      this.currentPlan.features.forEach((feature: String) => {
-        features.push(new FormControl(feature))
+    let feature = this.currentPlan.features ? this.currentPlan.features : null;
+    console.log("sssssssssss", feature);
+    let features = new FormControl(feature)
+
+
+    if(rolesAllowed.length > 0){
+      this.featureService.getFeatureListByRole(rolesAllowed[0].roleName)
+      .subscribe((response: HttpResponse<any>) => {
+        if(response.status === 200){
+          this.featureModules = response['data'];
+        }
       })
     }
+
 
     if(rolesAllowed){
       rolesAllowed.forEach((role, i) => {
@@ -96,7 +113,6 @@ export class EditSubscriptionComponent implements OnInit {
       'price': new FormControl(price),
       'description': new FormControl(description),
       'status': new FormControl(status),
-      'maxNumberOfMembers': new FormControl(maxNumberOfMembers),
       'rolesAllowed': new FormControl(rolesAllowed),
       'moduleIncluded': new FormControl(moduleIncluded),
       'features': features
@@ -170,6 +186,15 @@ export class EditSubscriptionComponent implements OnInit {
   }
 
   onItemSelect(item: any) {
+    if(item.itemName === "Buyer" || item.itemName === "Supplier" || item.itemName === "Agent" || item.itemName === "Reseller"){
+      this.featureService.getFeatureListByRole(item.itemName)
+      .subscribe((response: HttpResponse<any>) => {
+        if(response.status === 200){
+          this.featureModules = response['data'];
+          console.log("featuere module", this.featureModules)
+        }
+      })
+    }
   }
   OnItemDeSelect(item: any) {
   }

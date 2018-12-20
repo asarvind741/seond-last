@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { PlanService } from '../../../../services/plan.service';
 import { HttpResponse } from '@angular/common/http';
 import { id } from '@swimlane/ngx-datatable/release/utils';
+import { FeatureService } from '../../../../services/feature.service';
 
 @Component({
   selector: 'app-add-coupon',
@@ -14,6 +15,7 @@ import { id } from '@swimlane/ngx-datatable/release/utils';
 export class AddSubscriptionComponent implements OnInit {
   newPlanForm: FormGroup;
   statuss: Array<String> = ['Active', 'Inactive'];
+  featureModules: any;
   duration: Array<String> = ['Yearly', 'Half Yearly', 'Quaterly', 'Monthly'];
   role: Array<Object> = [
     { 'id': 0, 'itemName': 'Buyer' },
@@ -32,17 +34,16 @@ export class AddSubscriptionComponent implements OnInit {
   showMessage: any;
   constructor(
     public activeModal: NgbActiveModal,
-    private planService: PlanService
+    private planService: PlanService,
+    private featureService: FeatureService
   ) { }
 
   ngOnInit() {
     this.settings = {
-      singleSelection: false,
-      text: "Select Roles",
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
+      singleSelection: true,
+      text: "Select Role",
       enableSearchFilter: true,
-      badgeShowLimit: 3
+
     };
 
     this.settings1 = {
@@ -53,30 +54,28 @@ export class AddSubscriptionComponent implements OnInit {
       enableSearchFilter: true,
       badgeShowLimit: 3
     };
-
-
     this.createForm();
   }
 
   createForm() {
-    let features = new FormArray([]);
+    // let features = new FormArray([]);
     this.newPlanForm = new FormGroup({
       'name': new FormControl(null),
       'duration': new FormControl(null),
       'price': new FormControl(null),
       'status': new FormControl(null),
       'description': new FormControl(null),
-      'maxNumberOfMembers': new FormControl(null),
       'rolesAllowed': new FormControl([]),
       'moduleIncluded': new FormControl([]),
-      'features': features
+      'features': new FormControl()
+      // 'features': features
     })
   }
 
-  addNewFeature() {
-    const control = new FormControl('');
-    (<FormArray>this.newPlanForm.get('features')).push(control);
-  }
+  // addNewFeature() {
+  //   const control = new FormControl('');
+  //   (<FormArray>this.newPlanForm.get('features')).push(control);
+  // }
 
   addNewPlan() {
     const modulesArrary = this.newPlanForm.value.moduleIncluded;
@@ -94,6 +93,8 @@ export class AddSubscriptionComponent implements OnInit {
         delete role.itemName;
       });
     }
+
+    console.log(this.newPlanForm.value)
 
 
     this.planService.addPlan(this.newPlanForm.value).subscribe((response: HttpResponse<any>) => {
@@ -150,8 +151,20 @@ export class AddSubscriptionComponent implements OnInit {
   }
 
   onItemSelect(item: any) {
+
+  if(item.itemName === "Buyer" || item.itemName === "Supplier" || item.itemName === "Agent" || item.itemName === "Reseller"){
+    this.featureService.getFeatureListByRole(item.itemName)
+    .subscribe((response: HttpResponse<any>) => {
+      if(response.status === 200){
+        this.featureModules = response['data'];
+        console.log("featuere module", this.featureModules)
+      }
+    })
+
+  }
   }
   OnItemDeSelect(item: any) {
+    this.selectedRoles = undefined;
   }
   onSelectAll(items: any) {
   }

@@ -38,7 +38,7 @@
                                     </tr>
                                     <tr>
                                       <th scope="row">Birth Date</th>
-                                      <td>{{ currentUser.dateOfBirth}}</td>
+                                      <td>{{ currentUser.dateOfBirth | date }}</td>
                                     </tr>
                                     <tr>
                                       <th scope="row">Marital Status</th>
@@ -235,92 +235,95 @@
                   <div class="card">
                     <div class="card-header">
                       <h5 class="card-header-text">Address Details</h5>
-                      <button *ngIf = "isAddressAvailable" id="edit-info-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                      <button *ngIf="isAddressAvailable" id="edit-info-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
                         (click)="toggleEditAddress()">
                         <i class="icofont {{ editAddressIcon }}"></i>
                       </button>
-                  
-                        <button *ngIf = "!isAddressAvailable" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right" (click) = "addAddress()">
-                          <i class="fa fa-plus"></i>Add Address
-                        </button>
-                    </div>
-                    <div class="card-body user-desc">
-                      <div class="view-desc" *ngIf="editAddress">
-                        <div *ngFor="let addr of currentUser.address; let i = index">
-                          <h6 class="address-header">Address{{i+1}}</h6>
-                          <div class="col-lg-12 col-xl-12">
-                            <div class="table-responsive">
-                              <table class="table m-0">
-                                <tbody>
-                                  <tr>
-                                    <th scope="row">Line1</th>
-                                    <td>{{ addr.line1 }}</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">Lin2</th>
-                                    <td>{{ addr.line2}}</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">Zip Code</th>
-                                    <td>{{ addr.postalCode }}</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">City</th>
-                                    <td>{{ addr.city }}</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">Country</th>
-                                    <td>{{ addr.country }}</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="edit-desc" *ngIf="!editAddress">
-                        <div class="col-md-12">
-                          <div formArrayName="address">
-                            <div *ngFor="let addr of myProfileForm.get('address')['controls']; let i = index"
-                              [formGroupName]="i">
-                              <h4>Address{{i+1}}</h4>
-                              <div class="input-group">
-                                <label>Line 1</label>
-                                <input type="text" class="form-control" formControlName="line1">
-                              </div>
-                              <div class="input-group">
-                                <label>Line 2</label>
-                                <input type="text" class="form-control" formControlName="line2">
-                              </div>
-                              <div class="input-group">
-                                <label>Zip Code</label>
-                                <input type="text" class="form-control" formControlName="postalCode">
-                              </div>
-                              <div class="input-group">
-                                <label>City</label>
-                                <input type="text" class="form-control" formControlName="city">
-                              </div>
-                              <div class="input-group">
-                                <label>Country</label>
-                                <input type="text" class="form-control" formControlName="country">
-                              </div>
-                            </div>
-                          </div>
-                          <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-warning" (click)="toggleEditAddress()">Cancel</button>
-                          </div>
-                        </div>
 
+                      <button *ngIf="!isAddressAvailable" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                        (click)="addAddress()">
+                        <i class="fa fa-plus"></i>Add Address
+                      </button>
+                    </div>
+                    <div *ngIf="isAddressAvailable; else noAddressCurrently">
+                      <div class="card-body user-desc" >
+                        <div class="view-desc" *ngIf="editAddress">
+                          <div *ngFor="let addr of currentUser.address; let i = index">
+                            <h6 class="address-header">Address{{i+1}}</h6>
+                            <div class="col-lg-12 col-xl-12">
+                              <div class="table-responsive">
+                                <table class="table m-0">
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">Line1</th>
+                                      <td>{{ addr.line1 }}</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">Lin2</th>
+                                      <td>{{ addr.line2}}</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">Zip Code</th>
+                                      <td>{{ addr.postalCode }}</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">City</th>
+                                      <td>{{ addr.city }}</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">Country</th>
+                                      <td>{{ addr.country }}</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="edit-desc" *ngIf="!editAddress">
+                          <div class="col-md-12">
+                            <div formArrayName="address">
+                              <div *ngFor="let addr of myProfileForm.get('address')['controls']; let i = index"
+                                [formGroupName]="i">
+                                <h4>Address{{i+1}}</h4>
+                                <div class="input-group">
+                                  <label>Line 1</label>
+                                  <input type="text" class="form-control" formControlName="line1">
+                                </div>
+                                <div class="input-group">
+                                  <label>Line 2</label>
+                                  <input type="text" class="form-control" formControlName="line2">
+                                </div>
+                                <div class="input-group">
+                                  <label>Zip Code</label>
+                                  <input type="text" class="form-control" formControlName="postalCode">
+                                </div>
+                                <div class="input-group">
+                                  <label>City</label>
+                                  <input type="text" class="form-control" formControlName="city">
+                                </div>
+                                <div class="input-group">
+                                  <label>Country</label>
+                                  <input type="text" class="form-control" formControlName="country">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="text-center">
+                              <button type="submit" class="btn btn-primary">Save</button>
+                              <button type="button" class="btn btn-warning" (click)="toggleEditAddress()">Cancel</button>
+                            </div>
+                          </div>
+
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-              
+
               </div>
 
-              <div  class="row">
+              <div class="row">
                 <div class="col-lg-12">
                   <div class="card">
                     <div class="card-header">
@@ -331,33 +334,33 @@
                     </div>
                     <div class="card-body user-desc">
                       <div class="view-desc">
-                          <div class="row">
-                              <div class="col-lg-12 col-xl-6">
-                                <div class="table-responsive">
-                                  <table class="table m-0">
-                                    <tbody>
-                                      <tr>
-                                        <th scope="row">Company Name</th>
-                                        <td>{{ currentUserComapany.name }}</td>
-                                    </tbody>
-                                  </table>
-                                </div>
-                              </div>
-                              <!-- end of table col-lg-6 -->
-                              <div class="col-lg-12 col-xl-6">
-                                <div class="table-responsive">
-                                  <table class="table">
-                                    <tbody>
-                                      <tr>
-                                        <th scope="row">Lead Director</th>
-                                        <td>{{ currentUserComapany.primaryAdmin.name }}</td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </div>
-                              </div>
-                              <!-- end of table col-lg-6 -->
+                        <div class="row">
+                          <div class="col-lg-12 col-xl-6">
+                            <div class="table-responsive">
+                              <table class="table m-0">
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">Company Name</th>
+                                    <td>{{ currentUserComapany.name }}</td>
+                                </tbody>
+                              </table>
                             </div>
+                          </div>
+                          <!-- end of table col-lg-6 -->
+                          <div class="col-lg-12 col-xl-6">
+                            <div class="table-responsive">
+                              <table class="table">
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">Lead Director</th>
+                                    <td>{{ currentUserComapany.primaryAdmin.name || 'N/A' }}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <!-- end of table col-lg-6 -->
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -376,7 +379,8 @@
                     </div>
                     <div class="card-body user-desc">
                       <div class="view-desc" *ngIf="editAbout">
-                        <div *ngIf = "myProfileForm.value.description; else noDescription">{{ myProfileForm.value.description }}</div>
+                        <div *ngIf="myProfileForm.value.description; else noDescription">{{
+                          myProfileForm.value.description }}</div>
                         <ng-template #noDescription> Description not added yet</ng-template>
                       </div>
                       <div class="edit-desc" *ngIf="!editAbout">
@@ -404,3 +408,7 @@
     </div>
   </div>
 </div>
+
+<ng-template #noAddressCurrently>
+  <p>No address added</p>
+</ng-template>

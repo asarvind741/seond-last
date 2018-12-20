@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="row">
-        <label class="col-sm-4 col-lg-4 col-form-label">Price</label>
+        <label class="col-sm-4 col-lg-4 col-form-label">Price(In Euros)</label>
         <div class="col-sm-8 col-lg-8">
           <div class="input-group">
             <input type="number" class="form-control" placeholder="Enter cost" formControlName="price" min="0">
@@ -35,19 +35,11 @@
         <label class="col-sm-4 col-lg-4 col-form-label">Description</label>
         <div class="col-sm-8 col-lg-8">
           <div class="input-group">
-            <input type="number" class="form-control" placeholder="Enter description" formControlName="description" min="0">
+            <input type="text" class="form-control" placeholder="Enter description" formControlName="description" min="0">
           </div>
         </div>
       </div>
-      <div class="row">
-        <label class="col-sm-4 col-lg-4 col-form-label">Maximum Users</label>
-        <div class="col-sm-8 col-lg-8">
-          <div class="input-group">
-            <input type="number" class="form-control" placeholder="Maximum number of users per subscription"
-              formControlName="maxNumberOfMembers">
-          </div>
-        </div>
-      </div>
+
       <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Plan For</label>
         <div class="col-sm-8 col-lg-8">
@@ -80,7 +72,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <!-- <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Features</label>
         <div class="col-sm-8 col-lg-8">
           <div formArrayName="features">
@@ -92,6 +84,18 @@
           </div>
           <button class="btn btn-sm btn-primary waves-effect waves-light f-right" (click)="addNewFeature()" type="button"><i
               class="fa fa-plus"></i>Add Features</button>
+        </div>
+      </div> -->
+
+      <div class="row" *ngIf = "selectedRoles">
+        <label class="col-sm-4 col-lg-4 col-form-label">Feature Module</label>
+        <div class="col-sm-8 col-lg-8">
+          <select class="input-group" name="module" formControlName="features">
+            <option [ngValue]="null" disabled>Select One</option>
+            <option *ngFor="let feature of featureModules" [ngValue]="feature">
+              {{ feature.name }}
+            </option>
+          </select>
         </div>
       </div>
 

@@ -58,22 +58,6 @@
             </span>
           </ng-template>
         </ngx-datatable-column>
-
-        
-
-        <ngx-datatable-column name="maxNumberOfMembers">
-          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
-            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
-              Max Users
-            </span>
-          </ng-template>
-          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-            <span>
-              {{ value }}
-            </span>
-          </ng-template>
-        </ngx-datatable-column>
-
         
 
         <ngx-datatable-column name="moduleIncluded">

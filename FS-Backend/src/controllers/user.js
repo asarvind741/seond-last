@@ -9,7 +9,7 @@ import {
 import Constants from './constant';
 import sendSMS from '../functions/nexmo';
 import Redis from '../functions/redis';
-import Stripe from "../controllers/stripe";
+import Stripe from '../controllers/stripe';
 import Plan from '../models/subscriptions';
 import uniqid from 'uniqid';
 // SendMail('test@gmail.com', 'shuklas@synapseindia.email', 'test', 'test');
@@ -547,28 +547,82 @@ async function addUserFromWebsite(req, res) {
             if (!plan)
                 return sendResponse(res, 400, 'Plan not found');
             console.log(plan, 'plan');
-            let charge = await Stripe.createCharge((req.body.payment.amount * 100), 'EUR', req.body.payment.tokenId, 'test');
-            console.log(charge, 'charge');
+            if (req.body.payment.amount > 0) {
+                let charge = await Stripe.createCharge((req.body.payment.amount * 100), 'EUR', req.body.payment.tokenId, 'test');
+                console.log(charge, 'charge');
 
-            if (charge.status === 'succeeded') {
-                let subscriptionLastDate = new Date();
-                if (plan.duration === 'Yearly') {
-                    subscriptionLastDate = new Date(subscriptionLastDate.setFullYear(subscriptionLastDate.getFullYear() + 1));
-                } else if (plan.duration === 'Quaterly') {
-                    subscriptionLastDate = new Date(subscriptionLastDate.setMonth(subscriptionLastDate.getMonth() + 3));
-                } else if (plan.duration === 'Half Yearly') {
-                    subscriptionLastDate = new Date(subscriptionLastDate.setMonth(subscriptionLastDate.getMonth() + 6));
-                } else if (plan.duration === 'Monthly') {
-                    subscriptionLastDate = new Date(subscriptionLastDate.setMonth(subscriptionLastDate.getMonth() + 1));
+                if (charge.status === 'succeeded') {
+                    let subscriptionLastDate = new Date();
+                    if (plan.duration === 'Yearly') {
+                        subscriptionLastDate = new Date(subscriptionLastDate.setFullYear(subscriptionLastDate.getFullYear() + 1));
+                    } else if (plan.duration === 'Quaterly') {
+                        subscriptionLastDate = new Date(subscriptionLastDate.setMonth(subscriptionLastDate.getMonth() + 3));
+                    } else if (plan.duration === 'Half Yearly') {
+                        subscriptionLastDate = new Date(subscriptionLastDate.setMonth(subscriptionLastDate.getMonth() + 6));
+                    } else if (plan.duration === 'Monthly') {
+                        subscriptionLastDate = new Date(subscriptionLastDate.setMonth(subscriptionLastDate.getMonth() + 1));
 
+                    } else {
+                        return sendResponse(res, 400, 'Plan duration not found.');
+                    }
+                    let company = await Company.create({
+
+                        subscription: req.body.payment.subscriptionId,
+                        subscriptionLastDate: subscriptionLastDate,
+                        subscriptionBilledAmount: (req.body.payment.amount * 100),
+                        maximumNoOfUsers: plan.maxNumberOfMembers
+                    });
+                    req.body.company = company._id;
+                    req.body['permissions.isAccountAdmin'] = true;
+
+                    req.body.speakeasy_secret = speakeasy.generateSecret({
+                        length: 20
+                    });
+                    if (req.body.firstName && req.body.lastName)
+                        req.body.name = req.body.firstName + req.body.lastName;
+                    let newUser = await new User(req.body.user).save();
+                    let updateCompany = await Company.findByIdAndUpdate(
+                        company._id, {
+                            $set: {
+                                primaryAdmin: newUser._id,
+                                createdBy: newUser._id
+                            }
+                        }, {
+                            new: true
+                        }
+                    );
+                    console.log(newUser);
+                    let token = jwt.sign({
+                            data: newUser._id,
+                            exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24
+                        },
+                        Constants.JWT_SECRET
+                    );
+                    let link = `http://localhost:4200/auth/registration/activate/${token}`;
+                    console.log(link);
+                    let storeToken = await User.findByIdAndUpdate(newUser._id, {
+                        $set: {
+                            token: token
+                        }
+                    });
+                    sendResponse(res, 200, 'Please verify your email to procced.');
+                    SendMail(
+                        Constants.MAIL_FROM,
+                        req.body.user.email,
+                        Constants.SIGN_UP_MAIL_SUBJECT,
+                        `${Constants.SIGN_UP_TEXT}: ${link}`
+                    );
                 } else {
-                    return sendResponse(res, 400, 'Plan duration not found.');
+                    sendResponse(res, 400, 'Payment failed.');
+
                 }
+
+            } else {
                 let company = await Company.create({
 
                     subscription: req.body.payment.subscriptionId,
-                    subscriptionLastDate: subscriptionLastDate,
-                    subscriptionBilledAmount: (req.body.payment.amount * 100),
+                    subscriptionLastDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+                    subscriptionBilledAmount: 0,
                     maximumNoOfUsers: plan.maxNumberOfMembers
                 });
                 req.body.company = company._id;
@@ -611,9 +665,6 @@ async function addUserFromWebsite(req, res) {
                     Constants.SIGN_UP_MAIL_SUBJECT,
                     `${Constants.SIGN_UP_TEXT}: ${link}`
                 );
-            } else {
-                sendResponse(res, 400, 'Payment failed.');
-
             }
 
         }

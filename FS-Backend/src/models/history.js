@@ -8,7 +8,7 @@ const History = new Schema({
       type: Date,
       default: Date.now(),
     },
-  }, ],
+  }],
   searchKeywords: [{
     name: String,
     pageUrl: String,
@@ -23,10 +23,11 @@ const History = new Schema({
       type: Date,
       default: Date.now(),
     },
-  }, ],
+  }],
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
+    unique: true
   },
 });
 

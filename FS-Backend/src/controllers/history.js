@@ -5,22 +5,55 @@ import {
 
 async function addVisitedUrls(req, res) {
     try {
-        let historyId = req.body.id;
-        let history = await History.findById(req.body.id);
+        let history = await History.findOne({
+            user: req.body.id
+        });
+        console.log('history==>', history);
         if (!history) {
             let createHistory = await History.create({
                 user: req.body.id
             });
-            historyId = createHistory._id;
         }
-        let addVisitedUrl = await History.findByIdAndUpdate(historyId, {
-            $push: {
+        let data = {
+            url: req.body.url
+        };
+        let urlHistory = await History.findOne({
+            $and: [{
+                user: req.body.id
+            }, {
                 visitedUrls: {
-                    url: req.body.url
+                    $elemMatch: {
+                        url: req.body.url
+                    }
                 }
+            }],
+
+        });
+        console.log('previously visited==>', urlHistory);
+        if (urlHistory) {
+            let removeOldUrls = await History.update({
+                _id: urlHistory._id
+
+            }, {
+                $pull: {
+                    visitedUrls: {
+                        url: req.body.url
+                    }
+                }
+            }, {
+                multi: true
+            });
+            console.log('remove old', removeOldUrls);
+        }
+        let addVisitedUrl = await History.findOneAndUpdate({
+            user: req.body.id
+        }, {
+            $push: {
+                visitedUrls: data
             }
         });
         sendResponse(res, 200, 'Successful.', addVisitedUrl);
+        console.log('send rspo', addVisitedUrl);
     } catch (e) {
         console.log(e);
         sendResponse(res, 500, 'Unexpected Error.', e);
@@ -31,20 +64,23 @@ async function addVisitedUrls(req, res) {
 
 async function addSearchKeywords(req, res) {
     try {
-        let historyId = req.body.id;
-        let history = await History.findById(req.body.id);
+        let history = await History.findOne({
+            user: req.body.id
+        });
         if (!history) {
             let createHistory = await History.create({
                 user: req.body.id
             });
-            historyId = createHistory._id;
         }
-        let searchKeyword = await History.findByIdAndUpdate(historyId, {
+        let data = {
+            name: req.body.name,
+            pageUrl: req.body.url,
+        };
+        let searchKeyword = await History.findOneAndUpdate({
+            user: req.body.id
+        }, {
             $push: {
-                searchKeywords: {
-                    name: req.body.name,
-                    pageUrl: req.body.url,
-                }
+                searchKeywords: data
             }
         });
         sendResponse(res, 200, 'Successful.', searchKeyword);
@@ -58,15 +94,17 @@ async function addSearchKeywords(req, res) {
 
 async function addViewedProducts(req, res) {
     try {
-        let historyId = req.body.id;
-        let history = await History.findById(req.body.id);
+        let history = await History.findOne({
+            user: req.body.id
+        });
         if (!history) {
             let createHistory = await History.create({
                 user: req.body.id
             });
-            historyId = createHistory._id;
         }
-        let addViewedProduct = await History.findByIdAndUpdate(historyId, {
+        let addViewedProduct = await History.findOneAndUpdate({
+            user: req.body.id
+        }, {
             $push: {
                 viewedProducts: {
                     productUrl: req.body.url
@@ -83,7 +121,25 @@ async function addViewedProducts(req, res) {
 
 async function getUserSearchResults(req, res) {
     try {
-        let history = await History.findById(req.params.id);
+        let history = await History.findOne({
+            user: req.params.id
+        });
+        if (history)
+            sendResponse(res, 200, 'Successful.', history);
+        else
+            sendResponse(res, 200, 'No user history found.', history);
+
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected Error.', e);
+    }
+}
+
+async function clearHistory(req, res) {
+    try {
+        let history = await History.remove({
+            user: req.params.id
+        });
         if (history)
             sendResponse(res, 200, 'Successful.', history);
         else
@@ -99,5 +155,6 @@ module.exports = {
     addVisitedUrls,
     addSearchKeywords,
     addViewedProducts,
-    getUserSearchResults
+    getUserSearchResults,
+    clearHistory
 };
