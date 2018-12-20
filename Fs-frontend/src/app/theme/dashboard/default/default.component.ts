@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, OnDestroy} from '@angular/core';
-import {animate, style, transition, trigger} from '@angular/animations';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 declare const AmCharts: any;
 
@@ -13,6 +13,7 @@ import '../../../../assets/charts/amchart/worldLow.js';
 import '../../../../assets/charts/amchart/continentsLow.js';
 import { AuthenticationService } from '../../../services/auth.service.js';
 import { Subscription } from 'rxjs';
+import { SocketService } from 'src/app/services/socket.service.js';
 
 @Component({
   selector: 'app-default',
@@ -25,18 +26,18 @@ import { Subscription } from 'rxjs';
   animations: [
     trigger('fadeInOutTranslate', [
       transition(':enter', [
-        style({opacity: 0}),
-        animate('400ms ease-in-out', style({opacity: 1}))
+        style({ opacity: 0 }),
+        animate('400ms ease-in-out', style({ opacity: 1 }))
       ]),
       transition(':leave', [
-        style({transform: 'translate(0)'}),
-        animate('400ms ease-in-out', style({opacity: 0}))
+        style({ transform: 'translate(0)' }),
+        animate('400ms ease-in-out', style({ opacity: 0 }))
       ])
     ])
   ]
 })
 export class DefaultComponent implements OnInit, AfterViewInit, OnDestroy {
-  tokenSubscription:Subscription;
+  tokenSubscription: Subscription;
   token: String;
 
   public seoCard1Data: any;
@@ -51,21 +52,23 @@ export class DefaultComponent implements OnInit, AfterViewInit, OnDestroy {
   public feedbackData: any;
   public feedbackOption: any;
 
-    options: any = {
-      position: ['bottom', 'right'],
-    };
+  options: any = {
+    position: ['bottom', 'right'],
+  };
 
-    constructor(private authService: AuthenticationService) {
-    }
+  constructor(private authService: AuthenticationService, private socketService: SocketService) {
+  }
 
   ngOnInit() {
-    
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+
+    this.socketService.onLogin({ 'userId': user._id, 'name': user.name });
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
 
-      AmCharts.makeChart( 'statistics_chart', {
+      AmCharts.makeChart('statistics_chart', {
         'type': 'serial',
         'theme': 'light',
         'dataDateFormat': 'YYYY-MM-DD',
@@ -75,7 +78,7 @@ export class DefaultComponent implements OnInit, AfterViewInit, OnDestroy {
           'title': 'Sales',
           'position': 'left',
           'autoGridCount': false,
-          'labelFunction': function(value) {
+          'labelFunction': function (value) {
             return '$' + Math.round(value) + 'M';
           }
         }, {
@@ -116,7 +119,7 @@ export class DefaultComponent implements OnInit, AfterViewInit, OnDestroy {
         'categoryField': 'date',
         'categoryAxis': {
           'parseDates': true,
-          'gridAlpha' : 0,
+          'gridAlpha': 0,
           'minorGridEnabled': true
         },
         'legend': {
@@ -179,9 +182,9 @@ export class DefaultComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.feedbackOption = {
         responsive: true,
-        legend: {display: false},
-        title: {display: false, text: 'Chart.js Doughnut Chart'},
-        animation: {animateScale: true, animateRotate: true}
+        legend: { display: false },
+        title: { display: false, text: 'Chart.js Doughnut Chart' },
+        animation: { animateScale: true, animateRotate: true }
       };
       /* feedback chart end */
 
@@ -207,8 +210,8 @@ export class DefaultComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 75);
   }
 
-  ngOnDestroy(){
- 
+  ngOnDestroy() {
+
   }
 
 }
@@ -241,23 +244,23 @@ function e(h, g, i) {
 
 function f() {
   return {
-    title: {display: !1},
-    tooltips: {enabled: true, intersect: !1, mode: 'nearest', xPadding: 10, yPadding: 10, caretPadding: 10},
-    legend: {display: !1, labels: {usePointStyle: !1}},
+    title: { display: !1 },
+    tooltips: { enabled: true, intersect: !1, mode: 'nearest', xPadding: 10, yPadding: 10, caretPadding: 10 },
+    legend: { display: !1, labels: { usePointStyle: !1 } },
     responsive: !0,
     maintainAspectRatio: !0,
-    hover: {mode: 'index'},
+    hover: { mode: 'index' },
     scales: {
-      xAxes: [{display: !1, gridLines: !1, scaleLabel: {display: !0, labelString: 'Month'}}],
+      xAxes: [{ display: !1, gridLines: !1, scaleLabel: { display: !0, labelString: 'Month' } }],
       yAxes: [{
         display: !1,
         gridLines: !1,
-        scaleLabel: {display: !0, labelString: 'Value'},
-        ticks: {beginAtZero: !0}
+        scaleLabel: { display: !0, labelString: 'Value' },
+        ticks: { beginAtZero: !0 }
       }]
     },
-    elements: {point: {radius: 4, borderWidth: 12}},
-    layout: {padding: {left: 0, right: 0, top: 0, bottom: 0}}
+    elements: { point: { radius: 4, borderWidth: 12 } },
+    layout: { padding: { left: 0, right: 0, top: 0, bottom: 0 } }
   };
 
 }

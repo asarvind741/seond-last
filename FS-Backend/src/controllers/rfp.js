@@ -1,4 +1,5 @@
 import Rfp from '../models/rfp';
+import User from '../models/user';
 import {
     sendResponse,
     SendMail
@@ -7,8 +8,11 @@ import Constants from './constant';
 
 async function createRfp(req, res) {
     try {
+        if (!req.body.email)
+            sendResponse(res, 400, 'Email is required.');
         let rfp = await new Rfp(req.body).save();
         sendResponse(res, 200, 'Feature created Successfully.', rfp);
+        SendMail(Constants.MAIL_FROM, req.body.email, Constants.RFP_MAIL_SUBJECT, `RFP is created with following details ${req.body}`);
 
     } catch (e) {
         console.log(e);
@@ -51,9 +55,16 @@ async function deleteRfp(req, res) {
 
 async function getRfp(req, res) {
     try {
-        let rfp = await Rfp.find({
-            // status: 'Active'
-        }).populate('createdBy');
+        let query = {};
+        if (req.parmas && req.parmas.id) {
+            let user = await User.findById(req.parmas.id);
+            if (['Buyer', 'Seller', 'Supplier', 'Agent', 'Reseller'].includes(user.role)) {
+                query = {
+                    createdBy: req.parmas.id
+                };
+            }
+        }
+        let rfp = await Rfp.find(query).populate('createdBy');
 
         sendResponse(res, 200, 'Successful.', rfp);
 

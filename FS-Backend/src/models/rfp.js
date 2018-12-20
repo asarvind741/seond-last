@@ -1,17 +1,15 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const statusTypes = ['Active', 'Inactive'];
+const statusTypes = ['Active', 'Inactive', 'Expired'];
 
+// discussed with arvind singh
 const rfp = new Schema({
   name: {
     type: String,
     required: true,
   },
-  company: {
-    type: Schema.Types.ObjectId,
-    ref: 'Company'
-  },
+  company: String,
   email: {
     type: String,
     required: true,
@@ -26,7 +24,7 @@ const rfp = new Schema({
     select: false,
   },
   description: String,
-  documents: String,
+  documents: [String],
   createdBy: {
     type: Schema.Types.ObjectId,
     ref: 'User',
