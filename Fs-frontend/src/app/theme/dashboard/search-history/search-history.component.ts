@@ -12,6 +12,7 @@ import { SearchHistoryService } from '../../../services/search-history.service';
 export class SearchHistoryComponent implements OnInit {
   visitHistory: any = [];
   noHistory: Boolean;
+  searchTerm: String = '';
 
   constructor(
     private searchHistoryService: SearchHistoryService
@@ -44,5 +45,11 @@ export class SearchHistoryComponent implements OnInit {
     }).catch(swal.noop);
   }
 
+  searchFunction(event){
+    this.searchTerm = event.target.value;
+    console.log(this.searchTerm);
+  }
 
+  searchFromInput(){
+  }
 }
