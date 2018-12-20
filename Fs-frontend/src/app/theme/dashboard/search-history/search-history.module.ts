@@ -1,21 +1,19 @@
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FileUploadModule } from "ng2-file-upload";
-import { RfpManagementRoutingModule } from './rfp-management-routing.module';
+import { SearchHistoryRoutingModule } from './search-history-routing.module';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { RfpManagementComponent } from './rfp-management.component';
+import { SearchHistoryComponent } from './search-history.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { AddRfpComponent } from './add-rfp/add-rfp.component';
-import { EditRfpComponent } from './edit-rfp/edit-rfp.component';
 import { ImageUploadModule } from "angular2-image-upload";
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 
 @NgModule({
   imports: [
     CommonModule,
-    RfpManagementRoutingModule,
+    SearchHistoryRoutingModule,
     NgbModule.forRoot(),
     ImageUploadModule.forRoot(),
     FileUploadModule,
@@ -26,16 +24,12 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
     FormsModule
   ],
   declarations: [
-    RfpManagementComponent, 
-    AddRfpComponent, 
-    EditRfpComponent
+    SearchHistoryComponent, 
+
   ],
-  entryComponents: [
-    AddRfpComponent,
-    EditRfpComponent 
-  ]
+
 })
-export class RfpManagementModule {
+export class SearchHistoryModule {
 
   
 }

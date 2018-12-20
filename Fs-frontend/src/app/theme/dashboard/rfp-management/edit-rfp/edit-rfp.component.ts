@@ -4,6 +4,7 @@ import { RfpService } from '../../../../services/rfp.service';
 import { HttpResponse } from '@angular/common/http';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import swal from 'sweetalert2';
+import * as moment from 'moment';
 
 
 @Component({
@@ -11,13 +12,16 @@ import swal from 'sweetalert2';
   templateUrl: './edit-rfp.component.html',
   styleUrls: ['./edit-rfp.component.scss']
 })
+
 export class EditRfpComponent implements OnInit {
+
   editRfpForm: FormGroup;
   @Input('currentRfp') currentRfp: any;
   showMessage: any;
   documentCount: number = 0;
   statuss: Array<String> = ['Active', 'Inactive'];
   documents: any = [];
+  attachments: any = [];
   constructor(
     public activeModal: NgbActiveModal,
     private rfpService: RfpService
@@ -29,7 +33,7 @@ export class EditRfpComponent implements OnInit {
   }
 
   createForm() {
-
+    console.log("time start", this.currentRfp.timeStart)
     let name = this.currentRfp.name ? this.currentRfp.name: null;
     let company = this.currentRfp.company ? this.currentRfp.company: null;
     let email = this.currentRfp.email ? this.currentRfp.email: null;
@@ -38,12 +42,17 @@ export class EditRfpComponent implements OnInit {
     let timeStart = this.currentRfp.timeStart ? this.currentRfp.timeStart: null;
     let timeEnd = this.currentRfp.timeStart ? this.currentRfp.timeEnd: null;
     let status = this.currentRfp.status ? this.currentRfp.status: null;
-    
 
     let docs = new FormArray([]);
+
+    
     if(this.currentRfp.documents.length > 0){
       this.currentRfp.documents.forEach((doc) => {
-        docs.push(new FormControl(doc));
+        this.documentCount = this.documentCount  + 1;
+        this.documents.push(doc);
+        this.attachments.push(doc.split('/')[4].replace('"', ''));
+        // docs.push(new FormControl(doc))
+        
       })
     }
     this.editRfpForm = new FormGroup({
@@ -56,7 +65,20 @@ export class EditRfpComponent implements OnInit {
       'timeEnd': new FormControl(timeEnd),
       'status': new FormControl(status),
       'docs': docs
-    })
+    });
+
+    this.editRfpForm.get('timeStart').setValue({
+      year: parseInt(moment(timeStart).format('YYYY')),
+      month: parseInt(moment(timeStart).format('M')),
+      day: parseInt(moment(timeStart).format('D'))
+    });
+
+    this.editRfpForm.get('timeEnd').setValue({
+      year: parseInt(moment(timeEnd).format('YYYY')),
+      month: parseInt(moment(timeEnd).format('M')),
+      day: parseInt(moment(timeEnd).format('D'))
+    });
+
   }
 
   addMoreDocs(){
@@ -64,8 +86,7 @@ export class EditRfpComponent implements OnInit {
     (<FormArray>this.editRfpForm.get('docs')).push(control);
   }
 
-  addNewRfp() {
-    console.log('sdsd')
+  updateRfq() {
     let data = this.editRfpForm.value;
     delete this.editRfpForm.value.docs;
 
@@ -77,7 +98,7 @@ export class EditRfpComponent implements OnInit {
 
     data.createdBy = JSON.parse(localStorage.getItem('currentUser'))._id;
 
-    this.rfpService.addRfp(data).subscribe((response: HttpResponse<any>) => {
+    this.rfpService.updateRfp(this.currentRfp._id, data).subscribe((response: HttpResponse<any>) => {
       if (response.status === 200) {
         this.closeModal();
         this.openSuccessSwal();
@@ -88,7 +109,6 @@ export class EditRfpComponent implements OnInit {
         this.openUnscuccessSwal();
       }
     }, (error) => {
-      console.log(error);
       this.closeModal();
       this.showMessage = error.error['message']
       this.openUnscuccessSwal();
@@ -99,19 +119,31 @@ export class EditRfpComponent implements OnInit {
     const fileSelected: File = $event.target.files[0];
     this.rfpService.uploadDoc(fileSelected).subscribe((response: HttpResponse<any>) => {
       this.documents.push(JSON.stringify(response));
+      this.attachments.push(JSON.stringify(response).split('/')[4].replace('"', ''))
       this.documentCount = this.documentCount + 1;
     }, (error) => {
-      console.log(error);
       this.closeModal();
       this.showMessage = error.error['message']
       this.openUnscuccessSwal();
     })
   }
 
+  removeDoc(doc){
+    this.documents.forEach((document, i) => {
+      if(document.indexOf(doc) >= 0){
+        this.documents.splice(i, 1);
+        const index = this.attachments.indexOf(doc);
+        this.attachments.splice(index, 1)
+        console.log("this docs", this.documents)
+      }
+    })
+  }
+
+
   openSuccessSwal() {
     swal({
       title: 'Successful!',
-      text: 'RFP created successfully!',
+      text: 'RFQ updated successfully!',
       type: 'success'
     }).catch(swal.noop);
   }

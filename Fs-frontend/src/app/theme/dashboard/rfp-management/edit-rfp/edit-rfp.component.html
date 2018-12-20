@@ -1,127 +1,136 @@
 <div class="card">
-    <div class="card-header">
-      <h5>Create new RFP</h5>
-    </div>
-    <div class="card-block">
-      <form [formGroup]="editRfpForm" (ngSubmit)="addNewRfp()">
-        <div class="row">
-          <label class="col-sm-4 col-lg-4 col-form-label">Name(Buyer/Supplier)</label>
-          <div class="col-sm-8 col-lg-8">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter Buyer/Supplier Name" formControlName="name">
-            </div>
-            <div *ngIf="editRfpForm.get('name').invalid && editRfpForm.get('name').touched" class="text-danger">
-              <span *ngIf="editRfpForm.get('name').errors.required">RFP Name is required!</span>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <label class="col-sm-4 col-lg-4 col-form-label">Company Name</label>
-          <div class="col-sm-8 col-lg-8">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter Name" formControlName="company">
-            </div>
-            <div *ngIf="editRfpForm.get('company').invalid && editRfpForm.get('company').touched" class="text-danger">
-              <span *ngIf="editRfpForm.get('company').errors.required">Company Name is required!</span>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <label class="col-sm-4 col-lg-4 col-form-label">Email</label>
-          <div class="col-sm-8 col-lg-8">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter Email" formControlName="email">
-            </div>
-            <div *ngIf="editRfpForm.get('email').invalid && editRfpForm.get('email').touched" class="text-danger">
-              <span *ngIf="editRfpForm.get('email').errors.required">Email is required!</span>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <label class="col-sm-4 col-lg-4 col-form-label">Mobile</label>
-          <div class="col-sm-8 col-lg-8">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter mobile" formControlName="mobile">
-            </div>
-            <div *ngIf="editRfpForm.get('mobile').invalid && editRfpForm.get('mobile').touched" class="text-danger">
-              <span *ngIf="editRfpForm.get('mobile').errors.required">Mobile is required!</span>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <label class="col-sm-4 col-lg-4 col-form-label">Status</label>
-          <div class="col-sm-8 col-lg-8">
-            <div class="input-group">
-              <select class="input-group" name="status" formControlName="status">
-                <option [ngValue]="null" disabled>Select One</option>
-                <option *ngFor="let stat of statuss" [ngValue]="stat">
-                  {{ stat }}
-                </option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <label class="col-sm-4 col-lg-4 col-form-label">Description</label>
-          <div class="col-sm-8 col-lg-8">
-            <div class="input-group">
-              <textarea type="text" class="form-control" placeholder="Enter description about RFQ" formControlName="description">
-              </textarea>
-              <div *ngIf="editRfpForm.get('description').invalid && editRfpForm.get('description').touched" class="text-danger">
-                <span *ngIf="editRfpForm.get('description').errors.required">Description required!</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <label class="col-sm-4 col-lg-4 col-form-label">Time Start</label>
-          <div class="col-sm-8 col-lg-8">
-            <div class="input-group">
-              <input type="date" class="form-control" placeholder="Enter starting date" formControlName="timeStart"
-                ngbDatepicker #d1="ngbDatepicker">
-              <button type="button" (click)="d1.toggle()"><i class="fa fa-calendar"></i></button>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <label class="col-sm-4 col-lg-4 col-form-label">Time End</label>
-          <div class="col-sm-8 col-lg-8">
-            <div class="input-group">
-              <input type="date" class="form-control" placeholder="Enter expiry date" formControlName="timeEnd"
-                ngbDatepicker #d2="ngbDatepicker">
-              <button type="button" (click)="d2.toggle()"><i class="fa fa-calendar"></i></button>
-            </div>
-          </div>
-        </div>
-  
-        <div class="row">
-          <div formArrayName="docs">
-            <div *ngFor = "let doc of editRfpForm.get('docs')['controls']; let i = index">
-              <label class="col-sm-4 col-lg-4 col-form-label">Document</label>
-              <div class="col-sm-8 col-lg-8">
-                <div class="input-group">
-                  <input type="file" class="form-control" (change)=fileEvent($event) [formControlName]="i">
-                </div>
-              </div>
-            </div>
-            <button type = "button" class="btn btn-info" *ngIf="documentCount > 0" (click)="addMoreDocs()">Add more</button>
-          </div>
-        </div>
-  
-        
-  
-        <div class="row">
-          <div class="col-sm-3 col-lg-3">
-            <button class="btn btn-primary btn-round" type="submit">Done</button>
-          </div>
-          <div class="col-sm-3 col-lg-3">
-            <button class="btn btn-warning btn-round" type="button" (click)="closeModal()">Cancel</button>
-          </div>
-          <div class="col-sm-3 col-lg-3">
-            <button class="btn btn-info btn-round" type="button" (click)="clearModal()">Clear</button>
-          </div>
-        </div>
-      </form>
-    </div>
+  <div class="card-header">
+    <h5>Create new RFP</h5>
   </div>
-  
+  <div class="card-block">
+    <form [formGroup]="editRfpForm" (ngSubmit)="updateRfq()">
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Name(Buyer/Supplier)</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Enter Buyer/Supplier Name" formControlName="name">
+          </div>
+          <div *ngIf="editRfpForm.get('name').invalid && editRfpForm.get('name').touched" class="text-danger">
+            <span *ngIf="editRfpForm.get('name').errors.required">RFP Name is required!</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Company Name</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Enter Name" formControlName="company">
+          </div>
+          <div *ngIf="editRfpForm.get('company').invalid && editRfpForm.get('company').touched" class="text-danger">
+            <span *ngIf="editRfpForm.get('company').errors.required">Company Name is required!</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Email</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Enter Email" formControlName="email">
+          </div>
+          <div *ngIf="editRfpForm.get('email').invalid && editRfpForm.get('email').touched" class="text-danger">
+            <span *ngIf="editRfpForm.get('email').errors.required">Email is required!</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Mobile</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Enter mobile" formControlName="mobile">
+          </div>
+          <div *ngIf="editRfpForm.get('mobile').invalid && editRfpForm.get('mobile').touched" class="text-danger">
+            <span *ngIf="editRfpForm.get('mobile').errors.required">Mobile is required!</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Status</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <select class="input-group" name="status" formControlName="status">
+              <option [ngValue]="null" disabled>Select One</option>
+              <option *ngFor="let stat of statuss" [ngValue]="stat">
+                {{ stat }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Description</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <textarea type="text" class="form-control" placeholder="Enter description about RFQ" formControlName="description">
+              </textarea>
+            <div *ngIf="editRfpForm.get('description').invalid && editRfpForm.get('description').touched" class="text-danger">
+              <span *ngIf="editRfpForm.get('description').errors.required">Description required!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Time Start</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Enter starting date" formControlName="timeStart"
+              ngbDatepicker #d1="ngbDatepicker">
+            <button type="button" (click)="d1.toggle()"><i class="fa fa-calendar"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Time End</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Enter expiry date" formControlName="timeEnd"
+              ngbDatepicker #d2="ngbDatepicker">
+            <button type="button" (click)="d2.toggle()"><i class="fa fa-calendar"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label>Attachments</label>
+        <div class="col-sm-8 col-lg-8">
+          <div *ngFor="let doc of attachments">
+            <div>
+              <i class="fa fa-file"></i>{{ doc }}
+              <i class="fa fa-close" (click) = "removeDoc(doc)"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div formArrayName="docs">
+          <div *ngFor="let doc of editRfpForm.get('docs')['controls']; let i = index">
+            <label class="col-sm-4 col-lg-4 col-form-label">Document</label>
+            <div class="col-sm-8 col-lg-8">
+              <div class="input-group">
+                <input type="file" value="" class="form-control" (change)=fileEvent($event) [formControlName]="i">
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-info" *ngIf="documentCount > 0" (click)="addMoreDocs()">Add more</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3 col-lg-3">
+          <button class="btn btn-primary btn-round" type="submit">Submit</button>
+        </div>
+        <div class="col-sm-3 col-lg-3">
+          <button class="btn btn-warning btn-round" type="button" (click)="closeModal()">Cancel</button>
+        </div>
+        <div class="col-sm-3 col-lg-3">
+          <button class="btn btn-info btn-round" type="button" (click)="clearModal()">Clear</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
