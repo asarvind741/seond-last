@@ -17,6 +17,7 @@ import { ModalBasicComponent} from './modal-basic/modal-basic.component';
 import { ModalAnimationComponent} from './modal-animation/modal-animation.component';
 import { SpinnerComponent} from './spinner/spinner.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { ProductDetailsComponent } from './product-list/product-details/product-details.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -45,6 +46,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ModalBasicComponent,
     ModalAnimationComponent,
     ProductListComponent,
+    ProductDetailsComponent,
     SpinnerComponent,
     ClickOutsideModule
   ],
@@ -57,6 +59,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TitleComponent,
     CardComponent,
     ProductListComponent,
+    ProductDetailsComponent,
     ModalBasicComponent,
     ModalAnimationComponent,
     SpinnerComponent
