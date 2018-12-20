@@ -98,6 +98,10 @@ const routes: Routes = [
         path: 'simple-page',
         loadChildren: './theme/simple-page/simple-page.module#SimplePageModule'
       },
+      {
+         path: 'search',
+         loadChildren: './theme/search-products/search.module#SearchModule'
+      },
       { path: 'setup-profile', loadChildren: './wizard/wizard.module#WizardModule' }
     ]
   },
@@ -105,10 +109,7 @@ const routes: Routes = [
     path: 'report',
     loadChildren: './theme/report/report.module#ReportModule'
   },
-  {
-    path: 'search',
-    loadChildren: './theme/search-products/search.module#SearchModule'
-  },
+ 
   {
     path: '',
     component: AuthComponent,
