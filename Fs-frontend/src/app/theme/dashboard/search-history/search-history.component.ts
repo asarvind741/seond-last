@@ -19,7 +19,6 @@ export class SearchHistoryComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.searchHistoryService.getSearchHistoryOfUser()
       .subscribe((response: HttpResponse<any>) => {
         console.log("response", response)

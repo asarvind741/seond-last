@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { SearchRoutingModule } from './search-routing.module';
 import {SharedModule} from '../../shared/shared.module';
 import { SearchComponent } from './search.component';
-import { ProductListComponent } from '../product-list/product-list/product-list.component';
 
 @NgModule({
   imports: [
@@ -12,8 +11,7 @@ import { ProductListComponent } from '../product-list/product-list/product-list.
     SearchRoutingModule
   ],
   declarations: [
-    SearchComponent,
-    ProductListComponent
+    SearchComponent
   ]
 })
 export class SearchModule { }

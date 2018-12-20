@@ -14,7 +14,6 @@ import { CommonHeadersInterceptor } from './shared/interceptors/http.interceptor
 import { TokenIterceptor } from './shared/interceptors/token.interceptor';
 import { AuthGuardService } from './services/auth-guard.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { ProductDetailsComponent } from './theme/product-list/product-details/product-details.component';
 
 
 
@@ -23,8 +22,7 @@ import { ProductDetailsComponent } from './theme/product-list/product-details/pr
     AppComponent,
     AdminComponent,
     AuthComponent,
-    BreadcrumbsComponent,
-    ProductDetailsComponent
+    BreadcrumbsComponent
   ],
   imports: [
     BrowserModule,
