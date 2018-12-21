@@ -7,9 +7,9 @@ import { environment } from '../../environments/environment';
 })
 
 export class ProductService {
-
+    userId: any;
     constructor(private httpClient: HttpClient) {
-
+        this.userId = JSON.parse(localStorage.getItem('currentUser'))._id;
     }
 
     getProducts(){
@@ -21,12 +21,12 @@ export class ProductService {
     }
 
     addProduct(product){
+        product.createdBy = this.userId;
         return this.httpClient.post(`${environment.API_URL}/product/create`, product);
     }
 
     updateProduct(id, data){
         data.id = id;
-        console.log("daaaaaaaaaaaaaa", data)
         return this.httpClient.post(`${environment.API_URL}/product/edit`, data)
     }
 
