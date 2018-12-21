@@ -16,9 +16,9 @@
       <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Select Category</label>
         <div class="col-sm-8 col-lg-8">
-          <angular2-multiselect [data]="allCategories" [(ngModel)]="selectedCategories" [settings]="settings2" (onSelect)="onItemSelectCat($event)"
-            (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
-            formControlName="category">
+          <angular2-multiselect [data]="allCategories" [(ngModel)]="selectedCategories" [settings]="settings2"
+            (onSelect)="onItemSelectCat($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+            (onDeSelectAll)="onDeSelectAll($event)" formControlName="category">
           </angular2-multiselect>
         </div>
       </div>
@@ -41,9 +41,9 @@
             </div>
 
             <div class="col-sm-8 col-lg-8">
-              <angular2-multiselect [data]="selectedCategoryFilterValues" [(ngModel)]="filterValue[i]"
-                [settings]="settings4" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"
-                (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)" formControlName="value">
+              <angular2-multiselect [data]="selectedCategoryFilterValues" [(ngModel)]="filterValue[i]" [settings]="settings4"
+                (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                (onDeSelectAll)="onDeSelectAll($event)" formControlName="value">
               </angular2-multiselect>
             </div>
           </div>
@@ -95,9 +95,9 @@
         <label class="col-sm-4 col-lg-4 col-form-label">Dimensions</label>
         <div class="col-sm-8 col-lg-8">
           <div class="input-group">
-            <label>Width</label>
+            <label>Width (in cms)</label>
             <input type="text" class="form-control" formControlName="width">
-            <label>Height</label>
+            <label>Height (in cms)</label>
             <input type="text" class="form-control" formControlName="height">
           </div>
         </div>
@@ -120,14 +120,9 @@
       <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Images</label>
         <div class="col-sm-8 col-lg-8">
-          <image-upload url="http://40.71.47.14:5000/image"
-          [max]="10"
-          [maxFileSize]=""
-          [fileTooLargeMessage]="'Image too large!'"
-          [extensions]="['jpg','jpeg', 'png','gif']"
-          (removed)="onRemoved($event)"
-          (uploadFinished)="onUploadFinished($event)"
-          (uploadStateChanged)="onUploadStateChanged($event)"></image-upload>
+          <image-upload url="http://40.71.47.14:5000/image" [max]="10" [maxFileSize]="" [fileTooLargeMessage]="'Image too large!'"
+            [extensions]="['jpg','jpeg', 'png','gif']" (removed)="onRemoved($event)" (uploadFinished)="onUploadFinished($event)"
+            (uploadStateChanged)="onUploadStateChanged($event)"></image-upload>
         </div>
       </div>
 

@@ -804,7 +804,7 @@ const MENUITEMS1 = [
             state: 'search-history',
             name: 'View Search History'
           }
-         
+
         ]
       },
       {
@@ -1477,15 +1477,16 @@ const MENUITEMS1 = [
 export class MenuItems {
   currentUser: any;
 
-  constructor(){
+  constructor() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     console.log("this current", this.currentUser)
   }
 
   getAll(): Menu[] {
-    if(this.currentUser.role === "Admin")
-    return MENUITEMS;
-    else if(this.currentUser.role === "Buyer")
-    return MENUITEMS1;
+    console.log('sttessss')
+    if (this.currentUser.role === "Admin")
+      return MENUITEMS;
+    else if (this.currentUser.role === "Buyer")
+      return MENUITEMS1;
   }
 }

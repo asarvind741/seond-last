@@ -275,6 +275,7 @@ async function sociaLoginUser(req, res) {
         }
 
         if (!user) {
+            console.log('user', user)
             let company = await Company.create({
                 name: req.body['company.name'],
                 address: req.body['company.address'],

@@ -7,7 +7,7 @@ function setRfpAutoExpire() {
         }
     }, {
         _id: 1
-    }).exec((success) => {
+    }).exec().then((success) => {
         if (success.length > 0) {
             success.forEach(ids => {
                 let setRfpExpire = Rfp.findByIdAndUpdate(ids, {
