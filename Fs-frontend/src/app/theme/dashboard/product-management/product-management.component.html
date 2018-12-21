@@ -26,20 +26,20 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="mainCategory">
+        <ngx-datatable-column name="category">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
             <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
-              Main Category
+              Category
             </span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <span>
-              {{value}}
+              {{ value.name }}
             </span>
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="subcategory">
+        <ngx-datatable-column name="price">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
             <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
               Sub Category
@@ -52,6 +52,19 @@
           </ng-template>
         </ngx-datatable-column>
 
+        <ngx-datatable-column name="regions">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
+              Regions
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span *ngFor="let element of value">
+              {{ element.name }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
         <ngx-datatable-column name="createdBy">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
             <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
@@ -60,7 +73,7 @@
           </ng-template>
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <span>
-              {{value}}
+              {{value.name}}
             </span>
           </ng-template>
         </ngx-datatable-column>
@@ -73,7 +86,7 @@
           </ng-template>
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <span>
-              {{value}}
+              {{value | date }}
             </span>
           </ng-template>
         </ngx-datatable-column>
@@ -97,7 +110,11 @@
               </button>
             </div>
             <ng-template #activate>
+<<<<<<< HEAD
               <button class="btn btn-sm btn-primary" (click)="activateUser(row)">
+=======
+              <button class="btn btn-sm btn-primary" (click)="activateProduct(row)">
+>>>>>>> c29a4dcc290e5baba7286da11b67d7123bcc5540
                 Activate
               </button>
             </ng-template>

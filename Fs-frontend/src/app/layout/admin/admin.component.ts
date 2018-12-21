@@ -263,7 +263,7 @@ export class AdminComponent implements OnInit {
             debounceTime(200),
             distinctUntilChanged(),
             map(term => {
-                this.showResult = true;
+                this.showResult = false;
                 this.itemsSearched = [];
                 console.log('term')
                 this.elasticSearchService
@@ -359,7 +359,7 @@ export class AdminComponent implements OnInit {
     }
 
     selectFromSearch(item) {
-        this.showResult = false;
+        this.showResult = true;
         console.log("item selected", item)
         this.searchItem = item._source['name'];
     }

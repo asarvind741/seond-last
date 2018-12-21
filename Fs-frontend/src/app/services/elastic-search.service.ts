@@ -50,7 +50,7 @@ export class ElasticSearchService implements OnInit {
           }
         }
       },
-      _source: ['name']
+      // _source: ['name']
     });
   }
 }
