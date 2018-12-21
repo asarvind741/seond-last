@@ -4,7 +4,6 @@
   </div>
   <div class="card-block">
     <form [formGroup]="newFeatureModuleForm" (ngSubmit)="addNewFeatureModule()">
-
       <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Feature Module Name</label>
         <div class="col-sm-8 col-lg-8">
@@ -19,7 +18,7 @@
 
       <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Select Role</label>
-        <div class="col-sm-8 col-lg-8">
+        <div class="col-sm-8 col-lg-8 margin-bottom">
           <angular2-multiselect [data]="role" [(ngModel)]="selectedRoles" [settings]="settings" (onSelect)="onItemSelect($event)"
             (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
             formControlName="role">
@@ -42,8 +41,10 @@
               </div>
             </div>
           </div>
-          <button class="btn btn-sm btn-primary waves-effect waves-light f-right" (click)="addNewFeature()" type="button"><i
-              class="fa fa-plus"></i>Add Features</button>
+          <div class="input-group">
+            <button class="btn btn-sm btn-primary waves-effect waves-light" (click)="addNewFeature()" type="button"><i
+                class="fa fa-plus"></i>Add Features</button>
+          </div>
         </div>
       </div>
 
@@ -51,7 +52,7 @@
         <label class="col-sm-4 col-lg-4 col-form-label">Status</label>
         <div class="col-sm-8 col-lg-8">
           <div class="input-group">
-            <select class="input-group" name="status" formControlName="status">
+            <select class="input-group form-control" name="status" formControlName="status">
               <option [ngValue]="null" disabled>Select One</option>
               <option *ngFor="let stat of statuss" [ngValue]="stat">
                 {{ stat }}
@@ -63,13 +64,13 @@
 
       <div class="row">
         <div class="col-sm-3 col-lg-3">
-          <button class="btn btn-primary btn-round" type="submit">Done</button>
+          <button class="btn btn-primary" type="submit">Done</button>
         </div>
         <div class="col-sm-3 col-lg-3">
-          <button class="btn btn-warning btn-round" type="button" (click)="closeModal()">Cancel</button>
+          <button class="btn btn-warning" type="button" (click)="closeModal()">Cancel</button>
         </div>
         <div class="col-sm-3 col-lg-3">
-          <button class="btn btn-info btn-round" type="button" (click)="clearModal()">Clear</button>
+          <button class="btn btn-info" type="button" (click)="clearModal()">Clear</button>
         </div>
       </div>
     </form>
