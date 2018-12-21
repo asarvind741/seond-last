@@ -265,16 +265,31 @@ async function getDataFromElastic(data) {
                 query: {
                     match: {
                         name: data._source.name
-
                     }
                 },
+
                 aggs: {
                     filters: {
-                        terms: {
-                            field: 'filters.name'
+                        nested: {
+                            path: 'filters'
+                        },
+                        aggs: {
+                            key_name: {
+                                terms: {
+                                    field: 'filters.name'
+                                },
+                                aggs: {
+                                    key_value: {
+                                        terms: {
+                                            field: 'filters.value'
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
+
             }
 
         });
@@ -362,42 +377,18 @@ async function getDataFromElastic(data) {
 
 // });
 
-// getDataFromElastic({
-//     index: 'products',
-//     _type: 'product',
-//     _id: '5c0fb0277e18df8e27c26f93',
-//     _version: 7,
-//     _score: 1,
-//     _source: {
-//         name: 'Apple 6',
-//         description: 'dsds',
-//         price: 345,
+getDataFromElastic({
 
-//         category: {
-//             name: 'Shirt',
-//             id: '5c0fadfa7e18df8e27c26f77'
-//         },
-//         width: '34',
-//         height: '5',
-//         filters: [{
-//                 name: 'Color',
-//                 value: [
-//                     'Red'
-//                 ],
-//                 _id: '5c0fb0277e18df8e27c26f98'
-//             },
-//             {
-//                 name: 'Size',
-//                 value: [
-//                     'XL',
-//                     'L'
-//                 ],
-//                 _id: '5c0fb0277e18df8e27c26f97'
-//             }
-//         ]
+    index: 'products',
+    _type: 'product',
+    _id: '5c1cb28fa137432c360e446c',
+    _version: 1,
+    _score: null,
+    _source: {
+        name: 'woodland shoes'
+    }
 
-//     }
-// });
+});
 
 
 module.exports = {

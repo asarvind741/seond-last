@@ -4,22 +4,35 @@ import esClient from '../functions/elastic-search-connection';
 const Schema = mongoose.Schema;
 const statusTypes = ['Active', 'Inactive'];
 
+const filters = {
+  name: String,
+  value: [String],
+  id: Schema.Types.ObjectId
+};
 const Product = new Schema({
   name: {
     type: String,
     required: true,
+    es_indexed: true
   },
   // title: {
   //   type: String,
   //   required: true,
   // },
-  description: String,
+  description: {
+    type: String,
+    es_indexed: true
+
+  },
   // gender: {
   //   type: String,
   //   enum: ['Men', 'Women', 'Boys', 'Girls', 'Kids'],
   // },
   // material: String,
-  images: [String],
+  images: [{
+    type: String,
+    es_indexed: true
+  }],
   price: Number,
   // seller: {
   //   type: Schema.Types.ObjectId,
@@ -63,11 +76,12 @@ const Product = new Schema({
     es_indexed: false
 
   },
-  filters: [{
-    name: String,
-    value: [String],
-    id: Schema.Types.ObjectId
-  }],
+  filters: {
+    type: filters,
+    es_indexed: true,
+    es_type: 'nested',
+    es_include_in_parent: true
+  },
   // color: String,
   // quantity: {
   //   type: Number,
