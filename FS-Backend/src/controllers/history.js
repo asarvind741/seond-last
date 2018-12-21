@@ -91,6 +91,31 @@ async function addSearchKeywords(req, res) {
 
 }
 
+async function deleteHistoryOfDay(req, res) {
+    try {
+        let removeOldUrls = await History.update({
+            user: req.body.id
+
+        }, {
+            $pull: {
+                visitedUrls: {
+                    visitedTime: {
+                        $lte: new Date(req.body.date)
+                    }
+                }
+            }
+        }, {
+            multi: true
+        });
+        console.log('remove old', removeOldUrls);
+        sendResponse(res, 200, 'Successful.', removeOldUrls);
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected Error.', e);
+    }
+
+}
+
 
 async function addViewedProducts(req, res) {
     try {
@@ -156,5 +181,6 @@ module.exports = {
     addSearchKeywords,
     addViewedProducts,
     getUserSearchResults,
-    clearHistory
+    clearHistory,
+    deleteHistoryOfDay
 };
