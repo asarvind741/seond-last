@@ -1,30 +1,31 @@
-.category-container {width:100%;}
-.category-container {width:100%;border-bottom:1px solid #e5e5e5;margin:132px auto 0 auto;max-width:1141px;padding:60px 0 23px;}
+
+.category-container {width:100%;border-bottom:1px solid #e5e5e5;}
 .category-container  label{font-size:16px;color:#222222;float:left;font-weight:500;width:16%;}
 .category-container ul {width:84%;overflow:hidden;}
+.category-container .shot-by ul {width: 100%;}
 .category-container ul li a{display:block;float:left;font-size:16px;color:#222222;margin:0 15px;font-weight:500;}
 .category-container ul li a:hover {color:#853489;font-weight:500;}
 .category-container ul li span {font-size:16px;color:#222222;font-weight:500;margin:0 10px 0 0;}
-.category-container ul li select {font-size:16px;color:#222222;font-weight:500;border:none;}
+.category-container ul li select {font-size:16px;color:#222222;font-weight:500;border:none;background: none;}
 .filter-container {width:100%;margin:0 auto;max-width:1141px;padding:32px 0 23px;}
 .filter-container  label{font-size:16px;color:#222222;float:left;font-weight:500;width:16%;}
 .filter-container ul {width:84%;overflow:hidden;}
-.filter-container ul li select {font-size:16px;color:#222222;font-weight:500;border:none;}
+.filter-container ul li select {font-size:16px;color:#222222;font-weight:500;border:none; background: none;}
 .filter-container ul li {display:block;float:left;font-size:16px;color:#222222;margin: 0 4px;font-weight:500;}
 .filter-container ul li a{font-size:16px;color:#222222;}
-.price-section {background-color:#f9f9f9;width:100%;}
+.price-section {width:100%;}
 .price-container {width:100%;margin:0 auto;max-width:1141px;padding:27px 0;}
 .price-container p {font-size:16px;color:#222222;}
 .price-container label {font-size:16px;color:#222222;font-weight:400;margin:0 15px 0 0;}
-.price-container .result {width:46%;float:left;}
-.price-container .order {width:54%;float:right;}
+.price-container .result {width:35%;float:left;}
+.price-container .order {width:63%;float:right;}
 .price-container .order ul{float: right;}
 .order ul li img {margin: 0 8px 0 0;}
 .order ul li input {height:28px;width:54px;padding:5px;color:#000;}
-.order ul li select {font-size:16px;color:#222222;height:26px;width:97px;}
+.order ul li select {font-size:16px;color:#222222;height:26px;width:97px;background: none;}
 .price-container .order ul li {float:left;margin: 0 12px;}
 .price-container .order ul li:last-child {margin-right: 0;}
-.product-section {width:100%;background-color:#f9f9f9;padding:0 0 50px 0;}
+.product-section {width:100%;padding:0 0 50px 0;}
 .product-section .product-container {width:100%;margin:0 auto;max-width:1141px;padding-top: 25px;}
 .product-container .product-section-row {background-color: #fff;box-shadow: 0 0px 12px 1px #dcdcdc87;margin: 0 12px 30px 12px;border-radius: 5px;border: 3px solid transparent;display: inline-block; vertical-align: top;width: 23%; }
 .product-image img { width: 100%;}

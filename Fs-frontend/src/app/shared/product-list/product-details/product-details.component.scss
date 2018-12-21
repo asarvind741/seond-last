@@ -1,0 +1,141 @@
+
+.back-nav {width:100%;border-bottom:1px solid #ccc;padding: 30px 0px 35px;}
+.back-nav a{float:left;font-size:16px;color:#222222;}
+.back-nav span {float:right;font-size:16px;color:#000000;}
+.product-detail {width:100%;padding:20px 0;position:relative;}
+.product-detail .bc-icon {position:absolute;top:20px;right:10px;}
+.back-nav span img {margin:0 10px 0 0;max-width:100%;}
+.product-detail .product-view {width:100%;margin: 0 0 0 40px}
+.product-detail .product-view li {display:inline-block;width:18%;}
+.product-detail span {text-align:center;display:block;padding:20px 0;}
+.product-image img {display:block;margin:0 auto;max-width: 100%;}
+
+.about-product {width:100%;border-bottom: 1px solid #e9e9e9;padding:40px 0;}
+.about-product h5 {font-size:20px;color:#000000;font-weight:500;}
+.about-product p {font-size:15px;color:#000000;font-weight:400;}
+.about-product h6 {font-size:20px;color:#000000;font-weight:400;}
+.about-product h6 font {font-weight:500;}
+
+.product-custom {width:100%;padding:44px 0px;border-bottom: 1px solid #e9e9e9;}
+.product-custom .product-size {width:100%;margin:0 0 20px 0;float: left;}
+.product-custom .product-size label {font-size:15px;color:#000000;float:left;width:30%;margin:0;}
+.product-custom .product-size ul {width:70%;float:right;}
+.product-custom .product-size ul li{display: inline-block;padding: 0;border: 1px solid #e9e9e9;
+margin: 0 10px 0 0;height: 22px;width: 22px;line-height: 20px;text-align: center;color: #000;
+font-size: 13px;font-weight: 500;}
+.product-custom .product-color {width:100%;clear: both;}
+.product-custom .product-color label {font-size:15px;color:#000000;float:left;width:30%;margin:0;}
+.product-custom .product-color ul {width:41%;float:left;}
+.product-custom .product-color ul li{display: inline-block;padding: 0;border: 1px solid #e9e9e9;
+margin: 0 10px 0 0;height: 22px;width: 22px;line-height: 20px;text-align: center;color: #000;
+font-size: 13px;font-weight: 500;}
+.product-color ul {float: left;}
+.product-color span{font-size:12px;color:#000;width:29%;float:right;}
+
+.product-custom .customization {width:100%;clear:both;margin:40px 0 0 0;}
+.product-custom .customization label {width:30%;font-size:15px;color:#000000;float:left;}
+.product-custom .customization ul {width:70%;overflow:hidden;}
+.product-custom .customization ul li {font-size:12px;color:#000000;}
+.product-custom .customization ul li a {font-size:12px;color:#d62886;border-bottom:1px solid #d62886;cursor:pointer;}
+
+
+.payment {width:100%;padding:40px 0 0 0;}
+.payment label {font-size:16px;color:#000;width:16%;float:left;}
+.payment ul {width:55%;float:left;}
+.payment ul li {display:inline-block;margin:0 5px 0;}
+.payment a{font-size:12px;color:#d62886;border-bottom:1px solid #d62886;cursor:pointer;width:10%;}
+.payment button {display:block;clear:both;margin:30px 0;font-size:15px;color:#000;height:42px;width:200px;background-color:#fff;border:1px solid #bebebe;border-radius:50px;}
+
+.product-container {width:100%;background-color:#f9f9f9;padding:36px 0;}
+.product-container h3 {font-size:18px;color:#000;margin:0 0 20px 0;}
+.product-container .section {width:100%;background-color:#fff;position:relative;padding:020px;}
+.product-container .section span {position:absolute;right:10px;top:10px;}
+.section .product-image {max-width:100%;} 
+.section .product-price {width:100%;} 
+.section .product-price p {font-size:16px;color:#000;font-weight:500;padding:20px 0;}
+.section .product-price  ul li {font-size:13px;color:#000;font-weight:400;}
+.product-container .product-contact {width:100%;border-top:1px solid #e9e9e9;padding:20px 0;overflow: hidden;padding:20px 0;background-color:#fff;}
+.product-container .product-contact {width:100%;border-top:1px solid #e9e9e9;padding:20px 0;overflow: hidden;padding:20px 0;}
+.product-container .product-contact ul li {font-size:14px;color:#000;font-weight:500;float:left;}
+.product-container .product-contact ul li:first-child {width:68%;margin:1px 0 0 5px}
+.product-container .product-contact ul li:first-child span{padding:0 0 0 10px;}
+.product-container .product-contact ul li:nth-child(2) {width:28%;}
+.product-container .product-contact ul li:nth-child(2) img {display:block;;display:block;margin:0 0 0 50px;}
+.product-container .product-contact ul li:nth-child(2) span{display:block;text-align:right;width:100%}
+.about-product-container {
+    width: 100%;
+    float: left;
+    border-left: 1px solid #ccc;
+    padding: 0 0px 0 25px;
+}
+
+
+@media all and (min-width: 768px) and (max-width: 1023px) {
+.product-detail .product-view {margin:0;}
+.product-view img {max-width:100%;}
+.about-product h5 {font-size:15px;}
+.about-product p {font-size:13px;}
+.about-product h6 {font-size:15px;}
+.about-product {padding:15px 0;}
+.product-custom .customization label {font-size:13px;}
+.product-custom .product-size label {font-size:14px;}
+.product-custom .product-color label {font-size:14px;}
+.payment ul {width:62%;margin:0 0 0 10px;}
+.product-custom .product-color ul li{margin:0;}
+.product-custom .product-color ul {width:46%;}
+.product-custom .product-size label {font-size: 14px;width: 20%;float: left;}
+.product-custom .product-size ul{width: 80%;float: left;}
+.product-custom .product-color label {font-size: 14px;width: 20%;float: left;}
+.product-custom .product-color ul {width:50%;}
+.product-color span {font-size: 12px; color: #000;width: 29%;float: right;}
+.product-custom .customization label {width:100%;}
+.product-custom .customization ul {width:100%;}
+.payment {padding:20px 0 0 0;}
+.payment label {width:100%;}
+.payment ul {width:80%;margin:0;}
+.payment ul li {margin:0px 5px 0 0;}
+.payment a {width:20%;margin: 10px 0 0 0;}
+.payment button {margin: 30px 0;font-size: 12px;color: #000;height: 35px;width: 183px;}
+.product-container .section {padding:5px;}
+.section .product-price p {font-size:13px;}
+.col-sm-6 {margin:0 0 20px;}
+
+
+
+}
+
+@media all and (min-width: 640px) and (max-width: 767px) {
+.payment ul {width:45%;}
+}	
+
+
+
+@media all and (min-width: 320px) and (max-width: 767px) {
+.product-detail .bc-icon {top:25px;}
+.product-detail .product-view {margin:0;}
+.product-view li img {max-width:100%;}
+.about-product-container {border:none;padding:0;}
+.about-product {padding:10px 0;}
+.about-product h5 {font-size:14px;line-height:20px;}
+.about-product p {font-size:13px;}
+.about-product h6 {font-size:12px;}
+.product-custom .product-size label {width:20%;}
+.product-custom .product-size ul {width:80%;float:left;}
+.product-custom .product-size ul li {margin:0 7px 0 0;}
+.product-custom .product-color label {width:20%;}
+.product-custom .product-color ul {width:80%;}
+.product-color span {font-size: 12px;color: #000;width: 100%;float: left;padding:5px 0 0 20%;}
+.product-custom .customization {padding:20px 0 0 0;}
+.product-custom .customization label {width:100%;}
+.product-custom .customization ul {width:100%;}
+.payment label {width:100%; text-align:center; padding:0 0 10px 0;}
+.payment ul {width:80%;}
+.payment ul li {margin:0;}
+.payment button {font-size: 12px;color: #000;height: 35px;width: 162px;}
+.col-xs-12 {margin:0 0 20px 0;}
+.payment {width: 100%;padding: 40px 0 0 0;max-width: 300px;margin: 0 auto 0;}
+.payment button {margin:15px auto 0;}
+.product-custom .product-size {margin:0 0 15px 0;}
+.product-container .product-contact ul li:nth-child(2) img {margin:0 auto 0;}
+.product-container .product-contact ul li:nth-child(2) span {text-align:center;}
+}
