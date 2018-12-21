@@ -11,9 +11,9 @@ import swal from 'sweetalert2';
   styleUrls: ['./two-factor-authentication.component.scss']
 })
 export class TwoFactorAuthenticationComponent implements OnInit {
-   otp: Number;
-   user: Object;
-   userSubscription: Subscription;
+  otp: Number;
+  user: Object;
+  userSubscription: Subscription;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -26,23 +26,23 @@ export class TwoFactorAuthenticationComponent implements OnInit {
     })
   }
 
-  verifyUser(){
+  verifyUser() {
     this.authService.authenticateUser(this.otp, this.user)
-    .subscribe((response: HttpResponse<any>) => {
-      if(response.status === 206){
-        this.authService.saveUser(response['data']);
-        this.router.navigate(['../dashboard/default'], {relativeTo: this.activatedRoute});
-      }
-      else if(response.status === 200){
-        this.authService.saveUser(response['data']);
-        this.router.navigate(['../dashboard/default'], { relativeTo: this.activatedRoute})
-      }
-      else {
+      .subscribe((response: HttpResponse<any>) => {
+        if (response.status === 206) {
+          this.authService.saveUser(response['data']);
+          this.router.navigate(['../dashboard/default'], { relativeTo: this.activatedRoute });
+        }
+        else if (response.status === 200) {
+          this.authService.saveUser(response['data']);
+          this.router.navigate(['../dashboard/default'], { relativeTo: this.activatedRoute })
+        }
+        else {
+          this.openUnscuccessSwal();
+        }
+      }, (error: HttpErrorResponse) => {
         this.openUnscuccessSwal();
-      }
-    }, (error: HttpErrorResponse) => {
-      this.openUnscuccessSwal();
-    })
+      })
   }
 
   openUnscuccessSwal() {

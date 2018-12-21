@@ -344,60 +344,60 @@ async function getDataFromElastic(data) {
 
     }
 }
-getDataFromElastic({
+// getDataFromElastic({
 
-    index: 'categorys',
-    _type: 'category',
-    _id: '5c0e3c1e255323425122e2a5',
-    _version: 31,
-    _score: 1,
-    _source: {
-        name: 'Casual',
-        description: 'Casual category',
-        createdBy: '5c012fde9baf385b940f7daf',
-        status: 'Active',
-        updatedAt: '2018-12-10T10:12:46.062Z',
-        createdAt: '2018-12-10T10:12:46.062Z'
-    }
+//     index: 'categorys',
+//     _type: 'category',
+//     _id: '5c0e3c1e255323425122e2a5',
+//     _version: 31,
+//     _score: 1,
+//     _source: {
+//         name: 'Casual',
+//         description: 'Casual category',
+//         createdBy: '5c012fde9baf385b940f7daf',
+//         status: 'Active',
+//         updatedAt: '2018-12-10T10:12:46.062Z',
+//         createdAt: '2018-12-10T10:12:46.062Z'
+//     }
 
-});
+// });
 
-getDataFromElastic({
-    index: 'products',
-    _type: 'product',
-    _id: '5c0fb0277e18df8e27c26f93',
-    _version: 7,
-    _score: 1,
-    _source: {
-        name: 'Apple 6',
-        description: 'dsds',
-        price: 345,
+// getDataFromElastic({
+//     index: 'products',
+//     _type: 'product',
+//     _id: '5c0fb0277e18df8e27c26f93',
+//     _version: 7,
+//     _score: 1,
+//     _source: {
+//         name: 'Apple 6',
+//         description: 'dsds',
+//         price: 345,
 
-        category: {
-            name: 'Shirt',
-            id: '5c0fadfa7e18df8e27c26f77'
-        },
-        width: '34',
-        height: '5',
-        filters: [{
-                name: 'Color',
-                value: [
-                    'Red'
-                ],
-                _id: '5c0fb0277e18df8e27c26f98'
-            },
-            {
-                name: 'Size',
-                value: [
-                    'XL',
-                    'L'
-                ],
-                _id: '5c0fb0277e18df8e27c26f97'
-            }
-        ]
+//         category: {
+//             name: 'Shirt',
+//             id: '5c0fadfa7e18df8e27c26f77'
+//         },
+//         width: '34',
+//         height: '5',
+//         filters: [{
+//                 name: 'Color',
+//                 value: [
+//                     'Red'
+//                 ],
+//                 _id: '5c0fb0277e18df8e27c26f98'
+//             },
+//             {
+//                 name: 'Size',
+//                 value: [
+//                     'XL',
+//                     'L'
+//                 ],
+//                 _id: '5c0fb0277e18df8e27c26f97'
+//             }
+//         ]
 
-    }
-});
+//     }
+// });
 
 
 module.exports = {

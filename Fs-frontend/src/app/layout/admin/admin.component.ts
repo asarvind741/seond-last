@@ -13,6 +13,7 @@ import { AuthenticationService } from '../../services/auth.service';
 import { ElasticSearchService } from '../../services/elastic-search.service';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { SocketService } from 'src/app/services/socket.service';
 
 
 @Component({
@@ -147,7 +148,8 @@ export class AdminComponent implements OnInit {
         public menuItems: MenuItems,
         private authService: AuthenticationService,
         private router: Router,
-        private elasticSearchService: ElasticSearchService
+        private elasticSearchService: ElasticSearchService,
+        private socketService: SocketService
     ) {
         this.navType = 'st2';
         this.themeLayout = 'vertical';
@@ -216,6 +218,9 @@ export class AdminComponent implements OnInit {
     ngOnInit() {
         this.setBackgroundPattern('pattern1');
         this.elasticSearchService.isAvailable();
+        this.socketService.onNewNotification().subscribe(msg => {
+            console.log('got a msg: ' + msg);
+        });
         /*document.querySelector('body').classList.remove('dark');*/
     }
 
@@ -259,8 +264,8 @@ export class AdminComponent implements OnInit {
             distinctUntilChanged(),
             map(term => {
                 this.showResult = true;
-              this.itemsSearched = [];
-              console.log('term')
+                this.itemsSearched = [];
+                console.log('term')
                 this.elasticSearchService
                     .serchCategories(term)
                     .then(response => {
@@ -353,7 +358,7 @@ export class AdminComponent implements OnInit {
         }
     }
 
-    selectFromSearch(item){
+    selectFromSearch(item) {
         this.showResult = false;
         console.log("item selected", item)
         this.searchItem = item._source['name'];
@@ -371,7 +376,7 @@ export class AdminComponent implements OnInit {
             this.innerChatSlideInOut === 'out' ? 'in' : 'out';
     }
 
- 
+
 
 
     toggleOpened() {
