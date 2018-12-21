@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import {
     animate,
     AUTO_STYLE,
@@ -86,7 +86,7 @@ import { SocketService } from 'src/app/services/socket.service';
 })
 export class AdminComponent implements OnInit {
     searchItem: String;
-    showResult: Boolean = false;
+    showResult: Boolean = true;
     itemsSearched: Array<any> = [];
     lastKeypress = 0;
     categories: Array<String> = ['first', 'second', 'third', 'fourth'];
@@ -149,7 +149,8 @@ export class AdminComponent implements OnInit {
         private authService: AuthenticationService,
         private router: Router,
         private elasticSearchService: ElasticSearchService,
-        private socketService: SocketService
+        private socketService: SocketService,
+        private activatedRoute: ActivatedRoute
     ) {
         this.navType = 'st2';
         this.themeLayout = 'vertical';
@@ -219,7 +220,6 @@ export class AdminComponent implements OnInit {
         this.setBackgroundPattern('pattern1');
         this.elasticSearchService.isAvailable();
         this.socketService.onNewNotification().subscribe(msg => {
-            console.log('got a msg: ' + msg);
         });
         /*document.querySelector('body').classList.remove('dark');*/
     }
@@ -254,7 +254,7 @@ export class AdminComponent implements OnInit {
 
     logoutUser() {
         this.authService.logoutUser();
-        this.router.navigate(['/']);
+        this.router.navigate(['./search'], );
     }
 
 
@@ -265,13 +265,10 @@ export class AdminComponent implements OnInit {
             map(term => {
                 this.showResult = false;
                 this.itemsSearched = [];
-                console.log('term')
                 this.elasticSearchService
                     .serchCategories(term)
                     .then(response => {
-                        console.log(response);
                         response.hits.hits.forEach(hit => {
-                            console.log(hit._source['name']);
                             // if (this.itemsSearched.indexOf(hit._source['name']) < 0)
                             this.itemsSearched.push(hit);
                         });
@@ -280,7 +277,6 @@ export class AdminComponent implements OnInit {
         )
 
     onSeachButtonClicked() {
-        console.log("test")
     }
 
     setMenuAttributes(windowWidth) {
@@ -360,8 +356,9 @@ export class AdminComponent implements OnInit {
 
     selectFromSearch(item) {
         this.showResult = true;
-        console.log("item selected", item)
         this.searchItem = item._source['name'];
+        let queryParams = { 'indexArea': item['_index'], 'type': item['_type'], 'search_text': this.searchItem};
+        this.router.navigate(['./search'], { queryParams: queryParams, relativeTo: this.activatedRoute} )
     }
 
     toggleChat() {

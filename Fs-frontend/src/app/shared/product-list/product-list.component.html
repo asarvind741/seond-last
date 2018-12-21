@@ -89,10 +89,10 @@
 
 <div class="product-section">
   <div class="product-container">
-    <div class="product-section-row" (click)="openProductDetails('123')">
+    <div class="product-section-row" (click)="openProductDetails('123')" *ngFor="let product of productList">
       <div class="row-top">
         <div class="product-image">
-          <img src="../../../assets/images/products/black-tshirt.png" />
+          <img src = {{ product._source.images[0] }} />
         </div>
         <div class="product-price">
           <p>High Quality China Manufacturing Custom Fabric Black Owned</p>

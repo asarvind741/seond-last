@@ -13,7 +13,7 @@ export class ElasticSearchService implements OnInit {
       this._connect();
     }
   }
-  ngOnInit() {}
+  ngOnInit() { }
 
   private _connect() {
     this.client = new Client({
@@ -51,6 +51,40 @@ export class ElasticSearchService implements OnInit {
         }
       },
       // _source: ['name']
+    });
+  }
+
+  searchProductsFromElastiIndex(index, searchTerm): any {
+    return this.client.search({
+      index: index,
+      body: {
+        query: {
+          match: {
+            name: searchTerm
+          }
+        },
+        aggs: {
+          filters: {
+            nested: {
+              path: 'filters'
+            },
+            aggs: {
+              key_name: {
+                terms: {
+                  field: 'filters.name'
+                },
+                aggs: {
+                  key_value: {
+                    terms: {
+                      field: 'filters.value'
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     });
   }
 }
