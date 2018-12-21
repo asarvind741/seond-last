@@ -45,11 +45,18 @@ export class SearchHistoryComponent implements OnInit {
     }).catch(swal.noop);
   }
 
-  searchFunction(event){
+  searchFunction(event) {
     this.searchTerm = event.target.value;
     console.log(this.searchTerm);
+    this.visitHistory.visitedUrls.filter((urlObj) =>  { return urlObj.url.indexOf(this.searchTerm) >= 0 })
   }
 
-  searchFromInput(){
+  searchFromInput() {
+    this.visitHistory.visitedUrls.filter((urlObj) => {
+      if (urlObj.url.indexOf(this.searchTerm)) {
+        console.log("true");
+        return true;
+      }
+    })
   }
 }

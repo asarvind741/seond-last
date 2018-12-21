@@ -7,7 +7,7 @@
     <div class="search-history-head-right">
       <a href="">History</a>
       <div class="search-form">
-        <input type="text" [(ngModel)] = "searchTerm" (change) = "searchFunction($event)">
+        <input type="text" [(ngModel)] = "searchTerm" (keyup) = "searchFunction($event)">
         <button (click) = "searchFromInput()">Search history</button>
       </div>
     </div>
