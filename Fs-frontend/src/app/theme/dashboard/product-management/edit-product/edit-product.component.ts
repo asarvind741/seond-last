@@ -132,6 +132,8 @@ export class EditProductComponent implements OnInit {
     let price = this.currentProduct.price ? parseInt(this.currentProduct.price) : '';
     let regions = this.currentProduct.regions ? this.currentProduct.regions : '';
     let category = this.currentProduct.category ? this.currentProduct.category : '';
+    let minOrder = this.currentProduct.minOrder ? this.currentProduct.minOrder: '';
+    let companyName = this.currentProduct.companyName ? this.currentProduct.companyName: '';
 
     this.allCategoryFilters = [];
     this.filterService.getSelectedCategoryFilters(category.id)
@@ -222,6 +224,8 @@ export class EditProductComponent implements OnInit {
       'filters': filters,
       'modules': new FormControl(modules),
       'price': new FormControl(price),
+      'minOrder': new FormControl(minOrder),
+      'companyName': new FormControl(companyName),
       'description': new FormControl(description),
       'regions': new FormControl(regions),
       'status': new FormControl(status),

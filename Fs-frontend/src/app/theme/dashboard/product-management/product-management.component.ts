@@ -206,7 +206,7 @@ export class ProductManagementComponent implements OnInit {
     });
   }
 
-  deleteUser(user) {
+  deleteProduct(product) {
     swal({
       title: 'Are you sure to delete product?',
       text: 'You not be able to revert this!',
@@ -220,7 +220,7 @@ export class ProductManagementComponent implements OnInit {
       cancelButtonClass: 'btn btn-danger mr-sm'
     }).then((result) => {
       if (result.value) {
-        this.productService.deleteProduct(user._id).subscribe((response: HttpResponse<any>) => {
+        this.productService.deleteProduct(product._id).subscribe((response: HttpResponse<any>) => {
           if (response.status === 200) {
             this.getProducts();
             swal(

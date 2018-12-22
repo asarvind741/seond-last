@@ -5,10 +5,19 @@
   <div class="card-block">
     <form [formGroup]="newProductForm" (ngSubmit)="addNewProduct()">
       <div class="row">
-        <label class="col-sm-4 col-lg-4 col-form-label">Name</label>
+        <label class="col-sm-4 col-lg-4 col-form-label">Product Name</label>
         <div class="col-sm-8 col-lg-8">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Enter product name" formControlName="name">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Comany Name</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Enter company name" formControlName="companyName">
           </div>
         </div>
       </div>
@@ -56,6 +65,17 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Min. Order</label>
+        <div class="col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Enter minimum order" formControlName="minOrder">
+          </div>
+        </div>
+      </div>
+
+
       <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Description</label>
         <div class="col-sm-8 col-lg-8">

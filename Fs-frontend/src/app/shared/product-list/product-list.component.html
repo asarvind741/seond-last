@@ -92,10 +92,10 @@
     <div class="product-section-row" (click)="openProductDetails('123')" *ngFor="let product of productList">
       <div class="row-top">
         <div class="product-image">
-          <img src = {{ product._source.images[0] }} />
+          <img [src] =  "product._source.images[0] | sanatize " />
         </div>
         <div class="product-price">
-          <p>High Quality China Manufacturing Custom Fabric Black Owned</p>
+          <p>{{product.name}}</p>
           <ul>
             <li>SynapseIndia</li>
             <li>US $9.00-$15.00 / Piece</li>
@@ -110,153 +110,7 @@
         </ul>
       </div>
     </div>
-    <div class="product-section-row">
-      <div class="row-top">
-        <div class="product-image">
-          <img src="../../../assets/images/products/duaghter-tshirt.png" />
-        </div>
-        <div class="product-price">
-          <p>Custom High Quality Cotton Men's </p>
-          <ul>
-            <li>ABC Company</li>
-            <li>US $4.50-$7.60 / Piece</li>
-            <li>200 Pieces (Min. Order)</li>
-          </ul>
-        </div>
-      </div>
-      <div class="product-contact">
-        <ul>
-          <li><img src="../../../assets/images/products/contact.png" /><span>Contact Supplier</span></li>
-          <li><img src="../../../assets/images/products/flag2.png" /><span>1500 km</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="product-section-row">
-      <div class="row-top">
-        <div class="product-image">
-          <img src="../../../assets/images/products/blue-tshirt.png" />
-        </div>
-        <div class="product-price">
-          <p>Wholesale clothes custom blank cheap solid color mens t shirt</p>
-          <ul>
-            <li>DEF Company</li>
-            <li>US $9.00-$15.00 / Piece</li>
-            <li>20 Pieces (Min. Order))</li>
-          </ul>
-        </div>
-      </div>
-      <div class="product-contact">
-        <ul>
-          <li><img src="../../../assets/images/products/contact.png" /><span>Contact Supplier</span></li>
-          <li><img src="../../../assets/images/products/flag3.png" /><span>1500 km</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="product-section-row">
-      <div class="row-top">
-        <div class="product-image">
-          <img src="../../../assets/images/products/brown-tshirt.png" />
-        </div>
-        <div class="product-price">
-          <p>Wholesale clothes custom blank cheap solid color mens t shirt</p>
-          <ul>
-            <li>ABC Company</li>
-            <li>US $4.50-$7.60 / Piece</li>
-            <li>200 Pieces (Min. Order)</li>
-          </ul>
-        </div>
-      </div>
-      <div class="product-contact">
-        <ul>
-          <li><img src="../../../assets/images/products/contact.png" /><span>Contact Supplier</span></li>
-          <li><img src="../../../assets/images/products/flag4.png" /><span>1500 km</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="product-section-row">
-      <div class="row-top">
-        <div class="product-image">
-          <img src="../../../assets/images/products/black-tshirt.png" />
-        </div>
-        <div class="product-price">
-          <p>High Quality China Manufacturing Custom Fabric Black Owned</p>
-          <ul>
-            <li>SynapseIndia</li>
-            <li>US $9.00-$15.00 / Piece</li>
-            <li>20 Pieces (Min. Order)</li>
-          </ul>
-        </div>
-      </div>
-      <div class="product-contact">
-        <ul>
-          <li><img src="../../../assets/images/products/contact.png" /><span>Contact Supplier</span></li>
-          <li><img src="../../../assets/images/products/india-flag.png" /><span>1500 km</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="product-section-row">
-      <div class="row-top">
-        <div class="product-image">
-          <img src="../../../assets/images/products/duaghter-tshirt.png" />
-        </div>
-        <div class="product-price">
-          <p>Custom High Quality Cotton Men's </p>
-          <ul>
-            <li>ABC Company</li>
-            <li>US $4.50-$7.60 / Piece</li>
-            <li>200 Pieces (Min. Order)</li>
-          </ul>
-        </div>
-      </div>
-      <div class="product-contact">
-        <ul>
-          <li><img src="../../../assets/images/products/contact.png" /><span>Contact Supplier</span></li>
-          <li><img src="../../../assets/images/products/flag2.png" /><span>1500 km</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="product-section-row">
-      <div class="row-top">
-        <div class="product-image">
-          <img src="../../../assets/images/products/blue-tshirt.png" />
-        </div>
-        <div class="product-price">
-          <p>Wholesale clothes custom blank cheap solid color mens t shirt</p>
-          <ul>
-            <li>DEF Company</li>
-            <li>US $9.00-$15.00 / Piece</li>
-            <li>20 Pieces (Min. Order))</li>
-          </ul>
-        </div>
-      </div>
-      <div class="product-contact">
-        <ul>
-          <li><img src="../../../assets/images/products/contact.png" /><span>Contact Supplier</span></li>
-          <li><img src="../../../assets/images/products/flag3.png" /><span>1500 km</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="product-section-row">
-      <div class="row-top">
-        <div class="product-image">
-          <img src="../../../assets/images/products/brown-tshirt.png" />
-        </div>
-        <div class="product-price">
-          <p>Wholesale clothes custom blank cheap solid color mens t shirt</p>
-          <ul>
-            <li>ABC Company</li>
-            <li>US $4.50-$7.60 / Piece</li>
-            <li>200 Pieces (Min. Order)</li>
-          </ul>
-        </div>
-      </div>
-      <div class="product-contact">
-        <ul>
-          <li><img src="../../../assets/images/products/contact.png" /><span>Contact Supplier</span></li>
-          <li><img src="../../../assets/images/products/flag4.png" /><span>1500 km</span></li>
-        </ul>
-      </div>
-    </div>
+   
   </div>
 </div>
 

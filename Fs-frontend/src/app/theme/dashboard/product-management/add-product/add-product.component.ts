@@ -129,6 +129,8 @@ export class AddProductComponent implements OnInit {
       'price': new FormControl(null),
       'description': new FormControl(null),
       'regions': new FormControl([]),
+      'minOrder': new FormControl(null),
+      'companyName': new FormControl(null),
       'status': new FormControl(null),
       'width': new FormControl(null),
       'height': new FormControl(null),

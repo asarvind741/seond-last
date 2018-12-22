@@ -27,11 +27,10 @@ export class SearchComponent implements OnInit {
       .subscribe((params: Params) => {
         this.index = params['indexArea'];
         this.serarchTerm = params['search_text']
-        console.log("test", this.serarchTerm, "test", this.serarchTerm);
         this.elastiService.searchProductsFromElastiIndex(this.index, this.serarchTerm)
         .then((response: any) => {
          this.productList = response.hits.hits;
-         console.log("this product list", this.productList)
+         console.log("productssssssssss", this.productList)
         })
       })
   }

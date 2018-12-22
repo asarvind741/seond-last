@@ -18,6 +18,7 @@ import { ModalAnimationComponent} from './modal-animation/modal-animation.compon
 import { SpinnerComponent} from './spinner/spinner.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailsComponent } from './product-list/product-details/product-details.component';
+import { SanatizerPipe } from './pipes/dom-sanitizor.pipe';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -43,6 +44,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PerfectScrollbarModule,
     TitleComponent,
     CardComponent,
+    SanatizerPipe,
     ModalBasicComponent,
     ModalAnimationComponent,
     ProductListComponent,
@@ -58,6 +60,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CardToggleDirective,
     TitleComponent,
     CardComponent,
+    SanatizerPipe,
     ProductListComponent,
     ProductDetailsComponent,
     ModalBasicComponent,
