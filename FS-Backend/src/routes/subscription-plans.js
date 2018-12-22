@@ -9,5 +9,6 @@ module.exports = app => {
     app.get(`${plans}`, SubscriptionController.getPlans);
     app.get(`${plans}get-user-plans`, SubscriptionController.getUserPlans);
     app.get(`${plans}:id`, SubscriptionController.getPlan);
+    app.get(`${plans}by-role/:role`, SubscriptionController.getPlansForWebsite);
 
 };

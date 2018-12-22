@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FileUploadModule } from "ng2-file-upload";
 import { RfpManagementRoutingModule } from './rfp-management-routing.module';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -18,6 +19,7 @@ import { Angular2CsvModule } from 'angular2-csv';
     RfpManagementRoutingModule,
     NgbModule.forRoot(),
     ImageUploadModule.forRoot(),
+    FileUploadModule,
     SharedModule,
     AngularMultiSelectModule,
     NgxDatatableModule,

@@ -62,8 +62,6 @@ async function getFeatures(req, res) {
         sendResponse(res, 500, 'Unexpected error', e);
 
     }
-
-
 }
 
 async function updateFeaturesStatus(req, res) {
@@ -99,11 +97,44 @@ async function updateFeaturesStatus(req, res) {
     }
 }
 
+async function getFeaturesByRole(req, res) {
+    try {
+        let featuress = await Features.find({
+            role: req.params.role
+        }, {
+            name: 1,
+            _id: 1
+        });
 
+        sendResponse(res, 200, 'Successful.', featuress);
+
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected error', e);
+
+    }
+}
+
+async function getAllFeaturesByRole(req, res) {
+    try {
+        let featuress = await Features.find({
+            role: req.params.role
+        });
+
+        sendResponse(res, 200, 'Successful.', featuress);
+
+    } catch (e) {
+        console.log(e);
+        sendResponse(res, 500, 'Unexpected error', e);
+
+    }
+}
 module.exports = {
     createFeatures,
     editFeatures,
     deleteFeatures,
     getFeatures,
-    updateFeaturesStatus
+    updateFeaturesStatus,
+    getFeaturesByRole,
+    getAllFeaturesByRole
 };

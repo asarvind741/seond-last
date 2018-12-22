@@ -30,6 +30,8 @@ mongoose
   )
   .catch(err => console.log(err));
 const app = express();
+let http = require('http').Server(app);
+
 app.use(flash());
 app.use(logger('dev'));
 app.use(express.json());
@@ -43,6 +45,7 @@ app.use(Session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/file', express.static(path.join(__dirname, '../uploads')));
+
 console.log(path.join(__dirname, '../uploads'));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -54,7 +57,7 @@ i18n.configure({
 });
 app.use(i18n.init);
 app.use(function (req, res, next) {
-  console.log(req.body);
+  console.log('body data', req.body);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', '*');
   res.setHeader(
@@ -76,7 +79,11 @@ passport.deserializeUser(function (id, cb) {
 });
 
 app.options('*', cors());
+app.use(function (req, res, next) {
+  console.log('session data', req.user);
+  next();
 
+});
 require('./routes/user')(app);
 require('./routes/category')(app);
 require('./routes/coupon')(app);
@@ -90,12 +97,15 @@ require('./routes/restful')(app);
 require('./routes/filter')(app);
 require('./routes/features')(app);
 require('./routes/rfp')(app);
+require('./routes/history')(app);
+require('./functions/cron-job');
+require('./functions/socket-connection')(http);
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './uploads');
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + '.png');
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
 });
 
@@ -134,6 +144,9 @@ app.use(function (err, req, res, next) {
   next();
 });
 
-app.listen(process.env.PORT, () => {
+// app.listen(process.env.PORT, () => {
+//   console.log(`listening on ${process.env.PORT}`);
+// });
+http.listen(process.env.PORT, () => {
   console.log(`listening on ${process.env.PORT}`);
 });

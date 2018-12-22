@@ -38,6 +38,10 @@ export class RestfulManagementComponent implements OnInit {
       })
   }
 
+  openFormModal(){
+    
+  }
+
   onSearchInputChange(val) {
     if (val) {
       val = val.toLowerCase();

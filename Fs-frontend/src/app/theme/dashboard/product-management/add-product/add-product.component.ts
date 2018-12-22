@@ -143,9 +143,9 @@ export class AddProductComponent implements OnInit {
     });
 
     this.newProductForm.value.filters.forEach((filter) => {
-      
+
     })
-    
+
     this.newProductForm.value.category.forEach((cat) => {
       cat.name = cat.itemName;
       delete cat.itemName;
@@ -155,13 +155,11 @@ export class AddProductComponent implements OnInit {
       mod.name = mod.itemName;
       delete mod.itemName;
     })
-    
+
     this.newProductForm.value.regions.forEach((reg) => {
       reg.name = reg.itemName;
       delete reg.itemName;
     })
-    console.log("form Values=========>", this.newProductForm.value);
-
     this.productService.addProduct(this.newProductForm.value)
       .subscribe((response: HttpResponse<any>) => {
         if (response.status === 200) {

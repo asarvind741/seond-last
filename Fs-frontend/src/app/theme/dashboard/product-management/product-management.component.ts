@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import swal from 'sweetalert2';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
 import { AddProductComponent } from './add-product/add-product.component';
 import { HttpResponse } from '@angular/common/http';
 import { EditProductComponent } from './edit-product/edit-product.component';
@@ -64,7 +65,6 @@ export class ProductManagementComponent implements OnInit {
   getProducts() {
     this.productService.getProducts()
       .subscribe((response: HttpResponse<any>) => {
-        console.log("products", response);
         this.rows = response['data'];
         this.temp_rows = response['data'];
       })
@@ -91,13 +91,18 @@ export class ProductManagementComponent implements OnInit {
     if (val) {
       val = val.toLowerCase();
       let data = this.temp_rows;
-      data = data.filter(user => {
+      data = data.filter(product => {
+        let regionString = '';
+        product.regions.forEach(reg => {
+          regionString = regionString + reg.name;
+        })
         if (
-          user.firstName && user.firstName.toLowerCase().indexOf(val) >= 0 ? true : false ||
-            user.lastName && user.lastName.toLowerCase().indexOf(val) >= 0 ? true : false ||
-              user.email && user.email.toLowerCase().indexOf(val) >= 0 ? true : false ||
-                user.status && user.status.toLowerCase().indexOf(val) >= 0 ? true : false ||
-                  user.role && user.role.toLowerCase().indexOf(val) >= 0 ? true : false
+          product.name && product.name.toLowerCase().indexOf(val) >= 0 ? true : false ||
+          product.category && product.category.name.toLowerCase().indexOf(val) >= 0 ? true : false ||
+          product.price && product.price.toString().indexOf(val) >= 0 ? true : false ||
+          product.status && product.status.toLowerCase().indexOf(val) >= 0 ? true : false ||
+          regionString && regionString.toLowerCase().indexOf(val) >= 0 ? true : false ||
+          product.createdAt && moment(product.createdAt).format("MMM DD, YYYY").toLowerCase().indexOf(val) >= 0 ? true : false
         )
           return true;
       });
@@ -180,8 +185,7 @@ export class ProductManagementComponent implements OnInit {
       });
   }
 
-  activateUser(name) {
-    console.log("name", name)
+  activateProduct(name) {
     swal({
       title: 'Are you sure?',
       text: 'You not be able to revert this!',
@@ -196,7 +200,6 @@ export class ProductManagementComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.productService.modifyStatus(name._id).subscribe((response: HttpResponse<any>) => {
-          console.log(response)
           if (response.status === 200) {
             this.getProducts();
             swal(
@@ -232,7 +235,6 @@ export class ProductManagementComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.productService.deleteProduct(user._id).subscribe((response: HttpResponse<any>) => {
-          console.log(response)
           if (response.status === 200) {
             this.getProducts();
             swal(

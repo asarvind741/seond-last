@@ -12,6 +12,11 @@ userId: any;
         this.userId = JSON.parse(localStorage.getItem('currentUser'))._id;
     }
 
+    getFeatureListByRole(role){
+        return this.httpClient.get(`${environment.API_URL}/features/role/${role}`);
+
+    }
+
     getFeatures() {
         return this.httpClient.get(`${environment.API_URL}/features/`);
     }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import {
     animate,
     AUTO_STYLE,
@@ -13,6 +13,7 @@ import { AuthenticationService } from '../../services/auth.service';
 import { ElasticSearchService } from '../../services/elastic-search.service';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { SocketService } from 'src/app/services/socket.service';
 
 
 @Component({
@@ -85,7 +86,7 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 })
 export class AdminComponent implements OnInit {
     searchItem: String;
-    showResult: Boolean = false;
+    showResult: Boolean = true;
     itemsSearched: Array<any> = [];
     lastKeypress = 0;
     categories: Array<String> = ['first', 'second', 'third', 'fourth'];
@@ -147,7 +148,9 @@ export class AdminComponent implements OnInit {
         public menuItems: MenuItems,
         private authService: AuthenticationService,
         private router: Router,
-        private elasticSearchService: ElasticSearchService
+        private elasticSearchService: ElasticSearchService,
+        private socketService: SocketService,
+        private activatedRoute: ActivatedRoute
     ) {
         this.navType = 'st2';
         this.themeLayout = 'vertical';
@@ -216,6 +219,8 @@ export class AdminComponent implements OnInit {
     ngOnInit() {
         this.setBackgroundPattern('pattern1');
         this.elasticSearchService.isAvailable();
+        this.socketService.onNewNotification().subscribe(msg => {
+        });
         /*document.querySelector('body').classList.remove('dark');*/
     }
 
@@ -249,7 +254,7 @@ export class AdminComponent implements OnInit {
 
     logoutUser() {
         this.authService.logoutUser();
-        this.router.navigate(['/']);
+        this.router.navigate(['./search'], );
     }
 
 
@@ -258,15 +263,12 @@ export class AdminComponent implements OnInit {
             debounceTime(200),
             distinctUntilChanged(),
             map(term => {
-                this.showResult = true;
-              this.itemsSearched = [];
-              console.log('term')
+                this.showResult = false;
+                this.itemsSearched = [];
                 this.elasticSearchService
                     .serchCategories(term)
                     .then(response => {
-                        console.log(response);
                         response.hits.hits.forEach(hit => {
-                            console.log(hit._source['name']);
                             // if (this.itemsSearched.indexOf(hit._source['name']) < 0)
                             this.itemsSearched.push(hit);
                         });
@@ -275,7 +277,6 @@ export class AdminComponent implements OnInit {
         )
 
     onSeachButtonClicked() {
-        console.log("test")
     }
 
     setMenuAttributes(windowWidth) {
@@ -353,10 +354,11 @@ export class AdminComponent implements OnInit {
         }
     }
 
-    selectFromSearch(item){
-        this.showResult = false;
-        console.log("item selected", item)
+    selectFromSearch(item) {
+        this.showResult = true;
         this.searchItem = item._source['name'];
+        let queryParams = { 'indexArea': item['_index'], 'type': item['_type'], 'search_text': this.searchItem};
+        this.router.navigate(['./search'], { queryParams: queryParams, relativeTo: this.activatedRoute} )
     }
 
     toggleChat() {
@@ -371,7 +373,7 @@ export class AdminComponent implements OnInit {
             this.innerChatSlideInOut === 'out' ? 'in' : 'out';
     }
 
- 
+
 
 
     toggleOpened() {

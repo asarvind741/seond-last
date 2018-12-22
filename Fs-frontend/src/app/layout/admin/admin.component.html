@@ -43,7 +43,7 @@
                 </div>
                 <div class="search-result" [ngClass] = "searchItem ? 'show-dropdown': ''">
                     <div>
-                      <li [ngClass]="{'hide-class': showResult}" style="cursor: pointer" 
+                      <li [ngClass]="{'hide-class': showResult }" style="cursor: pointer" 
                       *ngFor = "let item of itemsSearched" class="show-search-item" (click)="selectFromSearch(item)">{{ item._source['name'] }}</li>
                     </div>
                   </div>

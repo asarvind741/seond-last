@@ -5,5 +5,6 @@ module.exports = {
     SIGN_UP_TEXT: 'Please click here to verify your email',
     SEND_OTP_TEXT: 'Please enter this six digit code for login.',
     SEND_OTP_SUBJECT: 'OTP Credentials',
-    JWT_SECRET: 'secret'
+    JWT_SECRET: 'secret',
+    RFP_MAIL_SUBJECT: 'RFP details'
 };
