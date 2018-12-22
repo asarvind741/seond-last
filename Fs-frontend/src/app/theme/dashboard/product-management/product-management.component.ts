@@ -23,18 +23,18 @@ export class ProductManagementComponent implements OnInit {
   showMessage: any;
   csvData: any;
 
-  // options = {
-  //   fieldSeparator: ',',
-  //   quoteStrings: '"',
-  //   decimalseparator: '.',
-  //   showLabels: true,
-  //   headers: ['First Name', 'Last Name', 'Email', 'Role','Status'],
-  //   showTitle: true,
-  //   title: 'modules_data',
-  //   useBom: false,
-  //   removeNewLines: true,
-  //   keys: ['firstName', 'lastName', 'email', 'role','status']
-  // };
+  options = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: true,
+    headers: ['name', 'price', 'category', 'minOrder','regions', 'createdBy', 'createdAt', 'status'],
+    showTitle: true,
+    title: 'product_data',
+    useBom: false,
+    removeNewLines: true,
+    keys: ['name', 'price', 'category', 'minOrder','regions', 'createdBy', 'createdAt', 'status']
+  };
   constructor(
     private productService: ProductService,
     private filterService: FilterService,
@@ -262,14 +262,21 @@ export class ProductManagementComponent implements OnInit {
         this.csvData = response['data'];
         let data = []
         this.csvData.forEach(element => {
-          // let user = {firstName:"", lastName:"", email:"", role:"", status:""}
-          // user.firstName = element.firstName;
-          // user.lastName = element.lastName;
-          // user.email = element.email;
-          // user.role = element.role;
-          // user.status = element.status;
-          // data.push(user);
+          let user = {name:"", price:"", category:"", minOrder:"", regions:"",createdBy:"", createdAt:"", status:""}
+          user.name = element.name;
+          user.price = element.price;
+          user.category = element.category.name;
+          user.minOrder = element.minOrder;
+          element.regions.forEach(elements => {
+            user.regions += elements.name + "/";
+          });
+          user.status = element.status;
+          if( element.createdBy) user.createdBy = element.createdBy.name || "";
+          user.createdAt = element.createdAt
+          user.status = element.status
+          data.push(user);
         });
+        this.csvData = data
         console.log("Yo-------------------->>>>>>>>>>>", JSON.stringify(this.csvData))
       })
   }
