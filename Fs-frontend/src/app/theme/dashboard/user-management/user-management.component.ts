@@ -17,11 +17,27 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 export class UserManagementComponent implements OnInit {
   deleting: Boolean;
   showMessage: any;
+
+  csvData: any;
+
+  options = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: true,
+    headers: ['FirstName', 'LastName', 'Email', 'Role','Status'],
+    showTitle: true,
+    title: 'user_data',
+    useBom: false,
+    removeNewLines: true,
+    keys: ['firstName', 'lastName', 'email', 'role','status']
+  };
   constructor(
     private userService: UserService,
     private modalService: NgbModal
   ) {
     this.getUsers();
+    this.exportData();
   }
   search_input: string = null;
   editing = {};
@@ -228,5 +244,27 @@ export class UserManagementComponent implements OnInit {
         );
       }
     });
+  }
+
+  exportData() {
+    this.userService.getUsers()
+      .subscribe(users => {
+        console.log("-------------------->>>>>>>>>>>", JSON.stringify(users))
+        this.csvData = users['data'];
+        let data = []
+        this.csvData.forEach((element,index) => {
+          let user = {firstName:"", lastName:"", email:"", role:"", status:""}
+          user.firstName = element.firstName;
+          user.lastName = element.lastName;
+          user.email = element.email;
+          user.role = element.role;
+          user.status = element.status;
+          data.push(user);
+        });
+
+        this.csvData = [];
+        this.csvData = data
+        console.log("Yo-------------------->>>>>>>>>>>", JSON.stringify(this.csvData))
+      })
   }
 }

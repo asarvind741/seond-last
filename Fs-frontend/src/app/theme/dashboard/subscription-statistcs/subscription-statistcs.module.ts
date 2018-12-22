@@ -7,6 +7,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { SubscriptionStatistcsComponent } from './subscription-statistcs.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { Angular2CsvModule } from 'angular2-csv';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     AngularMultiSelectModule,
     NgxDatatableModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    Angular2CsvModule
   ],
   declarations: [
     SubscriptionStatistcsComponent,

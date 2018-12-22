@@ -5,6 +5,7 @@ import * as elasticsearch from 'elasticsearch';
 import { AppRoutingModule } from './app-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
+
 import { AppComponent } from './app.component';
 import { AdminComponent } from './layout/admin/admin.component';
 import { AuthComponent } from './layout/auth/auth.component';

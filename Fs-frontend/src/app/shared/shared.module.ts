@@ -16,6 +16,7 @@ import {ModalBasicComponent} from './modal-basic/modal-basic.component';
 import {ModalAnimationComponent} from './modal-animation/modal-animation.component';
 import {SpinnerComponent} from './spinner/spinner.component';
 import {ClickOutsideModule} from 'ng-click-outside';
+import { Angular2CsvModule } from 'angular2-csv';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -30,6 +31,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HttpClientModule,
     PerfectScrollbarModule,
     ClickOutsideModule,
+    Angular2CsvModule
   ],
   exports: [
     NgbModule,

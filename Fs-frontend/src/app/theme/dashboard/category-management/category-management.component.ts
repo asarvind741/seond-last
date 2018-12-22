@@ -18,6 +18,20 @@ import { CategoryService } from '../../../services/category.service';
 export class CategoryManagementComponent implements OnInit {
   deleting: Boolean;
   showMessage: any;
+  csvData: any;
+
+  options = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: false,
+    headers: ['name', 'description', 'email', 'createdBy','createdAt','status'],
+    showTitle: true,
+    title: 'category_data',
+    useBom: false,
+    removeNewLines: true,
+    keys: ['name', 'description', 'filter', 'createdBy','createdAt','status']
+  };
   constructor(
     private categoryService: CategoryService,
     private modalService: NgbModal
@@ -29,6 +43,7 @@ export class CategoryManagementComponent implements OnInit {
   temp_rows = [];
   ngOnInit() {
     this.getCategories();
+    this.exportData();
   }
 
   getCategories() {
@@ -212,5 +227,34 @@ export class CategoryManagementComponent implements OnInit {
         );
       }
     });
+  }
+
+  exportData() {
+    this.categoryService.getCategories()
+      .subscribe(categories => {
+        console.log("-------------------->>>>>>>>>>>", JSON.stringify(categories))
+        this.csvData = categories['data'];
+        let data = []
+        this.csvData.forEach(element => {
+          let user = {name:"", filter: "", description:"", createdBy:"", createdAt:"", status:""}
+          user.name = element.name;
+          user.description = element.type;
+          if(element.createdBy){
+          user.createdBy = element.createdBy.firstName || "";
+          }
+          user.createdAt = element.createdAt;
+          user.status = element.status;
+          element.filter.forEach(elements => {
+            if(elements.name){
+            user.filter += elements.name+"/"
+            }
+          });
+          data.push(user);
+        });
+
+        this.csvData = [];
+        this.csvData = data
+        console.log("Yo-------------------->>>>>>>>>>>", JSON.stringify(this.csvData))
+      })
   }
 }

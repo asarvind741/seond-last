@@ -9,6 +9,9 @@
         <div class="col-sm-4">
           <button class="btn btn-primary btn-round" (click)="openFormModal()"><i class="fa fa-plus"></i>Create</button>
         </div>
+        <div>
+          <angular2csv [data]="csvData" filename="subscription_data" [options]="options"><button style="float: left">file_download</button></angular2csv>
+          </div>
       </div>
       <ngx-datatable #mydatatable class="material data-table" 
       [headerHeight]="50" 

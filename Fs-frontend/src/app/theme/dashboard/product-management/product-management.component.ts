@@ -20,7 +20,20 @@ import { ModuleService } from '../../../services/module.service';
 export class ProductManagementComponent implements OnInit {
   deleting: Boolean;
   showMessage: any;
+  csvData: any;
 
+  // options = {
+  //   fieldSeparator: ',',
+  //   quoteStrings: '"',
+  //   decimalseparator: '.',
+  //   showLabels: true,
+  //   headers: ['First Name', 'Last Name', 'Email', 'Role','Status'],
+  //   showTitle: true,
+  //   title: 'modules_data',
+  //   useBom: false,
+  //   removeNewLines: true,
+  //   keys: ['firstName', 'lastName', 'email', 'role','status']
+  // };
   constructor(
     private productService: ProductService,
     private filterService: FilterService,
@@ -36,6 +49,7 @@ export class ProductManagementComponent implements OnInit {
   ngOnInit() {
     this.getProducts();
     this.getPrdocutFilterList();
+    this.exportData();
   }
 
   getPrdocutFilterList(){
@@ -237,5 +251,24 @@ export class ProductManagementComponent implements OnInit {
         );
       }
     });
+  }
+
+  exportData() {
+    this.productService.getProducts()
+      .subscribe((response: HttpResponse<any>) => {
+        console.log("-------------------->>>>>>>>>>>", JSON.stringify(response))
+        this.csvData = response['data'];
+        let data = []
+        this.csvData.forEach(element => {
+          // let user = {firstName:"", lastName:"", email:"", role:"", status:""}
+          // user.firstName = element.firstName;
+          // user.lastName = element.lastName;
+          // user.email = element.email;
+          // user.role = element.role;
+          // user.status = element.status;
+          // data.push(user);
+        });
+        console.log("Yo-------------------->>>>>>>>>>>", JSON.stringify(this.csvData))
+      })
   }
 }

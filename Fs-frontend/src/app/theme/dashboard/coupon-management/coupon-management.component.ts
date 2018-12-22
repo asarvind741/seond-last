@@ -18,11 +18,26 @@ import * as moment from 'moment';
 export class CouponManagementComponent implements OnInit {
   deleting: Boolean;
   showMessage: any;
+  csvData: any;
+
+  options = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: false,
+    headers: ['name', 'noOfUsersAllowed', 'couponUrl','description','discount','expiresOn','status','module'],
+    showTitle: true,
+    title: 'coupon_data',
+    useBom: false,
+    removeNewLines: true,
+    keys: ['name','noOfUsersAllowed', 'couponUrl','description','discount','expiresOn','status','module']
+  };
   constructor(
     private couponService: CouponService,
     private modalService: NgbModal
   ) {
     this.getCoupons();
+    this.exportData()
   }
   search_input: string = null;
   editing = {};
@@ -200,5 +215,31 @@ export class CouponManagementComponent implements OnInit {
         );
       }
     });
+  }
+
+  exportData() {
+    this.couponService.getCoupons()
+      .subscribe(coupon => {
+        console.log("-------------------->>>>>>>>>>>", JSON.stringify(coupon))
+        this.csvData = coupon['data'];
+        let data = []
+        this.csvData.forEach((element,index) => {
+           let user = {name:"", module:"", noOfUsersAllowed:"", couponUrl:"", description:"",discount:"" ,expiresOn:"", status:""}
+          user.name = element.name;
+          user.module = element.module;
+          user.noOfUsersAllowed = element.noOfUsersAllowed;
+          user.couponUrl = element.couponUrl;
+          user.couponUrl = element.couponUrl;
+          user.description = element.description;
+          user.discount = element.discount;
+          user.expiresOn = element.expiresOn;
+          user.status = element.status;
+          data.push(user);
+        });
+
+        this.csvData = [];
+        this.csvData = data
+        console.log("Yo-------------------->>>>>>>>>>>", JSON.stringify(this.csvData))
+      })
   }
 }

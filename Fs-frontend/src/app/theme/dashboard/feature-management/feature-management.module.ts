@@ -9,6 +9,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddFeatureComponent } from './add-feature-module/add-feature-module.component';
 import { EditFeatureComponent } from './edit-feature-module/edit-feature-module.component';
+import { Angular2CsvModule } from 'angular2-csv';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { EditFeatureComponent } from './edit-feature-module/edit-feature-module.
     AngularMultiSelectModule,
     NgxDatatableModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    Angular2CsvModule
   ],
   declarations: [
     FeatureManagementComponent, 
