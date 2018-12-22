@@ -17,6 +17,21 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class VatManagementComponent implements OnInit {
   deleting: Boolean;
   showMessage: any;
+
+  csvData: any;
+
+  options = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: true,
+    headers: ['country', 'state', 'paymentMode', 'taxes','status'],
+    showTitle: true,
+    title: 'vat_data',
+    useBom: false,
+    removeNewLines: true,
+    keys: ['country', 'state', 'paymentMode', 'taxes','status']
+  };
   constructor(
     private vatService: VatManagementService,
     private router: Router,
@@ -24,6 +39,7 @@ export class VatManagementComponent implements OnInit {
     private ngbModal: NgbModal
   ) {
     this.getVats();
+    this.exportData()
   }
   search_input: string = null;
   editing = {};
@@ -185,7 +201,38 @@ export class VatManagementComponent implements OnInit {
   }
 
 
-
+  exportData() {
+    this.vatService.getVat()
+      .subscribe(vat => {
+        console.log("-------------------->>>>>>>>>>>", JSON.stringify(vat))
+        this.csvData = vat['data'];
+        let data = []
+        this.csvData.forEach((element,index) => {
+          let user = {country:"", state:"", paymentMode:"", taxes:"", status:""}
+          user.country = element.country.name || "";
+          if(element.state){
+            element.state.forEach(elements => {
+              user.state += elements.name+"/";
+            });        
+          }
+          if(element.paymentMode){
+            element.paymentMode.forEach(elements => {
+              user.paymentMode += elements.name+"/";
+            });        
+          }
+          if(element.taxes){
+            element.taxes.forEach(elements => {
+              user.taxes += elements.name+":"+elements.value+"/";
+            });        
+          }
+          user.status = element.status;
+          data.push(user);
+        });
+        this.csvData = [];
+        this.csvData = data
+        console.log("Yo-------------------->>>>>>>>>>>", JSON.stringify(this.csvData))
+      })
+  }
 
 
 }
