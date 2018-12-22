@@ -25,36 +25,10 @@
 <div class="filter-container">
   <label>FILTER RESULTS BY:</label>
   <ul>
-    <li><select>
-        <option value="volvo">Supplier Types</option>
-        <option value="saab">Saab</option>
-        <option value="opel">Opel</option>
-        <option value="audi">Audi</option>
-      </select>
-    </li>
-    <li><select>
-        <option value="volvo">Supplier Location</option>
-        <option value="saab">Saab</option>
-        <option value="opel">Opel</option>
-        <option value="audi">Audi</option>
-      </select>
-    </li>
-    <li><a href="#">Past Export Countries</a></li>
-
-    <li><select>
-        <option value="volvo">Color</option>
-        <option value="saab">Saab</option>
-        <option value="opel">Opel</option>
-        <option value="audi">Audi</option>
-      </select>
-    </li>
-    <li><a href="#">Sample Order</a></li>
-    <li><a href="#">Technics</a></li>
-    <li><select>
-        <option value="volvo">Material</option>
-        <option value="saab">Saab</option>
-        <option value="opel">Opel</option>
-        <option value="audi">Audi</option>
+    <li *ngFor = "let filter of productFilters">
+      <select>
+        <option [value] = "null">{{ filter.key }}</option>
+        <option *ngFor = "let filValue of filter.key_value.buckets" [value] = "filValue.key">{{ filValue.key }}</option>
       </select>
     </li>
   </ul>
@@ -89,28 +63,27 @@
 
 <div class="product-section">
   <div class="product-container">
-    <div class="product-section-row" (click)="openProductDetails('123')" *ngFor="let product of productList">
-      <div class="row-top">
+    <div class="product-section-row"  *ngFor="let product of productList">
+      <div class="row-top" (click)="openProductDetails('123')">
         <div class="product-image">
           <img [src] =  "product._source.images[0] | sanatize " />
         </div>
         <div class="product-price">
-          <p>{{product.name}}</p>
+          <p>{{product._source['name']}}</p>
           <ul>
-            <li>SynapseIndia</li>
-            <li>US $9.00-$15.00 / Piece</li>
-            <li>20 Pieces (Min. Order)</li>
+            <li>{{ product._source['company'].name }}</li>
+            <li>US ${{ product._source['price'] }} / Piece</li>
+            <li>{{ product._source['minOrder'] }} Pieces (Min. Order)</li>
           </ul>
         </div>
       </div>
       <div class="product-contact">
         <ul>
-          <li><img src="../../../assets/images/products/contact.png" /><span>Contact Supplier</span></li>
+          <li><img src="../../../assets/images/products/contact.png" /><span><a href="mailto:{{ product._source['company'].email}}">Contact Supplier</a></span></li>
           <li><img src="../../../assets/images/products/india-flag.png" /><span>1500 km</span></li>
         </ul>
       </div>
     </div>
-   
   </div>
 </div>
 

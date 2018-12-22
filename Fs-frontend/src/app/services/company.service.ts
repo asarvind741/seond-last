@@ -23,6 +23,10 @@ export class CompanyService implements OnInit  {
         return this.httpClient.get(`${environment.API_URL}/company/${companyId}`)
     }
 
+    getCompanyList(){
+        return this.httpClient.get(`${environment.API_URL}/company/`)
+    }
+
     updateCompany(userId, data) {
         data.id = userId;
         console.log("daaaaaaaaaaaaaa", data)

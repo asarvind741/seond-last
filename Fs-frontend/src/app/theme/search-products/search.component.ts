@@ -15,6 +15,7 @@ export class SearchComponent implements OnInit {
   serarchTerm: any;
   type: any;
   productList: any = [];
+  productFilters: any = [];
   filterList: any = [];
   
   constructor(
@@ -30,7 +31,8 @@ export class SearchComponent implements OnInit {
         this.elastiService.searchProductsFromElastiIndex(this.index, this.serarchTerm)
         .then((response: any) => {
          this.productList = response.hits.hits;
-         console.log("productssssssssss", this.productList)
+         this.productFilters = response.aggregations.filters.key_name.buckets;
+         console.log("this product list", this.productFilters[0].key_value);
         })
       })
   }

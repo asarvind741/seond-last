@@ -11,6 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ProductListComponent implements OnInit {
 
 @Input('productList') productList: any;
+@Input('productFilters') productFilters: any;
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute
