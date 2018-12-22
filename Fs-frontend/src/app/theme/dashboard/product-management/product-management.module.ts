@@ -10,6 +10,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddProductComponent } from './add-product/add-product.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { Angular2CsvModule } from 'angular2-csv';
+
 
 @NgModule({
   imports: [
@@ -21,7 +23,8 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     SharedModule,
     NgxDatatableModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    Angular2CsvModule
   ],
   declarations: [
     ProductManagementComponent, 

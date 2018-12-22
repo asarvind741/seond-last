@@ -6,6 +6,7 @@ import { AddFilterComponent } from './add-filter/add-filter.component';
 import { EditFilterComponent } from './edit-filter/edit-filter.component';
 import * as moment from 'moment';
 import { FilterService } from '../../../services/filter.service';
+import { filter } from 'rxjs-compat/operator/filter';
 
 @Component({
   selector: '<app-filter-management></app-filter-management>',
@@ -18,6 +19,20 @@ import { FilterService } from '../../../services/filter.service';
 export class FilterManagementComponent implements OnInit {
   deleting: Boolean;
   showMessage: any;
+  csvData: any;
+
+  options = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: false,
+    headers: ['name', 'type', 'email', 'createdBy','status'],
+    showTitle: true,
+    title: 'filter_data',
+    useBom: false,
+    removeNewLines: true,
+    keys: ['name', 'type', 'email', 'createdBy','status']
+  };
   constructor(
     private filterService: FilterService,
     private modalService: NgbModal
@@ -29,6 +44,7 @@ export class FilterManagementComponent implements OnInit {
   temp_rows = [];
   ngOnInit() {
     this.getFilters();
+    this.exportData()
   }
 
   getFilters() {
@@ -201,5 +217,27 @@ export class FilterManagementComponent implements OnInit {
         );
       }
     });
+  }
+
+  exportData() {
+    this.filterService.getFilters()
+      .subscribe(filter => {
+        console.log("-------------------->>>>>>>>>>>", JSON.stringify(filter))
+        this.csvData = filter['data'];
+        let data = []
+        this.csvData.forEach((element,index) => {
+          let user = {name:"", type:"", createdBy:"", createdAt:"", status:""}
+          user.name = element.name;
+          user.type = element.type;
+          user.createdBy = element.createdBy.name;
+          user.createdAt = element.createdAt;
+          user.status = element.status;
+          data.push(user);
+        });
+
+        this.csvData = [];
+        this.csvData = data
+        console.log("Yo-------------------->>>>>>>>>>>", JSON.stringify(this.csvData))
+      })
   }
 }

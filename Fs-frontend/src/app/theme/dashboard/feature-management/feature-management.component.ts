@@ -18,6 +18,20 @@ import * as moment from 'moment';
 export class FeatureManagementComponent implements OnInit {
   deleting: Boolean;
   showMessage: any;
+  csvData: any = [];
+
+  options = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: true,
+    headers: ['Name','Role','Status','Feature'],
+    showTitle: true,
+    title: 'features_data',
+    useBom: false,
+    removeNewLines: true,
+    keys: ['name','role','status','feature']
+  };
 
   constructor(
     private featureService: FeatureService,
@@ -30,17 +44,17 @@ export class FeatureManagementComponent implements OnInit {
   temp_rows = [];
   ngOnInit() {
     this.getFeatures();
+    this.exportData();
   }
 
   getFeatures() {
     this.featureService.getFeatures()
       .subscribe((response: HttpResponse<any>) => {
-        console.log("response", response);
         if (response['data'].length > 0) {
           this.rows = response['data'];
-
           this.temp_rows = response['data'];
         }
+        //this.exportData(response);
       })
   }
 
@@ -56,161 +70,188 @@ export class FeatureManagementComponent implements OnInit {
         })
         if (
           feature.name && feature.name.toLowerCase().indexOf(val) >= 0 ? true : false ||
-          feature.role && feature.role.toLowerCase().indexOf(val) >= 0 ? true : false ||
-          feature.status && feature.status.toLowerCase().indexOf(val) >= 0 ?  true : false ||
-          feature.createdAt && moment(feature.createdAt).format("MMM DD, YYYY").toLowerCase().indexOf(val) >= 0 ? true : false ||
-          feature.createdBy && feature.createdBy.name.toLowerCase().indexOf(val) >= 0 ? true: false ||
-          features && features.toLowerCase().indexOf(val) >= 0 ? true: false
+            feature.role && feature.role.toLowerCase().indexOf(val) >= 0 ? true : false ||
+              feature.status && feature.status.toLowerCase().indexOf(val) >= 0 ? true : false ||
+                feature.createdAt && moment(feature.createdAt).format("MMM DD, YYYY").toLowerCase().indexOf(val) >= 0 ? true : false ||
+                  feature.createdBy && feature.createdBy.name.toLowerCase().indexOf(val) >= 0 ? true : false ||
+                    features && features.toLowerCase().indexOf(val) >= 0 ? true : false
         )
-      return true;
-    });
-    this.rows = data;
-  } else this.rows = this.temp_rows;
+          return true;
+      });
+      this.rows = data;
+    } else this.rows = this.temp_rows;
   }
 
-openSuccessSwal() {
-  swal({
-    title: 'Successful!',
-    text: 'Feature module updated successfully!',
-    type: 'success'
-  }).catch(swal.noop);
-}
+  openSuccessSwal() {
+    swal({
+      title: 'Successful!',
+      text: 'Feature module updated successfully!',
+      type: 'success'
+    }).catch(swal.noop);
+  }
 
-openUnscuccessSwal() {
-  swal({
-    title: 'Cancelled!',
-    text: this.showMessage,
-    type: 'error'
-  }).catch(swal.noop);
-}
+  openUnscuccessSwal() {
+    swal({
+      title: 'Cancelled!',
+      text: this.showMessage,
+      type: 'error'
+    }).catch(swal.noop);
+  }
 
-activateCouppon(name) {
-  swal({
-    title: 'Are you sure?',
-    text: 'You not be able to revert this!',
-    type: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, activate it!',
-    cancelButtonText: 'Not now!',
-    confirmButtonClass: 'btn btn-success',
-    cancelButtonClass: 'btn btn-danger mr-sm'
-  }).then((result) => {
-    if (result.value) {
-      this.featureService.modifyStatus(name._id).subscribe((response: HttpResponse<any>) => {
-        if (response.status === 200) {
-          this.getFeatures();
-          swal(
-            'Activated!',
-            'Your have activated feature module successfully.',
-            'success'
-          );
-        }
-      });
+  activateCouppon(name) {
+    swal({
+      title: 'Are you sure?',
+      text: 'You not be able to revert this!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, activate it!',
+      cancelButtonText: 'Not now!',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger mr-sm'
+    }).then((result) => {
+      if (result.value) {
+        this.featureService.modifyStatus(name._id).subscribe((response: HttpResponse<any>) => {
+          if (response.status === 200) {
+            this.getFeatures();
+            swal(
+              'Activated!',
+              'Your have activated feature module successfully.',
+              'success'
+            );
+          }
+        });
 
-    } else if (result.dismiss) {
-      swal(
-        'Cancelled',
-        'Activation request cancelled.)',
-        'error'
-      );
-    }
-  });
-}
+      } else if (result.dismiss) {
+        swal(
+          'Cancelled',
+          'Activation request cancelled.)',
+          'error'
+        );
+      }
+    });
+  }
 
-deleteSubscription(subscription){
-  swal({
-    title: 'Are you sure to delete feature module?',
-    text: 'You not be able to revert this!',
-    type: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!',
-    cancelButtonText: 'Not now!',
-    confirmButtonClass: 'btn btn-success',
-    cancelButtonClass: 'btn btn-danger mr-sm'
-  }).then((result) => {
-    if (result.value) {
-      this.featureService.deleteFeature(subscription._id).subscribe((response: HttpResponse<any>) => {
-        if (response.status === 200) {
-          this.getFeatures();
-          swal(
-            'Deleted!',
-            'Your have deleted feature module successfully.',
-            'success'
-          );
-        }
-      });
+  deleteSubscription(subscription) {
+    swal({
+      title: 'Are you sure to delete feature module?',
+      text: 'You not be able to revert this!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Not now!',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger mr-sm'
+    }).then((result) => {
+      if (result.value) {
+        this.featureService.deleteFeature(subscription._id).subscribe((response: HttpResponse<any>) => {
+          if (response.status === 200) {
+            this.getFeatures();
+            swal(
+              'Deleted!',
+              'Your have deleted feature module successfully.',
+              'success'
+            );
+          }
+        });
 
-    } else if (result.dismiss) {
-      swal(
-        'Cancelled',
-        'Delete request cancelled',
-        'error'
-      );
-    }
-  });
-}
+      } else if (result.dismiss) {
+        swal(
+          'Cancelled',
+          'Delete request cancelled',
+          'error'
+        );
+      }
+    });
+  }
 
 
 
-openSuccessCancelSwal(name) {
-  this.deleting = true;
-  swal({
-    title: 'Are you sure?',
-    text: 'You not be able to revert this!',
-    type: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, deactivate it!',
-    cancelButtonText: 'Not now!',
-    confirmButtonClass: 'btn btn-success',
-    cancelButtonClass: 'btn btn-danger mr-sm'
-  }).then((result) => {
-    if (result.value) {
-      this.featureService.modifyStatus(name._id).subscribe((response: HttpResponse<any>) => {
-        if (response.status === 200) {
-          this.getFeatures();
-          swal(
-            'Deactivated!',
-            'Your have deactivated feature module successfully.',
-            'success'
-          );
-        }
-      });
+  openSuccessCancelSwal(name) {
+    this.deleting = true;
+    swal({
+      title: 'Are you sure?',
+      text: 'You not be able to revert this!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, deactivate it!',
+      cancelButtonText: 'Not now!',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger mr-sm'
+    }).then((result) => {
+      if (result.value) {
+        this.featureService.modifyStatus(name._id).subscribe((response: HttpResponse<any>) => {
+          if (response.status === 200) {
+            this.getFeatures();
+            swal(
+              'Deactivated!',
+              'Your have deactivated feature module successfully.',
+              'success'
+            );
+          }
+        });
 
-    } else if (result.dismiss) {
-      swal(
-        'Cancelled',
-        'Deactivation request cancelled.)',
-        'error'
-      );
-    }
-  });
-  this.deleting = false;
+      } else if (result.dismiss) {
+        swal(
+          'Cancelled',
+          'Deactivation request cancelled.)',
+          'error'
+        );
+      }
+    });
+    this.deleting = false;
 
-}
+  }
 
-openFormModal() {
-  const modalRef = this.modalService.open(AddFeatureComponent);
-  modalRef.result.then((result) => {
-    this.getFeatures();
-  }).catch((error) => {
-    this.getFeatures();
-  });
-}
-
-openEditFormModal(feature) {
-  const modalRef = this.modalService.open(EditFeatureComponent);
-  modalRef.componentInstance.currentFeature = feature;
-  modalRef.result.then((result) => {
-    this.getFeatures();
-  })
-    .catch((error) => {
+  openFormModal() {
+    const modalRef = this.modalService.open(AddFeatureComponent);
+    modalRef.result.then((result) => {
+      this.getFeatures();
+    }).catch((error) => {
       this.getFeatures();
     });
-}
+  }
+
+  openEditFormModal(feature) {
+    const modalRef = this.modalService.open(EditFeatureComponent);
+    modalRef.componentInstance.currentFeature = feature;
+    modalRef.result.then((result) => {
+      this.getFeatures();
+    })
+      .catch((error) => {
+        this.getFeatures();
+      });
+  }
+
+  exportData() {
+    //console.log("-------------------->>>>>>>>>>>", JSON.stringify(feature))
+    this.featureService.getFeatures()
+      .subscribe((response: HttpResponse<any>) => {
+        this.csvData = response['data']
+
+        let features = "";
+        this.csvData.forEach(element => {
+          features = "";
+          delete element.createdBy
+          delete element.updatedAt
+          delete element.createdAt
+          delete element._id;
+          delete element.__v
+          element.feature.forEach(elements => {
+            delete elements._id
+            features += elements.name + "/" + elements.value + " "
+            delete elements.name
+            delete elements.feature
+          });
+          delete element.feature
+          element.feature = features
+        });
+        console.log("---HEllo------------->>>>>>>", JSON.stringify(this.csvData))
+      })
+  }
 }

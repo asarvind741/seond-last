@@ -8,7 +8,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddCouponComponent } from './add-coupon/add-coupon.component';
 import { EditCouponComponent } from './edit-coupon/edit-coupon.component';
-
+import { Angular2CsvModule } from 'angular2-csv';
 @NgModule({
   imports: [
     CommonModule,
@@ -17,7 +17,8 @@ import { EditCouponComponent } from './edit-coupon/edit-coupon.component';
     SharedModule,
     NgxDatatableModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    Angular2CsvModule
   ],
   declarations: [
     CouponManagementComponent, 

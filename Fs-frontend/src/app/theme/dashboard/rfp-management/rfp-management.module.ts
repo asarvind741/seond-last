@@ -11,6 +11,7 @@ import { AddRfpComponent } from './add-rfp/add-rfp.component';
 import { EditRfpComponent } from './edit-rfp/edit-rfp.component';
 import { ImageUploadModule } from "angular2-image-upload";
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import { Angular2CsvModule } from 'angular2-csv';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
     AngularMultiSelectModule,
     NgxDatatableModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    Angular2CsvModule
   ],
   declarations: [
     RfpManagementComponent, 

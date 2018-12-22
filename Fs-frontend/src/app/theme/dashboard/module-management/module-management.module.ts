@@ -10,6 +10,7 @@ import { AddModuleComponent } from './add-module/add-module.component';
 import { EditModuleComponent } from './edit-module/edit-module.component';
 import { ImageUploadModule } from "angular2-image-upload";
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import { Angular2CsvModule } from 'angular2-csv';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
     AngularMultiSelectModule,
     NgxDatatableModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    Angular2CsvModule
   ],
   declarations: [
     ModuleManagementComponent, 

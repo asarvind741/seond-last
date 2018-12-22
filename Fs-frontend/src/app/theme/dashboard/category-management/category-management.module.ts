@@ -9,7 +9,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { EditCategoryComponent } from './edit-category/edit-category.component';
-
+import { Angular2CsvModule } from 'angular2-csv';
 @NgModule({
   imports: [
     CommonModule,
@@ -19,7 +19,8 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
     SharedModule,
     NgxDatatableModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    Angular2CsvModule
   ],
   declarations: [
     CategoryManagementComponent, 
