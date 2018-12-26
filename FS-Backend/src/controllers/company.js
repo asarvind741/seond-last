@@ -19,8 +19,8 @@ async function editCompany(req, res) {
         let updatedCompany = await Company.findByIdAndUpdate(id, {
             $set: req.body
         }, {
-                new: true
-            });
+            new: true
+        });
         sendResponse(res, 200, 'Company updated Successfully.', updatedCompany);
 
     } catch (e) {
@@ -38,12 +38,32 @@ async function deleteCompany(req, res) {
                 status: 'Inactive'
             }
         }, {
-                new: true
-            });
+            new: true
+        });
 
         sendResponse(res, 200, 'Company deleted Successfully.', updatedCompany);
 
     } catch (e) {
+        sendResponse(res, 500, 'Unexpected error', e);
+
+    }
+}
+
+async function getCompanies(req, res) {
+    try {
+        let company = await Company.find({
+            name: {
+                $exists: true
+            }
+        }, {
+            _id: 1,
+            name: 1
+        }).populate('primaryAdmin', 'email -_id');
+
+        sendResponse(res, 200, 'Successful.', company);
+
+    } catch (e) {
+        console.log(e);
         sendResponse(res, 500, 'Unexpected error', e);
 
     }
@@ -72,5 +92,39 @@ async function getCompany(req, res) {
 module.exports = {
     editCompany,
     deleteCompany,
-    getCompany
+    getCompany,
+    getCompanies
 };
+// console.time('start');
+// Company.find({
+//     name: {
+//         $exists: true
+//     }
+// }, {
+//     _id: 1,
+//     name: 1
+// }).populate('primaryAdmin', 'email -_id').exec().then((success) => {
+//     console.log('success', success);
+//     console.timeEnd('start');
+
+// }).catch((failed) => {
+//     console.error('failed', failed);
+
+// });
+
+// console.time('start2');
+// Company.find({
+//     name: {
+//         $exists: true
+//     }
+// }, {
+//     _id: 1,
+//     name: 1
+// }).lean().populate('primaryAdmin', 'email -_id').exec().then((success) => {
+//     console.log('success', success);
+//     console.timeEnd('start2');
+
+// }).catch((failed) => {
+//     console.error('failed', failed);
+
+// });

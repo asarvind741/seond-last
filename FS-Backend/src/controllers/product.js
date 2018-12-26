@@ -137,7 +137,7 @@ async function getProducts(req, res) {
     try {
         let id = req.body.id;
         delete req.body.id;
-        let product = await Product.find({});
+        let product = await Product.find({}).populate('createdBy');
         sendResponse(res, 200, 'Successful.', product);
 
     } catch (e) {
@@ -150,7 +150,7 @@ async function getProducts(req, res) {
 async function getProduct(req, res) {
     try {
         let id = req.params.id;
-        let product = await Product.findById(id);
+        let product = await Product.findById(id).populate('createdBy');
         sendResponse(res, 200, 'Successful.', product);
 
     } catch (e) {
@@ -198,13 +198,7 @@ async function deleteProduct(req, res) {
     try {
         let id = req.body.id;
         delete req.body.id;
-        let updatedModule = await Product.findByIdAndUpdate(id, {
-            $set: {
-                status: 'Inactive'
-            }
-        }, {
-            new: true
-        });
+        let updatedModule = await Product.findByIdAndRemove(id);
 
         sendResponse(res, 200, 'Product deleted Successfully.', updatedModule);
 
@@ -359,36 +353,77 @@ async function getDataFromElastic(data) {
 
     }
 }
+getDataFromElastic({
+
+    index: 'categorys',
+    _type: 'category',
+    _id: '5c0e3c1e255323425122e2a5',
+    _version: 31,
+    _score: 1,
+    _source: {
+        name: 'Casual',
+        description: 'Casual category',
+        createdBy: '5c012fde9baf385b940f7daf',
+        status: 'Active',
+        updatedAt: '2018-12-10T10:12:46.062Z',
+        createdAt: '2018-12-10T10:12:46.062Z'
+    }
+
+});
+
 // getDataFromElastic({
 
-//     index: 'categorys',
-//     _type: 'category',
-//     _id: '5c0e3c1e255323425122e2a5',
-//     _version: 31,
-//     _score: 1,
+//     index: 'products',
+//     _type: 'product',
+//     _id: '5c1cb28fa137432c360e446c',
+//     _version: 1,
+//     _score: null,
 //     _source: {
-//         name: 'Casual',
-//         description: 'Casual category',
-//         createdBy: '5c012fde9baf385b940f7daf',
-//         status: 'Active',
-//         updatedAt: '2018-12-10T10:12:46.062Z',
-//         createdAt: '2018-12-10T10:12:46.062Z'
+//         name: 'woodland shoes'
 //     }
 
 // });
 
-getDataFromElastic({
-
-    index: 'products',
-    _type: 'product',
-    _id: '5c1cb28fa137432c360e446c',
-    _version: 1,
-    _score: null,
-    _source: {
-        name: 'woodland shoes'
+/*
+query for filters
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match": {
+          "name": "woodland shoes"
+        }
+      },
+      "filter": {
+        "term": {
+          "filters.value": "yellow"
+        }
+      }
     }
-
-});
+  },
+  "aggs": {
+    "filters": {
+      "nested": {
+        "path": "filters"
+      },
+      "aggs": {
+        "key_name": {
+          "terms": {
+            "field": "filters.name"
+          },
+          "aggs": {
+            "key_value": {
+              "terms": {
+                "field": "filters.value"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+*/
 
 
 module.exports = {

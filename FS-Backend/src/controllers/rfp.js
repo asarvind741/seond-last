@@ -2,7 +2,8 @@ import Rfp from '../models/rfp';
 import User from '../models/user';
 import {
     sendResponse,
-    SendMail
+    SendMail,
+    notifyAdmin
 } from './functions';
 import Constants from './constant';
 
@@ -13,7 +14,7 @@ async function createRfp(req, res) {
         let rfp = await new Rfp(req.body).save();
         sendResponse(res, 200, 'Feature created Successfully.', rfp);
         SendMail(Constants.MAIL_FROM, req.body.email, Constants.RFP_MAIL_SUBJECT, `RFP is created with following details ${req.body}`);
-
+        notifyAdmin(req.body.createdBy, '', 'A new rfq created.', 'RFQ');
     } catch (e) {
         console.log(e);
         sendResponse(res, 500, 'Unexpected error', e);

@@ -18,7 +18,7 @@ const Notification = new Schema({
   senderName: String,
   recieverName: String,
   message: String,
-  images: [String],
+  images: String,
   status: {
     type: String,
     default: 'Active',
