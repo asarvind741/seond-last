@@ -24,11 +24,12 @@ export class AppComponent implements OnInit {
       }
       else {
         let visitedUrl = environment.API_URL + this.router.url;
-        console.log("this router", this.router.url);
-        this.searchHistoryService.saveVisitedUrl(visitedUrl, JSON.parse(localStorage.getItem('currentUser'))._id)
-        .subscribe((response: HttpResponse<any>) => {
-          console.log('response', response)
-        });
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser) {
+          this.searchHistoryService.saveVisitedUrl(visitedUrl, JSON.parse(localStorage.getItem('currentUser'))._id)
+            .subscribe((response: HttpResponse<any>) => {
+            });
+        }
         window.scrollTo(0, 0);
       }
     });

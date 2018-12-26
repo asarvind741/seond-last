@@ -15,7 +15,14 @@ export class AddUserComponent implements OnInit {
   showMessage: any;
   statuss: Array<String> = ['Active', 'Inactive'];
   roles: Array<String> = ['Buyer', 'Seller', 'Admin', 'SubAdmin', 'Agent', 'Reseller'];
-  permission: Array<String> = ['isAdmin','isSubAdmin','isBuyer', 'isSupplier', 'isReseller', 'isAgent', 'isAccountAdmin']
+  permission: Array<any> = [
+    { 'id': 1, 'itemName': 'isAdmin' }, 
+    { 'id': 2, 'itemName': 'isSubAdmin' }, 
+    { 'id': 3, 'itemName': 'isBuyer' }, 
+    { 'id': 4, 'itemName': 'isSupplier' }, 
+    { 'id': 5, 'itemName': 'isReseller' }, 
+    { 'id': 6, 'itemName': 'isAgent' }, 
+    { 'id': 7, 'itemName': 'isAccountAdmin' }]
   selectedPermission: any = [];
   showPermissionFlag: boolean = false;
   settings2 = {
@@ -26,14 +33,14 @@ export class AddUserComponent implements OnInit {
   constructor(
     public activeModal: NgbActiveModal,
     private userService: UserService
-    ) { }
+  ) { }
 
   ngOnInit() {
 
     this.createForm();
   }
 
-  createForm(){
+  createForm() {
     this.newUserForm = new FormGroup({
       'firstName': new FormControl(null),
       'lastName': new FormControl(null),
@@ -42,25 +49,40 @@ export class AddUserComponent implements OnInit {
       'mobile': new FormControl(null),
       'status': new FormControl(null),
       'role': new FormControl(null),
-      'permissions':new FormControl(null)
+      'permissions': new FormControl(null)
     })
   }
 
-  addNewUser(){
+  addNewUser() {
+    // console.log("this form", this.newUserForm.value);
+    console.log("selectedPermission----------------->>",this.selectedPermission)
+    let permission = {isAdmin: false, isSubAdmin: false, isBuyer: false, isSupplier: false, isReseller: false, isAgent: false, isAccountAdmin: false}
+    if(this.selectedPermission.length > 0 && this.newUserForm.value.role == 'SubAdmin'){
+      this.selectedPermission.forEach(element => {
+        element.itemName == 'isAdmin' ? permission.isAdmin = true: permission.isAdmin = false;
+        element.itemName == 'isSubAdmin' ? permission.isSubAdmin = true: permission.isSubAdmin = false;
+        element.itemName == 'isSubAdmin' ? permission.isBuyer = true: permission.isBuyer = false;
+        element.itemName == 'isSubAdmin' ? permission.isSupplier = true: permission.isSupplier = false;
+        element.itemName == 'isSubAdmin' ? permission.isReseller = true: permission.isReseller = false;
+        element.itemName == 'isSubAdmin' ? permission.isAgent = true: permission.isAgent = false;
+        element.itemName == 'isSubAdmin' ? permission.isAccountAdmin = true: permission.isAccountAdmin = false;
+      });
+      this.newUserForm.value.permissions = permission;
+    }
     console.log("this form", this.newUserForm.value);
 
-    this.userService.addUser(this.newUserForm.value)
-    .subscribe((response: HttpResponse<any>) => {
-      if(response.status === 200){
-        this.closeModal();
-        this.openSuccessSwal();
-      }
-    }, (error) => {
-      this.closeModal();
-      this.showMessage = error.error['message']
-      this.openUnscuccessSwal();
-    })
-    
+    // this.userService.addUser(this.newUserForm.value)
+    //   .subscribe((response: HttpResponse<any>) => {
+    //     if (response.status === 200) {
+    //       this.closeModal();
+    //       this.openSuccessSwal();
+    //     }
+    //   }, (error) => {
+    //     this.closeModal();
+    //     this.showMessage = error.error['message']
+    //     this.openUnscuccessSwal();
+    //   })
+
   }
 
   openSuccessSwal() {
@@ -83,20 +105,20 @@ export class AddUserComponent implements OnInit {
     this.activeModal.close('Modal Closed');
   }
 
-  cancelNewUserAddition(){
+  cancelNewUserAddition() {
     this.newUserForm.reset();
     this.closeModal();
   }
 
-  clearModal(){
+  clearModal() {
     this.newUserForm.reset();
   }
 
-  onRoleSelect(){
-    if(this.newUserForm.value.role == "SubAdmin"){
+  onRoleSelect() {
+    if (this.newUserForm.value.role == "SubAdmin") {
       this.showPermissionFlag = true;
     }
-    else{
+    else {
       this.showPermissionFlag = false;
     }
   }
