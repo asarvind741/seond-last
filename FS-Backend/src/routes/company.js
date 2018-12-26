@@ -5,6 +5,7 @@ module.exports = app => {
     app.post(`${company}edit`, CompanyController.editCompany);
     app.post(`${company}delete`, CompanyController.deleteCompany);
     app.get(`${company}:id`, CompanyController.getCompany);
+    app.get(`${company}`, CompanyController.getCompanies);
 
 
 };

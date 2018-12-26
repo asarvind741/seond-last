@@ -33,7 +33,10 @@ const Product = new Schema({
     type: String,
     es_indexed: true
   }],
-  price: Number,
+  price: {
+    type: Number,
+    es_indexed: true
+  },
   // seller: {
   //   type: Schema.Types.ObjectId,
   //   ref: 'User',
@@ -61,7 +64,24 @@ const Product = new Schema({
   },
 
   width: String,
-
+  minOrder: {
+    type: Number,
+    es_indexed: true
+  },
+  company: {
+    name: {
+      type: String,
+      es_indexed: true
+    },
+    email: {
+      type: String,
+      es_indexed: true
+    },
+    id: {
+      type: Schema.Types.ObjectId,
+      ref: 'Company'
+    }
+  },
   height: String,
   length: String,
 
@@ -92,10 +112,8 @@ const Product = new Schema({
     enum: statusTypes
   },
   createdBy: {
-    id: {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
-    }
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 }, {
   timestamps: true,

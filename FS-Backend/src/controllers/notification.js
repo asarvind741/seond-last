@@ -1,17 +1,13 @@
 import Notification from '../models/notification';
 
-async function addNotification(sender, reciever, message, notifcationType, senderName, recieverName) {
+async function addNotification(data) {
     try {
-        let notification = Notification.create({
-            sender: sender,
-            reciever: reciever,
-            message: message,
-            notifcationType: notifcationType,
-            senderName: senderName,
-            recieverName: recieverName
-        });
+        let notification = await Notification.create(data);
         console.log(notification);
-        return true;
+        if (notification)
+            return true;
+        else
+            return false;
     } catch (e) {
         console.log(e);
         return false;
