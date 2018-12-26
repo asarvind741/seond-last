@@ -72,6 +72,7 @@ const User = new Schema({
   role: {
     type: String,
     enum: ['Buyer', 'Seller', 'Admin', 'SubAdmin', 'Agent', 'Reseller'],
+    default: 'Buyer'
   },
   loginCount: {
     type: Number,

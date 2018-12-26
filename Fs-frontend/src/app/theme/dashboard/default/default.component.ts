@@ -13,7 +13,7 @@ import '../../../../assets/charts/amchart/worldLow.js';
 import '../../../../assets/charts/amchart/continentsLow.js';
 import { AuthenticationService } from '../../../services/auth.service.js';
 import { Subscription } from 'rxjs';
-import { SocketService } from 'src/app/services/socket.service.js';
+import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-default',
