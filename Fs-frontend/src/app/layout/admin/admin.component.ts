@@ -220,6 +220,7 @@ export class AdminComponent implements OnInit {
         this.setBackgroundPattern('pattern1');
         this.elasticSearchService.isAvailable();
         this.socketService.onNewNotification().subscribe(msg => {
+            console.log("message", msg)
         });
         /*document.querySelector('body').classList.remove('dark');*/
     }
