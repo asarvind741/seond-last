@@ -218,7 +218,6 @@ export class AdminComponent implements OnInit {
     ngOnInit() {
         this.setBackgroundPattern('pattern1');
         this.elasticSearchService.isAvailable();
-
         /*document.querySelector('body').classList.remove('dark');*/
     }
 

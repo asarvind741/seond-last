@@ -71,7 +71,7 @@ const User = new Schema({
   name: String,
   role: {
     type: String,
-    enum: ['Buyer', 'Seller', 'Admin', 'SubAdmin', 'Agent', 'Reseller'],
+    enum: ['Buyer', 'Supplier', 'Admin', 'SubAdmin', 'Agent', 'Reseller'],
     default: 'Buyer'
   },
   loginCount: {
