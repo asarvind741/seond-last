@@ -9,6 +9,8 @@ import { CategoryService } from '../../../../services/category.service';
 import { VatManagementService } from '../../../../services/vat-management.service';
 import { FileHolder } from 'angular2-image-upload';
 import { FilterService } from '../../../../services/filter.service';
+import { CompanyService } from '../../../../services/company.service';
+import { Http } from '@angular/http';
 
 @Component({
   selector: 'app-add-product',
@@ -18,34 +20,37 @@ import { FilterService } from '../../../../services/filter.service';
 export class AddProductComponent implements OnInit {
   newProductForm: FormGroup;
   showMessage: any;
-  afuConfig: any;
   categoryList: any;
-  selectedFilterVal: any = [];
-  allCategoryFilters: any = [];
-  selectedCategoryFilterValues: any = [];
+  selectedFilterVal: Array<any> = [];
+  allCategoryFilters: Array<any> = [];
+  allCompanies: Array<any> = [];
+  selectedCompany: any = [];
+  selectedCategoryFilterValues: Array<any> = [];
   selectedCategoryFilter: any;
-  filterValue: any = [];
-  allModules: any = [];
-  allCountry: any = [];
-  allCategories: any = [];
-  selectedCategories: any = [];
-  selectedRegions: any = [];
-  selectedModules: any = [];
-  selectedCategoryFilters: any = [];
-  allFilterValues: any = [];
+  filterValue: Array<any> = [];
+  allModules: Array<any> = [];
+  allCountry: Array<any> = [];
+  allCategories: Array<any> = [];
+  selectedCategories: Array<any> = [];
+  selectedRegions: Array<any> = [];
+  selectedModules: Array<any> = [];
+  selectedCategoryFilters: Array<any> = [];
+  compniesWithEmailIds: Array<any> = [];
+  allFilterValues: Array<any> = [];
   settings1: any;
   settings2: any;
   settings3: any;
   settings4: any;
-  images: any = [];
-  urls: any = [];
+  settings5: any;
+  images: Array<any> = [];
+  urls: Array<any> = [];
   moduleList: any;
   countryList: any;
-  uploadedImages: any = [];
   statuss: Array<String> = ['Active', 'Inactive'];
   constructor(
     public activeModal: NgbActiveModal,
     private productService: ProductService,
+    private companyService: CompanyService,
     private categoryService: CategoryService,
     private filterService: FilterService,
     private moduleService: ModuleService,
@@ -53,6 +58,17 @@ export class AddProductComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.companyService.getCompanyList()
+    .subscribe((response: HttpResponse<any>) => {
+      if(response.status === 200){
+        this.compniesWithEmailIds = response['data'];
+        response['data'].forEach(cat => {
+          let element = { 'id': cat._id, 'itemName': cat.name };
+          this.allCompanies.push(element);
+        })
+      }
+    })
 
     this.categoryService.getCategoryList()
       .subscribe((response: HttpResponse<any>) => {
@@ -116,6 +132,13 @@ export class AddProductComponent implements OnInit {
       enableSearchFilter: true,
       badgeShowLimit: 3
     };
+
+    this.settings5 = {
+      singleSelection: true,
+      text: "Select Values",
+      enableSearchFilter: true,
+    };
+
     this.createForm();
   }
 
@@ -129,6 +152,8 @@ export class AddProductComponent implements OnInit {
       'price': new FormControl(null),
       'description': new FormControl(null),
       'regions': new FormControl([]),
+      'minOrder': new FormControl(null),
+      'company': new FormControl([]),
       'status': new FormControl(null),
       'width': new FormControl(null),
       'height': new FormControl(null),
@@ -155,6 +180,15 @@ export class AddProductComponent implements OnInit {
       mod.name = mod.itemName;
       delete mod.itemName;
     })
+
+    if(this.newProductForm.value.company){
+      this.compniesWithEmailIds.forEach(comp => {
+        if(this.newProductForm.value.company[0].id === comp._id){
+          let element = { 'id': comp._id, 'name': comp.name, 'email': comp.primaryAdmin.email}
+          this.newProductForm.value.company = element;
+        }
+      })
+    }
 
     this.newProductForm.value.regions.forEach((reg) => {
       reg.name = reg.itemName;

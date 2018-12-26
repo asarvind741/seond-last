@@ -8,7 +8,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddFilterComponent } from './add-filter/add-filter.component';
 import { EditFilterComponent } from './edit-filter/edit-filter.component';
-
+import { Angular2CsvModule } from 'angular2-csv';
 @NgModule({
   imports: [
     CommonModule,
@@ -17,7 +17,8 @@ import { EditFilterComponent } from './edit-filter/edit-filter.component';
     SharedModule,
     NgxDatatableModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    Angular2CsvModule
   ],
   declarations: [
     FilterManagementComponent, 

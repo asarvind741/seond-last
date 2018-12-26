@@ -5,6 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 
 
+
 @NgModule({
   imports: [
     CommonModule,

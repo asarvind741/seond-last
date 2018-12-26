@@ -10,6 +10,9 @@
         <div class="col-sm-4">
           <button class="btn btn-primary new-vat" (click)="openFormModal()"><i class="fa fa-plus"></i>Create</button>
         </div>
+        <div class="col-sm-4">
+          <angular2csv [data]="csvData" filename="rfp_data" [options]="options"><button style="float: left">file_download</button></angular2csv>
+        </div>
       </div>
       <ngx-datatable #mydatatable class="material data-table" [headerHeight]="50" [limit]="6" [columnMode]="'force'"
         [scrollbarH]="true" [footerHeight]="50" [rowHeight]="'auto'" [rows]="rows">
@@ -25,7 +28,8 @@
             </span>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="company">
+
+        <!-- <ngx-datatable-column name="company">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
             <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
               Company
@@ -36,59 +40,59 @@
               {{value}}
             </span>
           </ng-template>
-        </ngx-datatable-column>
+        </ngx-datatable-column> -->
 
         <ngx-datatable-column name="email">
-            <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
-              <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
-                Email
-              </span>
-            </ng-template>
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-              <span>
-                {{ value }}
-              </span>
-            </ng-template>
-          </ngx-datatable-column>
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
+              Email
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span>
+              {{ value }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
 
-          <ngx-datatable-column name="mobile">
-            <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
-              <span>
-                Mobile
-              </span>
-            </ng-template>
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-              <span>
-                {{ value }}
-              </span>
-            </ng-template>
-          </ngx-datatable-column>
+        <ngx-datatable-column name="mobile">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span>
+              Mobile
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span>
+              {{ value }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
 
-          <ngx-datatable-column name="description">
-            <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
-              <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
-                Description
-              </span>
-            </ng-template>
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-              <span>
-                {{ value }}
-              </span>
-            </ng-template>
-          </ngx-datatable-column>
+        <ngx-datatable-column name="description">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
+              Description
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span>
+              {{ value }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
 
-          <ngx-datatable-column name="status">
-            <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
-              <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
-                Status
-              </span>
-            </ng-template>
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-              <span class="label" [ngClass]="value === 'Active' ? 'label-primary': 'label-danger'">
-                {{ value }}
-              </span>
-            </ng-template>
-          </ngx-datatable-column>
+        <ngx-datatable-column name="status">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
+            <span class="datatable-header-cell-label draggable" (click)="sort($event, sortDir, sortFn)">
+              Status
+            </span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span class="label" [ngClass]="value === 'Active' ? 'label-primary': 'label-danger'">
+              {{ value }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
 
           <ngx-datatable-column name="timeStart">
             <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn" let-sortDir="sortDir">
@@ -139,7 +143,6 @@
                 Activate
               </button>
             </ng-template>
-
           </ng-template>
         </ngx-datatable-column>
 

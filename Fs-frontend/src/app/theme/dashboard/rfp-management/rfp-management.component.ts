@@ -20,6 +20,20 @@ export class RfpManagementComponent implements OnInit {
   editing: any = {};
   rows: any = [];
   temp_rows: any = [];
+  csvData: any = [];
+
+  options = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: true,
+    headers: ['Name','Company','Email','Mobile','Description','Time End','Time Start','status' ],
+    showTitle: true,
+    title: 'rfp_data',
+    useBom: false,
+    removeNewLines: true,
+    keys: ['name','company','email','mobile','description','timeEnd','timeStart','status' ]
+  };
 
   constructor(
     private modalService: NgbModal,
@@ -33,9 +47,9 @@ export class RfpManagementComponent implements OnInit {
 
   getRfp() {
     this.rfpService.getRfp().subscribe((rfp) => {
-      //console.log("DATA ------------------>>>>>>>>>",JSON.stringify(rfp['data']))
       this.rows = rfp['data'];
       this.temp_rows = rfp['data'];
+      this.exportData(rfp);
     })
   }
 
@@ -201,6 +215,18 @@ export class RfpManagementComponent implements OnInit {
         );
       }
     });
+  }
+
+  exportData(rfp){
+    console.log("-------------------->>>>>>>>>>>", JSON.stringify(rfp))
+    this.csvData = rfp['data'];
+    this.csvData.forEach(element => {
+      delete element.createdBy
+      delete element.updatedAt
+      delete element.createdAt
+      delete element.documents
+});
+
   }
 
 }

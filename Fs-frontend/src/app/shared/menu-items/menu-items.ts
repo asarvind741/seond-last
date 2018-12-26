@@ -1479,11 +1479,9 @@ export class MenuItems {
 
   constructor() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    console.log("this current", this.currentUser)
   }
 
   getAll(): Menu[] {
-    console.log('sttessss')
     if (this.currentUser.role === "Admin")
       return MENUITEMS;
     else if (this.currentUser.role === "Buyer")

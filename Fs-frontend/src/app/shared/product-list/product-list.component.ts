@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
+
 
 @Component({
     selector: 'app-product-list',
@@ -11,15 +11,19 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class ProductListComponent implements OnInit {
 
 @Input('productList') productList: any;
+@Input('productFilters') productFilters: any;
     constructor(
         private router: Router,
-        private activatedRoute: ActivatedRoute,
-        private _DomSanitizationService: DomSanitizer
+        private activatedRoute: ActivatedRoute
     ) { }
 
-    ngOnInit() { }
+    ngOnInit() { 
+        
+    }
 
     openProductDetails(id) {
         this.router.navigate(['../../product-details', id], { relativeTo: this.activatedRoute });
     }
+    
+    
 }

@@ -18,12 +18,26 @@ import * as moment from 'moment';
 export class SubscriptionManagementComponent implements OnInit {
   deleting: Boolean;
   showMessage: any;
+  csvData: any;
 
+  options = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: false,
+    headers: ['name', 'type', 'price', 'maxNumberOfMembers', 'createdBy', 'createdBy', 'status', 'modules'],
+    showTitle: true,
+    title: 'subscription_data',
+    useBom: false,
+    removeNewLines: true,
+    keys: ['name', 'type', 'price', 'maxNumberOfMembers', 'createdBy', 'createdBy', 'status', 'modules']
+  };
   constructor(
     private planService: PlanService,
     private modalService: NgbModal
   ) {
     this.getPlans();
+    this.exportData()
   }
   search_input: string = null;
   editing = {};
@@ -218,6 +232,31 @@ export class SubscriptionManagementComponent implements OnInit {
     });
   }
 
+  exportData() {
+    this.planService.getPlans()
+      .subscribe(plans => {
+        console.log("-------------------->>>>>>>>>>>", JSON.stringify(plans))
+        this.csvData = plans['data'];
+        let data = []
+        this.csvData.forEach((element, index) => {
+          let user = { name: "", type: "", price: "", maxNumberOfMembers: "", modules: "", createdBy: "", createdAt: "", status: "" }
+          user.name = element.name;
+          user.type = element.duration;
+          user.price = element.price;
+          user.maxNumberOfMembers = element.maxNumberOfMembers;
+          user.modules = element.moduleIncluded.moduleName;
+          user.createdBy = element.createdBy.email;
+          user.createdAt = element.createdAt;
+          user.status = element.status;
+          data.push(user);
+        });
+
+        this.csvData = [];
+        this.csvData = data
+        console.log("Yo-------------------->>>>>>>>>>>", JSON.stringify(this.csvData))
+      })
+  }
+
   openEditFormModal(plan) {
     const modalRef = this.modalService.open(EditSubscriptionComponent);
     modalRef.componentInstance.currentPlan = plan;
@@ -229,3 +268,6 @@ export class SubscriptionManagementComponent implements OnInit {
       });
   }
 }
+
+
+

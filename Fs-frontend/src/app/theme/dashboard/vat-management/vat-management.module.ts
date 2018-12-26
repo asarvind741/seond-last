@@ -11,7 +11,7 @@ import { VatManagementComponent } from './vat-management.component';
 import { SelectedCountryWizardComponent } from './add-vat/selected-country-wizard/selected-country-wizard.component'
 import { AddVatComponent } from './add-vat/add-vat.component';
 import { EditVatComponent } from './edit-vat/edit-vat.component';
-
+import { Angular2CsvModule } from 'angular2-csv';
 @NgModule({
   imports: [
     CommonModule,
@@ -22,7 +22,8 @@ import { EditVatComponent } from './edit-vat/edit-vat.component';
     AngularMultiSelectModule,
     NgxDatatableModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    Angular2CsvModule
   ],
   declarations: [
     VatManagementComponent,

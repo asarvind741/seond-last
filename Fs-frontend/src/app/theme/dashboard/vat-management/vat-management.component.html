@@ -10,6 +10,9 @@
         <div class="col-sm-7">
           <button class="btn btn-primary new-vat" (click)="onAddNewVat()"><i class="fa fa-plus"></i>New Vat</button>
         </div>
+        <div>
+          <angular2csv [data]="csvData" filename="vat_data" [options]="options"><button style="float: left">file_download</button></angular2csv>
+          </div>
       </div>
       <ngx-datatable #mydatatable class="material data-table" [headerHeight]="50" [limit]="10" [columnMode]="'force'"
         [footerHeight]="50" [rowHeight]="'auto'" [rows]="rows">

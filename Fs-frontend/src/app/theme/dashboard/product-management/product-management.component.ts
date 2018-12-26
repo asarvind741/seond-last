@@ -21,7 +21,20 @@ import { ModuleService } from '../../../services/module.service';
 export class ProductManagementComponent implements OnInit {
   deleting: Boolean;
   showMessage: any;
+  csvData: any;
 
+  options = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: true,
+    headers: ['name', 'price', 'category', 'minOrder','regions', 'createdBy', 'createdAt', 'status'],
+    showTitle: true,
+    title: 'product_data',
+    useBom: false,
+    removeNewLines: true,
+    keys: ['name', 'price', 'category', 'minOrder','regions', 'createdBy', 'createdAt', 'status']
+  };
   constructor(
     private productService: ProductService,
     private filterService: FilterService,
@@ -37,6 +50,7 @@ export class ProductManagementComponent implements OnInit {
   ngOnInit() {
     this.getProducts();
     this.getPrdocutFilterList();
+    this.exportData();
   }
 
   getPrdocutFilterList(){
@@ -206,7 +220,7 @@ export class ProductManagementComponent implements OnInit {
     });
   }
 
-  deleteUser(user) {
+  deleteProduct(product) {
     swal({
       title: 'Are you sure to delete product?',
       text: 'You not be able to revert this!',
@@ -220,7 +234,7 @@ export class ProductManagementComponent implements OnInit {
       cancelButtonClass: 'btn btn-danger mr-sm'
     }).then((result) => {
       if (result.value) {
-        this.productService.deleteProduct(user._id).subscribe((response: HttpResponse<any>) => {
+        this.productService.deleteProduct(product._id).subscribe((response: HttpResponse<any>) => {
           if (response.status === 200) {
             this.getProducts();
             swal(
@@ -239,5 +253,31 @@ export class ProductManagementComponent implements OnInit {
         );
       }
     });
+  }
+
+  exportData() {
+    this.productService.getProducts()
+      .subscribe((response: HttpResponse<any>) => {
+        console.log("-------------------->>>>>>>>>>>", JSON.stringify(response))
+        this.csvData = response['data'];
+        let data = []
+        this.csvData.forEach(element => {
+          let user = {name:"", price:"", category:"", minOrder:"", regions:"",createdBy:"", createdAt:"", status:""}
+          user.name = element.name;
+          user.price = element.price;
+          user.category = element.category.name;
+          user.minOrder = element.minOrder;
+          element.regions.forEach(elements => {
+            user.regions += elements.name + "/";
+          });
+          user.status = element.status;
+          if( element.createdBy) user.createdBy = element.createdBy.name || "";
+          user.createdAt = element.createdAt
+          user.status = element.status
+          data.push(user);
+        });
+        this.csvData = data
+        console.log("Yo-------------------->>>>>>>>>>>", JSON.stringify(this.csvData))
+      })
   }
 }

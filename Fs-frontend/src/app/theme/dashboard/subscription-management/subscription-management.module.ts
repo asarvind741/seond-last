@@ -9,7 +9,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddSubscriptionComponent } from './add-subscription/add-subscription.component';
 import { EditSubscriptionComponent } from './edit-subscription/edit-subscription.component';
-
+import { Angular2CsvModule } from 'angular2-csv';
 @NgModule({
   imports: [
     CommonModule,
@@ -19,7 +19,8 @@ import { EditSubscriptionComponent } from './edit-subscription/edit-subscription
     AngularMultiSelectModule,
     NgxDatatableModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    Angular2CsvModule
   ],
   declarations: [
     SubscriptionManagementComponent, 

@@ -21,11 +21,13 @@ export class ProductService {
     }
 
     addProduct(product){
+        console.log("product", product);
         product.createdBy = this.userId;
         return this.httpClient.post(`${environment.API_URL}/product/create`, product);
     }
 
     updateProduct(id, data){
+        console.log("data", data)
         data.id = id;
         return this.httpClient.post(`${environment.API_URL}/product/edit`, data)
     }

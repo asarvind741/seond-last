@@ -254,7 +254,7 @@ export class AdminComponent implements OnInit {
 
     logoutUser() {
         this.authService.logoutUser();
-        this.router.navigate(['./search'], );
+        this.router.navigate(['./search']);
     }
 
 
@@ -357,8 +357,8 @@ export class AdminComponent implements OnInit {
     selectFromSearch(item) {
         this.showResult = true;
         this.searchItem = item._source['name'];
-        let queryParams = { 'indexArea': item['_index'], 'type': item['_type'], 'search_text': this.searchItem};
-        this.router.navigate(['./search'], { queryParams: queryParams, relativeTo: this.activatedRoute} )
+        let queryParams = { 'indexArea': item['_index'], 'type': item['_type'], 'search_text': this.searchItem };
+        this.router.navigate(['./search'], { queryParams: queryParams, relativeTo: this.activatedRoute })
     }
 
     toggleChat() {

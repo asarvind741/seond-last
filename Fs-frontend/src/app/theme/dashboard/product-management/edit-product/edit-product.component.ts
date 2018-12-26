@@ -9,6 +9,7 @@ import { CategoryService } from '../../../../services/category.service';
 import { VatManagementService } from '../../../../services/vat-management.service';
 import { FileHolder } from 'angular2-image-upload';
 import { FilterService } from '../../../../services/filter.service';
+import { CompanyService } from '../../../../services/company.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -20,28 +21,32 @@ export class EditProductComponent implements OnInit {
   showMessage: any;
   afuConfig: any;
   categoryList: any;
-  selectedFilterVal: any = [];
-  allCategoryFilters: any = [];
-  selectedCategoryFilterValues: any = [];
+  allCompanies: Array<any> = [];
+  selectedCompany: any = [];
+  selectedFilterVal: Array<any> = [];
+  allCategoryFilters: Array<any> = [];
+  selectedCategoryFilterValues: Array<any> = [];
   selectedCategoryFilter: any;
-  filterValue: any = [];
-  allModules: any = [];
-  allCountry: any = [];
-  allCategories: any = [];
-  selectedCategories: any = [];
-  selectedRegions: any = [];
-  selectedModules: any = [];
+  filterValue: Array<any> = [];
+  allModules: Array<any> = [];
+  allCountry: Array<any> = [];
+  allCategories: Array<any> = [];
+  selectedCategories: Array<any> = [];
+  selectedRegions: Array<any> = [];
+  selectedModules: Array<any> = [];
   selectedCategoryFilters: any = [];
-  allFilterValues: any = [];
+  allFilterValues: Array<any> = [];
   settings1: any;
   settings2: any;
   settings3: any;
   settings4: any;
-  images: any = [];
-  urls: any = [];
+  settings5: any;
+  images: Array<any> = [];
+  urls: Array<any> = [];
   moduleList: any;
   countryList: any;
-  uploadedImages: any = [];
+  uploadedImages: Array<any> = [];
+  compniesWithEmailIds: Array<any> = []
   @Input('currentProduct') currentProduct: any;
   statuss: Array<String> = ['Active', 'Inactive'];
   constructor(
@@ -49,11 +54,23 @@ export class EditProductComponent implements OnInit {
     private productService: ProductService,
     private categoryService: CategoryService,
     private filterService: FilterService,
+    private companyService: CompanyService,
     private moduleService: ModuleService,
     private vatManagementService: VatManagementService
   ) { }
 
   ngOnInit() {
+
+    this.companyService.getCompanyList()
+      .subscribe((response: HttpResponse<any>) => {
+        if (response.status === 200) {
+          this.compniesWithEmailIds = response['data'];
+          response['data'].forEach(cat => {
+            let element = { 'id': cat._id, 'itemName': cat.name };
+            this.allCompanies.push(element);
+          })
+        }
+      })
 
     this.categoryService.getCategoryList()
       .subscribe((response: HttpResponse<any>) => {
@@ -117,12 +134,17 @@ export class EditProductComponent implements OnInit {
       enableSearchFilter: true,
       badgeShowLimit: 3
     };
+
+    this.settings5 = {
+      singleSelection: true,
+      text: "Select Comapny",
+      enableSearchFilter: true,
+    };
+
     this.createForm();
   }
 
   createForm() {
-    console.log("current product=======>", this.currentProduct);
-
     let description = this.currentProduct.description ? this.currentProduct.description : '';
     let modules = this.currentProduct.modules ? this.currentProduct.modules : '';
     let name = this.currentProduct.name ? this.currentProduct.name : '';
@@ -132,6 +154,8 @@ export class EditProductComponent implements OnInit {
     let price = this.currentProduct.price ? parseInt(this.currentProduct.price) : '';
     let regions = this.currentProduct.regions ? this.currentProduct.regions : '';
     let category = this.currentProduct.category ? this.currentProduct.category : '';
+    let minOrder = this.currentProduct.minOrder ? this.currentProduct.minOrder : '';
+    let company = this.currentProduct.company ? this.currentProduct.company : '';
 
     this.allCategoryFilters = [];
     this.filterService.getSelectedCategoryFilters(category.id)
@@ -157,15 +181,10 @@ export class EditProductComponent implements OnInit {
         })
       })
 
-
-
-
     let filters = new FormArray([]);
-
     if (this.currentProduct.filters.length > 0) {
       this.currentProduct.filters.forEach(filter => {
         var val1 = filter.value.map((val, i) => {
-          console.log("val", val);
           let element = { 'id': i, 'itemName': val };
           return element;
         })
@@ -174,8 +193,6 @@ export class EditProductComponent implements OnInit {
           'value': new FormControl([val1])
         }))
         this.filterValue.push(val1);
-
-        console.log("sssssssss", filters.value)
       })
     }
 
@@ -200,7 +217,11 @@ export class EditProductComponent implements OnInit {
         let element = { 'id': mod.id, 'itemName': mod.name };
         this.selectedModules.push(element);
       })
+    }
 
+    if (company) {
+      let element = { 'id': company.id, 'itemName': company.name };
+      this.selectedCompany.push(element);
     }
 
 
@@ -222,6 +243,8 @@ export class EditProductComponent implements OnInit {
       'filters': filters,
       'modules': new FormControl(modules),
       'price': new FormControl(price),
+      'minOrder': new FormControl(minOrder),
+      'company': new FormControl([]),
       'description': new FormControl(description),
       'regions': new FormControl(regions),
       'status': new FormControl(status),
@@ -253,7 +276,17 @@ export class EditProductComponent implements OnInit {
       delete reg.itemName;
     })
 
-    this.productService.updateProduct(this.currentProduct._id ,this.editProductForm.value)
+
+    if(this.editProductForm.value.company){
+      this.compniesWithEmailIds.forEach(comp => {
+        if(this.editProductForm.value.company[0].id === comp._id){
+          let element = { 'id': comp._id, 'name': comp.name, 'email': comp.primaryAdmin.email}
+          this.editProductForm.value.company = element;
+        }
+      })
+    }
+
+    this.productService.updateProduct(this.currentProduct._id, this.editProductForm.value)
       .subscribe((response: HttpResponse<any>) => {
         if (response.status === 200) {
           this.closeModal();

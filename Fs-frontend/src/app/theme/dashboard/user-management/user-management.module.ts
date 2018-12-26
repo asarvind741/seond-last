@@ -8,6 +8,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddUserComponent } from './add-user/add-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { Angular2CsvModule } from 'angular2-csv';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { EditUserComponent } from './edit-user/edit-user.component';
     SharedModule,
     NgxDatatableModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    Angular2CsvModule
   ],
   declarations: [
     UserManagementComponent, 
