@@ -50,12 +50,21 @@
       <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Role:</label>
         <div class="col-sm-8 col-lg-8">
-          <select class="input-group" name="role" formControlName="role">
+          <select class="input-group" name="role" formControlName="role" (change)="onRoleSelect(role)">
             <option [ngValue]="null" disabled>Select Role</option>
             <option *ngFor="let role of roles" [ngValue]="role">
               {{ role }}
             </option>
           </select>
+        </div>
+      </div>
+      <div class="row" *ngIf="showPermissionFlag">
+        <label class="col-sm-4 col-lg-4 col-form-label">Select Permission</label>
+        <div class="col-sm-8 col-lg-8">
+          <angular2-multiselect [data]="permission" [(ngModel)]="selectedPermission" [settings]="settings2"
+            (onSelect)="onItemSelectCat($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+            (onDeSelectAll)="onDeSelectAll($event)" formControlName="categories">
+          </angular2-multiselect>
         </div>
       </div>
       <div class="row">

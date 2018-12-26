@@ -9,6 +9,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddUserComponent } from './add-user/add-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { Angular2CsvModule } from 'angular2-csv';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { Angular2CsvModule } from 'angular2-csv';
     NgxDatatableModule,
     ReactiveFormsModule,
     FormsModule,
-    Angular2CsvModule
+    Angular2CsvModule,
+    AngularMultiSelectModule
   ],
   declarations: [
     UserManagementComponent, 

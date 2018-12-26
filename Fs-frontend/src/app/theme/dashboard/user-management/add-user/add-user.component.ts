@@ -15,6 +15,14 @@ export class AddUserComponent implements OnInit {
   showMessage: any;
   statuss: Array<String> = ['Active', 'Inactive'];
   roles: Array<String> = ['Buyer', 'Seller', 'Admin', 'SubAdmin', 'Agent', 'Reseller'];
+  permission: Array<String> = ['isAdmin','isSubAdmin','isBuyer', 'isSupplier', 'isReseller', 'isAgent', 'isAccountAdmin']
+  selectedPermission: any = [];
+  showPermissionFlag: boolean = false;
+  settings2 = {
+    singleSelection: false,
+    text: "Select Category",
+    enableSearchFilter: true
+  };
   constructor(
     public activeModal: NgbActiveModal,
     private userService: UserService
@@ -33,12 +41,14 @@ export class AddUserComponent implements OnInit {
       'password': new FormControl(null),
       'mobile': new FormControl(null),
       'status': new FormControl(null),
-      'role': new FormControl(null)
+      'role': new FormControl(null),
+      'permissions':new FormControl(null)
     })
   }
 
   addNewUser(){
     console.log("this form", this.newUserForm.value);
+
     this.userService.addUser(this.newUserForm.value)
     .subscribe((response: HttpResponse<any>) => {
       if(response.status === 200){
@@ -80,6 +90,30 @@ export class AddUserComponent implements OnInit {
 
   clearModal(){
     this.newUserForm.reset();
+  }
+
+  onRoleSelect(){
+    if(this.newUserForm.value.role == "SubAdmin"){
+      this.showPermissionFlag = true;
+    }
+    else{
+      this.showPermissionFlag = false;
+    }
+  }
+
+  OnItemDeSelect(item: any) {
+
+  }
+  onSelectAll(items: any) {
+
+  }
+
+  onDeSelectAll(items: any) {
+
+  }
+
+  onItemSelectCat(item: any) {
+
   }
 
 }
