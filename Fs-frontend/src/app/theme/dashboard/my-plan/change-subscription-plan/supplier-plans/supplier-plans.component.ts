@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-supplier-plans',
@@ -6,6 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./supplier-plans.component.scss']
 })
 export class SupplierPlansComponent implements OnInit {
+
+  @Input('userRole') userRole: any;
+  @Input('plans') plans: any;
+  @Input('currentUser') currentUser: any;
+  showMessage: any;
 
   constructor() { }
 

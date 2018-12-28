@@ -55,7 +55,7 @@ export class PlanService {
             companyId: companyId,
             subscriptionId: subscriptionId
         }
-        return this.httpClient.post(`${environment.API_URL}/company/plan/delete`, data);
+        return this.httpClient.post(`${environment.API_URL}/company/plan/change`, data);
     }
 
 

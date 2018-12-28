@@ -25,7 +25,7 @@ export class BuyerPlansComponent implements OnInit {
     let selectedPlan;
     this.plans.forEach(plan => {
       if(plan.name === name){
-        selectedPlan = plan.name;
+        selectedPlan = plan;
         this.planService.changePlan(this.currentUser.company, selectedPlan._id)
         .subscribe((response: HttpResponse<any>) => {
           console.log("response", response)

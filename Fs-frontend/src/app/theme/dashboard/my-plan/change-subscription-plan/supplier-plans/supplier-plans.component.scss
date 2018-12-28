@@ -1,0 +1,531 @@
+.supplier_sec{margin:100px 0 135px}
+.table_sec .buyr_txt h2 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #000;
+    line-height: 17px;
+    text-transform: uppercase;
+    padding: 0 0 7px;
+}
+.tabTabl_sec .m_login_tabbing {
+    background: transparent;
+    border-radius: 50px;
+    display: block;
+    margin: 0 auto;
+    max-width: 395px;
+    width: 100%;
+    border: 1px solid #d62886;
+    position: relative;
+}
+.tabTabl_sec .m_login_tabbing ul li {
+    display:inline-block;
+    width:33.33%
+}
+.tab_wrapper .year_tabs ul li.active:first-child a,
+ .tabTabl_sec .m_login_tabbing ul li:first-child a {
+    border-radius: 50px 0 0 50px;
+}
+
+.tabTabl_sec .m_login_tabbing ul li.active a {
+    color: #000;
+}
+
+.tabTabl_sec .m_login_tabbing ul li > a {
+    color: #696969;
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 20px 23px;
+    text-align: center;
+    text-transform: capitalize;
+    position: relative;
+    line-height:20px
+}
+.tabTabl_sec .m_login_tabbing ul li:last-child a{padding:10px 23px}
+
+.tabTabl_sec .m_login_tabbing ul li span{display:block}
+
+.tabTabl_sec .m_login_tabbing ul li > a::after {
+    background: #cfcfcf;
+    height: 35%;
+    display: block;
+    position: absolute;
+    right: 0px;
+    content: "";
+    width: 1px;
+    top: 18px;
+}
+.tab_wrapper .year_tabs {
+    display: block;
+    padding: 0 0 80px;
+    width: 100%;
+    margin-top:30px
+}
+.clearfix::after, .clearfix::before {
+    clear: both;
+    content: "";
+    display: block;
+    position: relative;
+    width: 100%;
+}
+.clearfix::after {
+    clear: both;
+    content: "";
+    display: block;
+}
+.tab_wrapper .year_tabs ul {
+    background: transparent;
+    border-radius: 50px;
+    display: block;
+    margin: 0 auto;
+    max-width: 170px;
+    width: 100%;
+    border:1px solid #d62886;
+}
+.tab_wrapper .year_tabs ul li {
+    float: left;
+    width: 50%;
+}
+.tab_wrapper .year_tabs ul li.active a {
+    background: transparent;
+    color: #000;
+}
+.tab_wrapper .year_tabs ul li a {
+    color: #696969;
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 11px 17px;
+    text-align: center;
+    text-transform: uppercase;
+    position:relative;
+}
+.tab_wrapper .year_tabs ul li a::after{background: #cfcfcf;
+    height: 35%;
+    display: block;
+    position: absolute;
+    right: 0;
+    content: "";
+    width: 1px;
+    top: 13px;
+}
+
+.tab_wrapper .year_tabs ul li:last-child a:after{display:none}
+.tabTabl_sec .m_login_tabbing ul li:last-child a::after{display:none}
+
+/***table start**/
+.tab_wrapper .yearTbs.active {
+    display: block;
+}
+.yearTbs {
+    display: none;
+}
+.supplier_sec .tab_wrapper .yearTbs .table_plan_cntr {
+    display: block;
+    margin: 0 auto;
+    max-width: 960px;
+    width: 100%;
+    padding:0;
+}
+.yearTbs .table_plan_cntr table th.schol_clr::before, .yearTbs .table_plan_cntr table th.clr_f1::before {
+    display: none;
+}
+
+.table_plan_cntr table th.clr_f1::after {
+    
+    border-radius: 5px 5px 0 0;
+    content: "";
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -4;
+}
+.supplier_sec .table_plan_cntr table th.clr_f1, .supplier_sec .table_plan_cntr table th.schol_clr {
+    border-right: 0 none;
+}
+.table_plan_cntr table th.clr_f1, .table_plan_cntr.notHed_tbl table td.clr_f1 {
+    background: #f6f6f6 none repeat scroll 0 0;
+    border-radius: 5px 5px 0 0;
+    border-right: 1px solid #fff;
+    position: relative;
+    width: 27%;
+    z-index: 5;
+}
+.table_plan_cntr table th h1.titl_t, .table_plan_cntr table th, .table_plan_cntr.notHed_tbl table td.clr_f1, .table_plan_cntr.notHed_tbl table td h1.titl_t, .table_plan_cntr.notHed_tbl table td.schol_clr {
+    color: #000000;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    line-height: 20px;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: text-top;
+}
+.table_plan_cntr table th h1.titl_t, .table_plan_cntr.notHed_tbl table td.clr_f1 h1.titl_t {
+    background: #f1f1f1 none repeat scroll 0 0;
+    border-radius: 5px 5px 0 0;
+    padding: 28px 10px;
+}
+.yearTbs .table_plan_cntr table th.schol_clr::after {
+    background: rgba(0, 0, 0, 0) url("../../../../../../assets//images/supplier/tableBg-img.png") no-repeat scroll 0 0;
+}
+.table_plan_cntr table th.schol_clr::after {
+   
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: -4;
+}
+.yearTbs .table_plan_cntr table th.schol_clr {
+    padding: 26px 10px 55px;
+}
+.supplier_sec .tab_wrapper table th.schol_clr {
+    width: 14%;
+}
+.supplier_sec .table_plan_cntr table th.clr_f1, .supplier_sec .table_plan_cntr table th.schol_clr {
+    border-right: 0 none;
+}
+.table_plan_cntr table th.schol_clr, .table_plan_cntr.notHed_tbl table td.schol_clr {
+    background: #e7e6e6 none repeat scroll 0 0;
+    border-radius: 5px 5px 0 0;
+    border-right: 1px solid #fff;
+    padding: 26px 10px 50px;
+    position: relative;
+    width: 14.6%;
+    z-index: 5;
+}
+.yearTbs .table_plan_cntr table th span {
+    font-size: 18px;
+    font-weight: 600;
+}
+.table_plan_cntr table th span {
+    display: block;
+}
+.yearTbs .table_plan_cntr table th.schol_clr.s_1::after {
+    background: rgba(0, 0, 0, 0) url("../../../../../../assets//images/supplier/tableBg-img2.png") no-repeat scroll 0 0;
+    bottom: 15px;
+}
+.yearTbs .table_plan_cntr table th.schol_clr.clr_nwit cite::after {
+    background: rgba(0, 0, 0, 0) url("../../../../../../assets//images/supplier/bdr-imgCt.png") no-repeat scroll 0 0;
+    bottom: -8px;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+.yearTbs .table_plan_cntr table th.schol_clr.clr_nwit cite {
+    display: block;
+    font-style: normal;
+    line-height: 16px;
+    margin: 0 -9px;
+    position: relative;
+    top: -25px;
+}
+.table_plan_cntr table th.schol_clr.s_1 {
+    background: #d8f1f9 none repeat scroll 0 0;
+}
+.yearTbs .table_plan_cntr table th.schol_clr.s_4::after {
+    background: rgba(0, 0, 0, 0) url("../../../../../../assets//images/supplier/tableBg-img1.png") no-repeat scroll 0 0;
+}
+.table_plan_cntr table th.schol_clr.s_4 {
+    background: #e5ca95 none repeat scroll 0 0;
+}
+.table_plan_cntr table tbody tr:first-child td.clr_gra {
+    background: #f6f6f6 none repeat scroll 0 0;
+    text-align: left;
+}
+.table_plan_cntr table tbody tr:first-child td {
+    padding: 28px 15px 9px !important;
+}
+#supplier2 .table_plan_cntr table tbody tr:first-child td {
+    padding: 46px 15px 9px !important;
+}
+#supplier2 .table_plan_cntr.notHed_tbl tbody tr:first-child td:first-child {
+    background: #f6f6f6;
+}
+#supplier2.yearTbs .table_plan_cntr table th.schol_clr.s_1::after, #stockist2.yearTbs .table_plan_cntr table th.schol_clr.s_1::after, #reseller2.yearTbs .table_plan_cntr table th.schol_clr.s_1::after {
+    background: rgba(0, 0, 0, 0) url("../../../../../../assets//images/supplier/tableBg-img3.png") no-repeat scroll 0 0;
+    bottom: 1px;
+}
+#stockist2 {
+    position: relative;
+    margin-top: -64px;
+}
+#reseller2 {
+    margin-top: -72px;
+}
+tr.small-text th span{font-size: 12px !important; line-height: 16px;}
+#reseller2.yearTbs .table_plan_cntr table thead th.schol_clr {
+    width: 3%;
+}
+#reseller1 {
+    margin-top: 0;
+}
+.yearTbs .table_plan_cntr table tr td {
+    border-bottom: 1px solid #d4d4d4;
+    border-right: 0 none;
+}
+
+#stockist2 .table_plan_cntr table tbody tr:first-child td {
+    padding: 37px 15px 9px !important;
+}
+#reseller2 .table_plan_cntr table tbody tr:first-child td {
+    padding: 39px 15px 9px !important;
+}
+#reseller2 .table_plan_cntr table th.schol_clr.s_1 {
+    background: #e5ca95;
+}
+
+.table_plan_cntr table tbody tr td:nth-child(2) {
+    background: #e7e6e6;
+    border-bottom: 1px solid #d4d4d4;
+}
+.table_plan_cntr table tbody tr td:nth-child(3) {
+    background: #d8f1f9 none repeat scroll 0 0;
+    border-bottom: 1px solid #cadbe1;
+}
+.yearTbs .table_plan_cntr table tr td:last-child {
+    background: #e5ca95 none repeat scroll 0 0;
+    border-bottom: 1px solid #d3c09b;
+}
+.table_plan_cntr table tbody tr td {
+    background: #f1f1f1 none repeat scroll 0 0;
+    border-bottom: 1px solid #dbdbdb;
+    border-right: 1px solid #ffffff;
+    color: #000000;
+    font-family: "ProximaNova";
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 16px;
+    padding: 12px 15px;
+    text-align: center;
+}
+.yearTbs .table_plan_cntr table tr.active td {
+    background: #e5ca95 none repeat scroll 0 0;
+}
+.table_plan_cntr table tbody tr td > span {
+    display: block;
+    text-align: center;
+}
+.table_plan_cntr table tbody tr td.num_t_lft {
+    text-align: left;
+}
+.table_plan_cntr table tbody tr td input.sign_upBtn {
+    background: #5c356c none repeat scroll 0 0;
+    border: 0 none;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    font-family: "ProximaNova";
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    padding: 16px 10px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+}
+.table_plan_cntr table tbody tr:last-child td {
+    border-right: 0 none;
+}
+.table_plan_cntr table tbody tr:last-child td {
+    border-bottom: 0 none;
+    padding: 0;
+    border:0!important;
+}
+.supplier_sec .tab_wrapper .yearTbs .text_tbl {
+    max-width: 960px;
+}
+.table_sec .text_tbl {
+    display: block;
+    margin: 22px auto 0;
+    width: 100%;
+}
+.table_sec p {
+    color: #6c6c6c;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 16px;
+    opacity: 0.8;
+    text-align: left;
+    padding-bottom:10px
+}
+.table_sec .yearTbs .text_tbl p span {
+    display: block;
+    margin: 0 0 0 10px;
+}
+.yearTbs .table_plan_cntr table th.schol_clr.clr_nwit {color: #fff;}
+.tab_wrapper span.hd_txt{background-color:#13537f; color:#fff; font-size:14px; padding:12px 25px; letter-spacing:1px; text-align:center; text-transform: capitalize;}
+.table_plan_cntr.notHed_tbl tbody tr td:first-child {text-align: left;}
+.table_plan_cntr.notHed_tbl tbody tr:first-child td {background: #fff; border-bottom: 0; padding: 0;}
+.table_plan_cntr.notHed_tbl table td.clr_f1 {padding: 0 0 50px; border-right: 0; border-bottom: 0;}
+.table_plan_cntr.notHed_tbl table td.clr_f1 {padding: 0 0 50px; border-right: 0; border-bottom: 0;}
+.tab_wrapper span.hd_txt{color: #fff; font-size: 14px; font-weight: 400; letter-spacing: 1px;    line-height: 20px; text-align: center; background: #13537f; text-transform: capitalize;
+padding: 12px 25px; display: block;}
+.table_plan_cntr table th.schol_clr::after{background-size:100%!important} 
+.table_plan_cntr.notHed_tbl table tbody tr:first-child td{padding:0}
+.table_plan_cntr.agentTabs table th.clr_f1 {width: 50%;}
+.table_plan_cntr.agentTabs table th.schol_clr {width: 17%;}
+.table_plan_cntr table tbody tr td span.pric{font-size:18px; font-weight:600; padding-top:2px}
+.table_plan_cntr.agentTabs th.schol_clr.s_1{background:#e5ca95!important }
+.fade:not(.show) {display:none!important;} 
+#stockist .fade:not(.show) {opacity: 1;}
+.nav-tabs{border:0}
+.table_plan_cntr tr td span.pric{font-size:18px!important; font-weight:600!important}
+span.strd{margin-top: -7px; font-size: 13px!important; font-weight: 400!important;}
+
+.x_axis{display:none}
+a.animate-border {display:block;color:#fff;  background: #5c356c; transition:color 0.25s ease; height: 48px;  line-height: 48px;position: relative; overflow: hidden;}
+a.animate-border::after { position: absolute;content: '';top:0;left: 0;width: 0;height: 100%;background-color: #073d63;transform-origin:left;transition:width 0.25s ease; z-index:1; color: #fff;}
+a.animate-border:hover::after {width: 100%;}
+a.animate-border:hover::before { content: 'SELECT'; z-index: 99; color: #fff; position: absolute; left: 0; width: 100%; height: 100%;}
+span.enterprise-span {margin-top: -9px; font-size: 13px !important; font-weight: 400 !important;}
+
+#supplier2 {
+    position: relative;
+    margin-top: -44px;
+}
+.external-popup-hover {
+    position: absolute;
+    left: 100%;
+    display: none;
+    width: 170px;
+    top: -53px;    
+}
+.external-popup-hover ul{
+    margin-left: 18px;
+    box-shadow:-1px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 15px;
+    background: #fff;
+}
+.external-popup-hover::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    display: block;
+    position: absolute;
+    left: 7px;
+    top: 71px;
+    box-shadow: -3px 3px 6px 0px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    transform: rotate(45deg);
+}
+.tabTabl_sec .m_login_tabbing .external-popup-hover ul li {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.tabTabl_sec .m_login_tabbing .external-popup-hover ul li:last-child {
+    margin-bottom: 0;
+}
+
+
+
+@media only screen and (max-width:767px){
+    .supplier_sec{margin-bottom:80px}
+    .table_plan_cntr table th::after{background-size:100%!important}
+    .table_plan_cntr th.schol_clr.clr_nwit cite{display:none!important}
+    .table_plan_cntr table th{vertical-align:top; padding-top:7px!important; font-size:12px; line-height:12px}
+    .table_plan_cntr table th span{display:inline-block; font-size:12px!important}
+    /*.tabTabl_sec .m_login_tabbing ul li > a::after{right:0}
+    .tabTabl_sec .m_login_tabbing ul li > a{line-height:16px}*/
+    .tabTabl_sec .m_login_tabbing ul li > a{font-size:16px; padding:20px 30px}
+    .tabTabl_sec .m_login_tabbing ul li:last-child > a{padding:10px 30px}
+    .external-popup-hover {display: none !important;}
+    .supplier_sec .tab_wrapper .yearTbs .table_plan_cntr {overflow: auto;}
+    #supplier2, #stockist2 { margin-top: 0;}
+    #stockist1 table {width: 430px;}
+    #stockist2 table {width: 430px;}  
+    #reseller1 table {width: 430px;}  
+    #reseller2 {margin-top: 0;}
+}
+
+@media only screen and (max-width:479px){
+    .tabTabl_sec .m_login_tabbing{max-width:288px}
+    .tabTabl_sec .m_login_tabbing ul li > a{font-size:15px; padding:20px 16px}
+    .tabTabl_sec .m_login_tabbing ul li:last-child > a{padding:10px 13px}
+    .tabTabl_sec .m_login_tabbing ul li > a::after{top:20px} 
+   
+}
+
+@media only screen and (max-width:479px){
+    .x_axis{display:block; position:relative}
+    .hand_icn{width:40px; opacity:0.7}
+    .hnd_bounce{float:right; margin-top:-40px}
+    .hnd_bounce i.fa.fa-arrow-left {
+        font-size: 0;
+    }
+
+   
+
+      @-webkit-keyframes bounceLeft {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          -webkit-transform: translateX(0);
+          transform: translateX(0);
+        }
+        40% {
+          -webkit-transform: translateX(30px);
+          transform: translateX(30px);
+        }
+        60% {
+          -webkit-transform: translateX(15px);
+          transform: translateX(15px);
+        }
+      }
+      @-moz-keyframes bounceLeft {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateX(0);
+        }
+        40% {
+          transform: translateX(30px);
+        }
+        60% {
+          transform: translateX(15px);
+        }
+      }
+      @keyframes bounceLeft {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          -ms-transform: translateX(0);
+          transform: translateX(0);
+        }
+        40% {
+          -ms-transform: translateX(30px);
+          transform: translateX(30px);
+        }
+        60% {
+          -ms-transform: translateX(15px);
+          transform: translateX(15px);
+        }
+      }
+
+      .fa-arrow-left {
+        -webkit-animation: bounceLeft 2s infinite;
+        animation: bounceLeft 2s infinite; position:absolute; right:10px
+      }
+      /* /left bounce */
+      
+
+}
