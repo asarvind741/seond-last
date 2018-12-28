@@ -1,6 +1,5 @@
-<div *ngIf = "plans">
-  <app-buyer-plans *ngIf = "userRole === 'Buyer'"
-  [userRole]="userRole" [plans]="plans" [currentUser] = "currentUser"></app-buyer-plans>
-  <app-supplier-plans *ngIf = "userRole === 'Supplier'"
-  [userRole]="userRole" [plans]="plans"></app-supplier-plans>
+<div *ngIf="plans">
+  <app-buyer-plans *ngIf="userRole === 'Buyer'" [userRole]="userRole" [plans]="plans" [currentUser]="currentUser"></app-buyer-plans>
+  <!-- <app-supplier-plans *ngIf = "userRole === 'Supplier'"
+  [userRole]="userRole" [plans]="plans"></app-supplier-plans> -->
 </div>
