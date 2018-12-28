@@ -1,0 +1,41 @@
+<div class="row" *ngIf="myPlan">
+  <div class="col-sm-12">
+    <app-card [title]="'My Current Plan'" [classHeader]="true">
+      <div class="row">
+        <div class="col-sm-12">
+          <button class="btn btn-primary pull-right" type="button" (click) = "changePlan()">Change Plan</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <label for="overview"> Overview </label>
+          <table>
+            <thead>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Subscribed on</th>
+              <th>Expires On</th>
+            </thead>
+            <tbody>
+              <td>{{ myPlan.name }}</td>
+              <td>{{ myPlan.price }}</td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <label for="overview"> Features </label>
+        <div class="col-sm-12">
+          <div class="row" *ngFor="let feature of currentPlanFeatures">
+            <div class="col-sm-6">
+              <h4>{{ feature.name }}</h4>
+            </div>
+            <div class="col-sm-6">
+              <p>{{ feature.value}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>
