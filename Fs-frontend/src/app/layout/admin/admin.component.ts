@@ -149,7 +149,6 @@ export class AdminComponent implements OnInit {
         private authService: AuthenticationService,
         private router: Router,
         private elasticSearchService: ElasticSearchService,
-        private socketService: SocketService,
         private activatedRoute: ActivatedRoute
     ) {
         this.navType = 'st2';
@@ -219,9 +218,6 @@ export class AdminComponent implements OnInit {
     ngOnInit() {
         this.setBackgroundPattern('pattern1');
         this.elasticSearchService.isAvailable();
-        this.socketService.onNewNotification().subscribe(msg => {
-            console.log("message", msg)
-        });
         /*document.querySelector('body').classList.remove('dark');*/
     }
 

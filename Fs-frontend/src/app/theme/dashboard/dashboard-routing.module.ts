@@ -83,6 +83,10 @@ const routes: Routes = [
         loadChildren: './search-history/search-history.module#SearchHistoryModule'
       },
       {
+        path: 'my-plan',
+        loadChildren: './my-plan/my-plan.module#MyPlanModule'
+      },
+      {
         path: 'product-details/:id',
         component: ProductDetailsComponent
       }

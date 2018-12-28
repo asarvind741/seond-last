@@ -8,11 +8,7 @@ import { BehaviorSubject } from 'rxjs';
     providedIn: 'root',
 })
 
-
-
 export class AuthenticationService {
-
-    // private tokenSubject = new Subject<any>();
      public currentLoggingUserSubject = new BehaviorSubject<any>([]);
 
     constructor(private httpClient: HttpClient){
@@ -60,6 +56,10 @@ export class AuthenticationService {
 
     getToken(){
         return localStorage.getItem('token');
+    }
+
+    getCurrentUser(){
+        return localStorage.getItem('currentUser');
     }
 
     saveUser(user){

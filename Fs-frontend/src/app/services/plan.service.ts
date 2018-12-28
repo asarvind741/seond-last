@@ -18,6 +18,10 @@ export class PlanService {
         return this.httpClient.get(`${environment.API_URL}/plan/`);
     }
 
+    getPlansByRole(role) {
+        return this.httpClient.get(`${environment.API_URL}/plan/by-role/${role}`);
+    }
+
     getUserPlans(){
         return this.httpClient.get(`${environment.API_URL}/plan/get-user-plans`)
     }
@@ -44,6 +48,15 @@ export class PlanService {
 
     deleteSubscription(id){
         return this.httpClient.post(`${environment.API_URL}/plan/delete`, {id: id})
+    }
+
+    changePlan(companyId, subscriptionId){
+
+        let data = {
+            companyId: companyId,
+            subscriptionId: subscriptionId
+        }
+        return this.httpClient.post(`${environment.API_URL}/company/plan/delete`, data);
     }
 
 

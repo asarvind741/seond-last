@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { MyPlanComponent } from './my-plan.component';
+import { ChangeSubscriptionPlanComponent } from './change-subscription-plan/change-subscription-plan.component';
 
 const routes: Routes = [
-    { path: '', component: MyPlanComponent }
+    {
+        path: '', component: MyPlanComponent,
+    },
+    { 
+        path: 'change', component: ChangeSubscriptionPlanComponent 
+    }
 ]
 
 @NgModule({
-    declarations: [],
-    imports: [ CommonModule ],
-    exports: [],
-    providers: [],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
-export class MyPlanRoutingModule {}
+export class MyPlanRoutingModule { }

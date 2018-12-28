@@ -23,6 +23,10 @@ export class CompanyService implements OnInit  {
         return this.httpClient.get(`${environment.API_URL}/company/${companyId}`)
     }
 
+    getUserPlan(companyId){
+        return this.httpClient.get(`${environment.API_URL}/company/plan/${companyId}`)
+    }
+
     getCompanyList(){
         return this.httpClient.get(`${environment.API_URL}/company/`)
     }
