@@ -88,6 +88,8 @@ export class AdminComponent implements OnInit {
     searchItem: String;
     showResult: Boolean = true;
     itemsSearched: Array<any> = [];
+    notifications: Array<any> = [{ message: 'Lorem ipsum dolor sit amet, consectetuer elit.', time: '30 minutes ago' }];
+    newNotification: Boolean = false
     lastKeypress = 0;
     categories: Array<String> = ['first', 'second', 'third', 'fourth'];
     public navType: string;
@@ -149,8 +151,10 @@ export class AdminComponent implements OnInit {
         private authService: AuthenticationService,
         private router: Router,
         private elasticSearchService: ElasticSearchService,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private socketService: SocketService,
     ) {
+
         this.navType = 'st2';
         this.themeLayout = 'vertical';
         this.verticalPlacement = 'left';
@@ -218,7 +222,53 @@ export class AdminComponent implements OnInit {
     ngOnInit() {
         this.setBackgroundPattern('pattern1');
         this.elasticSearchService.isAvailable();
+        this.socketService.onNewNotification().subscribe(msg => {
+            console.log('msg came', msg);
+            this.newNotification = true;
+            this.notifications.unshift({ message: msg.message, time: this.timeDifference(msg.time) })
+
+
+        });
+        this.socketService.socket.on('error', function (err) {
+            console.log(err);
+        });
         /*document.querySelector('body').classList.remove('dark');*/
+    }
+
+    timeDifference(previous) {
+        let current = Date.now();
+        console.log('current', current, previous)
+        var msPerMinute = 60 * 1000;
+        var msPerHour = msPerMinute * 60;
+        var msPerDay = msPerHour * 24;
+        var msPerMonth = msPerDay * 30;
+        var msPerYear = msPerDay * 365;
+
+        var elapsed = current - previous;
+        console.log(elapsed)
+        if (elapsed < msPerMinute) {
+            return Math.round(elapsed / 1000) + ' seconds ago';
+        }
+
+        else if (elapsed < msPerHour) {
+            return Math.round(elapsed / msPerMinute) + ' minutes ago';
+        }
+
+        else if (elapsed < msPerDay) {
+            return Math.round(elapsed / msPerHour) + ' hours ago';
+        }
+
+        else if (elapsed < msPerMonth) {
+            return 'approximately ' + Math.round(elapsed / msPerDay) + ' days ago';
+        }
+
+        else if (elapsed < msPerYear) {
+            return 'approximately ' + Math.round(elapsed / msPerMonth) + ' months ago';
+        }
+
+        else {
+            return 'approximately ' + Math.round(elapsed / msPerYear) + ' years ago';
+        }
     }
 
     onResize(event) {
@@ -305,6 +355,8 @@ export class AdminComponent implements OnInit {
     }
 
     toggleLiveNotification() {
+        console.log('called toggle');
+        this.newNotification = false;
         this.liveNotification =
             this.liveNotification === 'an-off' ? 'an-animate' : 'an-off';
         this.liveNotificationClass =

@@ -41,7 +41,7 @@ const Company = new Schema({
     ref: 'User',
   },
 }, {
-    timestamps: true,
-  });
+  timestamps: true,
+});
 
 export default mongoose.model('Company', Company);

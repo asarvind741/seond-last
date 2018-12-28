@@ -4,7 +4,8 @@ import jwt from 'jsonwebtoken';
 import speakeasy from 'speakeasy';
 import {
     sendResponse,
-    SendMail
+    SendMail,
+    notifyAdmin
 } from './functions';
 import Constants from './constant';
 import sendSMS from '../functions/nexmo';
@@ -275,7 +276,7 @@ async function sociaLoginUser(req, res) {
         }
 
         if (!user) {
-            console.log('user', user)
+            console.log('user', user);
             let company = await Company.create({
                 name: req.body['company.name'],
                 address: req.body['company.address'],
@@ -613,6 +614,8 @@ async function addUserFromWebsite(req, res) {
                         Constants.SIGN_UP_MAIL_SUBJECT,
                         `${Constants.SIGN_UP_TEXT}: ${link}`
                     );
+                    notifyAdmin(newUser._id, req.body.name, 'new user created.', 'New-User');
+
                 } else {
                     sendResponse(res, 400, 'Payment failed.');
 

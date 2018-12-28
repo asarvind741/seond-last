@@ -116,7 +116,8 @@ function notifyUser(sender, reciever, message, notifcationType, recieverName, se
         reciever: reciever,
         message: message,
         senderName: senderName,
-        recieverName: recieverName
+        recieverName: recieverName,
+        time: Date.now()
     };
     if (onlineUsers && reciever in onlineUsers) {
         console.log('socket called===>', onlineUsers[reciever].socketId);
