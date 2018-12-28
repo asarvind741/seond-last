@@ -121,10 +121,11 @@ async function changePlan(req, res) {
                 $set: {
                     subscription: req.body.subscriptionId
                 }
+            }, {
+                new: true
             });
             if (updatePlan) {
                 sendResponse(res, 200, 'Successful.', updatePlan);
-
             } else {
                 sendResponse(res, 400, 'Plan not updated.');
             }
