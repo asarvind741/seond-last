@@ -51,7 +51,6 @@ export class PlanService {
     }
 
     changePlan(companyId, subscriptionId){
-
         let data = {
             companyId: companyId,
             subscriptionId: subscriptionId
