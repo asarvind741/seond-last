@@ -73,7 +73,6 @@ export class AuthenticationService {
 
     logoutUser(){
         localStorage.clear();
-        
     }
 
     get isLoggedIn(){
