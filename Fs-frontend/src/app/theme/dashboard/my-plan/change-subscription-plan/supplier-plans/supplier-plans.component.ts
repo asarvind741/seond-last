@@ -9,6 +9,9 @@ export class SupplierPlansComponent implements OnInit {
 
   active1 = true;
   applyClass = 1;
+  @Input('userRole') userRole: any;
+  @Input('plans') plans: any;
+  @Input('currentUser') currentUser: any;
   @ViewChild('supplier1') supplier1: ElementRef;
   @ViewChild('supplier2') supplier2: ElementRef;
   @ViewChild('stockist1') stockist1: ElementRef;
