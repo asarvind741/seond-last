@@ -121,7 +121,7 @@ p.red{color:#cb297b}
 a.animate-border {display:block;color:#fff;  background: #5c356c; transition:color 0.25s ease; height: 48px;  line-height: 48px;position: relative; overflow: hidden;}
 a.animate-border::after { position: absolute;content: '';top:0;left: 0;width: 0;height: 100%;background-color: #073d63;transform-origin:left;transition:width 0.25s ease; z-index:1; color: #fff;}
 a.animate-border:hover::after {width: 100%;}
-a.animate-border:hover::before { content: 'SIGN UP'; z-index: 99; color: #fff; position: absolute; left: 0; width: 100%; height: 100%;}
+a.animate-border:hover::before { content: 'SELECT'; z-index: 99; color: #fff; position: absolute; left: 0; width: 100%; height: 100%;}
 
 @media only screen and (min-width:320px) and (max-width:767px){
     .buyer_new_sec{margin-bottom:50px}

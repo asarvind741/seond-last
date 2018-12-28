@@ -19,6 +19,7 @@ export class MyPlanComponent implements OnInit {
   myPlan: any;
   currentPlanFeatures: any;
   errorMessage: any;
+  isPlan: Boolean;
 
   constructor(
     private router: Router,
@@ -36,13 +37,14 @@ export class MyPlanComponent implements OnInit {
     .subscribe((response: HttpResponse<any>) => {
       if(response.status === 200){
         this.myPlan = response['data'];
+        this.isPlan = true;
         this.currentPlanFeatures = this.myPlan.features._id.feature;
         console.log("current plan", this.currentPlanFeatures);
       }
     }, (error: HttpErrorResponse) => {
       console.log("error", error);
       this.errorMessage = error.error.message;
-      this.openUnscuccessSwal();
+      this.isPlan = false;
     })
   }
 

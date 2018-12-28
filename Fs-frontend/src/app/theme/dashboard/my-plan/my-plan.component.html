@@ -1,4 +1,4 @@
-<div class="row" *ngIf="myPlan">
+<div class="row" *ngIf="isPlan; else noPlan">
   <div class="col-sm-12">
     <app-card [title]="'My Current Plan'" [classHeader]="true">
       <div class="row">
@@ -41,3 +41,7 @@
     </app-card>
   </div>
 </div>
+
+<ng-template #noPlan>
+  <p>No Plan found...</p>
+</ng-template>
