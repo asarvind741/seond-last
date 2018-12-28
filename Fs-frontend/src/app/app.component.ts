@@ -3,7 +3,6 @@ import { NavigationEnd, Router } from '@angular/router';
 import { environment } from '../environments/environment';
 import { SearchHistoryService } from './services/search-history.service';
 import { HttpResponse } from '@angular/common/http';
-import { SocketService } from './services/socket.service';
 
 @Component({
   selector: 'app-root',
@@ -16,16 +15,10 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private searchHistoryService: SearchHistoryService,
-    private socketService: SocketService
   ) { }
 
   ngOnInit() {
-    this.socketService.onNewNotification().subscribe(msg => {
-      console.log('msg came', msg);
-    });
-    this.socketService.socket.on('error', function (err) {
-      console.log(err);
-    });
+
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
         return;
