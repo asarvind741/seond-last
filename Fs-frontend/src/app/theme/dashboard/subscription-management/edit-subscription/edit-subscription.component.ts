@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import swal from 'sweetalert2';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { HttpResponse } from '@angular/common/http';
-import {PlanService } from '../../../../services/plan.service';
+import { PlanService } from '../../../../services/plan.service';
 import { FeatureService } from '../../../../services/feature.service';
 
 @Component({
@@ -16,32 +16,38 @@ export class EditSubscriptionComponent implements OnInit {
   showMessage: any;
   featureModules: any;
   statuss: Array<String> = ['Active', 'Inactive'];
-  duration: Array<String> = ['Yearly', 'Half Yearly', 'Quarterly', 'Monthly'];
+  duration: Array<String> = ['2 YEARS', '1 YEAR', 'Half Yearly', 'Quaterly', 'Monthly'];
   role: Array<Object> = [
-    {'id': 0, 'itemName': 'Buyer' }, 
-    {'id': 1, 'itemName': 'Supplier' }, 
-    {'id': 2, 'itemName': 'Agent' }, 
-    {'id': 3, 'itemName': 'Reseller' }];
-    modulesToInclude: Array<Object> = [
-      {'id': 0, 'itemName': 'First Module' }, 
-      {'id': 1, 'itemName': 'Second Module' }, 
-      {'id': 2, 'itemName': 'Third Module' }, 
-      {'id': 3, 'itemName': 'Fourth Module' }];
-      selectedModules: any = [];
-      selectedRoles: any = [];
-      settings1: any;
-      settings: any;
+    { 'id': 0, 'itemName': 'Buyer' },
+    { 'id': 1, 'itemName': 'Supplier' }];
+  supplierType: Array<Object> = [
+    { 'id': 0, 'itemName': 'supplier' },
+    { 'id': 0, 'itemName': 'stockist' },
+    { 'id': 0, 'itemName': 'external resources' },
+    { 'id': 0, 'itemName': 'wholeseller/reseller' },
+    { 'id': 0, 'itemName': 'agent' },
+    { 'id': 0, 'itemName': 'manufacturer' }]
+  modulesToInclude: Array<Object> = [
+    { 'id': 0, 'itemName': 'First Module' },
+    { 'id': 1, 'itemName': 'Second Module' },
+    { 'id': 2, 'itemName': 'Third Module' },
+    { 'id': 3, 'itemName': 'Fourth Module' }];
+  selectedModules: any = [];
+  selectedRoles: any = [];
+  settings1: any;
+  settings2: any;
+  settings: any;
 
   @Input() currentPlan;
   constructor(
     public activeModal: NgbActiveModal,
     private planService: PlanService,
     private featureService: FeatureService
-    ) { }
+  ) { }
 
   ngOnInit() {
 
-  
+
     this.settings = {
       singleSelection: true,
       text: "Select Roles",
@@ -56,57 +62,48 @@ export class EditSubscriptionComponent implements OnInit {
       enableSearchFilter: true,
       badgeShowLimit: 3
     };
+
+    this.settings2 = {
+      singleSelection: true,
+      text: "Select supplier type",
+      enableSearchFilter: true,
+    };
     this.createForm();
   }
 
-  createForm(){
+  createForm() {
     let name = this.currentPlan.name ? this.currentPlan.name : '';
     let duration = this.currentPlan.duration ? this.currentPlan.duration : 'Select One';
     let price = this.currentPlan.price ? this.currentPlan.price : '';
-    let description = this.currentPlan.description ? this.currentPlan.description: '';
+    let description = this.currentPlan.description ? this.currentPlan.description : '';
     let status = this.currentPlan.status ? this.currentPlan.status : null;
-    let maxNumberOfMembers = this.currentPlan.maxNumberOfMembers ? this.currentPlan.maxNumberOfMembers : null;
     let rolesAllowed = this.currentPlan.rolesAllowed ? this.currentPlan.rolesAllowed : null;
     let moduleIncluded = this.currentPlan.moduleIncluded ? this.currentPlan.moduleIncluded : null;
-    
-    // let features = new FormArray([]);
-
-    // if(this.currentPlan.features){
-    //   this.currentPlan.features.forEach((feature: String) => {
-    //     features.push(new FormControl(feature))
-    //   })
-    // }
-
     let feature = this.currentPlan.features ? this.currentPlan.features : null;
-    console.log("sssssssssss", feature);
     let features = new FormControl(feature)
-
-
-    if(rolesAllowed.length > 0){
+    if (rolesAllowed.length > 0) {
       this.featureService.getFeatureListByRole(rolesAllowed[0].roleName)
-      .subscribe((response: HttpResponse<any>) => {
-        if(response.status === 200){
-          this.featureModules = response['data'];
-        }
-      })
+        .subscribe((response: HttpResponse<any>) => {
+          if (response.status === 200) {
+            this.featureModules = response['data'];
+          }
+        })
     }
-
-
-    if(rolesAllowed){
+    if (rolesAllowed) {
       rolesAllowed.forEach((role, i) => {
         let element = { 'id': i, 'itemName': role.roleName };
         this.selectedRoles.push(element);
         console.log("this selected", this.selectedRoles);
       })
     }
-    if(moduleIncluded){
+    if (moduleIncluded) {
       moduleIncluded.forEach((mod, i) => {
         let element = { 'id': i, 'itemName': mod.moduleName };
         this.selectedModules.push(element);
         console.log("this selected", this.selectedModules);
       })
     }
-    
+
     this.editPlanForm = new FormGroup({
       'name': new FormControl(name),
       'duration': new FormControl(duration),
@@ -119,12 +116,12 @@ export class EditSubscriptionComponent implements OnInit {
     })
   }
 
-  addNewFeature(){
+  addNewFeature() {
     const control = new FormControl('');
     (<FormArray>this.editPlanForm.get('features')).push(control);
   }
 
-  editPlan(){
+  editPlan() {
 
     const modulesArrary = this.editPlanForm.value.moduleIncluded;
     const rolesArray = this.editPlanForm.value.rolesAllowed;
@@ -143,17 +140,17 @@ export class EditSubscriptionComponent implements OnInit {
     }
 
     this.planService.updatePlan(this.currentPlan._id, this.editPlanForm.value)
-    .subscribe((response: HttpResponse<any>) => {
-      if(response.status === 200){
+      .subscribe((response: HttpResponse<any>) => {
+        if (response.status === 200) {
+          this.closeModal();
+          this.openSuccessSwal();
+        }
+      }, (error) => {
         this.closeModal();
-        this.openSuccessSwal();
-      }
-    }, (error) => {
-      this.closeModal();
-      this.showMessage = error.error['message']
-      this.openUnscuccessSwal();
-    })
-    
+        this.showMessage = error.error['message']
+        this.openUnscuccessSwal();
+      })
+
   }
 
   openSuccessSwal() {
@@ -176,24 +173,24 @@ export class EditSubscriptionComponent implements OnInit {
     this.activeModal.close('Modal Closed');
   }
 
-  cancelNewUserAddition(){
+  cancelNewUserAddition() {
     this.editPlanForm.reset();
     this.closeModal();
   }
 
-  clearModal(){
+  clearModal() {
     this.editPlanForm.reset();
   }
 
   onItemSelect(item: any) {
-    if(item.itemName === "Buyer" || item.itemName === "Supplier" || item.itemName === "Agent" || item.itemName === "Reseller"){
+    if (item.itemName === "Buyer" || item.itemName === "Supplier" || item.itemName === "Agent" || item.itemName === "Reseller") {
       this.featureService.getFeatureListByRole(item.itemName)
-      .subscribe((response: HttpResponse<any>) => {
-        if(response.status === 200){
-          this.featureModules = response['data'];
-          console.log("featuere module", this.featureModules)
-        }
-      })
+        .subscribe((response: HttpResponse<any>) => {
+          if (response.status === 200) {
+            this.featureModules = response['data'];
+            console.log("featuere module", this.featureModules)
+          }
+        })
     }
   }
   OnItemDeSelect(item: any) {

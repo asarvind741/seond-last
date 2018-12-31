@@ -16,12 +16,17 @@ export class AddSubscriptionComponent implements OnInit {
   newPlanForm: FormGroup;
   statuss: Array<String> = ['Active', 'Inactive'];
   featureModules: any;
-  duration: Array<String> = ['Yearly', 'Half Yearly', 'Quaterly', 'Monthly'];
+  duration: Array<String> = ['2 YEARS', '1 YEAR', 'Half Yearly', 'Quaterly', 'Monthly'];
   role: Array<Object> = [
     { 'id': 0, 'itemName': 'Buyer' },
-    { 'id': 1, 'itemName': 'Supplier' },
-    { 'id': 2, 'itemName': 'Agent' },
-    { 'id': 3, 'itemName': 'Reseller' }];
+    { 'id': 1, 'itemName': 'Supplier' }];
+  supplierType: Array<Object> = [
+    { 'id': 0, 'itemName': 'supplier' },
+    { 'id': 0, 'itemName': 'stockist' },
+    { 'id': 0, 'itemName': 'external resources' },
+    { 'id': 0, 'itemName': 'wholeseller/reseller' },
+    { 'id': 0, 'itemName': 'agent' },
+    { 'id': 0, 'itemName': 'manufacturer' }]
   modulesToInclude: Array<Object> = [
     { 'id': 0, 'itemName': 'First Module' },
     { 'id': 1, 'itemName': 'Second Module' },
@@ -31,6 +36,7 @@ export class AddSubscriptionComponent implements OnInit {
   selectedRoles: any;
   settings: any;
   settings1: any;
+  settings2: any;
   showMessage: any;
   constructor(
     public activeModal: NgbActiveModal,
@@ -54,11 +60,16 @@ export class AddSubscriptionComponent implements OnInit {
       enableSearchFilter: true,
       badgeShowLimit: 3
     };
+    this.settings2 = {
+      singleSelection: true,
+      text: "Select supplier type",
+      enableSearchFilter: true,
+    };
+
     this.createForm();
   }
 
   createForm() {
-    // let features = new FormArray([]);
     this.newPlanForm = new FormGroup({
       'name': new FormControl(null),
       'duration': new FormControl(null),
@@ -68,14 +79,8 @@ export class AddSubscriptionComponent implements OnInit {
       'rolesAllowed': new FormControl([]),
       'moduleIncluded': new FormControl([]),
       'features': new FormControl()
-      // 'features': features
     })
   }
-
-  // addNewFeature() {
-  //   const control = new FormControl('');
-  //   (<FormArray>this.newPlanForm.get('features')).push(control);
-  // }
 
   addNewPlan() {
     const modulesArrary = this.newPlanForm.value.moduleIncluded;
@@ -93,9 +98,6 @@ export class AddSubscriptionComponent implements OnInit {
         delete role.itemName;
       });
     }
-
-    console.log(this.newPlanForm.value)
-
 
     this.planService.addPlan(this.newPlanForm.value).subscribe((response: HttpResponse<any>) => {
       if (response.status === 200) {

@@ -12,6 +12,17 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-lg-4 col-form-label">Plan For</label>
+        <div class="col-sm-8 col-lg-8">
+          <angular2-multiselect [data]="role" [(ngModel)]="selectedRoles" [settings]="settings" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
+            formControlName="rolesAllowed">
+          </angular2-multiselect>
+        </div>
+      </div>
+
       <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Type:</label>
         <div class="col-sm-8 col-lg-8">
@@ -40,15 +51,7 @@
         </div>
       </div>
 
-      <div class="row">
-        <label class="col-sm-4 col-lg-4 col-form-label">Plan For</label>
-        <div class="col-sm-8 col-lg-8">
-          <angular2-multiselect [data]="role" [(ngModel)]="selectedRoles" [settings]="settings" (onSelect)="onItemSelect($event)"
-            (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
-            formControlName="rolesAllowed">
-          </angular2-multiselect>
-        </div>
-      </div>
+
       <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Select Modules</label>
         <div class="col-sm-8 col-lg-8">
@@ -71,7 +74,7 @@
           </div>
         </div>
       </div>
-<!-- 
+      <!-- 
       <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Features</label>
         <div class="col-sm-8 col-lg-8">
@@ -86,7 +89,7 @@
         </div>
       </div> -->
 
-      <div class="row" *ngIf = "selectedRoles">
+      <div class="row" *ngIf="selectedRoles">
         <label class="col-sm-4 col-lg-4 col-form-label">Feature Module</label>
         <div class="col-sm-8 col-lg-8">
           <select class="input-group" name="module" formControlName="features">

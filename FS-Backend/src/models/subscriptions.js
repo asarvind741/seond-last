@@ -27,7 +27,7 @@ const Subscription = new Schema({
   },
   duration: {
     type: String,
-    enum: ['Yearly', 'Monthly', 'Half Yearly', 'Quaterly'],
+    enum: ['2 YEARS', '1 YEAR', 'Monthly', 'Half Yearly', 'Quaterly'],
     default: 'Yearly',
   },
   // maxNumberOfMembers: {
