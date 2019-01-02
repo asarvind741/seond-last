@@ -166,7 +166,7 @@ function notifyAdmin(sender, senderName, message, notifcationType) {
 
 function socketIntialise(http) {
     io = require('socket.io')(http);
-    console.log(io, 'io==>');
+    // console.log(io, 'io==>');
     io.on('connection', (socket) => {
         console.log('a user connected', socket.id);
         socket.on('disconnect', () => {
