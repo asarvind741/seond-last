@@ -20,24 +20,29 @@ export class AddSubscriptionComponent implements OnInit {
   role: Array<Object> = [
     { 'id': 0, 'itemName': 'Buyer' },
     { 'id': 1, 'itemName': 'Supplier' }];
+
   supplierType: Array<Object> = [
     { 'id': 0, 'itemName': 'supplier' },
-    { 'id': 0, 'itemName': 'stockist' },
-    { 'id': 0, 'itemName': 'external resources' },
-    { 'id': 0, 'itemName': 'wholeseller/reseller' },
-    { 'id': 0, 'itemName': 'agent' },
-    { 'id': 0, 'itemName': 'manufacturer' }]
+    { 'id': 1, 'itemName': 'stockist' },
+    { 'id': 2, 'itemName': 'external resources' },
+    { 'id': 3, 'itemName': 'wholeseller/reseller' },
+    { 'id': 4, 'itemName': 'agent' },
+    { 'id': 5, 'itemName': 'manufacturer' }];
+
   modulesToInclude: Array<Object> = [
     { 'id': 0, 'itemName': 'First Module' },
     { 'id': 1, 'itemName': 'Second Module' },
     { 'id': 2, 'itemName': 'Third Module' },
     { 'id': 3, 'itemName': 'Fourth Module' }];
+
   selectedModules: any;
   selectedRoles: any;
+  selectedRoleType: any;
   settings: any;
   settings1: any;
   settings2: any;
   showMessage: any;
+  isSupplier: Boolean = false;
   constructor(
     public activeModal: NgbActiveModal,
     private planService: PlanService,
@@ -62,7 +67,7 @@ export class AddSubscriptionComponent implements OnInit {
     };
     this.settings2 = {
       singleSelection: true,
-      text: "Select supplier type",
+      text: "Select type",
       enableSearchFilter: true,
     };
 
@@ -78,13 +83,16 @@ export class AddSubscriptionComponent implements OnInit {
       'description': new FormControl(null),
       'rolesAllowed': new FormControl([]),
       'moduleIncluded': new FormControl([]),
-      'features': new FormControl()
+      'features': new FormControl(null),
+      'roleType': new FormControl([])
     })
   }
 
   addNewPlan() {
+    console.log("test", this.newPlanForm.value)
     const modulesArrary = this.newPlanForm.value.moduleIncluded;
-    const rolesArray = this.newPlanForm.value.rolesAllowed;
+    const mainRole = this.newPlanForm.value.rolesAllowed;
+    const subRole = this.newPlanForm.value.roleType;
     if (modulesArrary.length > 0) {
       modulesArrary.forEach(module => {
         module.moduleName = module.itemName;
@@ -92,11 +100,20 @@ export class AddSubscriptionComponent implements OnInit {
       });
     }
 
-    if (rolesArray.length > 0) {
-      rolesArray.forEach(role => {
-        role.roleName = role.itemName;
-        delete role.itemName;
-      });
+    if(mainRole.length > 0 ){
+      if(subRole.length > 0 ){
+        const element = { 'roleName': mainRole[0].itemName, 'roleType': subRole[0].itemName }
+        this.newPlanForm.value.rolesAllowed = element;
+        this.newPlanForm.value.roleType;
+        delete this.newPlanForm.value.roleType;
+        console.log("this main", this.newPlanForm.value);
+      }
+      else {
+        delete this.newPlanForm.value.roleType;
+        const element = {'roleName': mainRole[0].itemName }
+        this.newPlanForm.value.rolesAllowed = element;
+        console.log("this main", this.newPlanForm.value);
+      }
     }
 
     this.planService.addPlan(this.newPlanForm.value).subscribe((response: HttpResponse<any>) => {
@@ -119,7 +136,6 @@ export class AddSubscriptionComponent implements OnInit {
   }
 
   onSelectValue(event) {
-
   }
 
 
@@ -154,12 +170,17 @@ export class AddSubscriptionComponent implements OnInit {
 
   onItemSelect(item: any) {
 
-  if(item.itemName === "Buyer" || item.itemName === "Supplier" || item.itemName === "Agent" || item.itemName === "Reseller"){
+  if(item.itemName === "Buyer" || item.itemName === "Supplier"){
+    if(item.itemName === "Supplier"){
+      this.isSupplier = true;
+    }
+    else { 
+      this.isSupplier = false;
+    }
     this.featureService.getFeatureListByRole(item.itemName)
     .subscribe((response: HttpResponse<any>) => {
       if(response.status === 200){
         this.featureModules = response['data'];
-        console.log("featuere module", this.featureModules)
       }
     })
 

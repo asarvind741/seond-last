@@ -15,9 +15,7 @@ export class AddFeatureComponent implements OnInit {
   statuss: Array<String> = ['Active', 'Inactive'];
   role: Array<Object> = [
     { 'id': 0, 'itemName': 'Buyer' },
-    { 'id': 1, 'itemName': 'Supplier' },
-    { 'id': 2, 'itemName': 'Agent' },
-    { 'id': 3, 'itemName': 'Reseller' }];
+    { 'id': 1, 'itemName': 'Supplier' }];
 
   selectedRoles: any;
   settings: any;

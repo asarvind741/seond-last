@@ -23,6 +23,16 @@
         </div>
       </div>
 
+      <div class="row" *ngIf = "isSupplier">
+        <label class="col-sm-4 col-lg-4 col-form-label">Role Type</label>
+        <div class="col-sm-8 col-lg-8">
+          <angular2-multiselect [data]="supplierType" [(ngModel)]="selectedRoleType" [settings]="settings2" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
+            formControlName="roleType">
+          </angular2-multiselect>
+        </div>
+      </div>
+
       <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Type:</label>
         <div class="col-sm-8 col-lg-8">
@@ -34,6 +44,7 @@
           </select>
         </div>
       </div>
+      
       <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Price(In Euros)</label>
         <div class="col-sm-8 col-lg-8">

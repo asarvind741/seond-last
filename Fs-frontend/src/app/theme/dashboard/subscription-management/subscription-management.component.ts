@@ -235,7 +235,6 @@ export class SubscriptionManagementComponent implements OnInit {
   exportData() {
     this.planService.getPlans()
       .subscribe(plans => {
-        console.log("-------------------->>>>>>>>>>>", JSON.stringify(plans))
         this.csvData = plans['data'];
         let data = []
         this.csvData.forEach((element, index) => {
@@ -253,7 +252,6 @@ export class SubscriptionManagementComponent implements OnInit {
 
         this.csvData = [];
         this.csvData = data
-        console.log("Yo-------------------->>>>>>>>>>>", JSON.stringify(this.csvData))
       })
   }
 
