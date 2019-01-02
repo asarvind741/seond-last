@@ -46,17 +46,10 @@ const permissionSchema = new Schema({
 });
 
 const WishList = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
   products: [{
-    name: String,
-    _id: {
-      type: Schema.Types.Mixed,
-      ref: 'Product',
-    },
-  }, ],
+    type: Schema.Types.ObjectId,
+    ref: 'Product',
+  }]
 });
 
 const User = new Schema({
@@ -113,7 +106,7 @@ const User = new Schema({
   },
   wishlist: {
     type: WishList,
-    select: false,
+    // select: false,
   },
   status: {
     type: String,

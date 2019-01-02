@@ -30,10 +30,10 @@ const Subscription = new Schema({
     enum: ['2 YEARS', '1 YEAR', 'Monthly', 'Half Yearly', 'Quaterly'],
     default: '1 YEAR',
   },
-  rolesAllowed: {
+  rolesAllowed: [{
     roleName: String,
     roleType: String
-  },
+  }],
   features: {
     _id: {
 

@@ -32,4 +32,7 @@ module.exports = app => {
     app.post(`${user}sign-up-invite`, jwtAuth, UserController.addFromInvitation);
     app.post(`${user}token`, UserController.refreshTokenStrategy);
     app.post(`${user}create`, UserController.addUserFromWebsite);
+    app.post(`${user}add-to-wishList`, UserController.addToWishList);
+    app.get(`${user}get-wishlist/:id`, UserController.getWishlistProducts);
+
 };
