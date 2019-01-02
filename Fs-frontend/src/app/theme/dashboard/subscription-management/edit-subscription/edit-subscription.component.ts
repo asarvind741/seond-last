@@ -88,8 +88,8 @@ export class EditSubscriptionComponent implements OnInit {
     let moduleIncluded = this.currentPlan.moduleIncluded ? this.currentPlan.moduleIncluded : null;
     let feature = this.currentPlan.features ? this.currentPlan.features : null;
  
-    if (rolesAllowed) {
-      this.featureService.getFeatureListByRole(rolesAllowed.roleName)
+    if (rolesAllowed.length > 0) {
+      this.featureService.getFeatureListByRole(rolesAllowed[0].roleName)
         .subscribe((response: HttpResponse<any>) => {
           if (response.status === 200) {
            response['data'].forEach(item => {
@@ -99,30 +99,30 @@ export class EditSubscriptionComponent implements OnInit {
           }
         })
     }
-    if (rolesAllowed) {
+    if (rolesAllowed.length > 0) {
       let element;
       let element1;
-      if (rolesAllowed.roleName === "Supplier") {
+      if (rolesAllowed[0].roleName === "Supplier") {
         this.isSupplier = true;
-        element = { 'id': 0, 'itemName': rolesAllowed.roleName };
+        element = { 'id': 0, 'itemName': rolesAllowed[0].roleName };
 
-        if(rolesAllowed.roleType === "supplier"){
-          element1 = { 'id': 0, 'itemName': rolesAllowed.roleType }
+        if(rolesAllowed[0].roleType === "supplier"){
+          element1 = { 'id': 0, 'itemName': rolesAllowed[0].roleType }
         }
-        else if(rolesAllowed.roleType === "stockist"){
-          element1 = { 'id': 1, 'itemName': rolesAllowed.roleType }
+        else if(rolesAllowed[0].roleType === "stockist"){
+          element1 = { 'id': 1, 'itemName': rolesAllowed[0].roleType }
         }
-        else if(rolesAllowed.roleType === "external resources"){
-          element1 = { 'id': 2, 'itemName': rolesAllowed.roleType }
+        else if(rolesAllowed[0].roleType === "external resources"){
+          element1 = { 'id': 2, 'itemName': rolesAllowed[0].roleType }
         }
-        else if(rolesAllowed.roleType === "wholeseller/reseller"){
+        else if(rolesAllowed[0].roleType === "wholeseller/reseller"){
           element1 = { 'id': 3, 'itemName': rolesAllowed.roleType }
         }
-        else if(rolesAllowed.roleType === "agent"){
-          element1 = { 'id': 4, 'itemName': rolesAllowed.roleType }
+        else if(rolesAllowed[0].roleType === "agent"){
+          element1 = { 'id': 4, 'itemName': rolesAllowed[0].roleType }
         }
-        else if(rolesAllowed.roleType === "manufacturer"){
-          element1 = { 'id': 5, 'itemName': rolesAllowed.roleType }
+        else if(rolesAllowed[0].roleType === "manufacturer"){
+          element1 = { 'id': 5, 'itemName': rolesAllowed[0].roleType }
         }
         this.selectedRoles.push(element);
         this.selectedRoleType.push(element1);
@@ -150,10 +150,10 @@ export class EditSubscriptionComponent implements OnInit {
       'price': new FormControl(price),
       'description': new FormControl(description),
       'status': new FormControl(status),
-      'rolesAllowed': new FormControl(rolesAllowed.roleName),
+      'rolesAllowed': new FormControl(rolesAllowed[0].roleName),
       'moduleIncluded': new FormControl(moduleIncluded),
       'features': new FormControl(this.selectedFeature[0]),
-      'roleType': new FormControl(rolesAllowed.roleType)
+      'roleType': new FormControl(rolesAllowed[0].roleType)
     })
   }
 
@@ -168,11 +168,11 @@ export class EditSubscriptionComponent implements OnInit {
         delete module.itemName;
       });
     }
-
     if(mainRole.length > 0 ){
       if(subRole.length > 0 ){
         const element = { 'roleName': mainRole[0].itemName, 'roleType': subRole[0].itemName }
-        this.editPlanForm.value.rolesAllowed = element;
+        this.editPlanForm.value.rolesAllowed = [];
+        this.editPlanForm.value.rolesAllowed.push(element);
         this.editPlanForm.value.roleType;
         delete this.editPlanForm.value.roleType;
       }

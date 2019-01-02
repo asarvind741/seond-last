@@ -223,21 +223,18 @@ export class AdminComponent implements OnInit {
         this.setBackgroundPattern('pattern1');
         this.elasticSearchService.isAvailable();
         this.socketService.onNewNotification().subscribe(msg => {
-            console.log('msg came', msg);
             this.newNotification = true;
             this.notifications.unshift({ message: msg.message, time: this.timeDifference(msg.time) })
 
 
         });
         this.socketService.socket.on('error', function (err) {
-            console.log(err);
         });
         /*document.querySelector('body').classList.remove('dark');*/
     }
 
     timeDifference(previous) {
         let current = Date.now();
-        console.log('current', current, previous)
         var msPerMinute = 60 * 1000;
         var msPerHour = msPerMinute * 60;
         var msPerDay = msPerHour * 24;
@@ -245,7 +242,6 @@ export class AdminComponent implements OnInit {
         var msPerYear = msPerDay * 365;
 
         var elapsed = current - previous;
-        console.log(elapsed)
         if (elapsed < msPerMinute) {
             return Math.round(elapsed / 1000) + ' seconds ago';
         }
@@ -355,7 +351,6 @@ export class AdminComponent implements OnInit {
     }
 
     toggleLiveNotification() {
-        console.log('called toggle');
         this.newNotification = false;
         this.liveNotification =
             this.liveNotification === 'an-off' ? 'an-animate' : 'an-off';

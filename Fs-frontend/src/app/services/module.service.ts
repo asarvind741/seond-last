@@ -24,12 +24,10 @@ export class ModuleService {
     }
 
     addModule(modules){
-        console.log("module value", modules, this.httpClient.post(`${environment.API_URL}/module/create`, modules));
         return this.httpClient.post(`${environment.API_URL}/module/create`, modules);
     }
 
     updateModule(id, data){
-        console.log("data", id, "data2", data)
         data.id = id;
         return this.httpClient.post(`${environment.API_URL}/module/edit`, data)
     }

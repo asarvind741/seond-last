@@ -28,7 +28,6 @@ export class BuyerPlansComponent implements OnInit {
         selectedPlan = plan;
         this.planService.changePlan(this.currentUser.company, selectedPlan._id)
         .subscribe((response: HttpResponse<any>) => {
-          console.log("response", response)
           if(response.status === 200){
             this.showMessage = "Plan changed succesfully";
             this.openSuccessSwal();

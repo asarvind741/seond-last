@@ -15,7 +15,8 @@ import { FeatureService } from '../../../../services/feature.service';
 export class AddSubscriptionComponent implements OnInit {
   newPlanForm: FormGroup;
   statuss: Array<String> = ['Active', 'Inactive'];
-  featureModules: any;
+  featureModules: any = [];
+  selectedFeature: any = [];
   duration: Array<String> = ['2 YEARS', '1 YEAR', 'Half Yearly', 'Quaterly', 'Monthly'];
   role: Array<Object> = [
     { 'id': 0, 'itemName': 'Buyer' },
@@ -89,7 +90,6 @@ export class AddSubscriptionComponent implements OnInit {
   }
 
   addNewPlan() {
-    console.log("test", this.newPlanForm.value)
     const modulesArrary = this.newPlanForm.value.moduleIncluded;
     const mainRole = this.newPlanForm.value.rolesAllowed;
     const subRole = this.newPlanForm.value.roleType;
@@ -103,17 +103,24 @@ export class AddSubscriptionComponent implements OnInit {
     if(mainRole.length > 0 ){
       if(subRole.length > 0 ){
         const element = { 'roleName': mainRole[0].itemName, 'roleType': subRole[0].itemName }
-        this.newPlanForm.value.rolesAllowed = element;
+        this.newPlanForm.value.rolesAllowed = [];
         this.newPlanForm.value.roleType;
+        this.newPlanForm.value.rolesAllowed.push(element);
         delete this.newPlanForm.value.roleType;
-        console.log("this main", this.newPlanForm.value);
+
       }
       else {
         delete this.newPlanForm.value.roleType;
         const element = {'roleName': mainRole[0].itemName }
-        this.newPlanForm.value.rolesAllowed = element;
-        console.log("this main", this.newPlanForm.value);
+        this.newPlanForm.value.rolesAllowed = [];
+        this.newPlanForm.value.rolesAllowed.push(element);
       }
+    }
+
+    let feature = this.newPlanForm.value.features;
+    if(feature){
+      let element = { '_id': feature[0].id, 'name': feature[0].itemName };
+      this.newPlanForm.value.features = element;
     }
 
     this.planService.addPlan(this.newPlanForm.value).subscribe((response: HttpResponse<any>) => {
@@ -180,7 +187,10 @@ export class AddSubscriptionComponent implements OnInit {
     this.featureService.getFeatureListByRole(item.itemName)
     .subscribe((response: HttpResponse<any>) => {
       if(response.status === 200){
-        this.featureModules = response['data'];
+       response['data'].forEach(item => {
+         let element = { 'id': item._id, 'itemName': item.name };
+         this.featureModules.push(element);
+       })
       }
     })
 

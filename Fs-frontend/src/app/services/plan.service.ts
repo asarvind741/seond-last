@@ -32,12 +32,10 @@ export class PlanService {
 
     addPlan(plan){
         plan.createdBy = this.userId;
-        console.log("plan value", plan, this.httpClient.post(`${environment.API_URL}/plan/create`, plan));
         return this.httpClient.post(`${environment.API_URL}/plan/create`, plan);
     }
 
     updatePlan(id, data){
-        console.log("data", id, "data2", data)
         data.id = id;
         return this.httpClient.post(`${environment.API_URL}/plan/edit`, data)
     }

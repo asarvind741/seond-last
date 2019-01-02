@@ -33,7 +33,6 @@ export class CompanyService implements OnInit  {
 
     updateCompany(userId, data) {
         data.id = userId;
-        console.log("daaaaaaaaaaaaaa", data)
         return this.httpClient.post(`${environment.API_URL}/company/edit`, data);
     }
 }

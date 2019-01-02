@@ -805,6 +805,10 @@ const MENUITEMS1 = [
             name: 'My RFQs'
           },
           {
+            state: 'my-wishlist',
+            name: 'My Wishlist'
+          },
+          {
             state: 'search-history',
             name: 'View Search History'
           }

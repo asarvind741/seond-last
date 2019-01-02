@@ -20,12 +20,10 @@ export class CouponService {
     }
 
     addCoupon(coupon){
-        console.log("coupon value", coupon, this.httpClient.post(`${environment.API_URL}/coupon/create`, coupon));
         return this.httpClient.post(`${environment.API_URL}/coupon/create`, coupon);
     }
 
     updateCoupon(id, data){
-        console.log("data", id, "data2", data)
         data.id = id;
         return this.httpClient.post(`${environment.API_URL}/coupon/edit`, data)
     }

@@ -42,7 +42,6 @@ export class AuthenticationService {
             email: email,
             name: name
         }
-        console.log("social data", socialData);
         return this.httpClient.post(`${environment.API_URL}/user/social-login`, socialData)
     }
 

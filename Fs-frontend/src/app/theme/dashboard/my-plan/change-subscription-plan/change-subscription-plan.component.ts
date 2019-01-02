@@ -36,6 +36,7 @@ export class ChangeSubscriptionPlanComponent implements OnInit {
         .subscribe((response: HttpResponse<any>) => {
           if(response.status === 200){
             this.plans = response['data']
+            console.log("this plans", this.plans)
           }
         })
       }
