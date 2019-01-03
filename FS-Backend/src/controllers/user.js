@@ -724,6 +724,15 @@ async function getWishlistProducts(req, res) {
     }
 }
 
+async function contactSupplier(req, res) {
+    try {
+
+    } catch (e) {
+        console.log(e, 'error');
+
+    }
+}
+
 module.exports = {
     addUser,
     verifyUser,
@@ -741,5 +750,6 @@ module.exports = {
     deleteUser,
     addUserFromWebsite,
     addToWishList,
-    getWishlistProducts
+    getWishlistProducts,
+    contactSupplier
 };
