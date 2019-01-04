@@ -8,6 +8,23 @@
 .search-result {
   display: none;
 }
+.header-search-select select {
+  background: none;
+  color: #000;
+  border: none;
+  min-height: 31px;
+}
+.header-search-select {
+  position: absolute;
+  left: 5px;
+  z-index: 999;
+  top: 4px;  
+}
+
+.header-navbar .navbar-wrapper .header-search .main-search .input-group .form-control {
+    padding: 0.3rem 0.75rem 0.3rem 87px;
+    color: #000;
+}
 
 .search-result.show-dropdown {
     color: black;
