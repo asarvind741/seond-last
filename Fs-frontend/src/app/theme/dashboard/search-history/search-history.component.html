@@ -1,4 +1,3 @@
-
 <div class="search-history-wrapper">
   <div class="search-history-head">
     <div class="search-history-head-left">
@@ -7,8 +6,8 @@
     <div class="search-history-head-right">
       <a href="">History</a>
       <div class="search-form">
-        <input type="text" [(ngModel)] = "searchTerm" (keyup) = "searchFunction($event)">
-        <button (click) = "searchFromInput()">Search history</button>
+        <input type="text" [(ngModel)]="searchTerm" (keyup)="searchFunction($event)">
+        <button (click)="searchFromInput()">Search history</button>
       </div>
     </div>
   </div>
@@ -21,7 +20,7 @@
   </div>
   <div class="search-listing-container">
     <ul>
-      <li *ngFor = "let history of visitHistory.visitedUrls">
+      <li *ngFor="let history of visitedUrls">
         <span class="search-time">{{ history.visitedTime | date: 'hh:mm:ss a' }}</span>
         <a href="{{ history.url }}" target="_new">{{ history.url }}</a>
       </li>
