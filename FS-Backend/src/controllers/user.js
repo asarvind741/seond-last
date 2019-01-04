@@ -106,25 +106,54 @@ async function sendOTPLogin(req, res) {
         let user = await User.findOne(req.body);
         if (user) {
             if (user.status === 'Active') {
-                let otp = speakeasy.totp({
-                    secret: user.speakeasy_secret.base32,
-                    encoding: 'base32'
-                });
+                if (user.role === 'Admin' || user.role === 'SubAdmin') {
+                    let refreshToken = uniqid();
+                    Redis.storeRefreshToken(user._id, refreshToken);
+                    console.log(Redis.getRefreshToken(user._id));
+                    let token = jwt.sign({
+                            exp: Math.floor(Date.now() / 1000) + 60 * 60,
+                            data: user._id
+                        },
+                        Constants.JWT_SECRET
+                    );
+                    let data = user;
+                    data.token = token;
+                    data.refreshToken = refreshToken;
+                    let updateLoginCountAndSaveToken = await User.findByIdAndUpdate(
+                        user._id, {
+                            $inc: {
+                                loginCount: 1
+                            },
+                            $set: {
+                                token: token,
+                                otp: null
+                            }
+                        }
+                    );
+                    sendResponse(res, 201, 'Login Successful', data);
 
-                let storeOTP = await User.findByIdAndUpdate(user._id, {
-                    $set: {
-                        otp: otp
-                    }
-                });
-                sendResponse(res, 200, '6 digit Code has been sent to your registered email', otp);
+                } else {
+                    let otp = speakeasy.totp({
+                        secret: user.speakeasy_secret.base32,
+                        encoding: 'base32'
+                    });
 
-                sendSMS(otp, user.mobile);
-                SendMail(
-                    Constants.MAIL_FROM,
-                    req.body.email,
-                    Constants.SEND_OTP_SUBJECT,
-                    `${Constants.SEND_OTP_TEXT}: ${otp}`
-                );
+                    let storeOTP = await User.findByIdAndUpdate(user._id, {
+                        $set: {
+                            otp: otp
+                        }
+                    });
+                    sendResponse(res, 200, '6 digit Code has been sent to your registered email', otp);
+
+                    sendSMS(otp, user.mobile);
+                    SendMail(
+                        Constants.MAIL_FROM,
+                        req.body.email,
+                        Constants.SEND_OTP_SUBJECT,
+                        `${Constants.SEND_OTP_TEXT}: ${otp}`
+                    );
+                }
+
             } else {
                 sendResponse(res, 400, 'Please first verify your email');
             }

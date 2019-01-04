@@ -237,12 +237,12 @@ export class AdminComponent implements OnInit {
             this.setLayoutType('light')
         }
         this.elasticSearchService.isAvailable();
-        // this.notificationService.getNotifications(JSON.parse(this.authService.getCurrentUser())._id).subscribe((success) => {
-        //     console.log(success, 'success');
-        //     this.notifications = success['data'];
-        // }, (error) => {
-        //     console.log(error, 'error')
-        // })
+        this.notificationService.getNotifications(JSON.parse(this.authService.getCurrentUser())._id).subscribe((success) => {
+            console.log(success, 'success');
+            this.notifications = success['data'];
+        }, (error) => {
+            console.log(error, 'error')
+        })
         this.socketService.onNewNotification().subscribe(msg => {
             this.newNotification = true;
             this.notifications.unshift({ message: msg.message, time: this.timeDifference(msg.time) })

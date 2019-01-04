@@ -537,13 +537,13 @@ query for filters
 let array = [];
 let newArray = [];
 let key1, key2, key3, key4;
-array.forEach(data => {
-    for (let i = 0; i < data.filters.length; i++) {
-        if (data.filters[i].value.join('').match(/(key1|key2|key3)/)) {
-
-        }
-    }
-});
+array.forEach(data => { console.log(data);
+     for (let i = 0; i < data._source.filters.length; i++) {
+        if (data._source.filters[i].value.join('').match(/(Red|XL)/)) {
+			console.log("true")
+        } else {  console.log('false')
+        	}
+    }})
 */
 module.exports = {
     createProduct,
