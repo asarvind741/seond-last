@@ -14,7 +14,7 @@ export class AddUserComponent implements OnInit {
   newUserForm: FormGroup;
   showMessage: any;
   statuss: Array<String> = ['Active', 'Inactive'];
-  roles: Array<String> = ['Buyer', 'Seller', 'Admin', 'SubAdmin', 'Agent', 'Reseller'];
+  roles: Array<String> = ['Buyer', 'Supplier', 'Admin', 'SubAdmin', 'Agent', 'Reseller'];
   permission: Array<any> = [
     { 'id': 1, 'itemName': 'isAdmin' },
     { 'id': 2, 'itemName': 'isSubAdmin' },
@@ -66,8 +66,6 @@ export class AddUserComponent implements OnInit {
         if (element.itemName == 'isAccountAdmin') permission.isAccountAdmin = true;
       });
     }
-    this.newUserForm.value.permissions = permission;
-    console.log("this form", JSON.stringify(this.newUserForm.value));
     this.userService.addUser(this.newUserForm.value)
       .subscribe((response: HttpResponse<any>) => {
         if (response.status === 200) {
@@ -79,6 +77,7 @@ export class AddUserComponent implements OnInit {
         this.showMessage = error.error['message']
         this.openUnscuccessSwal();
       })
+
   }
 
   openSuccessSwal() {
