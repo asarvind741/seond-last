@@ -231,7 +231,7 @@ export class AdminComponent implements OnInit {
             this.setLayoutType('img')
         }
         else if (this.currentUserRole === "Admin") {
-            this.setLayoutType('dark')
+            this.setLayoutType('light')
         }
         else {
             this.setLayoutType('light')

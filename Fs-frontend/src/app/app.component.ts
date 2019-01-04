@@ -10,7 +10,7 @@ import { HttpResponse } from '@angular/common/http';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'Gradient Able 5+';
+  title = 'Fashion Sourcing';
 
   constructor(
     private router: Router,
