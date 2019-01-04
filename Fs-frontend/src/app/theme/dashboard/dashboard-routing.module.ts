@@ -95,7 +95,7 @@ const routes: Routes = [
         loadChildren: './product-details/product-details.module#ProductDetailsModule'
       },
       {
-        path: 'contact/product/:id',
+        path: 'contact-supplier',
         loadChildren: './contact-supplier/contact-supplier.module#ContactSupplierModule'
       }
     ]

@@ -43,7 +43,11 @@ export class UserService {
 
     getUserWishList(){
         let currentUserId = JSON.parse(this.authService.getCurrentUser())._id;
-        return this.httpClient.get(`${environment.API_URL}/user/get-wishlist/${currentUserId}`)
+        return this.httpClient.get(`${environment.API_URL}/user/get-wishlist/${currentUserId}`);
+    }
+
+    getSupplierDetails(id){
+        return this.httpClient.get(`${environment.API_URL}/user/ contact-supplier`, id)
     }
 
 }
