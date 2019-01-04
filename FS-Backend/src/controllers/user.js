@@ -755,6 +755,18 @@ async function getWishlistProducts(req, res) {
 
 async function contactSupplier(req, res) {
     try {
+        let data = {};
+        let company = Company.findById(req.body.id);
+        if (company) {
+            let userId = company.createdBy;
+            if (userId) {
+
+            } else {
+
+            }
+        } else {
+            sendResponse(res, 400, 'Company not found');
+        }
 
     } catch (e) {
         console.log(e, 'error');
