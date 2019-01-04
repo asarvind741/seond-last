@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpResponse } from "@angular/common/http";
+import { HttpResponse, HttpErrorResponse } from "@angular/common/http";
 import { ToastrService } from 'ngx-toastr';
 
 import { UserService } from '../../services/user.servivce';
@@ -31,7 +31,6 @@ export class ProductListComponent implements OnInit {
     }
 
     addToWishList(product) {
-        console.log(product)
         this.userService.addToWishList(product._id)
             .subscribe((response: HttpResponse<any>) => {
                 if (response.status === 200) {
@@ -39,6 +38,9 @@ export class ProductListComponent implements OnInit {
                     this.toastrService.success(this.showMessage, 'Successful',
                         { timeOut: 10000, positionClass: 'toast-top-center', closeButton: true, toastClass: 'toast' });
                 }
+            }, (error: HttpErrorResponse) => {
+                this.toastrService.error('Unexpected Error occured', 'Error',
+                { timeOut: 10000, positionClass: 'toast-top-center', closeButton: true, toastClass: 'toast' });
             })
     }
 

@@ -1,19 +1,26 @@
-<div class="row">
-  <div class="col-sm-6" (click)="openProductDetails(wishList)">
-    <img [src]="wishList.images[0] | sanatize " />
-  </div>
-  <div class="col-sm-6">
-    <div>
-      <h4 (click)="openProductDetails(wishList)">{{ wishList.name }}</h4>
-      <p>{{ wishList.company.name}}</p>
-      <p>{{ wishList.price }}</p>
-    </div>
-    <div class="product-contact">
-      <ul>
-        <li><img src="../../../../../assets/images/products/contact.png" /><span><a href="mailto:{{ wishList['company'].email}}">Contact
-              Supplier</a></span></li>
-        <li><img src="../../../../../assets/images/products/india-flag.png" /><span>1500 km</span></li>
-      </ul>
+<div class="container">
+  <div class="product-list">
+    <div class="row">
+
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <div class="product-text" (click)="openProductDetails(wishList)">
+          <img [src]="wishList.images[0] | sanatize " />
+        </div>
+      </div>
+
+      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+        <div class="product-detail">
+          <h4 (click)="openProductDetails(wishList)">{{ wishList.name }}</h4>
+          <ul>
+            <li>{{ wishList['company'].name }}</li>
+            <li>US ${{ wishList['price'] }} / Piece</li>
+            <li>{{ wishList['minOrder'] }} Pieces (Min. Order)</li>
+            <li><img src="../../../../../assets/images/products/contact.png" /><span><a href="mailto:{{ wishList['company'].email}}">Contact
+                  Supplier</a></span></li>
+            <li><img src="../../../../../assets/images/products/india-flag.png" /><span>1500 km</span></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>
