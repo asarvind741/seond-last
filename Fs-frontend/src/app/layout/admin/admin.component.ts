@@ -14,6 +14,7 @@ import { ElasticSearchService } from '../../services/elastic-search.service';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { SocketService } from 'src/app/services/socket.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 
 @Component({
@@ -153,6 +154,7 @@ export class AdminComponent implements OnInit {
         private elasticSearchService: ElasticSearchService,
         private activatedRoute: ActivatedRoute,
         private socketService: SocketService,
+        private notificationService: NotificationService
     ) {
 
         this.navType = 'st2';
@@ -222,6 +224,13 @@ export class AdminComponent implements OnInit {
     ngOnInit() {
         this.setBackgroundPattern('pattern1');
         this.elasticSearchService.isAvailable();
+        console.log(JSON.parse(this.authService.getCurrentUser())._id, 'this.authService.getCurrentUser()');
+        // this.notificationService.getNotifications(JSON.parse(this.authService.getCurrentUser())._id).subscribe((success) => {
+        //     console.log(success, 'success');
+        //     this.notifications = success['data'];
+        // }, (error) => {
+        //     console.log(error, 'error')
+        // })
         this.socketService.onNewNotification().subscribe(msg => {
             this.newNotification = true;
             this.notifications.unshift({ message: msg.message, time: this.timeDifference(msg.time) })

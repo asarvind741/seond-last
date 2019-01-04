@@ -10,6 +10,4 @@ module.exports = app => {
     app.get(`${product}`, ProductController.getProducts);
     app.get(`${product}:id`, ProductController.getProduct);
     app.post(`${product}status-modify`, ProductController.updateProductStatus);
-
-
 };
