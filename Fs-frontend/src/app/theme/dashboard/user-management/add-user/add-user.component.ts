@@ -27,7 +27,7 @@ export class AddUserComponent implements OnInit {
   showPermissionFlag: boolean = false;
   settings2 = {
     singleSelection: false,
-    text: "Select Category",
+    text: "Select Permission",
     enableSearchFilter: true
   };
   constructor(
@@ -66,6 +66,7 @@ export class AddUserComponent implements OnInit {
         if (element.itemName == 'isAccountAdmin') permission.isAccountAdmin = true;
       });
     }
+    this.newUserForm.value.permissions = permission;
     this.userService.addUser(this.newUserForm.value)
       .subscribe((response: HttpResponse<any>) => {
         if (response.status === 200) {

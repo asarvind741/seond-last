@@ -30,7 +30,7 @@ export class EditUserComponent implements OnInit {
   showPermissionFlag: boolean = false;
   settings2 = {
     singleSelection: false,
-    text: "Select Category",
+    text: "Select Permission",
     enableSearchFilter: true
   };
   @Input() currentUser;
