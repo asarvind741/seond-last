@@ -818,6 +818,45 @@ const MENUITEMS1 = [
     ],
   },
 ];
+
+const MENUITEMS2 = [
+  {
+    label: 'Navigation',
+    main: [
+      {
+        state: 'dashboard',
+        short_label: 'D',
+        name: 'Dashboard',
+        type: 'sub',
+        icon: 'ti-home',
+        children: [
+          {
+            state: 'default',
+            name: 'Default'
+          },
+          {
+            state: 'profile',
+            name: 'My Account'
+          },
+          {
+            state: 'my-plan',
+            name: 'My Subscription'
+          },
+          {
+            state: 'my-wishlist',
+            name: 'My Wishlist'
+          },
+          {
+            state: 'search-history',
+            name: 'View Search History'
+          }
+
+        ]
+      },
+    ],
+  },
+];
+
 @Injectable()
 export class MenuItems {
   currentUser: any;
@@ -826,13 +865,13 @@ export class MenuItems {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
-  getAll(): Menu[] {
-    if (this.currentUser.role === "Admin")
+  getAll(role): Menu[] {
+    if (role === "Admin")
       return MENUITEMS;
-    else if (this.currentUser.role === "Buyer")
+    else if (role === "Buyer")
       return MENUITEMS1;
-    else if (this.currentUser.role === "Supplier")
-      return MENUITEMS1;
+    else if (role === "Supplier")
+      return MENUITEMS2;
     else return MENUITEMS1;
   }
 }

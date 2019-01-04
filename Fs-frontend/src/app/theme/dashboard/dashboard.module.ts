@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {DashboardRoutingModule} from './dashboard-routing.module';
 import { SharedModule } from '../../shared/shared.module';
+import { ContactSupplierComponent } from './contact-supplier/contact-supplier.component';
 
 
 
@@ -12,6 +13,6 @@ import { SharedModule } from '../../shared/shared.module';
     DashboardRoutingModule
   ],
   declarations: [
-  ]
+  ContactSupplierComponent]
 })
 export class DashboardModule { }

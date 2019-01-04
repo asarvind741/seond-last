@@ -26,6 +26,9 @@ export class SearchHistoryComponent implements OnInit {
         if (response.status === 200) {
           if (response['data']) {
             this.visitHistory = response['data'];
+            this.visitHistory.visitedUrls.forEach(item => {
+              console.log("item", item)
+            })
             this.noHistory = false;
           }
           else {
@@ -48,15 +51,11 @@ export class SearchHistoryComponent implements OnInit {
   searchFunction(event) {
     this.searchTerm = event.target.value;
     console.log(this.searchTerm);
-    this.visitHistory.visitedUrls.filter((urlObj) =>  { return urlObj.url.indexOf(this.searchTerm) >= 0 })
+   this.visitHistory.visitedUrls.filter(urlObj =>  urlObj.url.indexOf(this.searchTerm) >= 0 )
   }
 
   searchFromInput() {
-    this.visitHistory.visitedUrls.filter((urlObj) => {
-      if (urlObj.url.indexOf(this.searchTerm)) {
-        console.log("true");
-        return true;
-      }
-    })
+   
+    this.visitHistory.visitedUrls.filter(urlObj =>  urlObj.url.indexOf(this.searchTerm) >= 0 )
   }
 }
