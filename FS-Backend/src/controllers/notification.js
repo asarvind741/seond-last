@@ -21,7 +21,7 @@ async function getNotifications(req, res) {
             reciever: req.params.id
         }).sort({
             time: -1
-        }).lean();
+        }).limit(10).lean();
         if (notifications) {
             let updated = [];
             notifications.forEach(data => {

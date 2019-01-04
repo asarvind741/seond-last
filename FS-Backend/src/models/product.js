@@ -79,7 +79,8 @@ const Product = new Schema({
     },
     id: {
       type: Schema.Types.ObjectId,
-      ref: 'Company'
+      ref: 'Company',
+      es_indexed: true
     }
   },
   height: String,

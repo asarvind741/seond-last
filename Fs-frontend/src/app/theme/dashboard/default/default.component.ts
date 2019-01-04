@@ -93,7 +93,7 @@ export class DefaultComponent implements OnInit, AfterViewInit, OnDestroy {
           'fillAlphas': 0.2,
           'lineColor': '#4099ff',
           'type': 'line',
-          'title': 'Laptop',
+          'title': 'Buyers',
           'useLineColorForBulletBorder': true,
           'valueField': 'market1',
           'balloonText': '[[title]]<br /><b style="font-size: 130%">[[value]]</b>'
@@ -104,7 +104,7 @@ export class DefaultComponent implements OnInit, AfterViewInit, OnDestroy {
           'lineThickness': 0,
           'lineColor': '#4099ff',
           'type': 'line',
-          'title': 'TV',
+          'title': 'Suppliers',
           'useLineColorForBulletBorder': true,
           'valueField': 'market2',
           'balloonText': '[[title]]<br /><b style="font-size: 130%">[[value]]</b>'
