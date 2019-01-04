@@ -34,5 +34,6 @@ module.exports = app => {
     app.post(`${user}create`, UserController.addUserFromWebsite);
     app.post(`${user}add-to-wishList`, UserController.addToWishList);
     app.get(`${user}get-wishlist/:id`, UserController.getWishlistProducts);
+    app.post(`${user}contact-supplier`, UserController.contactSupplier);
 
 };

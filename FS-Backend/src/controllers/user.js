@@ -1,5 +1,6 @@
 import User from '../models/user';
 import Company from '../models/company';
+import Product from '../models/product';
 import jwt from 'jsonwebtoken';
 import speakeasy from 'speakeasy';
 import {
@@ -756,13 +757,23 @@ async function getWishlistProducts(req, res) {
 async function contactSupplier(req, res) {
     try {
         let data = {};
-        let company = Company.findById(req.body.id);
+        let company = await Company.findById(req.body.id);
         if (company) {
             let userId = company.createdBy;
             if (userId) {
-
+                let userDetails = await User.findById(userId);
+                data.user = userDetails;
+                let products = await Product.find({
+                    createdBy: userId
+                });
+                if (products) {
+                    data.products = products;
+                } else {
+                    data.products = [];
+                }
+                sendResponse(res, 200, 'Successful.', data);
             } else {
-
+                sendResponse(res, 400, 'User not found');
             }
         } else {
             sendResponse(res, 400, 'Company not found');

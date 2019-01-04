@@ -13,7 +13,7 @@ export class SearchHistoryComponent implements OnInit {
   visitHistory: any = [];
   noHistory: Boolean;
   searchTerm: String = '';
-
+  visitedUrls: any = [];
   constructor(
     private searchHistoryService: SearchHistoryService
   ) {
@@ -26,6 +26,7 @@ export class SearchHistoryComponent implements OnInit {
         if (response.status === 200) {
           if (response['data']) {
             this.visitHistory = response['data'];
+            this.visitedUrls = this.visitHistory.visitedUrls
             this.visitHistory.visitedUrls.forEach(item => {
               console.log("item", item)
             })
@@ -51,11 +52,19 @@ export class SearchHistoryComponent implements OnInit {
   searchFunction(event) {
     this.searchTerm = event.target.value;
     console.log(this.searchTerm);
-   this.visitHistory.visitedUrls.filter(urlObj =>  urlObj.url.indexOf(this.searchTerm) >= 0 )
+    this.visitedUrls = this.visitedUrls.filter(urlObj => {
+      console.log(urlObj.url.indexOf(this.searchTerm) >= 0, 'test')
+
+      return urlObj.url.indexOf(this.searchTerm) >= 0
+    })
   }
 
   searchFromInput() {
-   
-    this.visitHistory.visitedUrls.filter(urlObj =>  urlObj.url.indexOf(this.searchTerm) >= 0 )
+
+    this.visitedUrls = this.visitedUrls.filter(urlObj => {
+      // console.log(urlObj.url.indexOf(this.searchTerm) >= 0, 'test')
+
+      return urlObj.url.indexOf(this.searchTerm) >= 0
+    })
   }
 }
