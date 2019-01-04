@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import {
     animate,
@@ -87,6 +87,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class AdminComponent implements OnInit {
     searchItem: String;
+    currentUserRole: String = "Buyer";
     showResult: Boolean = true;
     itemsSearched: Array<any> = [];
     notifications: Array<any> = [{ message: 'Lorem ipsum dolor sit amet, consectetuer elit.', time: '30 minutes ago' }];
@@ -222,9 +223,20 @@ export class AdminComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.setBackgroundPattern('pattern1');
+        this.currentUserRole = JSON.parse(this.authService.getCurrentUser()).role;
+        ;
+        if (this.currentUserRole === "Buyer")
+            this.setLayoutType('img')
+        else if (this.currentUserRole === "Supplier") {
+            this.setLayoutType('img')
+        }
+        else if (this.currentUserRole === "Admin") {
+            this.setLayoutType('dark')
+        }
+        else {
+            this.setLayoutType('light')
+        }
         this.elasticSearchService.isAvailable();
-        console.log(JSON.parse(this.authService.getCurrentUser())._id, 'this.authService.getCurrentUser()');
         // this.notificationService.getNotifications(JSON.parse(this.authService.getCurrentUser())._id).subscribe((success) => {
         //     console.log(success, 'success');
         //     this.notifications = success['data'];
