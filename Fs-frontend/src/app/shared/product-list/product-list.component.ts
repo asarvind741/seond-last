@@ -44,4 +44,10 @@ export class ProductListComponent implements OnInit {
             })
     }
 
+    contactSupplier(product){
+        console.log("company", product.company.id);
+        const queryParams = { supplierId: product.company.id }
+        this.router.navigate(['/contact-supplier'], { queryParams: queryParams})
+    }
+
 }

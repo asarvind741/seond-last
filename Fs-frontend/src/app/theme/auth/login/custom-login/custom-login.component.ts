@@ -59,8 +59,10 @@ export class CustomLoginComponent implements OnInit {
           this.router.navigate(['../one-time-password']);
         }
         else if(response.status === 201){
-          console.log("test")
-          this.router.navigate(['../dashboard/default'], { relativeTo: this.activatedRoute })
+          console.log("test");
+          console.log("response", response);
+          this.authService.saveUser(response['data']);
+          this.router.navigate(['/dashboard/default'], { relativeTo: this.activatedRoute});
         }
       }, (error) => {
         const err = error.error.message;
@@ -91,7 +93,7 @@ export class CustomLoginComponent implements OnInit {
           })
       })
       .catch(error => {
-        console.log("error occured")
+        this.toastrService.error(error.error.message, 'Error')
       })
 
   }
