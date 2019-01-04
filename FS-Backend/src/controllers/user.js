@@ -4,7 +4,8 @@ import jwt from 'jsonwebtoken';
 import speakeasy from 'speakeasy';
 import {
     sendResponse,
-    SendMail
+    SendMail,
+    notifyAdmin
 } from './functions';
 import Constants from './constant';
 import sendSMS from '../functions/nexmo';
@@ -275,7 +276,7 @@ async function sociaLoginUser(req, res) {
         }
 
         if (!user) {
-            console.log('user', user)
+            console.log('user', user);
             let company = await Company.create({
                 name: req.body['company.name'],
                 address: req.body['company.address'],
@@ -554,8 +555,10 @@ async function addUserFromWebsite(req, res) {
 
                 if (charge.status === 'succeeded') {
                     let subscriptionLastDate = new Date();
-                    if (plan.duration === 'Yearly') {
+                    if (plan.duration === '1 YEAR') {
                         subscriptionLastDate = new Date(subscriptionLastDate.setFullYear(subscriptionLastDate.getFullYear() + 1));
+                    } else if (plan.duration === '2 YEARS') {
+                        subscriptionLastDate = new Date(subscriptionLastDate.setFullYear(subscriptionLastDate.getFullYear() + 2));
                     } else if (plan.duration === 'Quaterly') {
                         subscriptionLastDate = new Date(subscriptionLastDate.setMonth(subscriptionLastDate.getMonth() + 3));
                     } else if (plan.duration === 'Half Yearly') {
@@ -613,6 +616,8 @@ async function addUserFromWebsite(req, res) {
                         Constants.SIGN_UP_MAIL_SUBJECT,
                         `${Constants.SIGN_UP_TEXT}: ${link}`
                     );
+                    notifyAdmin(newUser._id, req.body.name, 'new user created.', 'New-User');
+
                 } else {
                     sendResponse(res, 400, 'Payment failed.');
 
@@ -675,6 +680,59 @@ async function addUserFromWebsite(req, res) {
     }
 }
 
+async function addToWishList(req, res) {
+    try {
+        let user = await User.findById(req.body.userId);
+        if (!user)
+            sendResponse(res, 400, 'User not found.');
+        else {
+            if (user.wishlist && user.wishlist.products.join('').indexOf(req.body.productId) >= 0) {
+                sendResponse(res, 400, 'Product already added to wishlist.');
+
+            } else {
+                let updatedProduct = await User.findByIdAndUpdate(req.body.userId, {
+                    $push: {
+                        'wishlist.products': req.body.productId
+                    }
+                }, {
+                    new: true
+                });
+                sendResponse(res, 200, 'Successful.', updatedProduct);
+            }
+
+
+        }
+    } catch (e) {
+        console.log(e, 'error');
+        sendResponse(res, 500, 'Unexpected Error', e);
+    }
+}
+
+async function getWishlistProducts(req, res) {
+    try {
+        let product = await User.findById(req.params.id, {
+            _id: 0
+        }).populate('wishlist.products');
+        if (product) {
+            sendResponse(res, 200, 'Successful.', product);
+        } else {
+            sendResponse(res, 400, 'No wishlist found');
+        }
+    } catch (e) {
+        console.log(e, 'error');
+        sendResponse(res, 500, 'Unexpected Error', e);
+    }
+}
+
+async function contactSupplier(req, res) {
+    try {
+
+    } catch (e) {
+        console.log(e, 'error');
+
+    }
+}
+
 module.exports = {
     addUser,
     verifyUser,
@@ -690,5 +748,8 @@ module.exports = {
     addFromInvitation,
     refreshTokenStrategy,
     deleteUser,
-    addUserFromWebsite
+    addUserFromWebsite,
+    addToWishList,
+    getWishlistProducts,
+    contactSupplier
 };

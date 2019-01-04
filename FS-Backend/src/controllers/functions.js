@@ -1,12 +1,11 @@
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import constants from '../controllers/constant';
-import {
-    io,
-    onlineUsers
-} from '../functions/socket-connection';
+
 import User from '../models/user';
 import NotificationController from '../controllers/notification';
+let io = null;
+let onlineUsers = {};
 
 function sendResponse(res, status, message, data) {
     res.status(status).send({
@@ -117,10 +116,17 @@ function notifyUser(sender, reciever, message, notifcationType, recieverName, se
         reciever: reciever,
         message: message,
         senderName: senderName,
-        recieverName: recieverName
+        recieverName: recieverName,
+        time: Date.now()
     };
     if (onlineUsers && reciever in onlineUsers) {
-        io.to(onlineUsers[reciever].socketId).emit('notification', data);
+        console.log('socket called===>', onlineUsers[reciever].socketId);
+        io.to(`${onlineUsers[reciever].socketId}`).emit('notification', data);
+        // io.emit('notification', data);
+        // onlineUsers[reciever].socket.emit('notification', data);
+        // onlineUsers[reciever].socket.broadcast.to(onlineUsers[reciever].socketid).emit('notification', data);
+    } else {
+        console.log('no users online', reciever, onlineUsers);
     }
     NotificationController.addNotification(data).then((success) => {
         console.log('Notification added successfully.', success);
@@ -158,12 +164,43 @@ function notifyAdmin(sender, senderName, message, notifcationType) {
 
 }
 
+function socketIntialise(http) {
+    io = require('socket.io')(http);
+    // console.log(io, 'io==>');
+    io.on('connection', (socket) => {
+        console.log('a user connected', socket.id);
+        socket.on('disconnect', () => {
+            console.log('user disconnected');
+            for (let user in onlineUsers) {
+                if (onlineUsers[user].socketId === socket) {
+                    delete onlineUsers[user];
+                }
+            }
+        });
+        socket.on('start', (data) => {
+            console.log(data, 'data');
+
+            // Redis.storeSocketId(data.id, socket.id);
+            onlineUsers[data.userId] = {
+                data: data,
+                socketId: socket.id
+                // socket: socket
+            };
+            console.log(onlineUsers, 'onlineUsers');
+        });
+    });
+
+}
+
 module.exports = {
     sendResponse,
     jwtAuth,
     SendMail,
     sendMailToAdmin,
     notifyUser,
-    notifyAdmin
+    notifyAdmin,
+    io,
+    onlineUsers,
+    socketIntialise
 
 };

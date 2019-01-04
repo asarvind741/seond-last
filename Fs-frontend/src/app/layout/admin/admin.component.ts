@@ -14,6 +14,7 @@ import { ElasticSearchService } from '../../services/elastic-search.service';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { SocketService } from 'src/app/services/socket.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 
 @Component({
@@ -88,6 +89,8 @@ export class AdminComponent implements OnInit {
     searchItem: String;
     showResult: Boolean = true;
     itemsSearched: Array<any> = [];
+    notifications: Array<any> = [{ message: 'Lorem ipsum dolor sit amet, consectetuer elit.', time: '30 minutes ago' }];
+    newNotification: Boolean = false
     lastKeypress = 0;
     categories: Array<String> = ['first', 'second', 'third', 'fourth'];
     public navType: string;
@@ -149,9 +152,11 @@ export class AdminComponent implements OnInit {
         private authService: AuthenticationService,
         private router: Router,
         private elasticSearchService: ElasticSearchService,
+        private activatedRoute: ActivatedRoute,
         private socketService: SocketService,
-        private activatedRoute: ActivatedRoute
+        private notificationService: NotificationService
     ) {
+
         this.navType = 'st2';
         this.themeLayout = 'vertical';
         this.verticalPlacement = 'left';
@@ -219,9 +224,56 @@ export class AdminComponent implements OnInit {
     ngOnInit() {
         this.setBackgroundPattern('pattern1');
         this.elasticSearchService.isAvailable();
+        console.log(JSON.parse(this.authService.getCurrentUser())._id, 'this.authService.getCurrentUser()');
+        // this.notificationService.getNotifications(JSON.parse(this.authService.getCurrentUser())._id).subscribe((success) => {
+        //     console.log(success, 'success');
+        //     this.notifications = success['data'];
+        // }, (error) => {
+        //     console.log(error, 'error')
+        // })
         this.socketService.onNewNotification().subscribe(msg => {
+            this.newNotification = true;
+            this.notifications.unshift({ message: msg.message, time: this.timeDifference(msg.time) })
+
+
+        });
+        this.socketService.socket.on('error', function (err) {
         });
         /*document.querySelector('body').classList.remove('dark');*/
+    }
+
+    timeDifference(previous) {
+        let current = Date.now();
+        var msPerMinute = 60 * 1000;
+        var msPerHour = msPerMinute * 60;
+        var msPerDay = msPerHour * 24;
+        var msPerMonth = msPerDay * 30;
+        var msPerYear = msPerDay * 365;
+
+        var elapsed = current - previous;
+        if (elapsed < msPerMinute) {
+            return Math.round(elapsed / 1000) + ' seconds ago';
+        }
+
+        else if (elapsed < msPerHour) {
+            return Math.round(elapsed / msPerMinute) + ' minutes ago';
+        }
+
+        else if (elapsed < msPerDay) {
+            return Math.round(elapsed / msPerHour) + ' hours ago';
+        }
+
+        else if (elapsed < msPerMonth) {
+            return 'approximately ' + Math.round(elapsed / msPerDay) + ' days ago';
+        }
+
+        else if (elapsed < msPerYear) {
+            return 'approximately ' + Math.round(elapsed / msPerMonth) + ' months ago';
+        }
+
+        else {
+            return 'approximately ' + Math.round(elapsed / msPerYear) + ' years ago';
+        }
     }
 
     onResize(event) {
@@ -254,7 +306,8 @@ export class AdminComponent implements OnInit {
 
     logoutUser() {
         this.authService.logoutUser();
-        this.router.navigate(['./search']);
+        this.router.navigate(['/auth/login'])
+
     }
 
 
@@ -307,6 +360,7 @@ export class AdminComponent implements OnInit {
     }
 
     toggleLiveNotification() {
+        this.newNotification = false;
         this.liveNotification =
             this.liveNotification === 'an-off' ? 'an-animate' : 'an-off';
         this.liveNotificationClass =

@@ -1,0 +1,47 @@
+<div class="row" *ngIf="isPlan; else loading">
+  <div class="col-sm-12">
+    <app-card [title]="'My Current Plan'" [classHeader]="true">
+      <div class="row">
+        <div class="col-sm-12">
+          <button class="btn btn-primary pull-right margin-bottom" type="button" (click)="changePlan()">Change Plan</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <label for="overview"> Overview </label>
+          <table cellpadding="0" cellspacing="0" width="100%" class="plan-table">
+            <thead>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Subscribed on</th>
+              <th>Expires On</th>
+            </thead>
+            <tbody>
+              <td>{{ myPlan.name }}</td>
+              <td>{{ myPlan.price }}</td>
+              <td></td>
+              <td></td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row change-plan-bottom">
+        <div class="col-sm-12">
+          <label for="overview">Features </label>
+          <div class="row" *ngFor="let feature of currentPlanFeatures">
+            <div class="col-sm-6">
+              <h4>{{ feature.name }}</h4>
+            </div>
+            <div class="col-sm-6">
+              <p>{{ feature.value}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

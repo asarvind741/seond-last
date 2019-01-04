@@ -83,8 +83,16 @@ const routes: Routes = [
         loadChildren: './search-history/search-history.module#SearchHistoryModule'
       },
       {
+        path: 'my-plan',
+        loadChildren: './my-plan/my-plan.module#MyPlanModule'
+      },
+      {
+        path: 'my-wishlist',
+        loadChildren: './my-wishlist/wishlist.module#WishlistModule'
+      },
+      {
         path: 'product-details/:id',
-        component: ProductDetailsComponent
+        loadChildren: './product-details/product-details.module#ProductDetailsModule'
       }
     ]
   }

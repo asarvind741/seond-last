@@ -8,11 +8,7 @@ import { BehaviorSubject } from 'rxjs';
     providedIn: 'root',
 })
 
-
-
 export class AuthenticationService {
-
-    // private tokenSubject = new Subject<any>();
      public currentLoggingUserSubject = new BehaviorSubject<any>([]);
 
     constructor(private httpClient: HttpClient){
@@ -46,7 +42,6 @@ export class AuthenticationService {
             email: email,
             name: name
         }
-        console.log("social data", socialData);
         return this.httpClient.post(`${environment.API_URL}/user/social-login`, socialData)
     }
 
@@ -62,6 +57,10 @@ export class AuthenticationService {
         return localStorage.getItem('token');
     }
 
+    getCurrentUser(){
+        return localStorage.getItem('currentUser');
+    }
+
     saveUser(user){
         localStorage.setItem('token', user.token);
         localStorage.setItem('currentUser', JSON.stringify(user))
@@ -73,7 +72,6 @@ export class AuthenticationService {
 
     logoutUser(){
         localStorage.clear();
-        
     }
 
     get isLoggedIn(){

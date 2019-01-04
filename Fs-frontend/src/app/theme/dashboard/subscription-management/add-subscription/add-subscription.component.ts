@@ -15,23 +15,35 @@ import { FeatureService } from '../../../../services/feature.service';
 export class AddSubscriptionComponent implements OnInit {
   newPlanForm: FormGroup;
   statuss: Array<String> = ['Active', 'Inactive'];
-  featureModules: any;
-  duration: Array<String> = ['Yearly', 'Half Yearly', 'Quaterly', 'Monthly'];
+  featureModules: any = [];
+  selectedFeature: any = [];
+  duration: Array<String> = ['2 YEARS', '1 YEAR', 'Half Yearly', 'Quaterly', 'Monthly'];
   role: Array<Object> = [
     { 'id': 0, 'itemName': 'Buyer' },
-    { 'id': 1, 'itemName': 'Supplier' },
-    { 'id': 2, 'itemName': 'Agent' },
-    { 'id': 3, 'itemName': 'Reseller' }];
+    { 'id': 1, 'itemName': 'Supplier' }];
+
+  supplierType: Array<Object> = [
+    { 'id': 0, 'itemName': 'supplier' },
+    { 'id': 1, 'itemName': 'stockist' },
+    { 'id': 2, 'itemName': 'external resources' },
+    { 'id': 3, 'itemName': 'wholeseller/reseller' },
+    { 'id': 4, 'itemName': 'agent' },
+    { 'id': 5, 'itemName': 'manufacturer' }];
+
   modulesToInclude: Array<Object> = [
     { 'id': 0, 'itemName': 'First Module' },
     { 'id': 1, 'itemName': 'Second Module' },
     { 'id': 2, 'itemName': 'Third Module' },
     { 'id': 3, 'itemName': 'Fourth Module' }];
+
   selectedModules: any;
   selectedRoles: any;
+  selectedRoleType: any;
   settings: any;
   settings1: any;
+  settings2: any;
   showMessage: any;
+  isSupplier: Boolean = false;
   constructor(
     public activeModal: NgbActiveModal,
     private planService: PlanService,
@@ -54,11 +66,16 @@ export class AddSubscriptionComponent implements OnInit {
       enableSearchFilter: true,
       badgeShowLimit: 3
     };
+    this.settings2 = {
+      singleSelection: true,
+      text: "Select type",
+      enableSearchFilter: true,
+    };
+
     this.createForm();
   }
 
   createForm() {
-    // let features = new FormArray([]);
     this.newPlanForm = new FormGroup({
       'name': new FormControl(null),
       'duration': new FormControl(null),
@@ -67,19 +84,15 @@ export class AddSubscriptionComponent implements OnInit {
       'description': new FormControl(null),
       'rolesAllowed': new FormControl([]),
       'moduleIncluded': new FormControl([]),
-      'features': new FormControl()
-      // 'features': features
+      'features': new FormControl(null),
+      'roleType': new FormControl([])
     })
   }
 
-  // addNewFeature() {
-  //   const control = new FormControl('');
-  //   (<FormArray>this.newPlanForm.get('features')).push(control);
-  // }
-
   addNewPlan() {
     const modulesArrary = this.newPlanForm.value.moduleIncluded;
-    const rolesArray = this.newPlanForm.value.rolesAllowed;
+    const mainRole = this.newPlanForm.value.rolesAllowed;
+    const subRole = this.newPlanForm.value.roleType;
     if (modulesArrary.length > 0) {
       modulesArrary.forEach(module => {
         module.moduleName = module.itemName;
@@ -87,15 +100,28 @@ export class AddSubscriptionComponent implements OnInit {
       });
     }
 
-    if (rolesArray.length > 0) {
-      rolesArray.forEach(role => {
-        role.roleName = role.itemName;
-        delete role.itemName;
-      });
+    if(mainRole.length > 0 ){
+      if(subRole.length > 0 ){
+        const element = { 'roleName': mainRole[0].itemName, 'roleType': subRole[0].itemName }
+        this.newPlanForm.value.rolesAllowed = [];
+        this.newPlanForm.value.roleType;
+        this.newPlanForm.value.rolesAllowed.push(element);
+        delete this.newPlanForm.value.roleType;
+
+      }
+      else {
+        delete this.newPlanForm.value.roleType;
+        const element = {'roleName': mainRole[0].itemName }
+        this.newPlanForm.value.rolesAllowed = [];
+        this.newPlanForm.value.rolesAllowed.push(element);
+      }
     }
 
-    console.log(this.newPlanForm.value)
-
+    let feature = this.newPlanForm.value.features;
+    if(feature){
+      let element = { '_id': feature[0].id, 'name': feature[0].itemName };
+      this.newPlanForm.value.features = element;
+    }
 
     this.planService.addPlan(this.newPlanForm.value).subscribe((response: HttpResponse<any>) => {
       if (response.status === 200) {
@@ -117,7 +143,6 @@ export class AddSubscriptionComponent implements OnInit {
   }
 
   onSelectValue(event) {
-
   }
 
 
@@ -152,12 +177,20 @@ export class AddSubscriptionComponent implements OnInit {
 
   onItemSelect(item: any) {
 
-  if(item.itemName === "Buyer" || item.itemName === "Supplier" || item.itemName === "Agent" || item.itemName === "Reseller"){
+  if(item.itemName === "Buyer" || item.itemName === "Supplier"){
+    if(item.itemName === "Supplier"){
+      this.isSupplier = true;
+    }
+    else { 
+      this.isSupplier = false;
+    }
     this.featureService.getFeatureListByRole(item.itemName)
     .subscribe((response: HttpResponse<any>) => {
       if(response.status === 200){
-        this.featureModules = response['data'];
-        console.log("featuere module", this.featureModules)
+       response['data'].forEach(item => {
+         let element = { 'id': item._id, 'itemName': item.name };
+         this.featureModules.push(element);
+       })
       }
     })
 

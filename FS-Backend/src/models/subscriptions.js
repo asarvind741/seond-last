@@ -27,15 +27,12 @@ const Subscription = new Schema({
   },
   duration: {
     type: String,
-    enum: ['Yearly', 'Monthly', 'Half Yearly', 'Quaterly'],
-    default: 'Yearly',
+    enum: ['2 YEARS', '1 YEAR', 'Monthly', 'Half Yearly', 'Quaterly'],
+    default: '1 YEAR',
   },
-  // maxNumberOfMembers: {
-  //   type: Number,
-  //   default: 0,
-  // },
   rolesAllowed: [{
-    roleName: String
+    roleName: String,
+    roleType: String
   }],
   features: {
     _id: {

@@ -18,6 +18,10 @@ export class PlanService {
         return this.httpClient.get(`${environment.API_URL}/plan/`);
     }
 
+    getPlansByRole(role) {
+        return this.httpClient.get(`${environment.API_URL}/plan/by-role/${role}`);
+    }
+
     getUserPlans(){
         return this.httpClient.get(`${environment.API_URL}/plan/get-user-plans`)
     }
@@ -28,12 +32,10 @@ export class PlanService {
 
     addPlan(plan){
         plan.createdBy = this.userId;
-        console.log("plan value", plan, this.httpClient.post(`${environment.API_URL}/plan/create`, plan));
         return this.httpClient.post(`${environment.API_URL}/plan/create`, plan);
     }
 
     updatePlan(id, data){
-        console.log("data", id, "data2", data)
         data.id = id;
         return this.httpClient.post(`${environment.API_URL}/plan/edit`, data)
     }
@@ -44,6 +46,14 @@ export class PlanService {
 
     deleteSubscription(id){
         return this.httpClient.post(`${environment.API_URL}/plan/delete`, {id: id})
+    }
+
+    changePlan(companyId, subscriptionId){
+        let data = {
+            companyId: companyId,
+            subscriptionId: subscriptionId
+        }
+        return this.httpClient.post(`${environment.API_URL}/company/plan/change`, data);
     }
 
 

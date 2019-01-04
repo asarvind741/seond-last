@@ -31,7 +31,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     MenuItems,
@@ -40,7 +40,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     { provide: HTTP_INTERCEPTORS, useClass: TokenIterceptor, multi: true }
   ],
   entryComponents: [
-    
+
   ],
   bootstrap: [AppComponent]
 })

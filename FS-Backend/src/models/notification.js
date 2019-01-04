@@ -16,6 +16,10 @@ const Notification = new Schema({
     ref: 'User',
   },
   senderName: String,
+  time: {
+    type: Date,
+    default: Date.now()
+  },
   recieverName: String,
   message: String,
   images: String,

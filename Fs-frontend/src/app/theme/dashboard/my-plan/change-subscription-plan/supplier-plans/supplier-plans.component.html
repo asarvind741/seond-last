@@ -1,0 +1,824 @@
+<!-- Table-sec start -->
+<section class="table_sec supplier_sec" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="50">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="cntr_alTxt">
+          <h2>supplier plan</h2>
+        </div>
+
+        <div class="tabTabl_sec clearfix">
+          <div class="m_login_tabbing clearfix">
+            <ul class="nav nav-tabs">
+              <li [ngClass]="applyClass == 1 ? 'active': ''"><a href="#supplier" data-toggle="tab" ngbTooltip="Supplier"
+                  tooltipClass="color-change" (click)="classToApply($event)" placement="top">supplier</a></li>
+              <li [ngClass]="applyClass == 2 ? 'active': ''"><a href="#stockist" data-toggle="tab" ngbTooltip="Stockist"
+                  (click)="classToApply($event)" placement="top" tooltipClass="color-change">stockist</a></li>
+              <li [ngClass]="applyClass == 3 ? 'active': ''"><a href="#reseller" data-toggle="tab" (click)="classToApply($event)"
+                  (mouseenter)="onMouseOver()" (mouseleave)="onMouseLeave()" placement="top">External<span>resources</span></a></li>
+            </ul>
+            <div #popupDiv class="external-popup-hover">
+              <ul>
+                <li>Agent</li>
+                <li>QC</li>
+                <li>auditor</li>
+                <li>logistics</li>
+                <li>designer</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content">
+          <div id="supplier" class="tab_wrapper fade in active show">
+
+            <div class="year_tabs clearfix">
+              <ul class="clearfix nav nav-tabs">
+                <li [ngClass]="active1 ?  'active':''">
+                  <a data-toggle="tab" href="#supplier1" (click)="active1=true">1
+                    year</a></li>
+                <li [ngClass]="active1 ?  '':'active'">
+                  <a href="#supplier2" data-toggle="tab" (click)="active1=false">2
+                    years</a></li>
+              </ul>
+            </div>
+            <div class="x_axis">
+              <span class="hnd_bounce"><i class="fa fa-arrow-left">
+                  <img src="../../../../../../assets//icon/common/hand_arrow.png" class="hand_icn animated bounce" /></i>
+              </span>
+            </div>
+            <div id="supplier1" class="yearTbs active" data-aos="flip-left">
+
+              <div class="table_plan_cntr">
+                <table width="100%">
+
+                  <thead>
+                    <tr>
+                      <th class="clr_f1">
+                        <h1 class="titl_t">Features</h1>
+                      </th>
+                      <th class="schol_clr">standard <span>700 €</span></th>
+                      <th class="schol_clr s_1 clr_nwit">
+                        <cite class="top_t">most popular</cite>
+                        enterprise<span class="pric">850 €</span>
+                      </th>
+                      <th class="schol_clr s_4">business certified<span class="pric">1,950 €</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="clr_gra">Number of users</td>
+                      <td>Single</td>
+                      <td>Up to 5</td>
+                      <td>Up to 10</td>
+                    </tr>
+
+                    <tr class="active">
+                      <td class="num_t_lft">Worlwide on site audit by Certiﬁcation Organization*</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Member login dashboard</td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Product images showcases</td>
+                      <td><span>20</span></td>
+                      <td><span>200</span></td>
+                      <td><span>400</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Videos</td>
+                      <td><span>1</span></td>
+                      <td><span>3</span></td>
+                      <td><span>5</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Data bank </td>
+                      <td><span>500 MO</span></td>
+                      <td><span>1 GB</span></td>
+                      <td><span>3 GB</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Sponsored top list result</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span>1 Week free</span></td>
+                      <td><span>1 Month free</span></td>
+                    </tr>
+
+                    <!-- <tr>
+                        <td class="num_t_lft">One time company presentation in our newsletter</td>
+                        <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                        <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                        <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                      </tr> -->
+
+                    <tr>
+                      <td class="num_t_lft">RFQs (post and ability to quote)</td>
+                      <td><span>3/Monthly</span></td>
+                      <td><span>Unlimited </span></td>
+                      <td><span>Unlimited </span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Stocks (post and ability to quote)</td>
+                      <td><span>3/Monthly</span></td>
+                      <td><span>Unlimited</span></td>
+                      <td><span>Unlimited</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">JOBS (POST)</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span>3</span></td>
+                      <td><span>5</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Online support</td>
+                      <td><span class="numbr">Standard support by email</span></td>
+                      <td><span class="numbr">Priority support by email or phone</span></td>
+                      <td><span class="numbr">Priority support by phone</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">10% discount on our ADS program</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Who viewed my profile</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft"></td>
+                      <td><a class="animate-border" (click)="changePlan('5c2c87b84275ab8cff5a2dc3')">SELECT</a></td>
+                      <td><a class="animate-border">SELECT</a></td>
+                      <td><a class="animate-border">SELECT</a></td>
+                    </tr>
+
+                  </tbody>
+
+                </table>
+              </div>
+
+              <div class="text_tbl">
+                <p>* VAT may be applied in certain countries</p>
+                <p>**in some countries, our invoice is fully taking in charge by your development export<span>program
+                    authorities, please check with them</span>
+                </p>
+              </div>
+            </div>
+
+            <div id="supplier2" class="yearTbs" data-aos="flip-right">
+              <div class="table_plan_cntr notHed_tbl">
+                <table width="100%">
+                  <thead>
+                    <tr>
+                      <th colspan="1"></th>
+                      <th colspan="3"><span class="hd_txt">Two years subscription - get 6months free</span></th>
+                    </tr>
+                    <tr>
+                      <th class="clr_f1">
+                        <h1 class="titl_t">Features</h1>
+                      </th>
+                      <th class="schol_clr">standard <span class="pric">1,050 €</span></th>
+                      <th class="schol_clr s_1 clr_nwit">enterprise<span class="pric">1,275 €</span></th>
+                      <th class="schol_clr s_4"> business certified<span class="pric">2,925 €</span></th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <!-- <tr>
+                        <td colspan="2"></td>
+                        <td colspan="2"><span class="hd_txt">Two years subscription - get 6months free</span></td>
+                      </tr> -->
+                    <!-- <tr>
+                        <td class="clr_f1">
+                          <h1 class="titl_t">Features</h1>
+                        </td>
+                        <td class="schol_clr">standard <span class="pric">1,050 €</span></td>
+                        <td class="schol_clr s_1 clr_nwit">enterprise<span class="pric">1,275 €</span></td>
+                        <td class="schol_clr s_4"> business certified<span class="pric">2,925 €</span></td>
+                      </tr> -->
+                    <tr>
+                      <td>Number of users</td>
+                      <td>Single</td>
+                      <td>Up to 5</td>
+                      <td>Up to 10</td>
+                    </tr>
+                    <tr class="active">
+                      <td class="num_t_lft">Worlwide on site audit by Certiﬁcation Organization*</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+                    <tr>
+                      <td class="num_t_lft">Member login dashboard</td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+                    <tr>
+                      <td class="num_t_lft">Product images showcases</td>
+                      <td><span>20</span></td>
+                      <td><span>200</span></td>
+                      <td><span>400</span></td>
+                    </tr>
+                    <tr>
+                      <td class="num_t_lft">Videos </td>
+                      <td><span>1</span></td>
+                      <td><span>3</span></td>
+                      <td><span>5</span></td>
+                    </tr>
+                    <tr>
+                      <td class="num_t_lft">Data bank </td>
+                      <td><span>500 Mo</span></td>
+                      <td><span>1 GB</span></td>
+                      <td><span>3 GB</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Sponsored top list result</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span>1 Week free</span></td>
+                      <td><span> 1 Month free </span></td>
+                    </tr>
+
+                    <!-- <tr>
+                        <td class="num_t_lft">One time company presentation in our newsletter</td>
+                        <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                        <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                        <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                      </tr> -->
+
+                    <tr>
+                      <td class="num_t_lft">RFQs (post and ability to quote)</td>
+                      <td><span> 3 / Monthly </span></td>
+                      <td><span>Unlimited </span></td>
+                      <td><span>Unlimited </span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Stocks (post and ability to quote)</td>
+                      <td><span> 3 / Monthly </span></td>
+                      <td><span>Unlimited </span></td>
+                      <td><span>Unlimited </span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">JOBS (POST)</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span>3</span></td>
+                      <td><span>5</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Online support</td>
+                      <td><span class="numbr">Standard support by email</span></td>
+                      <td><span class="numbr"> Priority support by email or phone </span></td>
+                      <td><span class="numbr">Priority support by phone</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">10% discount on our ADS program</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Who viewed my profile</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft"></td>
+                      <td><a class="animate-border">SELECT</a></td>
+                      <td><a class="animate-border">SELECT</a></td>
+                      <td><a class="animate-border">SELECT</a></td>
+                    </tr>
+
+                  </tbody>
+
+                </table>
+
+
+              </div>
+
+              <div class="text_tbl">
+                <p>* VAT may be applied in certain countries</p>
+                <p>**in some countries, our invoice is fully taking in charge by your development export <span>program
+                    authorities, please check with them</span>
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          <div id="stockist" class="tab_wrapper fade">
+
+            <div class="year_tabs clearfix">
+              <ul class="clearfix nav nav-tabs">
+                <li [ngClass]="active1 ?  'active':''">
+                  <a href="#stockist1" data-toggle="tab" (click)="active1 = true" title="1 year">1
+                    year</a></li>
+                <li [ngClass]="active1 ?  '':'active'">
+                  <a href="#stockist2" data-toggle="tab" (click)="active1 = false" title="2 year">2
+                    years</a></li>
+              </ul>
+            </div>
+            <div class="x_axis">
+              <span class="hnd_bounce"><i class="fa fa-arrow-left">
+                  <img src="../../../../../../assets//icon/common/hand_arrow.png" class="hand_icn animated bounce" /></i>
+              </span>
+            </div>
+
+            <div id="stockist1" class="yearTbs active" data-aos="flip-left">
+              <div class="table_plan_cntr agentTabs">
+                <table width="100%">
+
+                  <thead>
+                    <tr>
+                      <th class="clr_f1">
+                        <h1 class="titl_t">Features</h1>
+                      </th>
+                      <th class="schol_clr">standard <span>700 €/year</span></th>
+                      <th class="schol_clr s_1 clr_nwit enterprise-th"><cite class="top_t">most popular</cite>
+                        <span class="enterprise-span">enterprise</span><span class="pric">850
+                          €/year</span></th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+
+                    <tr>
+                      <td class="clr_gra">Number of users</td>
+                      <td>Single</td>
+                      <td>Up to 5</td>
+                    </tr>
+
+                    <tr class="active">
+                      <td class="num_t_lft">Member login dashboard</td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Product images showcases</td>
+                      <td><span>100</span></td>
+                      <td><span>500</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Videos</td>
+                      <td><span>1</span></td>
+                      <td><span>3</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Data bank </td>
+                      <td><span>500 Mo</span></td>
+                      <td><span>3 GB</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Sponsored top list result</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span>1 Week free</span></td>
+                    </tr>
+
+                    <!-- <tr>
+                        <td class="num_t_lft">One time company presentation in our newsletter</td>
+                        <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                        <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                      </tr> -->
+
+                    <tr>
+                      <td class="num_t_lft">RFQs (post and ability to quote)</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Stocks (post and ability to quote)</td>
+                      <td><span>Unlimited </span></td>
+                      <td><span>Unlimited </span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">JOBS (POST)</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span>3</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Online support</td>
+                      <td><span class="numbr">Standard support by email</span></td>
+                      <td><span class="numbr"> Priority support by email or phone </span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">10% discount on our ADS program</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft"></td>
+                      <td><a class="animate-border">SELECT</a></td>
+                      <td><a class="animate-border">SELECT</a></td>
+                    </tr>
+
+                  </tbody>
+
+                </table>
+              </div>
+
+              <div class="text_tbl">
+                <p>* VAT may be applied in certain countries</p>
+                <p>**in some countries, our invoice is fully taking in charge by your development export<span>program
+                    authorities, please check with them</span></p>
+              </div>
+            </div>
+
+            <div id="stockist2" class="yearTbs" data-aos="flip-right">
+              <div class="table_plan_cntr notHed_tbl agentTabs stockTabs">
+                <table width="100%">
+                  <thead>
+                    <tr>
+                      <th colspan="1"></th>
+                      <th colspan="2"><span class="hd_txt">Two years subscription - get 6 months free</span></th>
+                    </tr>
+                    <tr>
+                      <th class="clr_f1">
+                        <h1 class="titl_t">Features</h1>
+                      </th>
+                      <th class="schol_clr">standard <span class="pric">1,050 €/year</span></th>
+                      <th class="schol_clr s_1 clr_nwit">enterprise<span class="pric">1,275 €/year</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- <tr>
+                        <td></td>
+                        <td colspan="2"><span class="hd_txt">Two years subscription - get 6 months free</span></td>
+                      </tr> -->
+                    <!-- <tr>
+                        <td class="clr_f1">
+                          <h1 class="titl_t">Features</h1>
+                        </td>
+                        <td class="schol_clr">standard <span class="pric">1,050 €/year</span></td>
+                        <td class="schol_clr s_1 clr_nwit">enterprise<span class="pric">1,275 €/year</span></td>
+                      </tr> -->
+
+                    <tr>
+                      <td class="clr_gra">Number of users</td>
+                      <td>Single</td>
+                      <td>Up to 5</td>
+                    </tr>
+
+                    <tr class="active">
+                      <td class="num_t_lft">Member login dashboard</td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Product images showcases</td>
+                      <td><span>100</span></td>
+                      <td><span>500</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Videos</td>
+                      <td><span>1</span></td>
+                      <td><span>3</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Data bank </td>
+                      <td><span>500 Mo</span></td>
+                      <td><span>3 GB</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Sponsored top list result</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span>1 Week free</span></td>
+                    </tr>
+
+                    <!-- <tr>
+                        <td class="num_t_lft">One time company presentation in our newsletter</td>
+                        <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                        <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                      </tr> -->
+
+                    <tr>
+                      <td class="num_t_lft">RFQs (post and ability to quote)</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Stocks (post and ability to quote)</td>
+                      <td><span>Unlimited </span></td>
+                      <td><span>Unlimited </span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">JOBS (POST)</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span>3</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Online support</td>
+                      <td><span class="numbr">Standard support by email</span></td>
+                      <td><span class="numbr"> Priority support by email or phone </span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">10% discount on our ADS program</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft"></td>
+                      <td><a class="animate-border">SELECT</a></td>
+                      <td><a class="animate-border">SELECT</a></td>
+                    </tr>
+
+                  </tbody>
+
+                </table>
+              </div>
+
+              <div class="text_tbl">
+                <p>* VAT may be applied in certain countries</p>
+                <p>**in some countries, our invoice is fully taking in charge by your development export <span>program
+                    authorities, please check with them</span></p>
+              </div>
+            </div>
+
+          </div>
+
+          <div id="reseller" class="tab_wrapper fade">
+
+            <div class="year_tabs clearfix nav nav-tabs">
+              <ul class="clearfix nav nav-tabs">
+                <li [ngClass]="active1 ?  'active':''">
+                  <a href="#reseller1" data-toggle="tab" (click)="active1 = true" title="1 year">1
+                    year</a></li>
+                <li [ngClass]="active1 ?  '':'active'">
+                  <a href="#reseller2" data-toggle="tab" (click)="active1 = false" title="2 year">2
+                    years</a></li>
+              </ul>
+            </div>
+            <div class="x_axis">
+              <span class="hnd_bounce"><i class="fa fa-arrow-left">
+                  <img src="../../../../../../assets//icon/common/hand_arrow.png" class="hand_icn animated bounce" /></i>
+              </span>
+            </div>
+
+            <div id="reseller1" class="yearTbs active" data-aos="flip-left">
+              <div class="table_plan_cntr agentTabs">
+                <table width="100%">
+
+                  <thead>
+                    <tr>
+                      <th class="clr_f1">
+                        <h1 class="titl_t">Features</h1>
+                      </th>
+                      <th class="schol_clr">lite <span class="pric">159 €/year</span></th>
+                      <th class="schol_clr s_1 clr_nwit"><cite class="top_t">most popular</cite> <span class="strd">standard</span><span
+                          class="pric">700
+                          € / year</span></th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+
+                    <tr>
+                      <td class="clr_gra">Number of users</td>
+                      <td>Single</td>
+                      <td>Single</td>
+                    </tr>
+
+                    <tr class="active">
+                      <td class="num_t_lft">Member login dashboard</td>
+                      <td><span>restricted*</span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Full access to the portal and data*</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Product images</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span>10</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Videos </td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span>1</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Sponsored top list result</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <!-- <tr>
+                        <td class="num_t_lft">One time company presentation in our newsletter</td>
+                        <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                        <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                      </tr> -->
+
+                    <tr>
+                      <td class="num_t_lft">RFQs (post and ability to quote)</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Stocks (post and ability to quote)</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Online support</td>
+                      <td><span class="numbr">standard support by email</span></td>
+                      <td><span class="numbr">standard support by email</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">10% discount on our ADS program</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft"></td>
+                      <td><a class="animate-border">SELECT</a></td>
+                      <td><a class="animate-border">SELECT</a></td>
+                    </tr>
+
+                  </tbody>
+
+                </table>
+              </div>
+
+              <div class="text_tbl">
+                <p>* VAT may be applied in certain countries</p>
+                <p>**in some countries, our invoice is fully taking in charge by your development export<span>program
+                    authorities, Please check with them</span></p>
+              </div>
+            </div>
+
+            <div id="reseller2" class="yearTbs" data-aos="flip-right">
+              <div class="table_plan_cntr notHed_tbl">
+                <table width="100%">
+                  <thead>
+                    <tr class="small-text">
+                      <th></th>
+                      <th><span class="hd_txt">Two years subscription get 2 months free</span></th>
+                      <th><span class="hd_txt">Two years subscription get 6 months free</span></th>
+                    </tr>
+                    <tr>
+                      <th class="clr_f1">
+                        <h1 class="titl_t">Features</h1>
+                      </th>
+                      <th class="schol_clr">lite <span class="pric">265 €/2year</span></th>
+                      <th class="schol_clr s_1 clr_nwit">standard<span class="pric">1050 € /2year</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- <tr>
+                        <td></td>
+                        <td><span class="hd_txt">Two years subscription get 2 months free</span></td>
+                        <td><span class="hd_txt">Two years subscription get 6 months free</span></td>
+                      </tr> -->
+
+                    <!-- <tr>
+                        <td class="clr_f1">
+                          <h1 class="titl_t">Features</h1>
+                        </td>
+                        <td class="schol_clr">lite <span class="pric">265 €/2year</span></td>
+                        <td class="schol_clr s_1 clr_nwit">standard<span class="pric">1050 € /2year</span></td>
+                      </tr> -->
+
+                    <tr>
+                      <td class="clr_gra">Number of users</td>
+                      <td>Single</td>
+                      <td>Single</td>
+                    </tr>
+
+                    <tr class="active">
+                      <td class="num_t_lft">Member login dashboard</td>
+                      <td><span>restricted*</span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Full access to the portal and data*</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Product images</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span>10</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Videos </td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span>1</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Sponsored top list result</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <!-- <tr>
+                        <td class="num_t_lft">One time company presentation in our newsletter</td>
+                        <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                        <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                      </tr> -->
+
+                    <tr>
+                      <td class="num_t_lft">RFQs (post and ability to quote)</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Stocks (post and ability to quote)</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">Online support</td>
+                      <td><span class="numbr">Standard support by email</span></td>
+                      <td><span class="numbr">Standard support by email</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft">10% discount on our ADS program</td>
+                      <td><span><img src="../../../../../../assets//icon/common/wrong_red1.png"></span></td>
+                      <td><span><img src="../../../../../../assets//icon/common/right_blue1.png"></span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="num_t_lft"></td>
+                      <td><a class="animate-border">SELECT</a></td>
+                      <td><a class="animate-border">SELECT</a></td>
+                    </tr>
+
+                  </tbody>
+
+                </table>
+              </div>
+
+              <div class="text_tbl">
+                <p>* VAT may be applied in certain countries</p>
+                <p>**in some countries, our invoice is fully taking in charge by your development export<span>program
+                    authorities, Please check with them</span></p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

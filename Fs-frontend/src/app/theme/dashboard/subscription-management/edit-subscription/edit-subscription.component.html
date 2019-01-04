@@ -49,6 +49,16 @@
           </angular2-multiselect>
         </div>
       </div>
+
+      <div class="row" *ngIf = "isSupplier">
+        <label class="col-sm-4 col-lg-4 col-form-label">Role Type</label>
+        <div class="col-sm-8 col-lg-8">
+          <angular2-multiselect [data]="supplierType" [(ngModel)]="selectedRoleType" [settings]="settings2" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
+            formControlName="roleType">
+          </angular2-multiselect>
+        </div>
+      </div>
       <div class="row">
         <label class="col-sm-4 col-lg-4 col-form-label">Select Modules</label>
         <div class="col-sm-8 col-lg-8">
@@ -90,12 +100,10 @@
       <div class="row" *ngIf = "selectedRoles">
         <label class="col-sm-4 col-lg-4 col-form-label">Feature Module</label>
         <div class="col-sm-8 col-lg-8">
-          <select class="input-group" name="module" formControlName="features">
-            <option [ngValue]="null" disabled>Select One</option>
-            <option *ngFor="let feature of featureModules" [ngValue]="feature">
-              {{ feature.name }}
-            </option>
-          </select>
+          <angular2-multiselect [data]="featureModules" [(ngModel)]="selectedFeature" [settings]="settings3" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
+            formControlName="features">
+          </angular2-multiselect>
         </div>
       </div>
 

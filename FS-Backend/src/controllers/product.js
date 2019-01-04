@@ -425,7 +425,126 @@ query for filters
 }
 */
 
+/*
 
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match": {
+          "name": "online"
+        }
+      },
+      "filter": {
+        "term": {
+          "filters.value": "red"
+        }
+      }
+    }
+  },
+  "aggs": {
+    "filters": {
+      "nested": {
+        "path": "filters"
+      },
+      "aggs": {
+        "key_name": {
+          "terms": {
+            "field": "filters.name"
+          },
+          "aggs": {
+            "key_value": {
+              "terms": {
+                "field": "filters.value"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+{
+"_index": "products",
+"_type": "product",
+"_id": "5c1e3630d6235d4dc32d432b",
+"_score": 0.3074455,
+"_source": {
+"name": "Online shop china custom logo contrast colors short sleeves wholesale mens clothing crew neck t shirts in bulk",
+"description": "Description",
+"images": [
+""http://40.71.47.14:5000/file/image-1545483821488.png""
+],
+"price": 340,
+"modules": [
+{
+"name": "denim",
+"id": "5c0909ca4700feb88bab8c04",
+"_id": "5c1e3650d6235d4dc32d4334"
+}
+],
+"category": {
+"name": "Shirt",
+"id": "5c0b9cfa7f71a77d942b7596"
+},
+"SubCategory": { },
+"minOrder": 34,
+"company": {
+"name": "Synapse India",
+"email": "t.bitan@fashionsourcing.com"
+},
+"regions": [
+{
+"id": "4",
+"name": "American Samoa",
+"_id": "5c1e3650d6235d4dc32d4333"
+}
+,
+{
+"id": "5",
+"name": "Andorra",
+"_id": "5c1e3650d6235d4dc32d4332"
+}
+],
+"filters": [
+{
+"name": "Color",
+"value": [
+"Red"
+,
+"Blue"
+]
+}
+,
+{
+"name": "Size",
+"value": [
+"XL"
+,
+"L"
+,
+"M"
+]
+}
+]
+}
+}
+
+*/
+/*
+let array = [];
+let newArray = [];
+let key1, key2, key3, key4;
+array.forEach(data => {
+    for (let i = 0; i < data.filters.length; i++) {
+        if (data.filters[i].value.join('').match(/(key1|key2|key3)/)) {
+
+        }
+    }
+});
+*/
 module.exports = {
     createProduct,
     getProductFromElastic,

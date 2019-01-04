@@ -14,10 +14,11 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private searchHistoryService: SearchHistoryService
+    private searchHistoryService: SearchHistoryService,
   ) { }
 
   ngOnInit() {
+
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
         return;

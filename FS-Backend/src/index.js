@@ -98,8 +98,10 @@ require('./routes/filter')(app);
 require('./routes/features')(app);
 require('./routes/rfp')(app);
 require('./routes/history')(app);
+require('./routes/notification')(app);
+
 require('./functions/cron-job');
-require('./functions/socket-connection')(http);
+require('./controllers/functions').socketIntialise(http);
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './uploads');

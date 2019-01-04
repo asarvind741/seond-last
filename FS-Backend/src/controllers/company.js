@@ -1,5 +1,6 @@
 import Company from '../models/company';
 import User from '../models/user';
+import Plan from '../models/subscriptions';
 import fs from 'fs';
 
 import {
@@ -89,11 +90,62 @@ async function getCompany(req, res) {
     }
 }
 
+async function getPlan(req, res) {
+    try {
+        console.log(req.params.id);
+        let company = await Company.findById(req.params.id);
+
+        if (company) {
+            let plan = await Plan.findById(company.subscription).populate('features._id');
+            if (plan)
+                sendResponse(res, 200, 'Successful.', plan);
+            else
+                sendResponse(res, 400, 'No plan found.');
+        } else {
+
+            sendResponse(res, 400, 'No company found.');
+
+        }
+    } catch (e) {
+        console.log('error', e);
+        sendResponse(res, 500, 'Unexpected Error', e);
+    }
+}
+
+async function changePlan(req, res) {
+    try {
+        let company = await Company.findById(req.body.companyId);
+
+        if (company) {
+            let updatePlan = await Company.findByIdAndUpdate(req.body.companyId, {
+                $set: {
+                    subscription: req.body.subscriptionId
+                }
+            }, {
+                new: true
+            });
+            if (updatePlan) {
+                sendResponse(res, 200, 'Successful.', updatePlan);
+            } else {
+                sendResponse(res, 400, 'Plan not updated.');
+            }
+        } else {
+
+            sendResponse(res, 400, 'No company found.');
+
+        }
+    } catch (e) {
+        console.log(e, 'error');
+    }
+}
+
 module.exports = {
     editCompany,
     deleteCompany,
     getCompany,
-    getCompanies
+    getCompanies,
+    getPlan,
+    changePlan
 };
 // console.time('start');
 // Company.find({
