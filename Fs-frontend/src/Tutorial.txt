@@ -150,3 +150,5 @@ https://www.npmjs.com/package/angular2-infinite-scroll
 git remote show origin
 
 git remote set-url origin git://new.url.here
+
+git remote remove origin
