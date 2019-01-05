@@ -12,4 +12,7 @@ export class NotificationService {
     getNotifications(id) {
         return this.httpClient.get(`${environment.API_URL}/notification/${id}`);
     }
+    readMsg(id) {
+        return this.httpClient.get(`${environment.API_URL}/notification/update/${id}`);
+    }
 }

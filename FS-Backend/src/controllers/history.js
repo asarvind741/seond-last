@@ -8,7 +8,7 @@ async function addVisitedUrls(req, res) {
         let history = await History.findOne({
             user: req.body.id
         });
-        console.log('history==>', history);
+        // console.log('history==>', history);
         if (!history) {
             let createHistory = await History.create({
                 user: req.body.id
@@ -29,7 +29,7 @@ async function addVisitedUrls(req, res) {
             }],
 
         });
-        console.log('previously visited==>', urlHistory);
+        // console.log('previously visited==>', urlHistory);
         if (urlHistory) {
             let removeOldUrls = await History.update({
                 _id: urlHistory._id
@@ -43,7 +43,7 @@ async function addVisitedUrls(req, res) {
             }, {
                 multi: true
             });
-            console.log('remove old', removeOldUrls);
+            // console.log('remove old', removeOldUrls);
         }
         let addVisitedUrl = await History.findOneAndUpdate({
             user: req.body.id
@@ -53,7 +53,7 @@ async function addVisitedUrls(req, res) {
             }
         });
         sendResponse(res, 200, 'Successful.', addVisitedUrl);
-        console.log('send rspo', addVisitedUrl);
+        // console.log('send rspo', addVisitedUrl);
     } catch (e) {
         console.log(e);
         sendResponse(res, 500, 'Unexpected Error.', e);
@@ -107,7 +107,7 @@ async function deleteHistoryOfDay(req, res) {
         }, {
             multi: true
         });
-        console.log('remove old', removeOldUrls);
+        // console.log('remove old', removeOldUrls);
         sendResponse(res, 200, 'Successful.', removeOldUrls);
     } catch (e) {
         console.log(e);

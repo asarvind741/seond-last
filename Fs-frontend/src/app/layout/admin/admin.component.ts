@@ -59,7 +59,7 @@ import { ToastrService } from 'ngx-toastr';
                 'an-animate',
                 style({
                     overflow: 'auto',
-                    height: '400px'
+                    height: '300px'
                 })
             ),
             transition('an-off <=> an-animate', [animate('400ms ease-in-out')])
@@ -412,6 +412,12 @@ export class AdminComponent implements OnInit {
 
     toggleLiveNotification() {
         this.newNotification = false;
+        this.notificationService.readMsg(JSON.parse(this.authService.getCurrentUser())._id).subscribe((success) => {
+            console.log(success, 'success');
+
+        }, (error) => {
+            console.log(error, 'error')
+        })
         this.liveNotification =
             this.liveNotification === 'an-off' ? 'an-animate' : 'an-off';
         this.liveNotificationClass =

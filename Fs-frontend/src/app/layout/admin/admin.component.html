@@ -63,18 +63,20 @@
       <ul [@notificationBottom1]="liveNotification" class="show-notification">
         <li>
           <h6>Notifications</h6>
-          <label class="label label-danger">New</label>
+          <!-- <label class="label label-danger">New</label> -->
         </li>
-        <li *ngFor="let data of notifications">
-          <div class="media">
-            <img class="d-flex align-self-center img-radius" src="assets/images/avatar-2.jpg" alt="Generic placeholder image">
-            <div class="media-body">
-              <!-- <h5 class="notification-user">John Doe</h5> -->
-              <p class="notification-msg">{{data.message}}</p>
-              <span class="notification-time">{{data.time}}</span>
+        <div *ngFor="let data of notifications">
+          <li [ngClass]="{'newMsg': !data.read }">
+            <div class="media">
+              <img class="d-flex align-self-center img-radius" src="assets/images/avatar-2.jpg" alt="Generic placeholder image">
+              <div class="media-body">
+                <!-- <h5 class="notification-user">John Doe</h5> -->
+                <p class="notification-msg">{{data.message}}</p>
+                <span class="notification-time">{{data.time}}</span>
+              </div>
             </div>
-          </div>
-        </li>
+          </li>
+        </div>
         <!-- <li>
           <div class="media">
             <img class="d-flex align-self-center img-radius" src="assets/images/avatar-4.jpg" alt="Generic placeholder image">

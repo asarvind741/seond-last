@@ -22,6 +22,10 @@ const Notification = new Schema({
   },
   recieverName: String,
   message: String,
+  read: {
+    type: Boolean,
+    default: false
+  },
   images: String,
   status: {
     type: String,

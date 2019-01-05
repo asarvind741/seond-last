@@ -79,7 +79,43 @@ function timeDifference(previous) {
     }
 }
 
+
+async function readNotification(req, res) {
+    try {
+        let notifications = await Notification.update({
+            reciever: req.params.id
+        }, {
+            $set: {
+                read: true
+            }
+        }, {
+            multi: true,
+            new: true
+        });
+        if (notifications)
+            res.status(200).send({
+                status: 200,
+                message: 'Successful.',
+                data: notifications
+            });
+        else
+            res.status(400).send({
+                status: 400,
+                message: 'No notifications found.',
+            });
+
+
+    } catch (e) {
+        console.log(e, 'error');
+        res.status(500).send({
+            status: 500,
+            message: 'Unexpected Error.',
+        });
+    }
+}
+
 module.exports = {
     addNotification,
-    getNotifications
+    getNotifications,
+    readNotification
 };

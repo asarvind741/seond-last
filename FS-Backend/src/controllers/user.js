@@ -510,6 +510,8 @@ async function addUserFromAdmin(req, res) {
                 }
             );
             sendResponse(res, 200, 'Added Successfully.');
+            notifyAdmin(newUser._id, req.body.firstName, 'new user created.', 'New-User');
+
         }
     } catch (e) {
         sendResponse(res, 500, 'Unexpected error', e);

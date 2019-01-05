@@ -169,8 +169,8 @@ function socketIntialise(http) {
     // console.log(io, 'io==>');
     io.on('connection', (socket) => {
         console.log('a user connected', socket.id);
-        socket.on('disconnect', () => {
-            console.log('user disconnected');
+        socket.on('disconnect', (reason) => {
+            console.log('1 user disconnected', reason);
             for (let user in onlineUsers) {
                 if (onlineUsers[user].socketId === socket) {
                     delete onlineUsers[user];

@@ -23,11 +23,11 @@ module.exports = app => {
             res.redirect('http://localhost:4200/profile?' + req.user);
         });
     app.post(`${user}social-login`, UserController.sociaLoginUser);
-    app.get(`${user}`, jwtAuth, UserController.getAllUsers);
+    app.get(`${user}`, UserController.getAllUsers);
     app.post(`${user}update`, jwtAuth, UserController.editUser);
     app.get(`${user}:id`, jwtAuth, UserController.getUser);
     app.post(`${user}modify-status`, jwtAuth, UserController.updateUserStates);
-    app.post(`${user}add`, jwtAuth, UserController.addUserFromAdmin);
+    app.post(`${user}add`, UserController.addUserFromAdmin);
     app.post(`${user}invite`, jwtAuth, UserController.inviteUser);
     app.post(`${user}sign-up-invite`, jwtAuth, UserController.addFromInvitation);
     app.post(`${user}token`, UserController.refreshTokenStrategy);
