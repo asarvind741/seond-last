@@ -1,3 +1,4 @@
+// Thierry live key. Please do not put it into github/bitbucket account
 // const stripe = require('stripe')('sk_live_ZJ7T9ooIICoqzBscW0cq20pc');
 
 const stripe = require('stripe')('sk_test_1PxLhQXh3FHIMCcB3oAkIIpT');
