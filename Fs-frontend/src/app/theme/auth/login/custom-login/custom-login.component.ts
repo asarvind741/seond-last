@@ -58,11 +58,11 @@ export class CustomLoginComponent implements OnInit {
         if (response.status === 200) {
           this.router.navigate(['../one-time-password']);
         }
-        else if(response.status === 201){
+        else if (response.status === 201) {
           console.log("test");
           console.log("response", response);
           this.authService.saveUser(response['data']);
-          this.router.navigate(['/dashboard/default'], { relativeTo: this.activatedRoute});
+          this.router.navigate(['/dashboard/default'], { relativeTo: this.activatedRoute });
         }
       }, (error) => {
         const err = error.error.message;

@@ -53,8 +53,6 @@ export class SearchHistoryComponent implements OnInit {
     this.searchTerm = event.target.value;
     console.log(this.searchTerm);
     this.visitedUrls = this.visitHistory.visitedUrls.filter(urlObj => {
-      console.log(urlObj.url.indexOf(this.searchTerm) >= 0, 'test')
-
       return urlObj.url.indexOf(this.searchTerm) >= 0
     })
   }
@@ -62,8 +60,6 @@ export class SearchHistoryComponent implements OnInit {
   searchFromInput() {
 
     this.visitedUrls = this.visitHistory.visitedUrls.filter(urlObj => {
-      // console.log(urlObj.url.indexOf(this.searchTerm) >= 0, 'test')
-
       return urlObj.url.indexOf(this.searchTerm) >= 0
     })
   }

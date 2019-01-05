@@ -39,6 +39,30 @@ import { NotificationService } from 'src/app/services/notification.service';
             ),
             transition('an-off <=> an-animate', [animate('400ms ease-in-out')])
         ]),
+        trigger('notificationBottom1', [
+            state(
+                'an-off, void',
+                style({
+                    overflow: 'hidden',
+                    height: '0px'
+                })
+            ),
+            state(
+                'open',
+                style({
+                    overflow: 'auto',
+                    height: '400px'
+                })
+            ),
+            state(
+                'an-animate',
+                style({
+                    overflow: 'auto',
+                    height: '400px'
+                })
+            ),
+            transition('an-off <=> an-animate', [animate('400ms ease-in-out')])
+        ]),
         trigger('slideInOut', [
             state(
                 'in',
@@ -87,6 +111,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class AdminComponent implements OnInit {
     searchItem: String;
+    addScroll: boolean = false;
     currentUserRole: String = "Buyer";
     showResult: Boolean = true;
     itemsSearched: Array<any> = [];
@@ -223,6 +248,9 @@ export class AdminComponent implements OnInit {
     }
 
     ngOnInit() {
+        const user = JSON.parse(localStorage.getItem('currentUser'));
+
+        this.socketService.onLogin({ 'userId': user._id, 'name': user.name });
         this.currentUserRole = JSON.parse(this.authService.getCurrentUser()).role;
         ;
         if (this.currentUserRole === "Buyer")
@@ -237,15 +265,19 @@ export class AdminComponent implements OnInit {
             this.setLayoutType('light')
         }
         this.elasticSearchService.isAvailable();
+
         this.notificationService.getNotifications(JSON.parse(this.authService.getCurrentUser())._id).subscribe((success) => {
             console.log(success, 'success');
             this.notifications = success['data'];
+            if (this.notifications.length > 4) {
+                this.addScroll = true
+            }
         }, (error) => {
             console.log(error, 'error')
         })
         this.socketService.onNewNotification().subscribe(msg => {
             this.newNotification = true;
-            this.notifications.unshift({ message: msg.message, time: this.timeDifference(msg.time) })
+            this.notifications.unshift({ message: msg.message, time: this.timeDifference(new Date(msg.time).getTime()) })
 
 
         });
@@ -263,6 +295,8 @@ export class AdminComponent implements OnInit {
         var msPerYear = msPerDay * 365;
 
         var elapsed = current - previous;
+        console.log(elapsed, '======', msPerMinute, msPerHour);
+
         if (elapsed < msPerMinute) {
             return Math.round(elapsed / 1000) + ' seconds ago';
         }
