@@ -120,3 +120,21 @@ https://stackoverflow.com/questions/33700266/how-can-i-get-new-selection-in-sele
 https://aberezkin.github.io/ng2-image-upload/#/readme
 https://coderanch.com/t/696247/angular-typescript-spa-javascript/languages/angular-image-upload-unable-hold
 https://aberezkin.github.io/ng2-image-upload/#/demo
+
+https://dzone.com/articles/css-position-relative-vs-position-absolute
+
+<ng-content> element cannot have content
+
+https://stackoverflow.com/questions/24949544/mongodb-cant-canonicalize-query-badvalue-projection-cannot-have-a-mix-of-incl
+
+https://stackoverflow.com/questions/35446955/how-to-go-back-last-page
+
+https://stackoverflow.com/questions/34338440/how-to-redirect-to-an-external-url-in-angular2
+
+https://stackoverflow.com/questions/41969571/how-can-i-programatically-pass-parameters-to-an-auxiliary-route-in-angular2
+
+
+https://stackoverflow.com/questions/7077770/window-location-href-and-window-open-methods-in-javascript
+
+https://www.smashingmagazine.com/2013/11/guidelines-navigation-categories-ecommerce-study/
+https://baymard.com/blog/ecommerce-over-categorization

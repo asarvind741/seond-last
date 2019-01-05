@@ -23,6 +23,7 @@ export class ContactSupplierComponent implements OnInit {
       this.companyId = params['supplierId'];
       this.userService.getSupplierDetails(this.companyId)
       .subscribe((response) => {
+        console.log("aaaaaaaaa", response)
         if(response['status'] === 200){
           this.supplier = response['data']
         }
