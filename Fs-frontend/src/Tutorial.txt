@@ -138,3 +138,15 @@ https://stackoverflow.com/questions/7077770/window-location-href-and-window-open
 
 https://www.smashingmagazine.com/2013/11/guidelines-navigation-categories-ecommerce-study/
 https://baymard.com/blog/ecommerce-over-categorization
+
+https://www.npmjs.com/package/ngx-infinite-scroll
+
+https://stackblitz.com/edit/ngx-infinite-scroll?file=src%2Fapp%2Fapp.component.html
+
+https://stackoverflow.com/questions/47326279/how-to-implement-on-scrolldown-pagination-in-angular-4
+
+https://www.npmjs.com/package/angular2-infinite-scroll
+
+git remote show origin
+
+git remote set-url origin git://new.url.here
