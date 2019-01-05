@@ -223,6 +223,9 @@ export class AdminComponent implements OnInit {
     }
 
     ngOnInit() {
+        const user = JSON.parse(localStorage.getItem('currentUser'));
+
+        this.socketService.onLogin({ 'userId': user._id, 'name': user.name });
         this.currentUserRole = JSON.parse(this.authService.getCurrentUser()).role;
         ;
         if (this.currentUserRole === "Buyer")
@@ -237,6 +240,7 @@ export class AdminComponent implements OnInit {
             this.setLayoutType('light')
         }
         this.elasticSearchService.isAvailable();
+        
         this.notificationService.getNotifications(JSON.parse(this.authService.getCurrentUser())._id).subscribe((success) => {
             console.log(success, 'success');
             this.notifications = success['data'];
