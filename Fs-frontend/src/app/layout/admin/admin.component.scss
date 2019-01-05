@@ -8,22 +8,24 @@
 .search-result {
   display: none;
 }
+
 .header-search-select select {
   background: none;
   color: #000;
   border: none;
   min-height: 31px;
 }
+
 .header-search-select {
   position: absolute;
   left: 5px;
   z-index: 999;
-  top: 4px;  
+  top: 4px;
 }
 
 .header-navbar .navbar-wrapper .header-search .main-search .input-group .form-control {
-    padding: 0.3rem 0.75rem 0.3rem 87px;
-    color: #000;
+  padding: 0.3rem 0.75rem 0.3rem 87px;
+  color: #000;
 }
 
 .fashion-logo {
@@ -33,22 +35,22 @@
 }
 
 .search-result.show-dropdown {
-    color: black;
-    display: block;
-    position: absolute;
-    left: 0;
-    width: 100%;
-    top: 44px;
-    background: #fff;
-    box-shadow: 0 5px 10px rgba(204, 204, 204, 0.5);
-    z-index: 99;
-    padding-left: 15px;
-    padding-right: 15px;
+  color: black;
+  display: block;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 44px;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(204, 204, 204, 0.5);
+  z-index: 99;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 li.show-search-item {
-    display: block;
-    float: none !important;
+  display: block;
+  float: none !important;
 }
 
 li.hide-class {
@@ -58,19 +60,27 @@ li.hide-class {
 .header-navbar .navbar-wrapper .header-search .main-search .input-group {
   border-radius: 0;
 }
+
 .header-navbar .navbar-wrapper .navbar-container .nav-left li {
   padding: 0;
 }
+
 .header-navbar .navbar-wrapper .header-search .main-search.open .input-group .form-control:focus {
   outline: none;
   box-shadow: none;
 }
+
 ul.nav-left {
-    float: none;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    width: 610px;
-    max-width: 100%;
+  float: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 610px;
+  max-width: 100%;
+}
+
+.scroll {
+  height: 350px !important;
+  overflow-x: auto !important
 }
