@@ -15,6 +15,7 @@ import { Observable } from 'rxjs/Observable';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { SocketService } from 'src/app/services/socket.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -180,7 +181,9 @@ export class AdminComponent implements OnInit {
         private elasticSearchService: ElasticSearchService,
         private activatedRoute: ActivatedRoute,
         private socketService: SocketService,
-        private notificationService: NotificationService
+        private notificationService: NotificationService,
+        private toastrService: ToastrService,
+
     ) {
 
         this.navType = 'st2';
@@ -278,7 +281,8 @@ export class AdminComponent implements OnInit {
         this.socketService.onNewNotification().subscribe(msg => {
             this.newNotification = true;
             this.notifications.unshift({ message: msg.message, time: this.timeDifference(new Date(msg.time).getTime()) })
-
+            this.toastrService.info(msg.message, 'New',
+                { timeOut: 10000, positionClass: 'toast-top-right', closeButton: true, toastClass: 'toast' });
 
         });
         this.socketService.socket.on('error', function (err) {
@@ -287,15 +291,16 @@ export class AdminComponent implements OnInit {
     }
 
     timeDifference(previous) {
-        let current = Date.now();
         var msPerMinute = 60 * 1000;
         var msPerHour = msPerMinute * 60;
         var msPerDay = msPerHour * 24;
         var msPerMonth = msPerDay * 30;
         var msPerYear = msPerDay * 365;
+        let current = Date.now();
 
         var elapsed = current - previous;
-        console.log(elapsed, '======', msPerMinute, msPerHour);
+        elapsed = elapsed / 10;
+        console.log(current, previous, elapsed, '======', msPerMinute, msPerHour);
 
         if (elapsed < msPerMinute) {
             return Math.round(elapsed / 1000) + ' seconds ago';
