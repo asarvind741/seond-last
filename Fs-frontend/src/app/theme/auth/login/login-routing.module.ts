@@ -10,22 +10,6 @@ const routes: Routes = [
     },
     children: [
       {
-        path: 'simple',
-        loadChildren: './basic-login/basic-login.module#BasicLoginModule'
-      },
-      {
-        path: 'header-footer',
-        loadChildren: './header-footer-login/header-footer-login.module#HeaderFooterLoginModule'
-      },
-      {
-        path: 'social',
-        loadChildren: './social-login/social-login.module#SocialLoginModule'
-      },
-      {
-        path: 'social-header-footer',
-        loadChildren: './social-header-footer-login/social-header-footer-login.module#SocialHeaderFooterLoginModule'
-      },
-      {
         path: '',
         loadChildren: './custom-login/custom-login.module#CustomLoginModule'
       }

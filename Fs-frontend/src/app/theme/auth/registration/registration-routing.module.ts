@@ -9,22 +9,6 @@ const routes: Routes = [
       status: false
     },
     children: [
-      {
-        path: 'simple',
-        loadChildren: './basic-reg/basic-reg.module#BasicRegModule'
-      },
-      {
-        path: 'header-footer',
-        loadChildren: './header-footer-reg/header-footer-reg.module#HeaderFooterRegModule'
-      },
-      {
-        path: 'social',
-        loadChildren: './social-reg/social-reg.module#SocialRegModule'
-      },
-      {
-        path: 'social-header-footer',
-        loadChildren: './social-header-footer-reg/social-header-footer-reg.module#SocialHeaderFooterRegModule'
-      },
        {
          path: '',
          loadChildren: './custom-registration/custom-registration.module#CustomRegistrationModule'
